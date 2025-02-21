@@ -22,10 +22,13 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: Android
-          buildMethod: BuildScript.BuildAndroid.BuildAndroidFunc
 
       # Output
       - uses: actions/upload-artifact@v4.6.0
         with:
           name: Build
           path: build
+          
+      - name: Remove Game
+        run: |
+          sudo rm -r /home/polo/HostedGithubRunner/_work/2DMobileGame
