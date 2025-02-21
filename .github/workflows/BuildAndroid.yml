@@ -30,14 +30,14 @@ jobs:
           name: Build
           path: build
 
-      - name: Upload APK to Discord
-        run: |
-          curl -F "content=Nouvelle build disponible 🎮" -F "file=@build/Build/Android.apk" ${{ secrets.DISCORD_WEBHOOK_URL }}
-
       - name: Debug Path
         run: |
           pwd  # Affiche le répertoire actuel
           ls -R build/  # Liste les fichiers dans le dossier build (récursivement)
+
+      - name: Upload APK to Discord
+        run: |
+          curl -F "content=Nouvelle build disponible 🎮" -F "file=@build/Android/Android.apk" ${{ secrets.DISCORD_WEBHOOK_URL }}
 
           
       # End Build
