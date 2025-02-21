@@ -29,6 +29,11 @@ jobs:
         with:
           name: Build
           path: build
+
+      - name: Upload APK to Discord
+        run: |
+          curl -F "content=Nouvelle build disponible 🎮" -F "file=@build/Android.apk" ${{ secrets.DISCORD_WEBHOOK_URL }}
+          
       # End Build
       - name: Remove Game
         run: |
