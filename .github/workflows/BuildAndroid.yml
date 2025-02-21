@@ -30,10 +30,10 @@ jobs:
           name: Build
           path: build
       
-      - name: Debug file presence2
+      - name: Vérifier les fichiers générés
         run: |
-          echo "Checking if the APK exists:"
-          ls -l /build/Android/
+          ls -lah build/
+          ls -lah build/Android/
 
       - name: Upload APK to Google Drive
         uses: Fork-on-the-Table-Collective/upload-to-download-from-gdrive@v2.0.0
