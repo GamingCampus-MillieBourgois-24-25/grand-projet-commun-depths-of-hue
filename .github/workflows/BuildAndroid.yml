@@ -31,4 +31,4 @@ jobs:
           
       - name: Remove Game
         run: |
-          sudo rm -r /home/polo/HostedGithubRunner/_work/2DMobileGame
+          sudo rm -r /home/polo/HostedGithubRunner/_work/
