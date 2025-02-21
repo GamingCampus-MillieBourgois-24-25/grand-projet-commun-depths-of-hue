@@ -32,7 +32,13 @@ jobs:
 
       - name: Upload APK to Discord
         run: |
-          curl -F "content=Nouvelle build disponible 🎮" -F "file=@build/Android.apk" ${{ secrets.DISCORD_WEBHOOK_URL }}
+          curl -F "content=Nouvelle build disponible 🎮" -F "file=@build/Build/Android.apk" ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+      - name: Debug Path
+        run: |
+          pwd  # Affiche le répertoire actuel
+          ls -R build/  # Liste les fichiers dans le dossier build (récursivement)
+
           
       # End Build
       - name: Remove Game
