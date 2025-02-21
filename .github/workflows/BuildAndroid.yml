@@ -30,12 +30,22 @@ jobs:
           name: Build
           path: build
 
+      - name: Debug file presence
+        run: |
+          echo "Checking if the APK exists:"
+          ls -l /home/polo/RunnerGP/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/build/Android/
+      
+      - name: Debug file presence2
+        run: |
+          echo "Checking if the APK exists:"
+          ls -l /build/Android/
+
       - name: Upload APK to Google Drive
         uses: Fork-on-the-Table-Collective/upload-to-download-from-gdrive@v2.0.0
         with:
           credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
           actionType: upload
-          localPath: '@/home/polo/RunnerGP/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/build/Android/Android.apk'
+          localPath: '/build/Android/Android.apk'
 
       - name: Get Google Drive file link
         id: get-link
