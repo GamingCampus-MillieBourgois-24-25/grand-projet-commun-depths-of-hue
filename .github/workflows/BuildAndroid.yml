@@ -29,11 +29,6 @@ jobs:
         with:
           name: Build
           path: build
-
-      - name: Debug file presence
-        run: |
-          echo "Checking if the APK exists:"
-          ls -l /home/polo/RunnerGP/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/build/Android/
       
       - name: Debug file presence2
         run: |
