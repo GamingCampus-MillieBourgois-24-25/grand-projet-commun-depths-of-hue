@@ -30,9 +30,24 @@ jobs:
           name: Build
           path: build
 
-      - name: Upload APK to Discord
+      - name: Upload APK to Google Drive
+        uses: Fork-on-the-Table-Collective/upload-to-download-from-gdrive@v2.0.0
+        with:
+          credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
+          actionType: upload
+          localPath: 'build/Android/Android.apk'
+          googleFolderId: 'your-google-drive-folder-id' 
+
+      - name: Get Google Drive file link
+        id: get-link
         run: |
-          curl -F "content=Nouvelle build disponible 🎮" -F "file=@build/Android/Android.apk" ${{ secrets.DISCORD_WEBHOOK_URL }}
+          # Extraire l'ID du fichier téléchargé (output de l'action précédente)
+          FILE_ID=$(echo "${{ steps.upload-apk.outputs.fileId }}")
+          echo "::set-output name=file_link::https://drive.google.com/file/d/$FILE_ID/view?usp=sharing"
+          
+      - name: Send link to Discord
+        run: |
+          curl -F "content=Nouvelle build disponible 🎮 Voici le lien pour télécharger l'APK : ${{ steps.get-link.outputs.file_link }}" ${{ secrets.DISCORD_WEBHOOK_URL }}
           
       # End Build
       - name: Remove Game
