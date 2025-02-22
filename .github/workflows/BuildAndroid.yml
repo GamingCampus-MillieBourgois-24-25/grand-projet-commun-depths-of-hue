@@ -36,7 +36,7 @@ jobs:
           ls -lah build/Android/
 
       - name: Upload APK to Google Drive
-        uses: PoloBongo/upload-to-download-from-gdrive@v2.0.0
+        uses: Fork-on-the-Table-Collective/upload-to-download-from-gdrive@v2.0.0
         with:
           credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
           actionType: upload
