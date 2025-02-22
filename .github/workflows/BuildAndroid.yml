@@ -6,7 +6,7 @@ jobs:
   build:
     name: Build my project ✨
     runs-on: self-hosted
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/Test-Actions'
     steps:
       # Checkout
       - name: Checkout repository
@@ -36,7 +36,7 @@ jobs:
           ls -lah build/Android/
 
       - name: Upload APK to Google Drive
-        uses: Fork-on-the-Table-Collective/upload-to-download-from-gdrive@v2.0.0
+        uses: PoloBongo/upload-to-download-from-gdrive@v2.0.0
         with:
           credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
           actionType: upload
