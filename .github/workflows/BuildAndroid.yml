@@ -40,7 +40,7 @@ jobs:
         with:
           credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
           actionType: upload
-          localPath: '/build/Android/Android.apk'
+          localPath: 'build/Android/Android.apk'
 
       - name: Get Google Drive file link
         id: get-link
