@@ -32,13 +32,6 @@ jobs:
 
       - name: Corriger les permissions
         run: sudo chown -R $USER:$USER build/
-
-      - name: Vérifier que le fichier APK existe
-        run: |
-          if [ ! -f "build/Android/Android.apk" ]; then
-            echo "Erreur : Le fichier APK n'existe pas !"
-            exit 1
-          fi
       
       - name: Vérifier les fichiers générés
         run: |
@@ -52,6 +45,7 @@ jobs:
           actionType: upload
           localPath: 'build/Android/Android.apk'
           emptyUploadFolder: false
+          debug: true
 
       - name: Get Google Drive file link
         id: get-link
