@@ -40,13 +40,13 @@ jobs:
           # Path to the file to upload.
           file_path: 'build/Android/Android.apk'
           # Destination path in Dropbox.
-          dropbox_path: './'
+          dropbox_path: '/Build/'
           
       - name: Send link to Discord
         run: |
-          curl -F "content=Nouvelle build disponible 🎮 Voici le lien pour télécharger l'APK : ${{ steps.get-link.outputs.file_link }}" ${{ secrets.DISCORD_WEBHOOK_URL }}
+          curl -F "content=Nouvelle build disponible 🎮 Voici le lien pour télécharger l'APK : https://www.dropbox.com/home/Build" ${{ secrets.DISCORD_WEBHOOK_URL }}
           
       # End Build
       - name: Remove Game
         run: |
-          sudo rm -r /home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/
+          sudo rm -r /home/polo/RunnerGPC/_work/
