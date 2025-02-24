@@ -40,7 +40,7 @@ jobs:
           # Path to the file to upload.
           file_path: 'build/Android/Android.apk'
           # Destination path in Dropbox.
-          dropbox_path: '/Build/'
+          dropbox_path: '/Build/Android.apk'
           
       - name: Send link to Discord
         run: |
@@ -49,4 +49,4 @@ jobs:
       # End Build
       - name: Remove Game
         run: |
-          sudo rm -r /home/polo/RunnerGPC/_work/
+          sudo rm -r /home/polo/RunnerGPC/_work/actions/
