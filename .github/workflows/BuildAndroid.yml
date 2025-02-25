@@ -88,7 +88,7 @@ jobs:
           
       - name: Remove Game
         run: |
-          chmod -R u+w "/home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/"
+          chmod -R u+w "/home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/build"
           sudo rm -r /home/polo/RunnerGPC/_work/_actions/game-ci
           sudo rm -r /home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Library
           sudo rm -r /home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Assets/Editor
