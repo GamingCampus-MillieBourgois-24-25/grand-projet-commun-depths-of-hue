@@ -46,18 +46,21 @@ jobs:
        # run: |
         #  curl -F "content=Nouvelle build disponible 🎮 Voici le lien pour télécharger l'APK : https://www.dropbox.com/home/Build" ${{ secrets.DISCORD_WEBHOOK_URL }}
 
-      - name: Envoyer un message Discord
+      - name: Installer jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+      
+      - name: Envoyer le lien sur Discord
         run: |
-          DISCORD_WEBHOOK_URL="${{ secrets.DISCORD_WEBHOOK_URL }}"    
-          
+          DISCORD_WEBHOOK_URL="${{ secrets.DISCORD_WEBHOOK_URL }}"
+      
           # Message Discord
           MESSAGE_CONTENT="🚀 **Nouvelle build disponible !**\n🎮 Téléchargez la dernière version de l'APK ici :\n🔗 [📥 Télécharger](https://www.dropbox.com/home/Build)"
-    
-          # Envoyer le message et stocker l'ID pour le supprimer plus tard
+      
+          # Envoyer le message et stocker l'ID pour suppression
           MESSAGE_ID=$(curl -s -X POST "$DISCORD_WEBHOOK_URL" \
-          -H "Content-Type: application/json" \
-          -d "{\"content\": \"$MESSAGE_CONTENT\"}" | jq -r '.id')
-          
+            -H "Content-Type: application/json" \
+            -d "{\"content\": \"$MESSAGE_CONTENT\"}" | jq -r '.id')
+      
           echo "MESSAGE_ID=$MESSAGE_ID" >> $GITHUB_ENV
       
       - name: Supprimer l'ancien message
