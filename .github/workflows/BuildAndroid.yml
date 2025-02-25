@@ -75,8 +75,8 @@ jobs:
         run: |
           MESSAGES=$(curl -s -X GET "https://discord.com/api/v10/channels/1343977032123682962/messages?limit=2" \
             -H "Authorization: Bot ${{ secrets.DISCORD_BOT_TOKEN }}" \
-            -H "Content-Type: application/json" | jq -r '.[].id') \
-            -H "User-Agent: PostmanRuntime/7.29.0"
+            -H "User-Agent: PostmanRuntime/7.29.0" \
+            -H "Content-Type: application/json" | jq -r '.[].id')
 
           echo "MESSAGE_IDS=$MESSAGES" >> $GITHUB_ENV
 
