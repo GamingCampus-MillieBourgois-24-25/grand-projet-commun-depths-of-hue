@@ -88,7 +88,13 @@ jobs:
           
       - name: Remove Game
         run: |
-          chmod -R u+w "/home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/build"
+          TARGET_DIR="/home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/build/Android"
+          if [ -e "$TARGET_DIR/Android.apk" ]; then
+            lsattr "$TARGET_DIR/Android.apk"
+            sudo chattr -i "$TARGET_DIR/Android.apk"
+          fi
+          chmod -R u+w "$TARGET_DIR"
+          rm -rf "$TARGET_DIR"
           sudo rm -r /home/polo/RunnerGPC/_work/_actions/game-ci
           sudo rm -r /home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Library
           sudo rm -r /home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Assets/Editor
