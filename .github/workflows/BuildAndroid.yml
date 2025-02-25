@@ -67,8 +67,18 @@ jobs:
         run: |
           DISCORD_WEBHOOK_URL="${{ secrets.DISCORD_WEBHOOK_URL }}"
       
-          # Récupérer les derniers messages du webhook (limite de 50 max)
-          MESSAGES=$(curl -s "$DISCORD_WEBHOOK_URL/messages?limit=10" | jq -r '.[].id')
+          # Debug: Afficher la réponse brute de l'API
+          RESPONSE=$(curl -s "$DISCORD_WEBHOOK_URL/messages?limit=10")
+          echo "Response from Discord API: $RESPONSE"
+      
+          # Extraire les IDs des messages (si la réponse est correcte)
+          MESSAGES=$(echo "$RESPONSE" | jq -r '.[].id' || echo "")
+      
+          # Vérifier si on a bien récupéré des IDs
+          if [[ -z "$MESSAGES" ]]; then
+            echo "❌ Aucun message trouvé ou réponse invalide"
+            exit 0
+          fi
       
           # Supprimer chaque message
           for MESSAGE_ID in $MESSAGES; do
