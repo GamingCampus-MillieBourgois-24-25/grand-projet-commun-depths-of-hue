@@ -33,7 +33,7 @@ jobs:
       - name: Supprimer l'ancien APK (sans erreur si absent)
         run: |
           curl -X POST https://api.dropboxapi.com/2/files/delete_v2 \
-            --header "Authorization: Bearer ${{ secrets.REFRESH_TOKEN_DROPBOX }}" \
+            --header "Authorization: Bearer ${{ secrets.DROPBOX_ACCESS_TOKEN }}" \
             --header "Content-Type: application/json" \
             --data "{\"path\": \"/Build/Android.apk\"}" || echo "Fichier non trouvé, on continue..."
 
@@ -68,33 +68,28 @@ jobs:
             -H "Content-Type: application/json" \
             -d "{\"content\": \"$MESSAGE_CONTENT\"}" | jq -r '.id')
       
-          echo "MESSAGE_ID=$MESSAGE_ID" >> $GITHUB_ENV
-      
-      - name: Supprimer les anciens messages du webhook
+          echo "MESSAGE_ID=$MESSAGE_ID" >> $GITHUB_ENV  
+     
+      - name: Get Message in Build Channel
+        id: get_messages
         run: |
-          DISCORD_WEBHOOK_URL="${{ secrets.DISCORD_WEBHOOK_URL }}"
-      
-          # Debug: Afficher la réponse brute de l'API
-          RESPONSE=$(curl -s "$DISCORD_WEBHOOK_URL/messages?limit=10")
-          echo "Response from Discord API: $RESPONSE"
-      
-          # Extraire les IDs des messages (si la réponse est correcte)
-          MESSAGES=$(echo "$RESPONSE" | jq -r '.[].id' || echo "")
-      
-          # Vérifier si on a bien récupéré des IDs
-          if [[ -z "$MESSAGES" ]]; then
-            echo "❌ Aucun message trouvé ou réponse invalide"
-            exit 0
-          fi
-      
-          # Supprimer chaque message
-          for MESSAGE_ID in $MESSAGES; do
-            curl -X DELETE "$DISCORD_WEBHOOK_URL/messages/$MESSAGE_ID"
-            sleep 1  # Pause pour éviter un rate-limit
-          done
+          MESSAGES=$(curl -s -X GET "https://discord.com/api/v10/channels/CHANNEL_ID/messages?limit=2" \
+            -H "Authorization: Bot ${{ secrets.DISCORD_BOT_TOKEN }}" \
+            -H "Content-Type: application/json" | jq -r '.[].id') \
+            -H "User-Agent: PostmanRuntime/7.29.0"
 
-      - name: Donner les permissions à l'utilisateur courant
-        run: sudo chmod 777 build/Android/Android.apk
+          echo "MESSAGE_IDS=$MESSAGES" >> $GITHUB_ENV
+
+      - name: Delete Message in Build Channel
+        run: |
+          for MESSAGE_ID in $MESSAGE_IDS; do
+            curl -X DELETE "https://discord.com/api/v10/channels/1343977032123682962/messages/$MESSAGE_ID" \
+              -H "Authorization: Bot ${{ secrets.DISCORD_BOT_TOKEN }}" \
+              -H "Content-Type: application/json"
+              -H "User-Agent: PostmanRuntime/7.29.0"
+            echo "Message $MESSAGE_ID supprimé"
+            sleep 1  # Pause pour éviter le rate-limit
+          done
           
       - name: Remove Game
         run: |
