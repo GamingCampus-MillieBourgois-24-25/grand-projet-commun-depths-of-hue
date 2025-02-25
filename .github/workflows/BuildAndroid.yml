@@ -14,6 +14,24 @@ jobs:
         with:
           lfs: false
 
+      - name: Discord Message Delete
+        run: |
+          MESSAGES=$(curl -s -X GET "https://discord.com/api/v10/channels/1343977032123682962/messages?limit=2" \
+            -H "Authorization: Bot MTM0Mzk2NTM4MDkwMDgxOTA4Nw.GZkzJv.OmYHH5zM-WKI5u_BniO8j-m_WrafzsJ1lXbl60" \
+            -H "User-Agent: PostmanRuntime/7.29.0" \
+            -H "Content-Type: application/json" | jq -r '.[].id')
+
+          # Supprime chaque message un par un
+          for MESSAGE_ID in $MESSAGES
+          do
+              curl -X DELETE "https://discord.com/api/v10/channels/1343977032123682962/messages/$MESSAGE_ID" \
+              -H "Authorization: Bot MTM0Mzk2NTM4MDkwMDgxOTA4Nw.GZkzJv.OmYHH5zM-WKI5u_BniO8j-m_WrafzsJ1lXbl60" \
+              -H "User-Agent: PostmanRuntime/7.29.0" \
+              -H "Content-Type: application/json"
+              echo "Message $MESSAGE_ID supprimé"
+              sleep 1  # Petite pause pour éviter les limites de rate (5 messages/sec)
+          done
+
       # Build
       - name: Build project
         uses: game-ci/unity-builder@v4.3.0
@@ -68,25 +86,7 @@ jobs:
             -H "Content-Type: application/json" \
             -d "{\"content\": \"$MESSAGE_CONTENT\"}" | jq -r '.id')
       
-          echo "MESSAGE_ID=$MESSAGE_ID" >> $GITHUB_ENV  
-     
-      - name: Discord Message Updater
-        run: |
-          MESSAGES=$(curl -s -X GET "https://discord.com/api/v10/channels/$CHANNEL_ID/messages?limit=2" \
-            -H "Authorization: Bot MTM0Mzk2NTM4MDkwMDgxOTA4Nw.GZkzJv.OmYHH5zM-WKI5u_BniO8j-m_WrafzsJ1lXbl60" \
-            -H "User-Agent: PostmanRuntime/7.29.0" \
-            -H "Content-Type: application/json" | jq -r '.[].id')
-
-          # Supprime chaque message un par un
-          for MESSAGE_ID in $MESSAGES
-          do
-              curl -X DELETE "https://discord.com/api/v10/channels/$CHANNEL_ID/messages/$MESSAGE_ID" \
-              -H "Authorization: Bot MTM0Mzk2NTM4MDkwMDgxOTA4Nw.GZkzJv.OmYHH5zM-WKI5u_BniO8j-m_WrafzsJ1lXbl60" \
-              -H "User-Agent: PostmanRuntime/7.29.0" \
-              -H "Content-Type: application/json"
-              echo "Message $MESSAGE_ID supprimé"
-              sleep 1  # Petite pause pour éviter les limites de rate (5 messages/sec)
-          done
+          echo "MESSAGE_ID=$MESSAGE_ID" >> $GITHUB_ENV
           
       - name: Remove Game
         run: |
