@@ -48,19 +48,17 @@ jobs:
 
       - name: Envoyer un message Discord
         run: |
-          DISCORD_WEBHOOK_URL=${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL="${{ secrets.DISCORD_WEBHOOK_URL }}"    
           
           # Message Discord
-          MESSAGE_CONTENT="📢 **Nouvelle Build Android Disponible !**\n🔗 [Télécharger ici](https://www.dropbox.com/s/ton_fichier.apk?dl=0)"
-          
-          # Envoyer le message et stocker l'ID
+          MESSAGE_CONTENT="🚀 **Nouvelle build disponible !**\n🎮 Téléchargez la dernière version de l'APK ici :\n🔗 [📥 Télécharger](https://www.dropbox.com/home/Build)"
+    
+          # Envoyer le message et stocker l'ID pour le supprimer plus tard
           MESSAGE_ID=$(curl -s -X POST "$DISCORD_WEBHOOK_URL" \
-            -H "Content-Type: application/json" \
-            -d "{\"content\": \"$MESSAGE_CONTENT\"}" | jq -r '.id')
+          -H "Content-Type: application/json" \
+          -d "{\"content\": \"$MESSAGE_CONTENT\"}" | jq -r '.id')
           
           echo "MESSAGE_ID=$MESSAGE_ID" >> $GITHUB_ENV
-
-          curl -F "content=MESSAGE_ID=$MESSAGE_ID" ${{ secrets.DISCORD_WEBHOOK_URL }}
       
       - name: Supprimer l'ancien message
         if: env.MESSAGE_ID != ''
