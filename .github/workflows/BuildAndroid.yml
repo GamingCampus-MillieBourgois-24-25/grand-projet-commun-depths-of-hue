@@ -30,6 +30,13 @@ jobs:
           name: Build
           path: build
 
+      - name: Supprimer l'ancien APK (sans erreur si absent)
+        run: |
+          curl -X POST https://api.dropboxapi.com/2/files/delete_v2 \
+            --header "Authorization: Bearer ${{ secrets.REFRESH_TOKEN_DROPBOX }}" \
+            --header "Content-Type: application/json" \
+            --data "{\"path\": \"/Build/Android.apk\"}" || echo "Fichier non trouvé, on continue..."
+
       - name: Dropbox Large File Uploader
         uses: thedefaultman/dropbox-large-file-uploader@v2.3.5
         with:
@@ -85,6 +92,9 @@ jobs:
             curl -X DELETE "$DISCORD_WEBHOOK_URL/messages/$MESSAGE_ID"
             sleep 1  # Pause pour éviter un rate-limit
           done
+
+      - name: Donner les permissions à l'utilisateur courant
+        run: sudo chmod 777 build/Android/Android.apk
           
       - name: Remove Game
         run: |
