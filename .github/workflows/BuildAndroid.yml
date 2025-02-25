@@ -23,7 +23,7 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
           # Message to be sent
           message: "Nouvelle build disponible 🎮 Voici le lien pour télécharger l'APK : https://www.dropbox.com/home/Build"
-          embed: '{ "color": 3447003, "title": "Nouvelle Build Disponible", "description": "Une nouvelle version de l APK vient de sortir!", "url": "https://www.dropbox.com/home/Build", "author": { "name": "${ pull_request.user.login }", "icon_url": "${ pull_request.user.avatar_url }"} }'
+          embed: '{ "color": 3447003, "title": "Nouvelle Build Disponible", "description": "Une nouvelle version de l APK vient de sortir!", "url": "https://www.dropbox.com/home/Build", "author": { "name": "${ pull_request.user.login } || Arthur", "icon_url": "${ pull_request.user.avatar_url } || ''"} }'
 
       # Build
       - name: Build project
