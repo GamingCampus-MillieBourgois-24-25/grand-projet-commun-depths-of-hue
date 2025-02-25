@@ -72,3 +72,4 @@ jobs:
       - name: Remove Game
         run: |
           sudo rm -r /home/polo/RunnerGPC/_work/_actions/game-ci
+          sudo rm -r /home/polo/RunnerGPC/_work/_actions/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Library
