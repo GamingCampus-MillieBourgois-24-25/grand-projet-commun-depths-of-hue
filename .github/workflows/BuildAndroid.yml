@@ -91,3 +91,4 @@ jobs:
           sudo rm -r /home/polo/RunnerGPC/_work/_actions/game-ci
           sudo rm -r /home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Library
           sudo rm -r /home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Assets/Editor
+          sudo rm -r /home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Assets/Logs
