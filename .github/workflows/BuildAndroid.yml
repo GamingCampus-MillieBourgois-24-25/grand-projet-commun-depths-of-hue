@@ -14,23 +14,15 @@ jobs:
         with:
           lfs: false
 
-      - name: Discord Message Delete
-        run: |
-          MESSAGES=$(curl -s -X GET "https://discord.com/api/v10/channels/1343977032123682962/messages?limit=10" \
-            -H "Authorization: Bot MTM0Mzk2NTM4MDkwMDgxOTA4Nw.GZkzJv.OmYHH5zM-WKI5u_BniO8j-m_WrafzsJ1lXbl60" \
-            -H "User-Agent: PostmanRuntime/7.29.0" \
-            -H "Content-Type: application/json" | jq -r '.[].id')
-
-          # Supprime chaque message un par un
-          for MESSAGE_ID in $MESSAGES
-          do
-              curl -X DELETE "https://discord.com/api/v10/channels/1343977032123682962/messages/$MESSAGE_ID" \
-              -H "Authorization: Bot MTM0Mzk2NTM4MDkwMDgxOTA4Nw.GZkzJv.OmYHH5zM-WKI5u_BniO8j-m_WrafzsJ1lXbl60" \
-              -H "User-Agent: PostmanRuntime/7.29.0" \
-              -H "Content-Type: application/json"
-              echo "Message $MESSAGE_ID supprimé"
-              sleep 1  # Petite pause pour éviter les limites de rate (5 messages/sec)
-          done
+      - name: discord-action-embed
+        # You may pin to the exact commit or the version.
+        # uses: rguillaume/discord-action-embed@eea5e19de504a66ec20b52f1a06b3b27985fa3ec
+        uses: rguillaume/discord-action-embed@v1.0.4
+        with:
+          # Discord webhook URL
+          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          # Message to be sent
+          message: "Nouvelle build disponible 🎮 Voici le lien pour télécharger l'APK : https://www.dropbox.com/home/Build"
 
       # Build
       - name: Build project
@@ -73,20 +65,24 @@ jobs:
 
       - name: Installer jq
         run: sudo apt-get update && sudo apt-get install -y jq
-      
-      - name: Envoyer le lien sur Discord
+
+      - name: Discord Message Delete
         run: |
-          DISCORD_WEBHOOK_URL="${{ secrets.DISCORD_WEBHOOK_URL }}"
-      
-          # Message Discord
-          MESSAGE_CONTENT="🚀 **Nouvelle build disponible !**\n🎮 Téléchargez la dernière version de l'APK ici :\n🔗 [📥 Télécharger](https://www.dropbox.com/home/Build)"
-      
-          # Envoyer le message et stocker l'ID pour suppression
-          MESSAGE_ID=$(curl -s -X POST "$DISCORD_WEBHOOK_URL" \
-            -H "Content-Type: application/json" \
-            -d "{\"content\": \"$MESSAGE_CONTENT\"}" | jq -r '.id')
-      
-          echo "MESSAGE_ID=$MESSAGE_ID" >> $GITHUB_ENV
+          MESSAGES=$(curl -s -X GET "https://discord.com/api/v10/channels/1343977032123682962/messages?limit=10" \
+            -H "Authorization: Bot MTM0Mzk2NTM4MDkwMDgxOTA4Nw.GZkzJv.OmYHH5zM-WKI5u_BniO8j-m_WrafzsJ1lXbl60" \
+            -H "User-Agent: PostmanRuntime/7.29.0" \
+            -H "Content-Type: application/json" | jq -r '.[].id')
+
+          # Supprime chaque message un par un
+          for MESSAGE_ID in $MESSAGES
+          do
+              curl -X DELETE "https://discord.com/api/v10/channels/1343977032123682962/messages/$MESSAGE_ID" \
+              -H "Authorization: Bot MTM0Mzk2NTM4MDkwMDgxOTA4Nw.GZkzJv.OmYHH5zM-WKI5u_BniO8j-m_WrafzsJ1lXbl60" \
+              -H "User-Agent: PostmanRuntime/7.29.0" \
+              -H "Content-Type: application/json"
+              echo "Message $MESSAGE_ID supprimé"
+              sleep 1  # Petite pause pour éviter les limites de rate (5 messages/sec)
+          done
           
       - name: Remove Game
         run: |
