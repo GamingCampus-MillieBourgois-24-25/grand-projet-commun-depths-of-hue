@@ -63,13 +63,20 @@ jobs:
       
           echo "MESSAGE_ID=$MESSAGE_ID" >> $GITHUB_ENV
       
-      - name: Supprimer l'ancien message
-        if: env.MESSAGE_ID != ''
+      - name: Supprimer les anciens messages du webhook
         run: |
-          curl -X DELETE "$DISCORD_WEBHOOK_URL/messages/$MESSAGE_ID"
-            # End Build
+          DISCORD_WEBHOOK_URL="${{ secrets.DISCORD_WEBHOOK_URL }}"
       
+          # Récupérer les derniers messages du webhook (limite de 50 max)
+          MESSAGES=$(curl -s "$DISCORD_WEBHOOK_URL/messages?limit=10" | jq -r '.[].id')
+      
+          # Supprimer chaque message
+          for MESSAGE_ID in $MESSAGES; do
+            curl -X DELETE "$DISCORD_WEBHOOK_URL/messages/$MESSAGE_ID"
+            sleep 1  # Pause pour éviter un rate-limit
+          done
+          
       - name: Remove Game
         run: |
           sudo rm -r /home/polo/RunnerGPC/_work/_actions/game-ci
-          sudo rm -r /home/polo/RunnerGPC/_work/_actions/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Library
+          sudo rm -r /home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Library
