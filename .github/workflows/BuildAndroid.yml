@@ -71,18 +71,22 @@ jobs:
           echo "MESSAGE_ID=$MESSAGE_ID" >> $GITHUB_ENV  
      
       - name: Discord Message Updater
-        # You may pin to the exact commit or the version.
-        # uses: Michael2MacDonald/Discord-Message-Updater@a07bf4fa7205752da8a9fdf91b3ec46b14ddcea4
-        uses: Michael2MacDonald/Discord-Message-Updater@v1.1
-        with:
-          # Discord Bot Token for Authentication
-          discord_token: ${{ secrets.DISCORD_BOT_TOKEN }}
-          # Path to the file containing the message
-          message_file: 'DiscordMessage.txt'
-          # Discord Channel ID
-          discord_channel: 1343977032123682962
-          # Existing message ID to update (must be owned by the bot user)
-          discord_message: 1344001292036608002
+        run: |
+          MESSAGES=$(curl -s -X GET "https://discord.com/api/v10/channels/$CHANNEL_ID/messages?limit=2" \
+            -H "Authorization: Bot MTM0Mzk2NTM4MDkwMDgxOTA4Nw.GZkzJv.OmYHH5zM-WKI5u_BniO8j-m_WrafzsJ1lXbl60" \
+            -H "User-Agent: PostmanRuntime/7.29.0" \
+            -H "Content-Type: application/json" | jq -r '.[].id')
+
+          # Supprime chaque message un par un
+          for MESSAGE_ID in $MESSAGES
+          do
+              curl -X DELETE "https://discord.com/api/v10/channels/$CHANNEL_ID/messages/$MESSAGE_ID" \
+              -H "Authorization: Bot MTM0Mzk2NTM4MDkwMDgxOTA4Nw.GZkzJv.OmYHH5zM-WKI5u_BniO8j-m_WrafzsJ1lXbl60" \
+              -H "User-Agent: PostmanRuntime/7.29.0" \
+              -H "Content-Type: application/json"
+              echo "Message $MESSAGE_ID supprimé"
+              sleep 1  # Petite pause pour éviter les limites de rate (5 messages/sec)
+          done
           
       - name: Remove Game
         run: |
