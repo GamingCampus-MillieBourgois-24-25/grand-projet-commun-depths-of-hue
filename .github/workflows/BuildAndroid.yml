@@ -73,7 +73,7 @@ jobs:
       - name: Get Message in Build Channel
         id: get_messages
         run: |
-          MESSAGES=$(curl -s -X GET "https://discord.com/api/v10/channels/CHANNEL_ID/messages?limit=2" \
+          MESSAGES=$(curl -s -X GET "https://discord.com/api/v10/channels/1343977032123682962/messages?limit=2" \
             -H "Authorization: Bot ${{ secrets.DISCORD_BOT_TOKEN }}" \
             -H "Content-Type: application/json" | jq -r '.[].id') \
             -H "User-Agent: PostmanRuntime/7.29.0"
