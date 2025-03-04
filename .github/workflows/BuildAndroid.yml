@@ -8,15 +8,19 @@ jobs:
     runs-on: self-hosted
     if: github.ref == 'refs/heads/Test-Actions'
     steps:
-      - name: Disable Cache
-        run: unity-editor -batchmode -quit -nographics -executeMethod BuildScript.PerformBuild -disable-assembly-cache
-      - name: Skip Library
-        run: unity-editor -batchmode -quit -nographics -executeMethod BuildScript.PerformBuild -skip-library-upgrade
       # Checkout
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
         with:
           lfs: false
+
+      - name: Cache Library folder
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/unity3d
+            /home/ubuntu/RunnerVPSUbuntu/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Library
+          key: ${{ runner.os }}-unity-${{ hashFiles('**/*.cs', '**/*.unity') }}
 
       # Build
       - name: Build project
@@ -27,6 +31,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: Android
+          options: "--no-compile"
 
       # Output
       - uses: actions/upload-artifact@v4.6.0
@@ -86,15 +91,16 @@ jobs:
       
       - name: Remove Game
         run: |
-          TARGET_DIR="/home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/build/Android"
+          TARGET_DIR="/home/ubuntu/RunnerVPSUbuntu/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/build/Android"
           if [ -e "$TARGET_DIR/Android.apk" ]; then
             lsattr "$TARGET_DIR/Android.apk"
             sudo chattr -i "$TARGET_DIR/Android.apk"
           fi
           chmod -R u+w "$TARGET_DIR"
           rm -rf "$TARGET_DIR"
-          sudo rm -r /home/polo/RunnerGPC/_work/_actions/game-ci
-          sudo rm -r /home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Library
-          sudo rm -r /home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Assets/Editor
-          sudo rm -r /home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Logs
-          sudo rm -r /home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/UserSettings
+          
+          # Suppression des répertoires de Unity (Library, Logs, etc.)
+          sudo rm -r /home/ubuntu/RunnerVPSUbuntu/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Library
+          sudo rm -r /home/ubuntu/RunnerVPSUbuntu/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Assets/Editor
+          sudo rm -r /home/ubuntu/RunnerVPSUbuntu/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Logs
+          sudo rm -r /home/ubuntu/RunnerVPSUbuntu/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/UserSettings
