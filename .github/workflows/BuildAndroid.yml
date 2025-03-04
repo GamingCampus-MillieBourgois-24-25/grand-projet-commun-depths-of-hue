@@ -8,6 +8,10 @@ jobs:
     runs-on: self-hosted
     if: github.ref == 'refs/heads/Test-Actions'
     steps:
+      - name: Disable Cache
+        run: unity-editor -batchmode -quit -nographics -executeMethod BuildScript.PerformBuild -disable-assembly-cache
+      - name: Skip Library
+        run: unity-editor -batchmode -quit -nographics -executeMethod BuildScript.PerformBuild -skip-library-upgrade
       # Checkout
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
