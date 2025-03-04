@@ -31,7 +31,11 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: Android
-          options: "--no-compile"
+          args: |
+            -batchmode
+            -nographics
+            -cacheServer
+            -buildTarget Android
 
       # Output
       - uses: actions/upload-artifact@v4.6.0
@@ -100,7 +104,6 @@ jobs:
           rm -rf "$TARGET_DIR"
           
           # Suppression des répertoires de Unity (Library, Logs, etc.)
-          sudo rm -r /home/ubuntu/RunnerVPSUbuntu/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Library
           sudo rm -r /home/ubuntu/RunnerVPSUbuntu/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Assets/Editor
           sudo rm -r /home/ubuntu/RunnerVPSUbuntu/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/Logs
           sudo rm -r /home/ubuntu/RunnerVPSUbuntu/_work/grand-projet-commun-depths-of-hue/grand-projet-commun-depths-of-hue/UserSettings
