@@ -1,8 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.EnhancedTouch;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 public class DeplacementPlayer : MonoBehaviour
 {
@@ -12,14 +12,26 @@ public class DeplacementPlayer : MonoBehaviour
     
     [SerializeField] private Vector3 playerDestination;
 
+    private Camera _camera;
+    
+    private void Awake()
+    {
+        EnhancedTouchSupport.Enable();
+    }
+
+    private void OnEnable()
+    {
+        TouchSimulation.Enable();
+    }
+
     private void Start()
     {
-        AssignPositionsInTheGridToUnits();
+        Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
+        _camera = Camera.main;
     }
 
     private void AssignPositionsInTheGridToUnits()
     {
-//        Vector3 _targetPosition = GetAvailableGridPosition(playerDestination);
         navMeshAgent.SetDestination(playerDestination);
     }
     
@@ -42,5 +54,21 @@ public class DeplacementPlayer : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(playerDestination, 0.3f);
+    }
+
+    private void Update()
+    {
+        foreach (var touch in Touch.activeTouches)
+        {
+            if (touch.isTap)
+            {
+                Vector2 touchPosition = touch.screenPosition;
+                RaycastHit2D hit = Physics2D.Raycast(_camera.ScreenToWorldPoint(touchPosition), Vector2.zero);
+                if (hit.collider)
+                {
+                    Debug.Log("Objet touché : " + hit.collider.gameObject.name);
+                }
+            }
+        }
     }
 }
