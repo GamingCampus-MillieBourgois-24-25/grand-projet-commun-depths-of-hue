@@ -22,7 +22,7 @@ public class RoomManager : MonoBehaviour
 
     /// <summary>
     /// Main function to load a scene/room.
-    /// Parameter is expecting a float room ID.
+    /// Parameter is expecting a string room ID.
     /// </summary>
     ///<param name="roomId"></param>
     public void LoadRoom(string roomId)
@@ -69,4 +69,24 @@ public class RoomManager : MonoBehaviour
         }
         
     }
+
+    /// <summary>
+    /// Getter for room data.
+    /// Paremeter is expecting a string room ID.
+    /// </summary>
+    /// <param name="roomId"></param>
+    /// <returns></returns>
+    public RoomDataBase GetRoomData(string roomId)
+    {
+        RoomDataBase targetRoom = System.Array.Find(allRooms, roomData => roomData.roomId == roomId); //Searching room function
+        if (targetRoom == null)
+        {
+            Debug.LogError($"Room {roomId} not found!");
+            return null;
+        }
+
+        return targetRoom;
+    }
+
+    
 }

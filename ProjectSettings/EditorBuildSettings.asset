@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Pathfinding_1.0.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/Rooms/Hub.unity
+    guid: 2e35c33e282561d408bd09b240df0a45
+  - enabled: 1
     path: Assets/Scenes/Rooms/Room_1.unity
     guid: a2ffbf6c71c937046b744734c82f1052
   - enabled: 1

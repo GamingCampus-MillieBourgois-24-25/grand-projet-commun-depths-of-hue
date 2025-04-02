@@ -7,6 +7,6 @@ public class Room2 : Room
 {
     public override void Initialize()
     {
-        Debug.Log("yolo");
+        
     }
 }
