@@ -31,9 +31,12 @@ public class HubManager : MonoBehaviour
     /// </summary>
     void InitializeDoors()
     {
-        foreach (DoorController door in doors)
-        {
-            door.Initialize(); // Initialize each door
+        if(doors != null)
+        {        
+            foreach (DoorController door in doors)
+            {
+                door.Initialize(); // Initialize each door
+            }
         }
     }
 }

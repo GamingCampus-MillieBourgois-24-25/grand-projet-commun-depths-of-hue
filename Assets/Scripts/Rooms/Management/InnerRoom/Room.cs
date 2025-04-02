@@ -15,7 +15,6 @@ public class Room : MonoBehaviour
     }
     public void ReturnToHub()
     {
-
         SceneManager.LoadScene("Hub");
     }
 }

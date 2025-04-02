@@ -17,15 +17,37 @@ public class DoorController : MonoBehaviour
     {
         //Check room's state
         RoomDataBase targetRoom = RoomManager.Instance.GetRoomData(targetRoomId);
-        isLocked = (targetRoom.roomStateEnum != RoomStateEnum.Unlocked);
+        isLocked = (targetRoom.CurrentState != RoomStateEnum.Unlocked);
 
         // Update visuals
-        UpdateDoorVisual();
 
+        if (lockedVisual != null && unlockedVisual != null)
+        {
+            UpdateDoorVisual();
+
+        }
         // Debug or in game message display
         Debug.Log($"Porte {targetRoomId} initialisée : Verrouillée = {isLocked}");
     }
 
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0)) // Clic gauche
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            Debug.Log("yolo");
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.gameObject == this.gameObject)
+                {
+                    OnClicked();
+                }
+            }
+        }
+    }
 
     /// <summary>
     /// Update the door visuals.

@@ -1,13 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-
-[CreateAssetMenu(fileName = "Data", menuName = "Rooms/Room_data", order = 1)]
+[CreateAssetMenu(fileName = "Room_", menuName = "Game/Rooms/Data", order = 1)]
 public class RoomDataBase : ScriptableObject
 {
-    [SerializeField] public string roomId; // First room id = 0
-    [SerializeField] public string sceneName; //Format : Room_roomNumber .Exemple : Room_1
-    [SerializeField] public RoomStateEnum roomStateEnum; 
+    [Header("Identification")]
+    public string roomId;
+    public string sceneName;
 
+    [Header("Default State")]
+    public RoomStateEnum initialState;
+
+    public RoomStateEnum roomState;
+
+    // Propriété avec sauvegarde automatique
+    public RoomStateEnum CurrentState
+    {
+        get => (RoomStateEnum)PlayerPrefs.GetInt(roomId + "_state", (int)initialState);
+        set => PlayerPrefs.SetInt(roomId + "_state", (int)value);
+
+    }
 }

@@ -16,7 +16,6 @@ public class RoomManager : MonoBehaviour
         if (Instance == null) Instance = this; //Singleton instantiation
         else Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
-        LoadRoom(allRooms[0].roomId);
     }
 
 
@@ -59,6 +58,7 @@ public class RoomManager : MonoBehaviour
             if (roomController != null)
             {
                 roomController.Initialize();
+                UnlockRoom("0");
             }
             else
             {
@@ -88,5 +88,23 @@ public class RoomManager : MonoBehaviour
         return targetRoom;
     }
 
-    
+
+    /// <summary>
+    /// Unlocks a room.
+    /// Parameter is expecting a string room ID
+    /// </summary>
+    /// <param name="roomId"></param>
+    public void UnlockRoom(string roomId)
+    {
+
+        RoomDataBase room = GetRoomData(roomId);
+        if (room != null)
+        {
+            room.CurrentState = RoomStateEnum.Unlocked;
+            Debug.Log($"Room {roomId} unlocked !");
+
+            room.roomState = room.CurrentState;
+            Debug.Log(room.CurrentState.ToString());
+        }
+    }
 }
