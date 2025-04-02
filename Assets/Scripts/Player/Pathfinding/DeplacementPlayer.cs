@@ -67,6 +67,16 @@ public class DeplacementPlayer : MonoBehaviour
                 if (hit.collider)
                 {
                     Debug.Log("Objet touché : " + hit.collider.gameObject.name);
+                    MonoBehaviour script = hit.collider.GetComponent<MonoBehaviour>();
+
+                    if (script != null)
+                    {
+                        script.Invoke("OnObjectClicked", 0f);
+                    }
+                    else
+                    {
+                        print("il n'y a rien");
+                    }
                 }
             }
         }
