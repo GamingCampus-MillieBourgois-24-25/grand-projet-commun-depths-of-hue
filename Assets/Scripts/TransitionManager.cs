@@ -39,7 +39,7 @@ public class TransitionManager : MonoBehaviour
     IEnumerator LoadScene(string sceneName)
     {
         transition.SetTrigger("Start");
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(sceneName);
     }
 }
