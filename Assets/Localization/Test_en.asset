@@ -26,6 +26,10 @@ MonoBehaviour:
     m_Localized: I don't know the suite my bad guys
     m_Metadata:
       m_Items: []
+  - m_Id: 7754200256512
+    m_Localized: Halooo
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

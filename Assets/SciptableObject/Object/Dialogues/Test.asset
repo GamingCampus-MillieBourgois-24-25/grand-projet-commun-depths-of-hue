@@ -19,4 +19,7 @@ MonoBehaviour:
   - npc: none
     image: 
     dialogueKey: Test_2
+  - npc: none
+    image: 
+    dialogueKey: Test_3
   tableKey: Test
