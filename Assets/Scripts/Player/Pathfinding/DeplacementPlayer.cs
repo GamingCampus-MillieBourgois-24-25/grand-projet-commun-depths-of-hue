@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem.EnhancedTouch;
@@ -7,7 +6,7 @@ using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 public class DeplacementPlayer : MonoBehaviour
 {
     [Header("Property")]
-    [SerializeField] private PathfindingGrid pathfindingGrid;
+    [SerializeField] private Rigidbody2D player;
     [SerializeField] private NavMeshAgent navMeshAgent;
     
     [SerializeField] private Vector3 playerDestination;
@@ -28,22 +27,12 @@ public class DeplacementPlayer : MonoBehaviour
     {
         Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
         _camera = Camera.main;
+        player.freezeRotation = true;
     }
 
-    private void AssignPositionsInTheGridToUnits()
+    public void MovePlayer()
     {
         navMeshAgent.SetDestination(playerDestination);
-    }
-    
-    private Vector3 GetAvailableGridPosition(Vector3 _targetPosition)
-    {
-        return IsPositionWalkable(_targetPosition) ? _targetPosition : Vector3.zero;
-    }
-    
-    private bool IsPositionWalkable(Vector3 position)
-    {
-        Vector3Int cellPosition = Vector3Int.FloorToInt(position);
-        return pathfindingGrid && pathfindingGrid.IsWalkable(cellPosition);
     }
 
     private void OnDrawGizmos()
@@ -58,6 +47,12 @@ public class DeplacementPlayer : MonoBehaviour
 
     private void Update()
     {
+        // pas de rotation chelou sur ces axes
+        var rotation = transform.eulerAngles;
+        rotation.x = 0;
+        rotation.y = 0;
+        transform.eulerAngles = rotation;
+        
         foreach (var touch in Touch.activeTouches)
         {
             if (touch.isTap)
@@ -67,8 +62,23 @@ public class DeplacementPlayer : MonoBehaviour
                 if (hit.collider)
                 {
                     Debug.Log("Objet touché : " + hit.collider.gameObject.name);
+                    MonoBehaviour script = hit.collider.GetComponent<MonoBehaviour>();
+
+                    if (script)
+                    {
+                        script.Invoke("OnObjectClicked", 0f);
+                    }
+                    else
+                    {
+                        print("il n'y a rien");
+                    }
                 }
             }
         }
+    }
+    
+    public void SetPlayerDestination(Vector3 _playerDestination)
+    {
+        playerDestination = _playerDestination;
     }
 }
