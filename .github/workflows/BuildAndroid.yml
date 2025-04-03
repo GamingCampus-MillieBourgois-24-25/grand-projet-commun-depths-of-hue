@@ -45,6 +45,8 @@ jobs:
       #- name: Send link to Discord
        # run: |
         #  curl -F "content=Nouvelle build disponible 🎮 Voici le lien pour télécharger l'APK : https://www.dropbox.com/home/Build" ${{ secrets.DISCORD_WEBHOOK_URL }}
+      - name: Réparer les paquets
+        run: sudo dpkg --configure -a
 
       - name: Installer jq
         run: sudo apt-get update && sudo apt-get install -y jq
