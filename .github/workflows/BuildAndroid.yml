@@ -14,12 +14,39 @@ jobs:
         with:
           lfs: false
 
-      - name: Réparer les paquets
-        run: sudo dpkg --configure -a
-
-      - name: Installer jq
-        run: sudo apt-get update && sudo apt-get install -y jq
-
+      - name: Envoyer le lien sur Discord
+        run: |
+          DISCORD_WEBHOOK_URL="${{ secrets.DISCORD_WEBHOOK_URL }}"
+      
+          # Message Discord
+          MESSAGE_CONTENT="🚀 **Nouvelle build disponible !**\n🎮 Téléchargez la dernière version de l'APK ici :\n🔗 [📥 Télécharger](https://www.dropbox.com/home/Build)"
+      
+          # Envoyer le message sans utiliser jq
+          curl -s -X POST "$DISCORD_WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "{\"content\": \"$MESSAGE_CONTENT\"}"
+      
+      - name: Supprimer les anciens messages du webhook
+        run: |
+          DISCORD_WEBHOOK_URL="${{ secrets.DISCORD_WEBHOOK_URL }}"
+      
+          # Debug: Afficher la réponse brute de l'API
+          RESPONSE=$(curl -s "$DISCORD_WEBHOOK_URL/messages?limit=10")
+          echo "Response from Discord API: $RESPONSE"
+      
+          # Extraire les IDs des messages sans jq
+          MESSAGE_ID=$(echo "$RESPONSE" | grep -o '"id":"\([^"]*\)"' | head -n 1 | sed 's/"id":"\([^"]*\)"/\1/')
+      
+          # Vérifier si un ID a été trouvé
+          if [[ -z "$MESSAGE_ID" ]]; then
+            echo "❌ Aucun message trouvé ou réponse invalide"
+            exit 0
+          fi
+      
+          # Supprimer le message
+          curl -X DELETE "$DISCORD_WEBHOOK_URL/messages/$MESSAGE_ID"
+          sleep 1  # Pause pour éviter un rate-limit
+    
       # Build
       - name: Build project
         uses: game-ci/unity-builder@v4.3.0
