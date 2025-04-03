@@ -15,17 +15,17 @@ public class DeplacementPlayer : MonoBehaviour
     
     private void Awake()
     {
-        EnhancedTouchSupport.Enable();
+        //EnhancedTouchSupport.Enable();
     }
 
     private void OnEnable()
     {
-        TouchSimulation.Enable();
+        //TouchSimulation.Enable();
     }
 
     private void Start()
     {
-        Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
+        //Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
         _camera = Camera.main;
         player.freezeRotation = true;
     }
@@ -53,7 +53,7 @@ public class DeplacementPlayer : MonoBehaviour
         rotation.y = 0;
         transform.eulerAngles = rotation;
         
-        foreach (var touch in Touch.activeTouches)
+        /*foreach (var touch in Touch.activeTouches)
         {
             if (touch.isTap)
             {
@@ -74,7 +74,7 @@ public class DeplacementPlayer : MonoBehaviour
                     }
                 }
             }
-        }
+        }*/
     }
     
     public void SetPlayerDestination(Vector3 _playerDestination)
