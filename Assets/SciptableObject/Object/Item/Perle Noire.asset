@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Perle Noire
   m_EditorClassIdentifier: 
   itemName: Perle Noire
-  itemSprite: {fileID: 0}
-  itemDescription: 
+  itemSprite: {fileID: -310154257, guid: 5a04331407e277a4baf352ca36531bf3, type: 3}
+  itemDescription: tkt mon reuf
