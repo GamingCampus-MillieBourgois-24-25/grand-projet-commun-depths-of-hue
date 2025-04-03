@@ -152,4 +152,10 @@ sysinfo.txt
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+# Ignorer les fichiers de localisation Addressable
+Assets/AddressableAssetsData/AssetGroups/Localization-Assets-Shared.asset
+Assets/AddressableAssetsData/AssetGroups/Localization-Locales.asset
+Assets/AddressableAssetsData/AssetGroups/Localization-String-Tables-English (en).asset
+Assets/AddressableAssetsData/AssetGroups/Localization-String-Tables-French (France) (fr-FR).asset
+
 # End of https://www.toptal.com/developers/gitignore/api/unity,rider
