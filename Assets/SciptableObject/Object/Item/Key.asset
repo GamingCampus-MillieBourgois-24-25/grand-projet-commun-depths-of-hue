@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Key
   m_EditorClassIdentifier: 
   itemName: Key
-  itemSprite: {fileID: -310154257, guid: 5a04331407e277a4baf352ca36531bf3, type: 3}
+  itemSprite: {fileID: -477330383, guid: 5a04331407e277a4baf352ca36531bf3, type: 3}
   itemDescription: "je suis une petite cl\xE9"
+  type: 1
