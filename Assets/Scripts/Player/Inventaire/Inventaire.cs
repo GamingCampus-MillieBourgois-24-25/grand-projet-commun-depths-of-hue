@@ -8,12 +8,14 @@ using UnityEngine.UI;
 
 public class Inventaire : MonoBehaviour
 {
-    public List<ItemData> allItems;
+    [SerializeField] private List<ItemData> allItems;
+    [SerializeField] private UI_Inventaire inv;
+    [SerializeField] private List<ItemData> itemDatas;
 
     public List<Image> spriteSlots;
 
-    public GameObject tooltip; // UI du pop-up
-    public TMP_Text tooltipText; // Texte du pop-up
+    public GameObject tooltip;
+    public TMP_Text tooltipText;
     public Transform tooltipRect;
 
     void Start()
@@ -25,8 +27,7 @@ public class Inventaire : MonoBehaviour
         {
             Debug.Log("Objet trouvé : " + item.itemName);
         }
-        UpdateUI();
-        HideTooltip();
+        
     }
 
     public void Add(ItemData item)
@@ -34,6 +35,7 @@ public class Inventaire : MonoBehaviour
         if (!allItems.Contains(item))
         {
             allItems.Add(item);
+            inv.UpdateUI();
             Debug.Log(item.itemName + " ajouté à l'inventaire.");
         }
         else
@@ -47,6 +49,7 @@ public class Inventaire : MonoBehaviour
         if (allItems.Contains(item))
         {
             allItems.Remove(item);
+            inv.UpdateUI();
             Debug.Log(item.itemName + " retiré de l'inventaire.");
         }
         else
@@ -89,58 +92,7 @@ public class Inventaire : MonoBehaviour
         return sprites;
     }
 
-    public void UpdateUI()
-    {
-        List<Sprite> sprites = GetAllSprites();
+    public List<ItemData> GetItemsData() {  return allItems; }
 
-        for (int i = 0; i < spriteSlots.Count; i++)
-        {
-            if (sprites.Count > i && sprites[i] != null)
-            {
-                spriteSlots[i].sprite = sprites[i];
-                AddTooltip(spriteSlots[i], i);
-
-            }
-            else
-            {
-                spriteSlots[i].sprite = null;
-            }
-        }
-    }
-
-    public void AddTooltip(Image slot, int index)
-    {
-        EventTrigger trigger = slot.gameObject.GetComponent<EventTrigger>();
-        if (trigger == null)
-        {
-            trigger = slot.gameObject.AddComponent<EventTrigger>();
-        }
-
-        EventTrigger.Entry entryEnter = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
-        entryEnter.callback.AddListener((data) => ShowTooltip(index, slot));
-
-        EventTrigger.Entry entryExit = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
-        entryExit.callback.AddListener((data) => HideTooltip());
-
-        trigger.triggers.Clear();
-        trigger.triggers.Add(entryEnter);
-        trigger.triggers.Add(entryExit);
-    }
-
-    public void ShowTooltip(int index, Image slot)
-    {
-        if (index < allItems.Count)
-        {
-            tooltipText.text = allItems[index].itemName + "\n" + allItems[index].itemDescription;
-            tooltip.SetActive(true);
-
-            Vector3 slotPosition = slot.transform.position;
-            tooltipRect.position = new Vector3(slotPosition.x, slotPosition.y + 100, slotPosition.z);
-        }
-    }
-
-    void HideTooltip()
-    {
-        tooltip.SetActive(false);
-    }
+    public List<ItemData> GetItems() { return itemDatas; }
 }

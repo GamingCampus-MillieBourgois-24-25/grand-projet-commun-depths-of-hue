@@ -6,7 +6,8 @@ public class test : MonoBehaviour
 {
     private bool launchTimer;
     private float timer;
-    // Start is called before the first frame update
+    [SerializeField] private Inventaire inventaire;
+    [SerializeField] private UI_Inventaire inv;
     void Start()
     {
         
@@ -29,7 +30,29 @@ public class test : MonoBehaviour
     public void OnObjectClicked()
     {
         Debug.Log(gameObject.name + " a été cliqué !");
-        launchTimer = true;
-        // Ajoutez ici l'action que l'objet doit effectuer
+        
+        string gameObjectName = gameObject.name.ToLower();
+
+        ItemData foundItem = inventaire.GetItems().Find(item => item.itemName.ToLower().Contains(gameObjectName));
+
+        if (foundItem != null)
+        {
+            if (inventaire != null && inventaire.GetItemsData().Count < inv.spriteSlots.Count)
+            {
+                inventaire.Add(foundItem);
+                Destroy(gameObject);
+
+            }
+            else
+            {
+                print("plus de place");
+            }
+        }
+        else
+        {
+            // Si aucun élément correspondant n'est trouvé
+            Debug.Log("Aucun élément trouvé avec un nom similaire à : " + gameObjectName);
+        }
+        
     }
 }
