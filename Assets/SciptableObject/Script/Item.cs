@@ -9,5 +9,7 @@ public class ItemData : ScriptableObject
     public string itemName;
     public Sprite itemSprite;
     public string itemDescription;
+    public enum itemType { none, inspectable, };
+    public itemType type;
 }
 
