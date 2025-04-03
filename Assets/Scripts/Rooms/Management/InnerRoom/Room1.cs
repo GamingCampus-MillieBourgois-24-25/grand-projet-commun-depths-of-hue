@@ -1,0 +1,11 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Room1 : Room
+{
+    public override void Initialize()
+    {
+
+    }
+}
