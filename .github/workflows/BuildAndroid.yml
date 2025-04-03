@@ -14,6 +14,12 @@ jobs:
         with:
           lfs: false
 
+      - name: Réparer les paquets
+        run: sudo dpkg --configure -a
+
+      - name: Installer jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
       # Build
       - name: Build project
         uses: game-ci/unity-builder@v4.3.0
@@ -45,11 +51,6 @@ jobs:
       #- name: Send link to Discord
        # run: |
         #  curl -F "content=Nouvelle build disponible 🎮 Voici le lien pour télécharger l'APK : https://www.dropbox.com/home/Build" ${{ secrets.DISCORD_WEBHOOK_URL }}
-      - name: Réparer les paquets
-        run: sudo dpkg --configure -a
-
-      - name: Installer jq
-        run: sudo apt-get update && sudo apt-get install -y jq
       
       - name: Envoyer le lien sur Discord
         run: |
