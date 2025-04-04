@@ -1,13 +1,14 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.EnhancedTouch;
-using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+//using UnityEngine.InputSystem.EnhancedTouch;
+//using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 public class DeplacementPlayer : MonoBehaviour
 {
     [Header("Property")]
     [SerializeField] private Rigidbody2D player;
     [SerializeField] private NavMeshAgent navMeshAgent;
+    [SerializeField] private GestionCadre actualCadre;
     
     [SerializeField] private Vector3 playerDestination;
 
@@ -28,10 +29,13 @@ public class DeplacementPlayer : MonoBehaviour
         //Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
         _camera = Camera.main;
         player.freezeRotation = true;
+        actualCadre.SetArrowsVisibilities();
     }
 
     public void MovePlayer()
     {
+        if (!navMeshAgent.enabled) return;
+
         navMeshAgent.SetDestination(playerDestination);
     }
 
