@@ -31,10 +31,17 @@ public class GestionCadre : MonoBehaviour
     
     Dictionary<GameObject, bool> arrowsVisibilities = new Dictionary<GameObject, bool>();
     Dictionary<GameObject, bool> stockCadreTarget = new Dictionary<GameObject, bool>();
+    Dictionary<GameObject, GameObject> arrowToCadre = new();
 
-    private void Start()
+    private void Awake()
     {
         StockTargetCadre();
+        StockVisiblities();
+        
+        if (arrowLeft && targetCadreLeft) arrowToCadre[arrowLeft] = targetCadreLeft;
+        if (arrowRight && targetCadreRight) arrowToCadre[arrowRight] = targetCadreRight;
+        if (arrowUp && targetCadreUp) arrowToCadre[arrowUp] = targetCadreUp;
+        if (arrowDown && targetCadreDown) arrowToCadre[arrowDown] = targetCadreDown;
     }
 
     public void StockVisiblities()
@@ -43,7 +50,10 @@ public class GestionCadre : MonoBehaviour
         if (!arrowsVisibilities.ContainsKey(arrowRight) || !arrowsVisibilities.ContainsValue(ArrowRight)) arrowsVisibilities.Add(arrowRight, ArrowRight);
         if (!arrowsVisibilities.ContainsKey(arrowUp) || !arrowsVisibilities.ContainsValue(ArrowUp)) arrowsVisibilities.Add(arrowUp, ArrowUp);
         if (!arrowsVisibilities.ContainsKey(arrowDown) || !arrowsVisibilities.ContainsValue(ArrowDown)) arrowsVisibilities.Add(arrowDown, ArrowDown);
+    }
 
+    public void SetArrowsVisibilities()
+    {
         foreach(KeyValuePair<GameObject, bool> visibility in arrowsVisibilities)
         {
             GameObject arrow = visibility.Key;
@@ -69,15 +79,11 @@ public class GestionCadre : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
-        
-        Debug.Log("player enter in the cadre : " + gameObject.name);
     }
     
     private void OnTriggerExit2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
-        
-        Debug.Log("player exit in the cadre : " + gameObject.name);
     }
 
     private void ResetArrows()
@@ -96,22 +102,15 @@ public class GestionCadre : MonoBehaviour
 
     public void NavigateCadre(GameObject _original)
     {
-        Debug.Log(_original.name);
+        Debug.Log("navigation");
         ResetArrows();
-        
-        foreach(KeyValuePair<GameObject, bool> targetCadre in stockCadreTarget)
-        {
-            GameObject cadre = targetCadre.Key;
-            
-            if(!arrowsVisibilities[_original]) continue;
-            
-            if (_original == arrowsVisibilities[_original])
-            {
-                Debug.Log("good: " + _original.name);
-                player.SetPlayerDestination(cadre.transform.TransformPoint(cadre.GetComponent<GestionCadre>().center.localPosition));
-                cadre.GetComponent<GestionCadre>().StockVisiblities();
-                player.MovePlayer();
-            }
-        }
+
+        if (!arrowsVisibilities.ContainsKey(_original) || !arrowsVisibilities[_original]) return;
+
+        if (!arrowToCadre.TryGetValue(_original, out var cadre)) return;
+
+        player.SetPlayerDestination(cadre.transform.TransformPoint(cadre.GetComponent<GestionCadre>().center.localPosition));
+        cadre.GetComponent<GestionCadre>().SetArrowsVisibilities();
+        player.MovePlayer();
     }
 }
