@@ -8,23 +8,23 @@ public class test : MonoBehaviour
     private float timer;
     [SerializeField] private Inventaire inventaire;
     [SerializeField] private UI_Inventaire inv;
+    [SerializeField] private ParticleSystem part;
+    private AudioSource audioSource;
     void Start()
     {
-        
+        part.Stop();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Stop();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (launchTimer)
+        if (Input.GetKeyDown(KeyCode.Space)) // Appuie sur Espace pour jouer le son
         {
-            timer += Time.deltaTime;
-            if (timer >= 3) 
-            {
-                print("fini");
-            }
+            PlayAudio();
         }
-        
+
     }
 
     public void OnObjectClicked()
@@ -39,9 +39,11 @@ public class test : MonoBehaviour
         {
             if (inventaire != null && inventaire.GetItemsData().Count < inv.spriteSlots.Count)
             {
+                PlayAudio();
                 inventaire.Add(foundItem);
                 Destroy(gameObject);
-
+                part.transform.position = transform.position;
+                part.Play();
             }
             else
             {
@@ -54,5 +56,15 @@ public class test : MonoBehaviour
             Debug.Log("Aucun élément trouvé avec un nom similaire à : " + gameObjectName);
         }
         
+    }
+
+
+
+    public void PlayAudio()
+    {
+        if (audioSource != null && !audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
     }
 }
