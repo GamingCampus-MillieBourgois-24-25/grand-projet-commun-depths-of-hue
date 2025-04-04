@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
+    [RoomId] 
     [SerializeField] private string targetRoomId;
     [SerializeField] private bool isLocked;
     [SerializeField] private GameObject lockedVisual;
