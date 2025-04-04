@@ -12,7 +12,7 @@ public class FramesManager : MonoBehaviour
     [SerializeField] private Button leftButton;
 
     [SerializeField] private Sprite lockedFrame;
-    [SerializeField] private Image unlockedFrame;
+    [SerializeField] private Sprite unlockedFrame;
 
     [System.Serializable]
     public class Frame
@@ -41,6 +41,8 @@ public class FramesManager : MonoBehaviour
     [SerializeField] private string initalFrame = "main_frame"; //First frame always called main_frame
     [SerializeField] private float cameraSpeed = 2f;
 
+    private Coroutine currentCameraCoroutine;
+
     private Camera mainCamera;
 
 
@@ -58,34 +60,33 @@ public class FramesManager : MonoBehaviour
     /// <param name="newRoomID"></param>
     public void SwitchFrame(string newRoomID)
     {
-        StopAllCoroutines();
-        mainCamera.transform.position = currentFrame.cameraPosition.position;
-
-
-        Frame targetFrame = System.Array.Find(frames, s => s.id == newRoomID);
-        if (targetFrame == null) return;
-
-        // Deactivate currently used props
-        foreach (var salle in frames)
+        if (CheckIfLocked(newRoomID))
         {
-            foreach (var obj in salle.ActiveProps)
+            //Target frame reference
+            Frame targetFrame = System.Array.Find(frames, s => s.id == newRoomID);
+
+            //Stop current camera movement
+            if (currentCameraCoroutine != null)
             {
-                obj.SetActive(false);
+                StopCoroutine(currentCameraCoroutine);
+                mainCamera.transform.position = currentFrame.cameraPosition.position;
             }
-        }
 
-        // Activate future props
-        foreach (var obj in targetFrame.ActiveProps)
+
+            //Manage props deactivation/activation
+            ManageFrameProps(targetFrame);
+
+
+            // Move camera
+            currentCameraCoroutine= StartCoroutine(MoveCamera(targetFrame.cameraPosition.position));
+            currentFrame = targetFrame;
+            UpdateDirectionButtons();
+        }
+        else
         {
-            obj.SetActive(true);
+            Debug.Log("can't acces locked room");
         }
 
-        // Déplace la caméra
-
-        StartCoroutine(MoveCamera(targetFrame.cameraPosition.position));
-        currentFrame = targetFrame;
-        UpdateDirectionButtons();
-        
     }
 
 
@@ -155,8 +156,12 @@ public class FramesManager : MonoBehaviour
                         Debug.Log(targetFrameLeft.FrameState);
                         leftButton.image.sprite = lockedFrame;
                     }
+                    else
+                    {
+                        leftButton.image.sprite = unlockedFrame;
+                    }
                     leftButton.onClick.RemoveAllListeners();
-                    leftButton.onClick.AddListener(() => CheckIfLocked(connection.connectedFrameId));
+                    leftButton.onClick.AddListener(() => SwitchFrame(connection.connectedFrameId));
 
                     break;
 
@@ -176,18 +181,47 @@ public class FramesManager : MonoBehaviour
 
     }
 
-    void CheckIfLocked(string frameId)
+    /// <summary>
+    /// Checks if a frame is unlocked.
+    /// </summary>
+    /// <param name="frameId"></param>
+    bool CheckIfLocked(string frameId)
     {
         Frame targetFrameUp = System.Array.Find(frames, s => s.id == frameId);
 
         if (targetFrameUp.FrameState == RoomStateEnum.Locked)
         {
-            Debug.Log("noe");
+            return false;
         }
         else
         {
-            SwitchFrame(frameId);
+            return true;
+            
         }
     }
 
+    void ManageFrameProps(Frame targetFrame)
+    {
+        
+        if (targetFrame == null) return;
+
+        // Deactivate all props
+        foreach (var frame in frames)
+        {
+            foreach (var obj in frame.ActiveProps)
+            {
+                obj.SetActive(false);
+            }
+        }
+
+        // Activate target frame and current frame props
+        foreach (var obj in targetFrame.ActiveProps)
+        {
+            obj.SetActive(true);
+        }
+        foreach (var obj in currentFrame.ActiveProps)
+        {
+            obj.SetActive(true);
+        }
+    }
 }
