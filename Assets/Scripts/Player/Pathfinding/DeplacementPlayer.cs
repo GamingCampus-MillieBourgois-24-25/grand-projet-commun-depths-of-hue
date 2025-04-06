@@ -1,35 +1,38 @@
 using UnityEngine;
 using UnityEngine.AI;
-//using UnityEngine.InputSystem.EnhancedTouch;
-//using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+using UnityEngine.InputSystem.EnhancedTouch;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 public class DeplacementPlayer : MonoBehaviour
 {
     [Header("Property")]
     [SerializeField] private Rigidbody2D player;
     [SerializeField] private NavMeshAgent navMeshAgent;
-    [SerializeField] private GestionCadre actualCadre;
     
     [SerializeField] private Vector3 playerDestination;
+    private GestionCadre actualCadre;
 
     private Camera _camera;
     
     private void Awake()
     {
-        //EnhancedTouchSupport.Enable();
+        EnhancedTouchSupport.Enable();
     }
 
     private void OnEnable()
     {
-        //TouchSimulation.Enable();
+        TouchSimulation.Enable();
     }
 
     private void Start()
     {
-        //Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
+        Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
         _camera = Camera.main;
         player.freezeRotation = true;
-        actualCadre.SetArrowsVisibilities();
+        //GameObject foundActualCadre = GameObject.FindWithTag("ActualCadre");
+        //actualCadre = foundActualCadre.GetComponent<GestionCadre>();
+        //actualCadre.SetArrowsVisibilities();
+        //player.transform.position = actualCadre.center.position;
     }
 
     public void MovePlayer()
@@ -57,7 +60,7 @@ public class DeplacementPlayer : MonoBehaviour
         rotation.y = 0;
         transform.eulerAngles = rotation;
         
-        /*foreach (var touch in Touch.activeTouches)
+        foreach (var touch in Touch.activeTouches)
         {
             if (touch.isTap)
             {
@@ -78,7 +81,7 @@ public class DeplacementPlayer : MonoBehaviour
                     }
                 }
             }
-        }*/
+        }
     }
     
     public void SetPlayerDestination(Vector3 _playerDestination)
