@@ -29,10 +29,10 @@ public class DeplacementPlayer : MonoBehaviour
         Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
         _camera = Camera.main;
         player.freezeRotation = true;
-        GameObject foundActualCadre = GameObject.FindWithTag("ActualCadre");
-        actualCadre = foundActualCadre.GetComponent<GestionCadre>();
-        actualCadre.SetArrowsVisibilities();
-        player.transform.position = actualCadre.center.position;
+        //GameObject foundActualCadre = GameObject.FindWithTag("ActualCadre");
+        //actualCadre = foundActualCadre.GetComponent<GestionCadre>();
+        //actualCadre.SetArrowsVisibilities();
+        //player.transform.position = actualCadre.center.position;
     }
 
     public void MovePlayer()

@@ -340,7 +340,7 @@ Transform:
   m_GameObject: {fileID: 4346043374499309607}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -496,18 +496,22 @@ MonoBehaviour:
   ArrowLeft: 0
   targetCadreLeft: {fileID: 0}
   arrowLeft: {fileID: 9123703932168259864}
+  tagToFoundCadreLeft: 
   angleTargetLeft: 0
   ArrowRight: 0
   targetCadreRight: {fileID: 0}
   arrowRight: {fileID: 7436207860956581959}
+  tagToFoundCadreRight: 
   angleTargetRight: 0
   ArrowUp: 1
   targetCadreUp: {fileID: 0}
   arrowUp: {fileID: 2237499851232773875}
+  tagToFoundCadreUp: 
   angleTargetUp: 0
   ArrowDown: 0
   targetCadreDown: {fileID: 0}
   arrowDown: {fileID: 520490459426341599}
+  tagToFoundCadreDown: 
   angleTargetDown: 0
 --- !u!1 &7436207860956581959
 GameObject:

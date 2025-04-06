@@ -7,7 +7,6 @@ TagManager:
   - Cube
   - Arrows
   - ActualCadre
-  - CadreHautTemplate2
   layers:
   - Default
   - TransparentFX

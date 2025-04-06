@@ -36,6 +36,21 @@ public class GestionCadre : MonoBehaviour
     private readonly Dictionary<GameObject, bool> stockCadreTarget = new Dictionary<GameObject, bool>();
     private readonly Dictionary<GameObject, GameObject> arrowToCadre = new();
 
+    #region Getter Bool
+    public bool ArrowLeftBool => ArrowLeft;
+    public bool ArrowRightBool => ArrowRight;
+    public bool ArrowUpBool => ArrowUp;
+    public bool ArrowDownBool => ArrowDown;
+    #endregion
+    
+    #region Setter GameObject
+    public GameObject TargetCadreLeftGO { set => targetCadreLeft = value; }
+    public GameObject TargetCadreRightGO { set => targetCadreRight = value; }
+    public GameObject TargetCadreUpGO { set => targetCadreUp = value; }
+    public GameObject TargetCadreDownGO { set => targetCadreDown = value; }
+    #endregion
+
+
     private void Awake()
     {
         FoundPlayer();
@@ -56,12 +71,6 @@ public class GestionCadre : MonoBehaviour
 
     private void FoundTargetCadre()
     {
-        // assignation des cadre target (si j'ai mis un tag dans le prefab)
-        if (!targetCadreLeft && ArrowLeft && !string.IsNullOrWhiteSpace(tagToFoundCadreLeft)) targetCadreLeft = GameObject.FindGameObjectWithTag(tagToFoundCadreLeft);
-        if (!targetCadreRight && ArrowRight && !string.IsNullOrWhiteSpace(tagToFoundCadreRight)) targetCadreRight = GameObject.FindGameObjectWithTag(tagToFoundCadreRight);
-        if (!targetCadreUp && ArrowUp && !string.IsNullOrWhiteSpace(tagToFoundCadreUp)) targetCadreUp = GameObject.FindGameObjectWithTag(tagToFoundCadreUp);
-        if (!targetCadreDown && ArrowDown && !string.IsNullOrWhiteSpace(tagToFoundCadreDown)) targetCadreDown = GameObject.FindGameObjectWithTag(tagToFoundCadreDown);
-        
         // assignation des arrows à un cadre target (si y'en a), une fois que je les ai trouvé juste en haut
         if (arrowLeft && targetCadreLeft) arrowToCadre[arrowLeft] = targetCadreLeft;
         if (arrowRight && targetCadreRight) arrowToCadre[arrowRight] = targetCadreRight;
@@ -138,9 +147,8 @@ public class GestionCadre : MonoBehaviour
         ResetArrows();
 
         if (!arrowsVisibilities.ContainsKey(_original) || !arrowsVisibilities[_original]) return;
-
         if (!arrowToCadre.TryGetValue(_original, out var cadre)) return;
-
+        
         player.SetPlayerDestination(cadre.transform.TransformPoint(cadre.GetComponent<GestionCadre>().center.localPosition));
         cadre.GetComponent<GestionCadre>().SetArrowsVisibilities();
         player.MovePlayer();
