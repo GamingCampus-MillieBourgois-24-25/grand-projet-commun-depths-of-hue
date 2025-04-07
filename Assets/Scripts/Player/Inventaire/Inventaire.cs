@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,20 +9,20 @@ using UnityEngine.UI;
 
 public class Inventaire : MonoBehaviour
 {
-    [SerializeField] private List<ItemData> allItems;
+    [SerializeField] private List<ItemData> inventaire;
     [SerializeField] private UI_Inventaire inv;
     [SerializeField] private List<ItemData> itemDatas;
-
-    public List<Image> spriteSlots;
-
-    public GameObject tooltip;
-    public TMP_Text tooltipText;
-    public Transform tooltipRect;
+    [SerializeField] private ParticleSystem part;
+    [SerializeField] private Save save;
+    private void Awake()
+    {
+        save.LoadGame();
+    }
 
     void Start()
     {
         string searchTerm = "perle";
-        List<ItemData> matchingItems = FindItemsByPartialName(searchTerm);
+        List<ItemData> matchingItems = FindItemsByPartialName( searchTerm);
 
         foreach (ItemData item in matchingItems)
         {
@@ -30,13 +31,17 @@ public class Inventaire : MonoBehaviour
         
     }
 
-    public void Add(ItemData item)
+    public void Add(ItemData item, GameObject obj)
     {
-        if (!allItems.Contains(item))
+        if (!inventaire.Contains(item))
         {
-            allItems.Add(item);
+            inventaire.Add(item);
             inv.UpdateUI();
+            Destroy(obj);
+            part.transform.position = obj.transform.position;
+            part.Play();
             Debug.Log(item.itemName + " ajouté à l'inventaire.");
+            save.SaveGame();
         }
         else
         {
@@ -44,11 +49,11 @@ public class Inventaire : MonoBehaviour
         }
     }
 
-    public void Remove(ItemData item)
+    public void Remove( ItemData item)
     {
-        if (allItems.Contains(item))
+        if (inventaire.Contains(item))
         {
-            allItems.Remove(item);
+            inventaire.Remove(item);
             inv.UpdateUI();
             Debug.Log(item.itemName + " retiré de l'inventaire.");
         }
@@ -58,9 +63,9 @@ public class Inventaire : MonoBehaviour
         }
     }
 
-    public List<ItemData> FindItemsByPartialName(string partialName)
+    public List<ItemData> FindItemsByPartialName( string partialName)
     {
-        List<ItemData> foundItems = allItems.Where(item => item.itemName.IndexOf(partialName, System.StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+        List<ItemData> foundItems = inventaire.Where(item => item.itemName.IndexOf(partialName, System.StringComparison.OrdinalIgnoreCase) >= 0).ToList();
         if (foundItems.Count == 0)
         {
             throw new System.Exception("Aucun objet trouvé contenant : " + partialName);
@@ -70,7 +75,7 @@ public class Inventaire : MonoBehaviour
 
     public ItemData GetItemByName(string itemName)
     {
-        ItemData item = allItems.FirstOrDefault(item => item.itemName.Equals(itemName, System.StringComparison.OrdinalIgnoreCase));
+        ItemData item = inventaire.FirstOrDefault(item => item.itemName.Equals(itemName, System.StringComparison.OrdinalIgnoreCase));
         if (item == null)
         {
             throw new System.Exception("Aucun objet trouvé avec le nom : " + itemName);
@@ -80,11 +85,11 @@ public class Inventaire : MonoBehaviour
 
     public List<Sprite> GetAllSprites()
     {
-        if (allItems.Count == 0)
+        if (inventaire.Count == 0)
         {
             throw new System.Exception("L'inventaire est vide, aucun sprite disponible.");
         }
-        List<Sprite> sprites = allItems.Select(item => item.itemSprite).Where(sprite => sprite != null).ToList();
+        List<Sprite> sprites = inventaire.Select(item => item.itemSprite).Where(sprite => sprite != null).ToList();
         if (sprites.Count == 0)
         {
             throw new System.Exception("Aucun sprite valide trouvé dans l'inventaire.");
@@ -92,7 +97,7 @@ public class Inventaire : MonoBehaviour
         return sprites;
     }
 
-    public List<ItemData> GetItemsData() {  return allItems; }
-
+    public List<ItemData> GetInventaire() {  return inventaire; }
+    public void SetInventaire(List<ItemData> _inventaire) { inventaire = _inventaire; }
     public List<ItemData> GetItems() { return itemDatas; }
 }
