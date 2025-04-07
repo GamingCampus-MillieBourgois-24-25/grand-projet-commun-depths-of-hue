@@ -30,31 +30,47 @@ jobs:
           name: Build
           path: build
       
-      - name: Vérifier les fichiers générés
-        run: |
-          ls -lah build/
-          ls -lah build/Android/
-
-      - name: Upload APK to Google Drive
-        uses: Fork-on-the-Table-Collective/upload-to-download-from-gdrive@v2.0.0
+      - name: Dropbox Large File Uploader
+        uses: thedefaultman/dropbox-large-file-uploader@v2.3.5
         with:
-          credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
-          actionType: upload
-          localPath: 'build/Android/Android.apk'
-          emptyUploadFolder: false
-
-      - name: Get Google Drive file link
-        id: get-link
-        run: |
-          # Extraire l'ID du fichier téléchargé (output de l'action précédente)
-          FILE_ID=$(echo "${{ steps.upload-apk.outputs.fileId }}")
-          echo "::set-output name=file_link::https://drive.google.com/file/d/$FILE_ID/view?usp=sharing"
+          app_key: ${{ secrets.DROPBOX_APP_KEY }}
+          app_secret: ${{ secrets.DROPBOX_APP_SECRET }}
+          # Dropbox API refresh token.
+          refresh_token: ${{ secrets.REFRESH_TOKEN_DROPBOX }}
+          # Path to the file to upload.
+          file_path: 'build/Android/Android.apk'
+          # Destination path in Dropbox.
+          dropbox_path: '/Build/Android.apk'
           
-      - name: Send link to Discord
+      - name: Envoyer le lien sur Discord
         run: |
-          curl -F "content=Nouvelle build disponible 🎮 Voici le lien pour télécharger l'APK : ${{ steps.get-link.outputs.file_link }}" ${{ secrets.DISCORD_WEBHOOK_URL }}
-          
-      # End Build
-      - name: Remove Game
+          DISCORD_WEBHOOK_URL="${{ secrets.DISCORD_WEBHOOK_URL }}"
+      
+          # Message Discord
+          MESSAGE_CONTENT="🚀 **Nouvelle build disponible !**\n🎮 Téléchargez la dernière version de l'APK ici :\n🔗 [📥 Télécharger](https://www.dropbox.com/home/Build)"
+      
+          # Envoyer le message sans utiliser jq
+          curl -s -X POST "$DISCORD_WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "{\"content\": \"$MESSAGE_CONTENT\"}"
+      
+      - name: Supprimer les anciens messages du webhook
         run: |
-          sudo rm -r /home/polo/RunnerDepthsOfHue/_work/grand-projet-commun-depths-of-hue/
+          DISCORD_WEBHOOK_URL="${{ secrets.DISCORD_WEBHOOK_URL }}"
+      
+          # Debug: Afficher la réponse brute de l'API
+          RESPONSE=$(curl -s "$DISCORD_WEBHOOK_URL/messages?limit=10")
+          echo "Response from Discord API: $RESPONSE"
+      
+          # Extraire les IDs des messages sans jq
+          MESSAGE_ID=$(echo "$RESPONSE" | grep -o '"id":"\([^"]*\)"' | head -n 1 | sed 's/"id":"\([^"]*\)"/\1/')
+      
+          # Vérifier si un ID a été trouvé
+          if [[ -z "$MESSAGE_ID" ]]; then
+            echo "❌ Aucun message trouvé ou réponse invalide"
+            exit 0
+          fi
+      
+          # Supprimer le message
+          curl -X DELETE "$DISCORD_WEBHOOK_URL/messages/$MESSAGE_ID"
+          sleep 1  # Pause pour éviter un rate-limit
