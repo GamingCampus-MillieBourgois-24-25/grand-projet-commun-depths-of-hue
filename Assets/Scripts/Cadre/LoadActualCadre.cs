@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class LoadActualCadre : MonoBehaviour
 {
-    [SerializeField] private GestionCadre gestionCadre;
+    private GestionCadre gestionCadre;
 
     private void Start()
     {
+        GameObject foundActualCadre = GameObject.FindWithTag("ActualCadre");
+        gestionCadre = foundActualCadre.GetComponent<GestionCadre>();
         gestionCadre.StockVisiblities();
     }
 }
