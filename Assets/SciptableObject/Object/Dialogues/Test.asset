@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: Assembly-CSharp::DialogueGroup
   dialogues:
-  - npc: none
-    image: 
+  - npc: Player
+    image: {fileID: 0}
     dialogueKey: Test_1
-  - npc: none
-    image: 
+  - npc: NPC
+    image: {fileID: 0}
     dialogueKey: Test_2
-  - npc: none
-    image: 
+  - npc: Player
+    image: {fileID: 0}
     dialogueKey: Test_3
   tableKey: Test

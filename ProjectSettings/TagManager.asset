@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Cube
+  - Arrows
+  - ActualCadre
   layers:
   - Default
   - TransparentFX

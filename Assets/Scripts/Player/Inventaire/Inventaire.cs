@@ -1,11 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Inventaire : MonoBehaviour
 {
-    public List<ItemData> allItems;
+    [SerializeField] private List<ItemData> allItems;
+    [SerializeField] private UI_Inventaire inv;
+    [SerializeField] private List<ItemData> itemDatas;
+
+    public List<Image> spriteSlots;
+
+    public GameObject tooltip;
+    public TMP_Text tooltipText;
+    public Transform tooltipRect;
 
     void Start()
     {
@@ -16,6 +27,7 @@ public class Inventaire : MonoBehaviour
         {
             Debug.Log("Objet trouvé : " + item.itemName);
         }
+        
     }
 
     public void Add(ItemData item)
@@ -23,6 +35,7 @@ public class Inventaire : MonoBehaviour
         if (!allItems.Contains(item))
         {
             allItems.Add(item);
+            inv.UpdateUI();
             Debug.Log(item.itemName + " ajouté à l'inventaire.");
         }
         else
@@ -36,6 +49,7 @@ public class Inventaire : MonoBehaviour
         if (allItems.Contains(item))
         {
             allItems.Remove(item);
+            inv.UpdateUI();
             Debug.Log(item.itemName + " retiré de l'inventaire.");
         }
         else
@@ -77,4 +91,8 @@ public class Inventaire : MonoBehaviour
         }
         return sprites;
     }
+
+    public List<ItemData> GetItemsData() {  return allItems; }
+
+    public List<ItemData> GetItems() { return itemDatas; }
 }

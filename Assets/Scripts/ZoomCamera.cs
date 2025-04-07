@@ -32,6 +32,10 @@ public class ZoomCamera : MonoBehaviour
 
     void Update()
     {
+        if (cam.orthographicSize >= 4.99f)
+        {
+            transform.position = Vector3.Lerp(transform.position, initialPosition, Time.deltaTime * 5f);
+        }
         if (Input.GetMouseButtonDown(0))
         {
             if (Time.time - lastClickTime < doubleClickTime)
@@ -78,5 +82,6 @@ public class ZoomCamera : MonoBehaviour
                 isDragging = false;
             }
         }
+        
     }
 }

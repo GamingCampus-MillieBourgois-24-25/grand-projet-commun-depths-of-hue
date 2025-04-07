@@ -10,6 +10,7 @@ public class DeplacementPlayer : MonoBehaviour
     [SerializeField] private NavMeshAgent navMeshAgent;
     
     [SerializeField] private Vector3 playerDestination;
+    private GestionCadre actualCadre;
 
     private Camera _camera;
     
@@ -28,10 +29,16 @@ public class DeplacementPlayer : MonoBehaviour
         Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
         _camera = Camera.main;
         player.freezeRotation = true;
+        //GameObject foundActualCadre = GameObject.FindWithTag("ActualCadre");
+        //actualCadre = foundActualCadre.GetComponent<GestionCadre>();
+        //actualCadre.SetArrowsVisibilities();
+        //player.transform.position = actualCadre.center.position;
     }
 
     public void MovePlayer()
     {
+        if (!navMeshAgent.enabled) return;
+
         navMeshAgent.SetDestination(playerDestination);
     }
 
