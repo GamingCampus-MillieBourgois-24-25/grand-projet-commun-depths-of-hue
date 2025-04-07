@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Cube
   - Arrows
+  - ActualCadre
+  - Rope
   layers:
   - Default
   - TransparentFX

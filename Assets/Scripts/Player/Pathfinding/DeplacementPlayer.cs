@@ -10,28 +10,35 @@ public class DeplacementPlayer : MonoBehaviour
     [SerializeField] private NavMeshAgent navMeshAgent;
     
     [SerializeField] private Vector3 playerDestination;
+    private GestionCadre actualCadre;
 
     private Camera _camera;
     
     private void Awake()
     {
-        //EnhancedTouchSupport.Enable();
+        EnhancedTouchSupport.Enable();
     }
 
     private void OnEnable()
     {
-        //TouchSimulation.Enable();
+        TouchSimulation.Enable();
     }
 
     private void Start()
     {
-        //Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
+        Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
         _camera = Camera.main;
         player.freezeRotation = true;
+        //GameObject foundActualCadre = GameObject.FindWithTag("ActualCadre");
+        //actualCadre = foundActualCadre.GetComponent<GestionCadre>();
+        //actualCadre.SetArrowsVisibilities();
+        //player.transform.position = actualCadre.center.position;
     }
 
     public void MovePlayer()
     {
+        if (!navMeshAgent.enabled) return;
+
         navMeshAgent.SetDestination(playerDestination);
     }
 
@@ -53,7 +60,7 @@ public class DeplacementPlayer : MonoBehaviour
         rotation.y = 0;
         transform.eulerAngles = rotation;
         
-        /*foreach (var touch in Touch.activeTouches)
+        foreach (var touch in Touch.activeTouches)
         {
             if (touch.isTap)
             {
@@ -74,7 +81,7 @@ public class DeplacementPlayer : MonoBehaviour
                     }
                 }
             }
-        }*/
+        }
     }
     
     public void SetPlayerDestination(Vector3 _playerDestination)

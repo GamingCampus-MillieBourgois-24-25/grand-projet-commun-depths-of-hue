@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "NewDialogue", menuName = "Dialogue")]
 public class DialogueGroup : ScriptableObject
@@ -17,7 +18,7 @@ public class DialogueGroup : ScriptableObject
 public class DialogueData
 {
     public string npc;
-    public string image;
+    public Sprite image;
     public string dialogueKey;
 }
 
@@ -26,6 +27,9 @@ public class DialogueManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private TextMeshProUGUI textComponent;
+    [SerializeField] private TextMeshProUGUI nameComponent;
+    [SerializeField] private Image imageComponent;
+
     [SerializeField] private GameObject dialogFrame;
     [SerializeField] private AudioClip dialogSound;
 
@@ -78,6 +82,9 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator TypeLine(DialogueData dialogueData)
     {
+        nameComponent.text = dialogueData.npc;
+        imageComponent.color = new Color(1, 1, 1, dialogueData.image == null ? 0 : 1);
+        imageComponent.sprite = dialogueData.image;
         foreach (char c in GetDialogue(dialogueData))
         {
             textComponent.text += c;

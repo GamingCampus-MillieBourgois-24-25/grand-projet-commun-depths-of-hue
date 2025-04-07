@@ -6,30 +6,61 @@ public class test : MonoBehaviour
 {
     private bool launchTimer;
     private float timer;
-    // Start is called before the first frame update
+    [SerializeField] private Inventaire inventaire;
+    [SerializeField] private UI_Inventaire inv;
+    [SerializeField] private ParticleSystem part;
+    private AudioSource audioSource;
     void Start()
     {
-        
+        part.Stop();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Stop();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (launchTimer)
+        if (Input.GetKeyDown(KeyCode.Space)) // Appuie sur Espace pour jouer le son
         {
-            timer += Time.deltaTime;
-            if (timer >= 3) 
-            {
-                print("fini");
-            }
+            PlayAudio();
         }
-        
+
     }
 
     public void OnObjectClicked()
     {
         Debug.Log(gameObject.name + " a été cliqué !");
-        launchTimer = true;
-        // Ajoutez ici l'action que l'objet doit effectuer
+        
+        string gameObjectName = gameObject.name.ToLower();
+
+        ItemData foundItem = inventaire.GetItems().Find(item => item.itemName.ToLower().Contains(gameObjectName));
+
+        if (foundItem != null)
+        {
+            if (inventaire != null && inventaire.GetInventaire().Count < inv.spriteSlots.Count)
+            {
+                inventaire.Add( foundItem, gameObject);
+            }
+            else
+            {
+                print("plus de place");
+            }
+        }
+        else
+        {
+            // Si aucun élément correspondant n'est trouvé
+            Debug.Log("Aucun élément trouvé avec un nom similaire à : " + gameObjectName);
+        }
+        
+    }
+
+
+
+    public void PlayAudio()
+    {
+        if (audioSource != null && !audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
     }
 }
