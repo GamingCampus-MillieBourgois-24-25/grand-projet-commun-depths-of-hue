@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,16 +10,16 @@ public class TransitionManager : MonoBehaviour
 
     [SerializeField] private bool skipEndTransition = false;
 
-    public static TransitionManager instance;
+    public static TransitionManager Instance;
     public void Awake()
     {
-        if (instance != null)
+        if (Instance != null)
         {
             Destroy(this);
         }
         else
         {
-            instance = this;
+            Instance = this;
         }
 
         if (skipEndTransition)

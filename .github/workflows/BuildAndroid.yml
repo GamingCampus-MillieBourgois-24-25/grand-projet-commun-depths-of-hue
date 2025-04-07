@@ -57,4 +57,4 @@ jobs:
       # End Build
       - name: Remove Game
         run: |
-          sudo rm -r /home/polo/RunnerGPC/_work/grand-projet-commun-depths-of-hue/
+          sudo rm -r /home/polo/RunnerDepthsOfHue/_work/grand-projet-commun-depths-of-hue/

@@ -37,13 +37,9 @@ public class test : MonoBehaviour
 
         if (foundItem != null)
         {
-            if (inventaire != null && inventaire.GetItemsData().Count < inv.spriteSlots.Count)
+            if (inventaire != null && inventaire.GetInventaire().Count < inv.spriteSlots.Count)
             {
-                PlayAudio();
-                inventaire.Add(foundItem);
-                Destroy(gameObject);
-                part.transform.position = transform.position;
-                part.Play();
+                inventaire.Add( foundItem, gameObject);
             }
             else
             {

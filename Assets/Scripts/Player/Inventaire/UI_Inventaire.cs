@@ -17,7 +17,7 @@ public class UI_Inventaire : MonoBehaviour
 
     void Start()
     {
-        allItems = inv.GetItemsData();
+        allItems = inv.GetInventaire();
         UpdateUI();
         HideTooltip();
         inspectionImage.gameObject.SetActive(false);
