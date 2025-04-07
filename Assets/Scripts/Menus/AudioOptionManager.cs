@@ -9,34 +9,27 @@ public class AudioOptionManager : MonoBehaviour
     public static float musicVolume {  get; private set; }
     public static float soundEffectsVolume { get; private set; }
 
-    public float startMusicVolume = 0.5f;
-    public float startSoundEffectsVolume = 0.5f;
-
-    [SerializeField] private TextMeshProUGUI musicSliderText;
-    [SerializeField] private TextMeshProUGUI soundEffectsSliderText;
+    public float startMusicVolume = 5f;
+    public float startSoundEffectsVolume = 5f;
 
     private void Start()
     {
-        musicSlider.value = startMusicVolume*10;
-        musicSliderText.text = musicSlider.value.ToString();
+        musicSlider.value = startMusicVolume;
         AudioManager.Instance.UpdateMixerVolume();
 
-        soundEffectsSlider.value = startSoundEffectsVolume*10;
-        soundEffectsSliderText.text = soundEffectsSlider.value.ToString();
+        soundEffectsSlider.value = startSoundEffectsVolume;
         AudioManager.Instance.UpdateMixerVolume();
     }
 
     public void OnMusicSliderValueChange()
     {
-        musicVolume = musicSlider.value;
-        musicSliderText.text = musicSlider.value.ToString();
+        musicVolume = Mathf.Log10(musicSlider.value) * 20;
         AudioManager.Instance.UpdateMixerVolume();
     }
 
     public void OnSoundEffectsSliderValueChange()
     {
-        soundEffectsVolume = soundEffectsSlider.value;
-        soundEffectsSliderText.text = soundEffectsSlider.value.ToString();
+        soundEffectsVolume = Mathf.Log10(soundEffectsSlider.value) * 20;
         AudioManager.Instance.UpdateMixerVolume();
     }
 }

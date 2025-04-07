@@ -69,12 +69,10 @@ public class AudioManager : MonoBehaviour
 
     public void UpdateMixerVolume()
     {
-        float normalizedMusicVolume = AudioOptionManager.musicVolume / 10f;
-        float musicDB = (normalizedMusicVolume > 0.0001f) ? Mathf.Log10(normalizedMusicVolume) * 20 : -80f;
-        musicMixerGroup.audioMixer.SetFloat("Music Volume", musicDB);
+        float musicDB = Mathf.Log10(AudioOptionManager.musicVolume) * 20;
+        musicMixerGroup.audioMixer.SetFloat("Music Volume", AudioOptionManager.musicVolume);
 
-        float normalizedSoundEffectsVolume = AudioOptionManager.soundEffectsVolume / 10f;
-        float soundEffectsDB = (normalizedSoundEffectsVolume > 0.0001f) ? Mathf.Log10(normalizedSoundEffectsVolume) * 20 : -80f;
-        soundEffectsMixerGroup.audioMixer.SetFloat("Sound Effects Volume", soundEffectsDB);
+        float soundEffectsDB = Mathf.Log10(AudioOptionManager.soundEffectsVolume) * 20;
+        soundEffectsMixerGroup.audioMixer.SetFloat("Sound Effects Volume", AudioOptionManager.soundEffectsVolume);
     }
 }
