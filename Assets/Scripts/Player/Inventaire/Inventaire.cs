@@ -14,13 +14,11 @@ public class Inventaire : MonoBehaviour
     [SerializeField] private List<ItemData> itemDatas;
     [SerializeField] private ParticleSystem part;
     [SerializeField] private Save save;
-    private void Awake()
-    {
-        save.LoadGame();
-    }
+    private List<string> ids = new List<string>();
 
     void Start()
     {
+        save.LoadGame();
         string searchTerm = "perle";
         List<ItemData> matchingItems = FindItemsByPartialName( searchTerm);
 
@@ -98,6 +96,34 @@ public class Inventaire : MonoBehaviour
     }
 
     public List<ItemData> GetInventaire() {  return inventaire; }
+    public List<string> GetId()
+    {
+        if(inventaire.Count == 0) 
+        { 
+            return null; 
+        }
+        foreach(var item in inventaire) 
+        { 
+            ids.Add(item.GetId());
+        }
+        return ids;
+    }
+
+    public void SetId(List<string> _ids) { ids = _ids; }
     public void SetInventaire(List<ItemData> _inventaire) { inventaire = _inventaire; }
+    public void AddItemSave()
+    {
+        for (int i = 0; i < ids.Count; i++)
+        {
+            for(int j = 0; j < itemDatas.Count; j++)
+            {
+                if (ids[i] == itemDatas[j].GetId())
+                {
+                    inventaire.Add(itemDatas[i]);
+                    print("trouve");
+                }
+            }
+        }
+    }
     public List<ItemData> GetItems() { return itemDatas; }
 }
