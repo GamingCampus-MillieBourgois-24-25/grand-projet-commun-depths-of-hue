@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 8219793574857517892}
   - component: {fileID: 1438488960550922654}
   m_Layer: 0
-  m_Name: CadreMidTemple
+  m_Name: CadreBotTemple2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -493,12 +493,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   center: {fileID: 9143937313133203452}
-  ArrowLeft: 1
+  ArrowLeft: 0
   targetCadreLeft: {fileID: 0}
   arrowLeft: {fileID: 9123703932168259864}
   tagToFoundCadreLeft: 
   angleTargetLeft: 0
-  ArrowRight: 1
+  ArrowRight: 0
   targetCadreRight: {fileID: 0}
   arrowRight: {fileID: 7436207860956581959}
   tagToFoundCadreRight: 
@@ -508,7 +508,7 @@ MonoBehaviour:
   arrowUp: {fileID: 2237499851232773875}
   tagToFoundCadreUp: 
   angleTargetUp: 0
-  ArrowDown: 1
+  ArrowDown: 0
   targetCadreDown: {fileID: 0}
   arrowDown: {fileID: 520490459426341599}
   tagToFoundCadreDown: 

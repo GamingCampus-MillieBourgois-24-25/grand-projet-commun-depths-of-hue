@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 8219793574857517892}
   - component: {fileID: 1438488960550922654}
   m_Layer: 0
-  m_Name: CadreMidTemple
+  m_Name: CadreRightTemple2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -498,17 +498,17 @@ MonoBehaviour:
   arrowLeft: {fileID: 9123703932168259864}
   tagToFoundCadreLeft: 
   angleTargetLeft: 0
-  ArrowRight: 1
+  ArrowRight: 0
   targetCadreRight: {fileID: 0}
   arrowRight: {fileID: 7436207860956581959}
   tagToFoundCadreRight: 
   angleTargetRight: 0
-  ArrowUp: 1
+  ArrowUp: 0
   targetCadreUp: {fileID: 0}
   arrowUp: {fileID: 2237499851232773875}
   tagToFoundCadreUp: 
   angleTargetUp: 0
-  ArrowDown: 1
+  ArrowDown: 0
   targetCadreDown: {fileID: 0}
   arrowDown: {fileID: 520490459426341599}
   tagToFoundCadreDown: 
