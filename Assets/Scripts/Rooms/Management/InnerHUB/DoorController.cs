@@ -39,7 +39,7 @@ public class DoorController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            Debug.Log("yolo");
+
             if (Physics.Raycast(ray, out hit))
             {
                 if (hit.collider.gameObject == this.gameObject)
