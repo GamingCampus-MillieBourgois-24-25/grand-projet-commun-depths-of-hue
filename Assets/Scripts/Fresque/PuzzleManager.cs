@@ -48,20 +48,29 @@ public class PuzzleManager : MonoBehaviour
     public void AddFragmentToFresque(PuzzleFragment fragment)
     {
         // Calculer la position correcte du fragment sur la fresque
-        // Dépendant de la position en lignes et colonnes, il faut ajuster pour que (0,0) soit en haut à gauche
-
-        // Normaliser la position en fonction des dimensions de la fresque
         float normalizedX = (col[fragment.col] / longueur) * fresque.transform.localScale.x;
+        // Pour avoir l'origine en haut à gauche, inverser la position en Y
         float normalizedY = (row[fragment.row] / largeur) * fresque.transform.localScale.y;
 
         // Décalage pour que l'origine (0,0) soit en haut à gauche
         float offsetX = fresque.transform.localScale.x / 2f;
+        // Inverser l'axe Y pour amener l'origine en haut à gauche
         float offsetY = fresque.transform.localScale.y / 2f;
 
         // Calculer la position locale en tenant compte du décalage
-        Vector3 position = new Vector3(normalizedX - offsetX, normalizedY + offsetY, this.transform.position.z);
+        Vector3 position = new Vector3(normalizedX - offsetX, offsetY - normalizedY, this.transform.position.z);
 
         // Appliquer la position locale au fragment
         fragment.transform.localPosition = position;
+
+        // Calculer la taille (scale) de chaque fragment pour qu'il occupe toute la cellule
+        // Diviser la taille totale de la fresque par le nombre de colonnes et de lignes
+        float fragmentWidth = longueur / 4f;  // Taille en X de chaque fragment
+        float fragmentHeight = largeur / 4f;  // Taille en Y de chaque fragment
+
+        // Appliquer la scale aux fragments pour qu'ils remplissent leur cellule
+        fragment.transform.localScale = new Vector3(fragmentWidth / fragment.GetComponent<Renderer>().bounds.size.x,
+                                                     fragmentHeight / fragment.GetComponent<Renderer>().bounds.size.y,
+                                                     1f);
     }
 }
