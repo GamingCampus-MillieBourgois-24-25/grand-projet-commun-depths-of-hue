@@ -14,8 +14,8 @@ public class GestionInputs : MonoBehaviour
 
     private void OnEnable()
     {
-        controls = new Controls();
-        controls.Enable();
+        //controls = new Controls();
+        //controls.Enable();
         //controls.Mouse.Clic.performed += HandleClicMouse;
     }
 
