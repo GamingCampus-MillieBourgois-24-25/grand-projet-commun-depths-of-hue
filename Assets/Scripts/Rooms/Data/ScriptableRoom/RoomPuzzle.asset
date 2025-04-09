@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd4c70bf8427d804caae1c0c80de7bac, type: 3}
-  m_Name: Room2
+  m_Name: RoomPuzzle
   m_EditorClassIdentifier: 
-  roomId: Room2
-  sceneName: Room_2
-  initialState: 0
-  roomState: 0
+  roomId: Final
+  sceneName: Room_Puzzle
+  initialState: 1
+  roomState: 1

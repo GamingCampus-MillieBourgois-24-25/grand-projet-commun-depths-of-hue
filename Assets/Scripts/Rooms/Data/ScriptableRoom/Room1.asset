@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd4c70bf8427d804caae1c0c80de7bac, type: 3}
   m_Name: Room1
   m_EditorClassIdentifier: 
-  roomId: 0
+  roomId: Room1
   sceneName: Room_1
-  roomStateEnum: 0
+  initialState: 1
+  roomState: 1
