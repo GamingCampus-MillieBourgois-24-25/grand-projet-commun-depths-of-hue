@@ -68,9 +68,26 @@ public class PuzzleManager : MonoBehaviour
         float fragmentWidth = longueur / 4f;  // Taille en X de chaque fragment
         float fragmentHeight = largeur / 4f;  // Taille en Y de chaque fragment
 
-        // Appliquer la scale aux fragments pour qu'ils remplissent leur cellule
-        fragment.transform.localScale = new Vector3(fragmentWidth / fragment.GetComponent<Renderer>().bounds.size.x,
-                                                     fragmentHeight / fragment.GetComponent<Renderer>().bounds.size.y,
-                                                     1f);
+        // Récupération de la taille actuelle via le collider
+        BoxCollider fragCollider = fragment.GetComponent<BoxCollider>();
+        if (fragCollider != null)
+        {
+            Vector3 currentSize = fragCollider.size;
+            Vector3 newScale = new Vector3(
+                fragmentWidth / currentSize.x,
+                fragmentHeight / currentSize.y,
+                1f); // Conserve l'épaisseur Z
+
+            fragment.transform.localScale = newScale;
+        }
+        else // Fallback si pas de collider
+        {
+            fragment.transform.localScale = new Vector3(
+                fragmentWidth,
+                fragmentHeight,
+                1f);
+        }
+        
+
     }
 }
