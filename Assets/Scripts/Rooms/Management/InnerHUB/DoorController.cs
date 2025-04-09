@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
+    [RoomId] 
     [SerializeField] private string targetRoomId;
     [SerializeField] private bool isLocked;
     [SerializeField] private GameObject lockedVisual;
@@ -38,7 +39,7 @@ public class DoorController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            Debug.Log("yolo");
+
             if (Physics.Raycast(ray, out hit))
             {
                 if (hit.collider.gameObject == this.gameObject)
@@ -65,6 +66,7 @@ public class DoorController : MonoBehaviour
     {
         if (!isLocked)
         {
+
             RoomManager.Instance.LoadRoom(targetRoomId);
         }
         else

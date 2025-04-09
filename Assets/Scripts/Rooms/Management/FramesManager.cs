@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.MemoryProfiler;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +10,7 @@ public class FramesManager : MonoBehaviour
     [SerializeField] private Button rightButton;
     [SerializeField] private Button downButton;
     [SerializeField] private Button leftButton;
+    [SerializeField] private TextMeshProUGUI ZoneText;
 
     [SerializeField] private Sprite lockedFrame;
     [SerializeField] private Sprite unlockedFrame;
@@ -64,6 +65,8 @@ public class FramesManager : MonoBehaviour
         {
             //Target frame reference
             Frame targetFrame = System.Array.Find(frames, s => s.id == newRoomID);
+
+            ZoneText.text = newRoomID;
 
             //Stop current camera movement
             if (currentCameraCoroutine != null)
