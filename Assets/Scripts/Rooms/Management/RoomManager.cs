@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,7 +13,6 @@ public class RoomManager : MonoBehaviour
         if (Instance == null) Instance = this; //Singleton instantiation
         else Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
-        LoadAllRooms();
     }
 
 
@@ -41,37 +37,6 @@ public class RoomManager : MonoBehaviour
         SceneManager.LoadScene(targetRoom.sceneName); //Load the scene
     }
 
-
-    /// <summary>
-    /// Detects every Room data base automatically. Only works in editor mode !!!!
-    /// </summary>
-    void LoadAllRooms()
-    {
-#if UNITY_EDITOR
-        // Méthode Éditeur (plus complète)
-        string[] guids = AssetDatabase.FindAssets("t:RoomDataBase");
-        allRooms = new RoomDataBase[guids.Length];
-
-        for (int i = 0; i < guids.Length; i++)
-        {
-            string path = AssetDatabase.GUIDToAssetPath(guids[i]);
-            allRooms[i] = AssetDatabase.LoadAssetAtPath<RoomDataBase>(path);
-        }
-#else
-        // Méthode Build - Solution 1 (si dans Resources)
-        allRooms = Resources.LoadAll<RoomDataBase>("");
-        
-        // OU Solution 2 (préchargement recommandé)
-        // Laissez le tableau sérialisé et rempli manuellement
-        // (voir alternative ci-dessous)
-#endif
-
-        // Trie commun
-        if (allRooms != null)
-        {
-            System.Array.Sort(allRooms, (a, b) => a.roomId.CompareTo(b.roomId));
-        }
-    }
 
     /// <summary>
     /// Called when the event scene loaded is done

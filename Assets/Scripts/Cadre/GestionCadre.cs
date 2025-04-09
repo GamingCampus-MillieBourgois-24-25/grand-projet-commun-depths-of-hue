@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -146,8 +145,13 @@ public class GestionCadre : MonoBehaviour
     {
         ResetArrows();
 
+        Debug.Log("good0");
         if (!arrowsVisibilities.ContainsKey(_original) || !arrowsVisibilities[_original]) return;
+              
+        Debug.Log("good1");
         if (!arrowToCadre.TryGetValue(_original, out var cadre)) return;
+        
+        Debug.Log("good2");
         
         player.SetPlayerDestination(cadre.transform.TransformPoint(cadre.GetComponent<GestionCadre>().center.localPosition));
         cadre.GetComponent<GestionCadre>().SetArrowsVisibilities();

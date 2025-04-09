@@ -32,7 +32,7 @@ public class Save : MonoBehaviour
     {
         var data = new SaveDataTemp
         {
-            scriptableObjects = inventaire.GetInventaire(),
+            scriptableObjectIDs = inventaire.GetId(),
         };
 
         string json = JsonUtility.ToJson(data, true);
@@ -42,11 +42,13 @@ public class Save : MonoBehaviour
 
     public void LoadGame()
     {
+        print(savePath);
         string json = System.IO.File.ReadAllText(savePath);
         var data = JsonUtility.FromJson<SaveDataTemp>(json);
 
         /*dataManager.SetPlayerPosition(data.playerPos);*/
-        inventaire.SetInventaire(data.scriptableObjects);
+        inventaire.SetId(data.scriptableObjectIDs);
+        inventaire.AddItemSave();
         /*dataManager.SetGameParameters(data.parameters);*/
 
         Debug.Log("Game loaded from: " + savePath);
@@ -65,6 +67,6 @@ public class Save : MonoBehaviour
     [System.Serializable]
     private class SaveDataTemp
     {
-        public List<ItemData> scriptableObjects;
+        public List<string> scriptableObjectIDs;
     }
 }

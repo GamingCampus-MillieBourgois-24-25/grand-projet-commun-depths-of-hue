@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aca40beb723e5144f83bfd1e5ead494a, type: 3}
   m_Name: Perle Noire
   m_EditorClassIdentifier: 
+  id: 3
   itemName: Perle Noire
   itemSprite: {fileID: -310154257, guid: 5a04331407e277a4baf352ca36531bf3, type: 3}
   itemDescription: tkt mon reuf
+  type: 0
