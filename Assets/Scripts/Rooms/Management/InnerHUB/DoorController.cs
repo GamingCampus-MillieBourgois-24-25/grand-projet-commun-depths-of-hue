@@ -27,7 +27,7 @@ public class DoorController : MonoBehaviour
             UpdateDoorVisual();
 
         }
-        // Debug or in game message display
+        
         Debug.Log($"Porte {targetRoomId} initialisée : Verrouillée = {isLocked}");
     }
 

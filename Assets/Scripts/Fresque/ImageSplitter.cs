@@ -132,6 +132,7 @@ public class DynamicPuzzleGenerator : MonoBehaviour
         DestroyImmediate(cube.GetComponent<BoxCollider>());
     }
 
+
     void CreateDynamicCanvas(GameObject parent, string texturePath, int width, int height)
     {
         // Create Canvas
