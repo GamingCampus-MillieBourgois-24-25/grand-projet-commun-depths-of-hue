@@ -13,7 +13,6 @@ public class UI_Inventaire : MonoBehaviour
     public TMP_Text tooltipText;
     public RectTransform tooltipRect;
     public Image inspectionImage;
-    
 
     void Start()
     {
@@ -34,18 +33,44 @@ public class UI_Inventaire : MonoBehaviour
     public void UpdateUI()
     {
         List<Sprite> sprites = inv.GetAllSprites();
-        for (int i = 0; i < spriteSlots.Count; i++)
+        Dictionary<Sprite, int> itemCounts = new Dictionary<Sprite, int>();
+
+        foreach (Sprite sprite in sprites)
         {
-            if (sprites.Count > i && sprites[i] != null)
+            if (sprite != null)
             {
-                spriteSlots[i].sprite = sprites[i];
-                AddTooltip(spriteSlots[i], i);
-                AddClickEvent(spriteSlots[i], i);
+                if (itemCounts.ContainsKey(sprite))
+                    itemCounts[sprite]++;
+                else
+                    itemCounts[sprite] = 1;
+            }
+        }
+
+        int slotIndex = 0;
+        foreach (var item in itemCounts)
+        {
+            if (slotIndex >= spriteSlots.Count) break;
+
+            spriteSlots[slotIndex].sprite = item.Key;
+            if (item.Value > 1)
+            {
+                spriteSlots[slotIndex].color = new Color(1f, 1f, 1f, 0.8f);
             }
             else
             {
-                spriteSlots[i].sprite = null;
+                spriteSlots[slotIndex].color = Color.white;
             }
+
+            int itemIndex = sprites.IndexOf(item.Key);
+            AddTooltip(spriteSlots[slotIndex], itemIndex);
+            AddClickEvent(spriteSlots[slotIndex], itemIndex);
+            slotIndex++;
+        }
+
+        for (int i = slotIndex; i < spriteSlots.Count; i++)
+        {
+            spriteSlots[i].sprite = null;
+            spriteSlots[i].color = Color.white;
         }
     }
 
