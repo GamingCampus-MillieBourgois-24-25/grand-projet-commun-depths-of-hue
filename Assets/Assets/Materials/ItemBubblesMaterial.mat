@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_New Shader Graph
+  m_Name: ItemBubblesMaterial
   m_Shader: {fileID: -6465566751694194690, guid: 733034fb12aefbf49b46a9c38713cedb,
     type: 3}
   m_Parent: {fileID: 0}

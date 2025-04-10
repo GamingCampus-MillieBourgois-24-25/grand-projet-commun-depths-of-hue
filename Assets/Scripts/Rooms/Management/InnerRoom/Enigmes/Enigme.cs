@@ -1,38 +1,52 @@
-//using UnityEngine;
+using UnityEngine;
 
-//public abstract class Enigme : MonoBehaviour
-//{
-//    public bool isResolved = false;
-//    public float timeLimit = 60f;
-//    protected float timer;
+public abstract class Enigme : MonoBehaviour
+{
+    protected bool isResolved = false;
+    protected bool isStarted = false;
 
-//    public System.Action OnSuccess;
-//    public System.Action OnFail;
+    public System.Action OnSuccess; //Event enigme succeeded
+    public System.Action OnFail; // Event enigme failed
 
-//    public virtual void Initialize()
-//    {
-//        timer = timeLimit;
-//    }
 
-//    public virtual void UpdateEnigme(float deltaTime)
-//    {
-//        if (isResolved) return;
+    /// <summary>
+    /// This function must be called first. It will be used for the enigme setup.
+    /// </summary>
+    public virtual void Initialize()
+    {
+        isStarted = true;
+    }
 
-//        timer -= deltaTime;
-//        if (timer <= 0f)
-//        {
-//            Fail();
-//        }
-//    }
+    public virtual void UpdateEnigme(float deltaTime)
+    {
+        //Code updated if needed.
+    }
 
-//    protected virtual void Success()
-//    {
-//        isResolved = true;
-//        OnSuccess?.Invoke();
-//    }
+    /// <summary>
+    /// Enigme succes instructions.
+    /// </summary>
+    protected virtual void Success()
+    {
+        isStarted = false;
+        isResolved = true;
+        OnSuccess?.Invoke();
+    }
 
-//    protected virtual void Fail()
-//    {
-//        OnFail?.Invoke();
-//    }
-//}
+    /// <summary>
+    /// Enigme failed instructions.
+    /// </summary>
+    protected virtual void Fail()
+    {
+        isStarted = false;
+        OnFail?.Invoke();
+    }
+
+    /// <summary>
+    /// Getter for the resolution state
+    /// </summary>
+    /// <returns></returns>
+    public bool GetIsResolved()
+    {
+        return isResolved;
+    }
+}

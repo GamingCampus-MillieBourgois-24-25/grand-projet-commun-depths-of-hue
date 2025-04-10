@@ -191,7 +191,7 @@ public class DynamicPuzzleGenerator : MonoBehaviour
         fragment.id = $"Piece_{x}_{y}";
         fragment.icon = AssetDatabase.LoadAssetAtPath<Sprite>(texturePath);
 
-        piece.AddComponent<FragmentPickup>();
+
     }
 
     void SaveAsPrefab(GameObject obj, string name)
