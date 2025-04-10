@@ -1768,7 +1768,7 @@ MonoBehaviour:
   - {fileID: 1611615188}
   - {fileID: 520362625}
   objectsUsedInEnigme: []
-  amountObjectsUsed: 10
+  amountObjectsUsed: 4
 --- !u!114 &1643466330
 MonoBehaviour:
   m_ObjectHideFlags: 0
