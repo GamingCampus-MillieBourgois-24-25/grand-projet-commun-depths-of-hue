@@ -6,26 +6,33 @@ public class PuzzleManager : MonoBehaviour
     public static PuzzleManager Instance;
     public GameObject fresque;
 
+    public int rowAmount =4;
+    public int columnAmount = 4;
+
     public float largeur;
     public float longueur;
     public List<float> col;
     public List<float> row;
 
+    public PuzzleFragment[,] puzzleGrid;
+
     private void Awake()
     {
+        puzzleGrid = new PuzzleFragment[rowAmount, columnAmount];
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        // Récupérer la taille de la fresque en utilisant le Renderer si c'est un objet 3D
-        Renderer fresqueRenderer = fresque.GetComponent<Renderer>();
-        if (fresqueRenderer != null)
+        // Gets the size of the object
+        Collider collider = fresque.GetComponent<Collider>();
+
+        if (collider != null)
         {
-            longueur = fresqueRenderer.bounds.size.x;  // Largeur de l'objet
-            largeur = fresqueRenderer.bounds.size.y;  // Hauteur de l'objet
+            longueur = collider.bounds.size.x;  
+            largeur = collider.bounds.size.y;  
         }
         else
         {
-            // Si fresque n'a pas de Renderer (pas un objet 3D), vérifier si c'est un UI (RectTransform)
+    
             RectTransform fresqueRectTransform = fresque.GetComponent<RectTransform>();
             if (fresqueRectTransform != null)
             {
@@ -34,34 +41,91 @@ public class PuzzleManager : MonoBehaviour
             }
         }
 
-        // Remplir les listes col et row pour le découpage de la fresque (divisé en 4 par exemple)
+
         col.Clear();
         row.Clear();
+
+        // This divides the width and length by the amount of wanted row/column. These values depend on the image splitter values.
         for (int i = 0; i < 4; i++)
         {
-            col.Add((longueur / 4) * i);  // Positions en X
-            row.Add((largeur / 4) * i);   // Positions en Y
+            col.Add((longueur / columnAmount) * i);  
+            row.Add((largeur / rowAmount) * i); 
         }
     }
 
-    // Ajouter un fragment à la fresque
+
+    /// <summary>
+    /// Add a fragment to the puzzle. This function places the fragment to his right position depending on the object holding this script.
+    /// The parameter excpects a puzzle fragment with a row and collumn values.
+    /// </summary>
+    /// <param name="fragment"></param>
     public void AddFragmentToFresque(PuzzleFragment fragment)
     {
-        // Calculer la position correcte du fragment sur la fresque
-        // Dépendant de la position en lignes et colonnes, il faut ajuster pour que (0,0) soit en haut à gauche
-
-        // Normaliser la position en fonction des dimensions de la fresque
+    
         float normalizedX = (col[fragment.col] / longueur) * fresque.transform.localScale.x;
+
         float normalizedY = (row[fragment.row] / largeur) * fresque.transform.localScale.y;
 
-        // Décalage pour que l'origine (0,0) soit en haut à gauche
-        float offsetX = fresque.transform.localScale.x / 2f;
-        float offsetY = fresque.transform.localScale.y / 2f;
 
-        // Calculer la position locale en tenant compte du décalage
-        Vector3 position = new Vector3(normalizedX - offsetX, normalizedY + offsetY, this.transform.position.z);
+        float offsetXFresque = fresque.transform.localScale.x / 2f;
 
-        // Appliquer la position locale au fragment
-        fragment.transform.localPosition = position;
+        float offsetYFresque = fresque.transform.localScale.y / 2f;
+        
+        float offsetXFragment = fragment.transform.localScale.x*2;
+        
+        float offsetYFragment = fragment.transform.localScale.y*2;
+
+        Vector3 position = new Vector3(normalizedX - offsetXFresque + offsetXFragment, offsetYFresque - normalizedY - offsetYFragment, this.transform.position.z);
+
+        Vector3 fragmentPosition = position;
+        Vector3 fragmentScale = Vector3.one;
+
+
+        float fragmentWidth = longueur / columnAmount;  
+        float fragmentHeight = largeur / rowAmount;  
+
+        //Adjusts the scale of the fragment to the fresque
+
+        BoxCollider fragCollider = fragment.GetComponent<BoxCollider>();
+        if (fragCollider != null)
+        {
+            Vector3 currentSize = fragCollider.size;
+            Vector3 newScale = new Vector3(
+                fragmentWidth / currentSize.x,
+                fragmentHeight / currentSize.y,
+                1f); // Conserve l'épaisseur Z
+
+            fragmentScale = newScale;
+        }
+        else 
+        {
+            fragment.transform.localScale = new Vector3(
+                fragmentWidth,
+                fragmentHeight,
+                1f);
+        }
+
+
+        if (puzzleGrid[fragment.row, fragment.col] != null)
+        {
+            Debug.LogWarning($"Un fragment est déjà en {fragment.row}, {fragment.col}");
+            return;
+        }
+
+        puzzleGrid[fragment.row, fragment.col] = fragment;
+
+        fragment.MoveFragment(fragmentPosition, fragmentScale);
+
+        Debug.Log(IsPuzzleComplete());
+
+    }
+    public bool IsPuzzleComplete()
+    {
+        foreach (var fragment in puzzleGrid)
+        {
+            if (fragment == null)
+                return false;
+        }
+        return true;
     }
 }
