@@ -1,11 +1,15 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Room_", menuName = "Game/Rooms/Data", order = 1)]
+[System.Serializable]
 public class RoomDataBase : ScriptableObject
 {
     [Header("Identification")]
     public string roomId;
+
+    [ScenePath] 
     public string sceneName;
+ 
 
     [Header("Default State")]
     public RoomStateEnum initialState;

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class TransitionManager : MonoBehaviour
 {
     public Animator transition;
+    public Animator transitionToMainMenu;
     [SerializeField]
     private float transitionTime = 1f;
 
@@ -33,11 +34,25 @@ public class TransitionManager : MonoBehaviour
         StartCoroutine(LoadScene("Pathfinding_1.0"));
     }
 
-    
+    public void BackToMainMenu()
+    {
+        StartCoroutine(MainMenu("MainMenu"));
+    }
+
+
+
     IEnumerator LoadScene(string sceneName)
     {
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(sceneName);
     }
+
+    IEnumerator MainMenu(string sceneName)
+    {
+        transitionToMainMenu.SetTrigger("Start");
+        yield return new WaitForSeconds(transitionTime);
+        SceneManager.LoadScene(sceneName);
+    }
+
 }
