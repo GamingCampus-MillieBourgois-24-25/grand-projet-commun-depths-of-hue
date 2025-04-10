@@ -166,7 +166,6 @@ public class Rope2DCreator : MonoBehaviour
 
     [SerializeField] private float motorSpeedChangeInterval = 2f;
     private float timeSinceLastChange = 0f;
-    private bool wasMotorSpeedNegative = false;
     
     public int GetSegmentCount() => segmentsCount;
     
