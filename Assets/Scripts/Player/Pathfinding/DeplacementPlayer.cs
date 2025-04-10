@@ -39,6 +39,8 @@ public class DeplacementPlayer : MonoBehaviour
     {
         if (!navMeshAgent.enabled) return;
 
+        navMeshAgent.updateRotation = false;
+        navMeshAgent.updateUpAxis = false;
         navMeshAgent.SetDestination(playerDestination);
     }
 

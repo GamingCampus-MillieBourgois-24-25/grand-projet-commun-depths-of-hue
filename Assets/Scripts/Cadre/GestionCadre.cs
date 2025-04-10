@@ -1,9 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GestionCadre : MonoBehaviour
 {
+    private static readonly int IsWalk = Animator.StringToHash("IsWalk");
+    private static readonly int IsLeft = Animator.StringToHash("IsLeft");
     [SerializeField] private DeplacementPlayer player;
+    private Animator playerAnimator;
     public Transform center;
     
     [Header("Manage Arrows")]
@@ -55,6 +59,12 @@ public class GestionCadre : MonoBehaviour
         FoundPlayer();
         StockTargetCadre();
         StockVisiblities();
+    }
+
+    private void Start()
+    {
+        if (!player) return;
+        playerAnimator = player.GetComponent<Animator>();
     }
 
     #region Gestion d'événements
@@ -145,16 +155,43 @@ public class GestionCadre : MonoBehaviour
     {
         ResetArrows();
 
-        Debug.Log("good0");
         if (!arrowsVisibilities.ContainsKey(_original) || !arrowsVisibilities[_original]) return;
-              
-        Debug.Log("good1");
         if (!arrowToCadre.TryGetValue(_original, out var cadre)) return;
-        
-        Debug.Log("good2");
         
         player.SetPlayerDestination(cadre.transform.TransformPoint(cadre.GetComponent<GestionCadre>().center.localPosition));
         cadre.GetComponent<GestionCadre>().SetArrowsVisibilities();
         player.MovePlayer();
+        
+        float angleZ = 0;
+
+        switch (_original.name)
+        {
+            case "ArrowDown":
+                Debug.Log("Direction down");
+                angleZ = cadre.GetComponent<GestionCadre>().angleTargetDown;
+                playerAnimator.SetBool(IsWalk, true);
+                playerAnimator.SetBool(IsLeft, false);
+                break;
+            case "ArrowLeft":
+                Debug.Log("Direction left");
+                angleZ = 180f;
+                playerAnimator.SetBool(IsWalk, false);
+                playerAnimator.SetBool(IsLeft, true);
+                break;
+            case "ArrowRight":
+                Debug.Log("Direction right");
+                angleZ = 0;
+                playerAnimator.SetBool(IsWalk, false);
+                playerAnimator.SetBool(IsLeft, true);
+                break;
+            case "ArrowUp":
+                Debug.Log("Direction up");
+                angleZ = 0f;
+                playerAnimator.SetBool(IsWalk, true);
+                playerAnimator.SetBool(IsLeft, false);
+                break;
+        }
+        
+        player.transform.rotation = Quaternion.Euler(0, 0, angleZ);
     }
 }

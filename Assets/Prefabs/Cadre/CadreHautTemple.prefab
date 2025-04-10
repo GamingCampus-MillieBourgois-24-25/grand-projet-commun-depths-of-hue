@@ -722,4 +722,4 @@ MonoBehaviour:
   targetCadreDown: {fileID: 0}
   arrowDown: {fileID: 7932013276807918324}
   tagToFoundCadreDown: 
-  angleTargetDown: 0
+  angleTargetDown: 180

@@ -271,7 +271,7 @@ MonoBehaviour:
   targetCadreDown: {fileID: 0}
   arrowDown: {fileID: 3644020875952648463}
   tagToFoundCadreDown: 
-  angleTargetDown: 0
+  angleTargetDown: 180
 --- !u!1 &2685084833594333934
 GameObject:
   m_ObjectHideFlags: 0
