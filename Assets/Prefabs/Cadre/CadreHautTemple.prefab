@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cadre: {fileID: 4964681290440356594}
-  targetCadre: {fileID: 0}
+  targetArrow: {fileID: 3343379724257393347}
 --- !u!1 &4776553405529786192
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cadre: {fileID: 4964681290440356594}
-  targetCadre: {fileID: 0}
+  targetArrow: {fileID: 4776553405529786192}
 --- !u!1 &6817804846552221055
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,7 +419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cadre: {fileID: 4964681290440356594}
-  targetCadre: {fileID: 0}
+  targetArrow: {fileID: 6817804846552221055}
 --- !u!1 &7932013276807918324
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,7 +524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cadre: {fileID: 4964681290440356594}
-  targetCadre: {fileID: 7932013276807918324}
+  targetArrow: {fileID: 7932013276807918324}
 --- !u!1 &8624816385805410537
 GameObject:
   m_ObjectHideFlags: 0
@@ -722,4 +722,4 @@ MonoBehaviour:
   targetCadreDown: {fileID: 0}
   arrowDown: {fileID: 7932013276807918324}
   tagToFoundCadreDown: 
-  angleTargetDown: 0
+  angleTargetDown: 180

@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 public class ArrowsTrigger : MonoBehaviour
 {
     [SerializeField] private GestionCadre cadre;
-    [SerializeField] private GameObject targetCadre;
+    [SerializeField] private GameObject targetArrow;
     private void Start()
     {
         EventTrigger trigger = GetComponent<EventTrigger>();
@@ -17,6 +17,6 @@ public class ArrowsTrigger : MonoBehaviour
     public void OnPointerDownDelegate(PointerEventData data)
     {
         Debug.Log("clicked");
-        cadre.NavigateCadre(targetCadre);
+        cadre.NavigateCadre(targetArrow);
     }
 }
