@@ -25,7 +25,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2929265223208164678}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.204}
+  m_LocalPosition: {x: 0, y: 0, z: -0.051}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 1}
+  m_SizeDelta: {x: 0.1, y: 0.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7273446260544690531
 Canvas:
@@ -88,7 +88,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.4}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4135322845867592436}
@@ -229,7 +229,6 @@ GameObject:
   - component: {fileID: 4135322845867592436}
   - component: {fileID: 9113805585902498208}
   - component: {fileID: 1587470247658750617}
-  - component: {fileID: 2345701983182177094}
   m_Layer: 0
   m_Name: Piece_3_0
   m_TagString: Untagged
@@ -273,7 +272,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 0.4}
+  m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1587470247658750617
 MonoBehaviour:
@@ -291,15 +290,3 @@ MonoBehaviour:
   col: 3
   id: Piece_3_0
   icon: {fileID: 21300000, guid: 7dd1ade5a54fb624c8519db32620e71a, type: 3}
---- !u!114 &2345701983182177094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6902147977748524255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 917ed62844ccbc04c8992923070b4422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

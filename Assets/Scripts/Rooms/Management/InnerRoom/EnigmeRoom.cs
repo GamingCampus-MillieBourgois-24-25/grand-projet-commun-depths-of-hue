@@ -18,14 +18,14 @@ public class EnigmeRoom : Room
         foreach (var enigme in enigmes)// subscribe to each enigme OnSucces event.
         {
             enigme.OnSuccess += OnEnigmeResolved;
-            InitilizeCurrentEnigma();
         }
+        InitilizeCurrentEnigma();
     }
 
     /// <summary>
     /// This function is used to initialize and launch the first enigme not resolved yet in the enigmas list.
     /// </summary>
-    private void InitilizeCurrentEnigma()
+    protected virtual void InitilizeCurrentEnigma()
     {
         foreach (var enigme in enigmes)
         {
@@ -47,6 +47,16 @@ public class EnigmeRoom : Room
     private void OnEnigmeResolved()
     {
         enigmesResolved++;
+
+        if  (IsRoomComplete())
+        {
+            EndRoomSequence();
+        }
+        else
+        {
+            InitilizeCurrentEnigma();
+        }
+        
     }
 
     /// <summary>
@@ -58,4 +68,13 @@ public class EnigmeRoom : Room
         return enigmesResolved >= enigmes.Count;
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual void EndRoomSequence()
+    {
+        roomData.roomState = RoomStateEnum.Completed;
+
+    }
 }

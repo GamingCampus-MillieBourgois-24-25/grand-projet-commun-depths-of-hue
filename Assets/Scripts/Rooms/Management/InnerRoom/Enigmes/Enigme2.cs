@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Room1 : EnigmeRoom
+public class Enigme2 : Enigme
 {
     public override void Initialize()
     {
         base.Initialize();
-        Debug.Log("YALALALA");
+        Debug.Log("al");
     }
 }
-

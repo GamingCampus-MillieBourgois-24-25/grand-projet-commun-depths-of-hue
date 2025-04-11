@@ -25,7 +25,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2907200375557519736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.204}
+  m_LocalPosition: {x: 0, y: 0, z: -0.051}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 1}
+  m_SizeDelta: {x: 0.1, y: 0.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1865113556443802520
 Canvas:
@@ -71,7 +71,6 @@ GameObject:
   - component: {fileID: 6398155514929980226}
   - component: {fileID: 4732665668179567536}
   - component: {fileID: 3947258472577818243}
-  - component: {fileID: 8779236448043379617}
   m_Layer: 0
   m_Name: Piece_3_2
   m_TagString: Untagged
@@ -115,7 +114,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 0.4}
+  m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3947258472577818243
 MonoBehaviour:
@@ -133,18 +132,6 @@ MonoBehaviour:
   col: 3
   id: Piece_3_2
   icon: {fileID: 21300000, guid: f4aa325e75fa9a0489adffb511318c2e, type: 3}
---- !u!114 &8779236448043379617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3119569610649958138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 917ed62844ccbc04c8992923070b4422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3164848794982595347
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +235,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.4}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6398155514929980226}
