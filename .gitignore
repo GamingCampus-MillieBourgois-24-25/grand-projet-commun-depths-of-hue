@@ -159,3 +159,6 @@ Assets/AddressableAssetsData/AssetGroups/Localization-String-Tables-English (en)
 Assets/AddressableAssetsData/AssetGroups/Localization-String-Tables-French (France) (fr-FR).asset
 
 # End of https://www.toptal.com/developers/gitignore/api/unity,rider
+
+#Custom 
+Recordings

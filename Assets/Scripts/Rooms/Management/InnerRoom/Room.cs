@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Room : MonoBehaviour
 {
+    [SerializeField] public RoomDataBase roomData;
 
     /// <summary>
     /// Called when scene is loaded. Will initialize the room.
@@ -13,6 +14,7 @@ public class Room : MonoBehaviour
     {
 
     }
+
     public void ReturnToHub()
     {
         SceneManager.LoadScene("Hub");

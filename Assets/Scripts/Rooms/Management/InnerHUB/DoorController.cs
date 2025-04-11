@@ -18,7 +18,7 @@ public class DoorController : MonoBehaviour
     {
         //Check room's state
         RoomDataBase targetRoom = RoomManager.Instance.GetRoomData(targetRoomId);
-        isLocked = (targetRoom.CurrentState != RoomStateEnum.Unlocked);
+        isLocked = (targetRoom.CurrentState == RoomStateEnum.Locked);
 
         // Update visuals
 
@@ -27,7 +27,7 @@ public class DoorController : MonoBehaviour
             UpdateDoorVisual();
 
         }
-        // Debug or in game message display
+        
         Debug.Log($"Porte {targetRoomId} initialisée : Verrouillée = {isLocked}");
     }
 
@@ -71,6 +71,7 @@ public class DoorController : MonoBehaviour
         }
         else
         {
+            RoomManager.Instance.UnlockRoom(targetRoomId);
             Debug.Log("Door Locked !");
         }
     }

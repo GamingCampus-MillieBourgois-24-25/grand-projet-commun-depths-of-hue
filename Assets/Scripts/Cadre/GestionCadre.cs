@@ -1,10 +1,17 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GestionCadre : MonoBehaviour
 {
+    private static readonly int IsWalk = Animator.StringToHash("IsWalk");
+    private static readonly int IsLeft = Animator.StringToHash("IsLeft");
     [SerializeField] private DeplacementPlayer player;
+    private Animator playerAnimator;
     public Transform center;
+    private float angleZStart = 0f;
+    private float angleZStartSide = 0f;
+    private bool isRotating = false;
     
     [Header("Manage Arrows")]
     [SerializeField] private bool ArrowLeft;
@@ -57,6 +64,12 @@ public class GestionCadre : MonoBehaviour
         StockVisiblities();
     }
 
+    private void Start()
+    {
+        if (!player) return;
+        playerAnimator = player.GetComponent<Animator>();
+    }
+
     #region Gestion d'événements
     private void OnEnable()
     {
@@ -70,6 +83,7 @@ public class GestionCadre : MonoBehaviour
 
     private void FoundTargetCadre()
     {
+        arrowToCadre.Clear();
         // assignation des arrows à un cadre target (si y'en a), une fois que je les ai trouvé juste en haut
         if (arrowLeft && targetCadreLeft) arrowToCadre[arrowLeft] = targetCadreLeft;
         if (arrowRight && targetCadreRight) arrowToCadre[arrowRight] = targetCadreRight;
@@ -78,7 +92,7 @@ public class GestionCadre : MonoBehaviour
     }
     #endregion
 
-    #region Attribution des différentes varaibles
+    #region Attribution des différentes variables
     private void FoundPlayer()
     {
         // permet de trouver le joueur
@@ -90,10 +104,10 @@ public class GestionCadre : MonoBehaviour
     {
         // permet de stock les arrows key->value pour avoir l'info si ils sont visibles ou non
         // Gestion de l'anti duplication dans la map pour éviter les erreurs
-        if (!arrowsVisibilities.ContainsKey(arrowLeft) || !arrowsVisibilities.ContainsValue(ArrowLeft)) arrowsVisibilities.Add(arrowLeft, ArrowLeft);
-        if (!arrowsVisibilities.ContainsKey(arrowRight) || !arrowsVisibilities.ContainsValue(ArrowRight)) arrowsVisibilities.Add(arrowRight, ArrowRight);
-        if (!arrowsVisibilities.ContainsKey(arrowUp) || !arrowsVisibilities.ContainsValue(ArrowUp)) arrowsVisibilities.Add(arrowUp, ArrowUp);
-        if (!arrowsVisibilities.ContainsKey(arrowDown) || !arrowsVisibilities.ContainsValue(ArrowDown)) arrowsVisibilities.Add(arrowDown, ArrowDown);
+        arrowsVisibilities.TryAdd(arrowLeft, ArrowLeft);
+        arrowsVisibilities.TryAdd(arrowRight, ArrowRight);
+        arrowsVisibilities.TryAdd(arrowUp, ArrowUp);
+        arrowsVisibilities.TryAdd(arrowDown, ArrowDown);
     }
     
     private void StockTargetCadre()
@@ -145,16 +159,123 @@ public class GestionCadre : MonoBehaviour
     {
         ResetArrows();
 
-        Debug.Log("good0");
         if (!arrowsVisibilities.ContainsKey(_original) || !arrowsVisibilities[_original]) return;
-              
-        Debug.Log("good1");
         if (!arrowToCadre.TryGetValue(_original, out var cadre)) return;
         
-        Debug.Log("good2");
-        
-        player.SetPlayerDestination(cadre.transform.TransformPoint(cadre.GetComponent<GestionCadre>().center.localPosition));
-        cadre.GetComponent<GestionCadre>().SetArrowsVisibilities();
+        player.SetPlayerDestination(cadre.transform.TransformPoint(cadre.GetComponent<GestionCadre>().center.localPosition), cadre.GetComponent<GestionCadre>());
         player.MovePlayer();
+        
+        #region Gestion Rotation par Arrows
+        float angleZ = 0;
+        switch (_original.name)
+        {
+            case "ArrowDown":
+                angleZ = 180f;
+                if (player.PlayerPressLeftArrow || player.PlayerPressRightArrow)
+                {
+                    angleZStart = angleZStartSide;
+                }
+                else
+                {
+                    angleZStart = 0f;
+                }
+                ResetBoolAnimation("IsWalk");
+                if (!player.PlayerPressDownArrow && !isRotating)
+                {
+                    StartCoroutine(RotateZOverTime(player.transform, angleZ, 2f));
+                    isRotating = true;
+                }
+                player.PlayerPressDownArrow = true;
+                player.PlayerPressUpArrow = false;
+                ResetBoolSideArrowInPlayer();
+                break;
+            case "ArrowLeft":
+                angleZ = 0;
+                ResetBoolAnimation("IsLeft");
+                angleZStartSide = -90f;
+                player.PlayerPressLeftArrow = true;
+                player.PlayerPressRightArrow = false;
+                player.transform.rotation = Quaternion.Euler(0, 0, angleZ);
+                ResetBoolUpArrowInPlayer();
+                break;
+            case "ArrowRight":
+                angleZ = 0;
+                ResetBoolAnimation("IsRight");
+                angleZStartSide = 90f;
+                player.PlayerPressRightArrow = true;
+                player.PlayerPressLeftArrow = false;
+                player.transform.rotation = Quaternion.Euler(0, 0, angleZ);
+                ResetBoolUpArrowInPlayer();
+                break;
+            case "ArrowUp":
+                angleZ = 0f;
+                if (player.PlayerPressLeftArrow || player.PlayerPressRightArrow)
+                {
+                    angleZStart = angleZStartSide;
+                }
+                else
+                {
+                    angleZStart = 180f;
+                }
+                ResetBoolAnimation("IsWalk");
+                if (!player.PlayerPressUpArrow && !isRotating)
+                {
+                    StartCoroutine(RotateZOverTime(player.transform, angleZ, 2f));
+                    isRotating = true;
+                }
+                player.PlayerPressUpArrow = true;
+                player.PlayerPressDownArrow = false;
+                ResetBoolSideArrowInPlayer();
+                break;
+        }
+        #endregion
+    }
+
+    private void ResetBoolAnimation(string _animToSkip)
+    {
+        if (!playerAnimator || !player) return;
+        foreach (var t in player.ListAnimations)
+        {
+            if (t == _animToSkip)
+            {
+                playerAnimator.SetBool(Animator.StringToHash(t), true);
+                continue;
+            }
+            playerAnimator.SetBool(Animator.StringToHash(t), false);
+        }
+    }
+
+    private IEnumerator RotateZOverTime(Transform obj, float targetZAngle, float duration, float step = 0f)
+    {
+        isRotating = true;
+        
+        float startZ = angleZStart;
+        float shortestAngle = Mathf.DeltaAngle(startZ, targetZAngle);
+
+        float z = startZ + shortestAngle * (step / duration);
+        obj.rotation = Quaternion.Euler(obj.eulerAngles.x, obj.eulerAngles.y, z);
+
+        if (step < duration)
+        {
+            yield return new WaitForEndOfFrame(); // ou yield return null
+            StartCoroutine(RotateZOverTime(obj, targetZAngle, duration, step + Time.deltaTime));
+        }
+        else
+        {
+            obj.rotation = Quaternion.Euler(obj.eulerAngles.x, obj.eulerAngles.y, targetZAngle);
+            isRotating = false;
+        }
+    }
+
+    private void ResetBoolSideArrowInPlayer()
+    {
+        player.PlayerPressLeftArrow = false;
+        player.PlayerPressRightArrow = false;
+    }
+    
+    private void ResetBoolUpArrowInPlayer()
+    {
+        player.PlayerPressUpArrow = false;
+        player.PlayerPressDownArrow = false;
     }
 }
