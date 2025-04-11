@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEditor;
 using UnityEngine.UI;
 using System.IO;
-using UnityEditor;
 
-public class DynamicPuzzleGenerator : MonoBehaviour
+public class DynamicPuzzleGeneratorEditor : EditorWindow
 {
     [Header("Source Settings")]
     public Texture2D sourceImage;
@@ -19,11 +19,34 @@ public class DynamicPuzzleGenerator : MonoBehaviour
     [Header("Output Settings")]
     public string outputFolder = "Assets/Prefabs/PuzzlePieces";
 
-    [ContextMenu("Generate Puzzle Pieces")]
-    public void GeneratePuzzlePieces()
+    [MenuItem("Tools/Generate Puzzle Pieces")]
+    public static void ShowWindow()
+    {
+        GetWindow<DynamicPuzzleGeneratorEditor>("Puzzle Generator");
+    }
+
+    void OnGUI()
+    {
+        GUILayout.Label("Puzzle Generation Settings", EditorStyles.boldLabel);
+
+        sourceImage = (Texture2D)EditorGUILayout.ObjectField("Source Image", sourceImage, typeof(Texture2D), false);
+        rows = EditorGUILayout.IntSlider("Rows", rows, 1, 16);
+        columns = EditorGUILayout.IntSlider("Columns", columns, 1, 16);
+        thickness = EditorGUILayout.FloatField("Thickness", thickness);
+        scale = EditorGUILayout.FloatField("Scale", scale);
+        pixelsPerUnit = EditorGUILayout.FloatField("Pixels Per Unit", pixelsPerUnit);
+        outputFolder = EditorGUILayout.TextField("Output Folder", outputFolder);
+
+        if (GUILayout.Button("Generate Puzzle Pieces"))
+        {
+            GeneratePuzzlePieces();
+        }
+    }
+
+    void GeneratePuzzlePieces()
     {
         uiOffset = -(thickness * 51f) / 100.0f;
-#if UNITY_EDITOR
+
         if (!ValidateInputs()) return;
 
         PrepareOutputFolders();
@@ -40,7 +63,6 @@ public class DynamicPuzzleGenerator : MonoBehaviour
         }
 
         FinalizeGeneration();
-#endif
     }
 
     bool ValidateInputs()
@@ -62,15 +84,22 @@ public class DynamicPuzzleGenerator : MonoBehaviour
 
     void PrepareOutputFolders()
     {
-        Directory.CreateDirectory(outputFolder);
-        Directory.CreateDirectory($"{outputFolder}/Textures");
+        if (!Directory.Exists(outputFolder))
+        {
+            Directory.CreateDirectory(outputFolder);
+        }
+
+        if (!Directory.Exists($"{outputFolder}/Textures"))
+        {
+            Directory.CreateDirectory($"{outputFolder}/Textures");
+        }
+
         AssetDatabase.Refresh();
     }
 
     void GeneratePuzzlePiece(int x, int y, int width, int height)
     {
         string pieceName = $"Piece_{x}_{y}";
-        EditorUtility.DisplayProgressBar("Generating Puzzle", pieceName, (float)(y * columns + x) / (rows * columns));
 
         try
         {
@@ -132,44 +161,36 @@ public class DynamicPuzzleGenerator : MonoBehaviour
         DestroyImmediate(cube.GetComponent<BoxCollider>());
     }
 
-
     void CreateDynamicCanvas(GameObject parent, string texturePath, int width, int height)
     {
-        // Create Canvas
         GameObject canvasObj = new GameObject("PieceCanvas");
         canvasObj.transform.SetParent(parent.transform);
         canvasObj.layer = LayerMask.NameToLayer("UI");
 
-        // Setup Canvas
         Canvas canvas = canvasObj.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.WorldSpace;
         canvas.worldCamera = Camera.main;
 
-        // Calculate dimensions
         float aspect = (float)width / height;
         float canvasWidth = aspect * scale;
         float canvasHeight = scale;
 
-        // Configure Canvas RectTransform
         RectTransform canvasRT = canvasObj.GetComponent<RectTransform>();
         canvasRT.sizeDelta = new Vector2(canvasWidth, canvasHeight);
         canvasRT.localPosition = new Vector3(0, 0, 0 + uiOffset);
         canvasRT.localRotation = Quaternion.identity;
         canvasRT.localScale = Vector3.one;
 
-        // Create Image
         GameObject imageObj = new GameObject("PieceImage");
         imageObj.transform.SetParent(canvasObj.transform);
         imageObj.transform.localPosition = new Vector3(0, 0, 0);
         imageObj.layer = LayerMask.NameToLayer("UI");
 
-        // Setup Image
         Image image = imageObj.AddComponent<Image>();
         image.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(texturePath);
         image.preserveAspect = true;
         image.raycastTarget = false;
 
-        // Configure Image RectTransform
         RectTransform imageRT = imageObj.GetComponent<RectTransform>();
         imageRT.anchorMin = Vector2.zero;
         imageRT.anchorMax = Vector2.one;
@@ -179,19 +200,15 @@ public class DynamicPuzzleGenerator : MonoBehaviour
 
     void AddPuzzleComponents(GameObject piece, string texturePath, int x, int y)
     {
-        // Add collider
         float aspect = (float)(sourceImage.width / columns) / (sourceImage.height / rows);
         BoxCollider collider = piece.AddComponent<BoxCollider>();
         collider.size = new Vector3(aspect * scale, scale, thickness);
 
-        // Add puzzle components
         PuzzleFragment fragment = piece.AddComponent<PuzzleFragment>();
         fragment.row = y;
         fragment.col = x;
         fragment.id = $"Piece_{x}_{y}";
         fragment.icon = AssetDatabase.LoadAssetAtPath<Sprite>(texturePath);
-
-
     }
 
     void SaveAsPrefab(GameObject obj, string name)
@@ -204,6 +221,6 @@ public class DynamicPuzzleGenerator : MonoBehaviour
     {
         EditorUtility.ClearProgressBar();
         AssetDatabase.Refresh();
-        Debug.Log("Puzzle generation completed!");
+     
     }
 }
