@@ -35,6 +35,7 @@ public class Raycat : MonoBehaviour
 
             if (script != null)
             {
+
                 script.Invoke("OnObjectClicked", 0f);
             }
             else
