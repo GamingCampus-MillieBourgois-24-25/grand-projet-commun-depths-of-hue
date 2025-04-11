@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Recorder.OutputPath;
 
 public class EnigmeRoom : Room
 {
@@ -70,11 +71,12 @@ public class EnigmeRoom : Room
 
 
     /// <summary>
-    /// 
+    /// End of room sequence. (logique..)
     /// </summary>
     public virtual void EndRoomSequence()
     {
-        roomData.roomState = RoomStateEnum.Completed;
+        roomData.CurrentState = RoomStateEnum.Completed;
+        roomData.roomState = roomData.CurrentState;
 
     }
 }
