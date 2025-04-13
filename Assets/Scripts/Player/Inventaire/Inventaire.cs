@@ -18,8 +18,7 @@ public class Inventaire : MonoBehaviour
 
     void Start()
     {
-        /*save.LoadGame();*/
-        save.DeleteSave();
+        save.LoadGame();
         string searchTerm = "perle";
         List<ItemData> matchingItems = FindItemsByPartialName( searchTerm);
 
@@ -32,13 +31,14 @@ public class Inventaire : MonoBehaviour
 
     public void Add(ItemData item, GameObject obj)
     {
-        if (!inventaire.Contains(item) || item.type.ToString() == "Stack")
+        if (inv.GetUnmodifiedSprite() > 0 || item.type.ToString() == "Stack" || (!inventaire.Contains(item) && item.type.ToString() != "Stack"))
         {
             inventaire.Add(item);
             inv.UpdateUI();
             Destroy(obj);
             part.transform.position = obj.transform.position;
             part.Play();
+            save.SaveGame();
             Debug.Log(item.itemName + " ajouté à l'inventaire.");
         }
         else
@@ -98,6 +98,7 @@ public class Inventaire : MonoBehaviour
     public List<ItemData> GetInventaire() {  return inventaire; }
     public List<string> GetId()
     {
+        ids.Clear();
         if(inventaire.Count == 0) 
         { 
             return null; 
@@ -120,7 +121,6 @@ public class Inventaire : MonoBehaviour
                 if (ids[i] == itemDatas[j].GetId())
                 {
                     inventaire.Add(itemDatas[j]);
-                    print("trouve");
                 }
             }
         }
