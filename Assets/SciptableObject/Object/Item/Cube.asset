@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: Cube
   itemSprite: {fileID: 1944251251, guid: 5a04331407e277a4baf352ca36531bf3, type: 3}
   itemDescription: je suis un cube
-  type: 1
+  type: 3

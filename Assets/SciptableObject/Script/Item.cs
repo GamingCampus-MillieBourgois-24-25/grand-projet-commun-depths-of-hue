@@ -10,7 +10,7 @@ public class ItemData : ScriptableObject
     public string itemName;
     public Sprite itemSprite;
     public string itemDescription;
-    public enum itemType { none, inspectable, Enigme, };
+    public enum itemType { none, inspectable, Enigme, Stack};
     public itemType type;
 
     public string GetId() { return id; }
