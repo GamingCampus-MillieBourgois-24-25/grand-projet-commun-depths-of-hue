@@ -15,6 +15,9 @@ public class FramesManager : MonoBehaviour
     [SerializeField] private Sprite lockedFrame;
     [SerializeField] private Sprite unlockedFrame;
 
+
+    public static FramesManager Instance;
+
     [System.Serializable]
     public class Frame
     {
@@ -52,6 +55,18 @@ public class FramesManager : MonoBehaviour
         mainCamera = Camera.main;
         SwitchFrame(initalFrame);
 
+    }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     /// <summary>
@@ -225,6 +240,34 @@ public class FramesManager : MonoBehaviour
         foreach (var obj in currentFrame.ActiveProps)
         {
             obj.SetActive(true);
+        }
+    }
+
+    public void UnlockFrame(string frame_id)
+    {
+        //Target frame reference
+        Frame targetFrame = System.Array.Find(frames, s => s.id == frame_id);
+
+        if (targetFrame != null)
+        {
+            targetFrame.FrameState = RoomStateEnum.Unlocked;
+            UpdateDirectionButtons();
+        }
+        else
+        {
+            print("no frame");
+        }
+    }
+    
+    public void LockFrame(string frame_id)
+    {
+        //Target frame reference
+        Frame targetFrame = System.Array.Find(frames, s => s.id == frame_id);
+
+        if (targetFrame != null)
+        {
+            targetFrame.FrameState = RoomStateEnum.Locked;
+            UpdateDirectionButtons() ;
         }
     }
 }
