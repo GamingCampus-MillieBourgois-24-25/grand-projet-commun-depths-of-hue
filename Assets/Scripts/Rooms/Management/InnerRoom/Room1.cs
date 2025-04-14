@@ -9,5 +9,17 @@ public class Room1 : EnigmeRoom
         base.Initialize();
         Debug.Log("YALALALA");
     }
+
+    protected override void OnPostEnigme()
+    {
+        if (IsRoomComplete())
+        {
+            EndRoomSequence();
+        }
+        else
+        {
+            FramesManager.Instance.LockFrame("Cave");
+        }
+    }
 }
 

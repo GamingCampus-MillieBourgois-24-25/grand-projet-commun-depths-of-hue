@@ -11,6 +11,7 @@ public class Enigme_FindObjects : Enigme
     public int currentRound = 0;
 
     public TextMeshProUGUI[] text;
+    public GameObject panel;
 
 
     [SerializeField] private float timeLimit = 60f;
@@ -35,6 +36,8 @@ public class Enigme_FindObjects : Enigme
         timer = timeLimit;
         objectsUsedInEnigme = MakeObjectsList();
         StartTimer();
+
+        panel.SetActive(true);
     }
 
     void StartTimer()
@@ -147,11 +150,14 @@ public class Enigme_FindObjects : Enigme
             }
             else
             {
+                panel.SetActive(false);
                 Success(); // End the enigme and invoke succes event
+
             }
         }
 
     }
+
     /// <summary>
     /// This function returns the state of the round ending. True = ended.
     /// </summary>
