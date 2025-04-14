@@ -14,6 +14,9 @@ jobs:
         with:
           lfs: false
 
+      - name: Réparer tex-common
+        run: sudo apt-get install --reinstall tex-common
+
       - name: Réparer les paquets
         run: sudo dpkg --configure -a
 
