@@ -43,6 +43,7 @@ public class RoomManager : MonoBehaviour
     /// </summary>
     /// <param name="scene"></param>
     /// <param name="mode"></param>
+    /// 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (currentRoom != null)
@@ -54,8 +55,13 @@ public class RoomManager : MonoBehaviour
 
             if (roomController != null)
             {
+                if (roomController.roomData == null) 
+                {
+                    roomController.roomData = currentRoom;
+                }
+               
                 roomController.Initialize();
-                UnlockRoom("0");
+            
             }
             else
             {

@@ -42,7 +42,6 @@ public class Save : MonoBehaviour
 
     public void LoadGame()
     {
-        print(savePath);
         string json = System.IO.File.ReadAllText(savePath);
         var data = JsonUtility.FromJson<SaveDataTemp>(json);
 

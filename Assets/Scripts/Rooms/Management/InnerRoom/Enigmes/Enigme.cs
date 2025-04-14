@@ -27,6 +27,7 @@ public abstract class Enigme : MonoBehaviour
     /// </summary>
     protected virtual void Success()
     {
+        Debug.Log("win");
         isStarted = false;
         isResolved = true;
         OnSuccess?.Invoke();

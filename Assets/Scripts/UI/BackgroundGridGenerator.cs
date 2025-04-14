@@ -57,11 +57,27 @@ public class BackgroundGridGenerator : MonoBehaviour
                     gestionCadre.SetArrowsVisibilities();
                 }
 
+                #region Attribution des cadre target à tous les cadres selon les directions coché
+
+                bool isArrowLeft = gestionCadre.ArrowLeftBool;
+                bool isArrowRight = gestionCadre.ArrowRightBool;
+                bool isArrowDown = gestionCadre.ArrowDownBool;
+                bool isArrowUp = gestionCadre.ArrowUpBool;
+
+                // Exceptions
+                bool isExceptionCaseLeft = (x == columns - 1 && y == rows - 1) || (x == 2 && y == 0);
+                bool isExceptionCaseRight = (x == columns - 1 && y == rows - 1) || (x == 2 && y == 0);
+                bool isExceptionCaseDown = (x == columns - 1 && y == rows - 1) || (x == 2 && y == 0);
+                bool isExceptionCaseUp = (x == columns - 1 && y == rows - 1) || (x == rows - 3 && y == columns - 1);
+
                 // permet de set les target cadre selon leur position dans la grid
-                if (gestionCadre.ArrowLeftBool && x > 0 || gestionCadre.ArrowLeftBool && x == columns - 1 && y == rows - 1 || gestionCadre.ArrowLeftBool && x == 2 && y == 0) gestionCadre.TargetCadreLeftGO = gridCadres[x - 1, y];
-                if (gestionCadre.ArrowRightBool && x < columns - 1 || gestionCadre.ArrowRightBool && x == columns - 1 && y == rows - 1 || gestionCadre.ArrowRightBool && x == 2 && y == 0) gestionCadre.TargetCadreRightGO = gridCadres[x + 1, y];
-                if ((gestionCadre.ArrowDownBool && y > 0) || gestionCadre.ArrowDownBool && x == columns - 1 && y == rows - 1 || gestionCadre.ArrowDownBool && x == 2 && y == 0) gestionCadre.TargetCadreDownGO = gridCadres[x, y + 1];
-                if (gestionCadre.ArrowUpBool && y < rows - 1 || gestionCadre.ArrowUpBool && x == columns - 1 && y == rows - 1 || gestionCadre.ArrowUpBool && x == 2 && y == 0) gestionCadre.TargetCadreUpGO = gridCadres[x, y - 1];
+                // Variables pour vérifier les directions
+                if (isArrowLeft && (x > 0 || isExceptionCaseLeft)) gestionCadre.TargetCadreLeftGO = gridCadres[x - 1, y];
+                if (isArrowRight && (x < columns - 1 || isExceptionCaseRight)) gestionCadre.TargetCadreRightGO = gridCadres[x + 1, y];
+                if (isArrowDown && (y < rows - 1 || isExceptionCaseDown)) gestionCadre.TargetCadreDownGO = gridCadres[x, y + 1];
+                if (isArrowUp && (y > 0 || isExceptionCaseUp)) gestionCadre.TargetCadreUpGO = gridCadres[x, y - 1];
+
+                #endregion
                 
                 OnSpawnCadre?.Invoke();
             }

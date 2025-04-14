@@ -14,6 +14,14 @@ jobs:
         with:
           lfs: false
 
+      - name: Cache Unity Library
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-${{ runner.os }}-${{ hashFiles('**/ProjectSettings/EditorBuildSettings.asset') }}
+          restore-keys: |
+            Library-${{ runner.os }}-
+
       # Build
       - name: Build project
         uses: game-ci/unity-builder@v4.3.0
@@ -23,6 +31,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: Android
+          cacheName: ''
 
       # Output
       - uses: actions/upload-artifact@v4.6.0

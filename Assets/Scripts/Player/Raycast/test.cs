@@ -29,7 +29,6 @@ public class test : MonoBehaviour
 
     public void OnObjectClicked()
     {
-        Debug.Log(gameObject.name + " a été cliqué !");
         
         string gameObjectName = gameObject.name.ToLower();
 
@@ -37,14 +36,7 @@ public class test : MonoBehaviour
 
         if (foundItem != null)
         {
-            if (inventaire != null && inventaire.GetInventaire().Count < inv.spriteSlots.Count)
-            {
-                inventaire.Add( foundItem, gameObject);
-            }
-            else
-            {
-                print("plus de place");
-            }
+            inventaire.Add( foundItem, gameObject);
         }
         else
         {
