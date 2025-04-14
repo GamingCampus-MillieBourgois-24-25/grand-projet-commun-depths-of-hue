@@ -14,9 +14,6 @@ jobs:
         with:
           lfs: false
 
-      - name: Mettre à jour APT
-        run: sudo apt install -f
-
       - name: Réparer les paquets
         run: sudo dpkg --configure -a
 
