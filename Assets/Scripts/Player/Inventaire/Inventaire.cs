@@ -31,15 +31,15 @@ public class Inventaire : MonoBehaviour
 
     public void Add(ItemData item, GameObject obj)
     {
-        if (!inventaire.Contains(item))
+        if (inv.GetUnmodifiedSprite() > 0 || item.type.ToString() == "Stack" || (!inventaire.Contains(item) && item.type.ToString() != "Stack"))
         {
             inventaire.Add(item);
             inv.UpdateUI();
             Destroy(obj);
             part.transform.position = obj.transform.position;
             part.Play();
-            Debug.Log(item.itemName + " ajouté à l'inventaire.");
             save.SaveGame();
+            Debug.Log(item.itemName + " ajouté à l'inventaire.");
         }
         else
         {
@@ -98,6 +98,7 @@ public class Inventaire : MonoBehaviour
     public List<ItemData> GetInventaire() {  return inventaire; }
     public List<string> GetId()
     {
+        ids.Clear();
         if(inventaire.Count == 0) 
         { 
             return null; 
@@ -119,8 +120,7 @@ public class Inventaire : MonoBehaviour
             {
                 if (ids[i] == itemDatas[j].GetId())
                 {
-                    inventaire.Add(itemDatas[i]);
-                    print("trouve");
+                    inventaire.Add(itemDatas[j]);
                 }
             }
         }
