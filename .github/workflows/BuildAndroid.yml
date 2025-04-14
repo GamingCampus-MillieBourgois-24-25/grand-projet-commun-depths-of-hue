@@ -15,12 +15,7 @@ jobs:
           lfs: false
 
       - name: Mettre à jour APT
-        run: sudo apt-get update && sudo apt-get upgrade -y
-
-      - name: Forcer la récupération et réinstallation de tex-common
-        run: |
-          sudo apt-get install --reinstall --download-only tex-common
-          sudo dpkg -i /var/cache/apt/archives/tex-common*.deb
+        run: sudo apt install -f
 
       - name: Réparer les paquets
         run: sudo dpkg --configure -a
