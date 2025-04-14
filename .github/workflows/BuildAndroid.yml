@@ -99,4 +99,3 @@ jobs:
           sudo rm -r /home/polo/RunnerDepthsOfHue/_work/_actions/game-ci/unity-builder/v4.3.0/dist/BlankProject/Library/
           sudo rm -r /home/polo/RunnerDepthsOfHue/_work/_actions/game-ci/unity-builder/v4.3.0/dist/BlankProject/Logs/
           sudo rm -r /home/polo/RunnerDepthsOfHue/_work/_actions/game-ci/unity-builder/v4.3.0/dist/
-          sudo rm -r /home/polo/RunnerDepthsOfHue/_work/grand-projet-commun-depths-of-hue/
