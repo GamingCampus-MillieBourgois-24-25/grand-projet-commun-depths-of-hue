@@ -14,6 +14,12 @@ jobs:
         with:
           lfs: false
 
+      - name: Réparer les paquets
+        run: sudo dpkg --configure -a
+
+      - name: Installer jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
       - name: Cache Unity Library
         uses: actions/cache@v4
         with:
@@ -26,6 +32,7 @@ jobs:
       - name: Build project
         uses: game-ci/unity-builder@v4.3.0
         env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
@@ -71,15 +78,24 @@ jobs:
           RESPONSE=$(curl -s "$DISCORD_WEBHOOK_URL/messages?limit=10")
           echo "Response from Discord API: $RESPONSE"
       
-          # Extraire les IDs des messages sans jq
-          MESSAGE_ID=$(echo "$RESPONSE" | grep -o '"id":"\([^"]*\)"' | head -n 1 | sed 's/"id":"\([^"]*\)"/\1/')
+          # Extraire les IDs des messages (si la réponse est correcte)
+          MESSAGES=$(echo "$RESPONSE" | jq -r '.[].id' || echo "")
       
-          # Vérifier si un ID a été trouvé
-          if [[ -z "$MESSAGE_ID" ]]; then
+          # Vérifier si on a bien récupéré des IDs
+          if [[ -z "$MESSAGES" ]]; then
             echo "❌ Aucun message trouvé ou réponse invalide"
             exit 0
           fi
       
-          # Supprimer le message
-          curl -X DELETE "$DISCORD_WEBHOOK_URL/messages/$MESSAGE_ID"
-          sleep 1  # Pause pour éviter un rate-limit
+          # Supprimer chaque message
+          for MESSAGE_ID in $MESSAGES; do
+            curl -X DELETE "$DISCORD_WEBHOOK_URL/messages/$MESSAGE_ID"
+            sleep 1  # Pause pour éviter un rate-limit
+          done
+
+      # End Build
+      - name: Remove Game
+        run: |
+          sudo rm -r /home/polo/RunnerDepthsOfHue/_work/_actions/game-ci/unity-builder/v4.3.0/dist/BlankProject/Library/
+          sudo rm -r /home/polo/RunnerDepthsOfHue/_work/_actions/game-ci/unity-builder/v4.3.0/dist/BlankProject/Logs/
+          sudo rm -r /home/polo/RunnerDepthsOfHue/_work/_actions/game-ci/unity-builder/v4.3.0/dist/
