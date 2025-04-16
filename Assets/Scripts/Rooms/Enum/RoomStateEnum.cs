@@ -1,6 +1,6 @@
 public enum RoomStateEnum
 {
-    Locked,
     Unlocked,
+    Locked,   
     Completed
 }
