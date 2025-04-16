@@ -20,7 +20,10 @@ public class Enigme_FindObjects : Enigme
     
 
     [SerializeField] private List <GameObject> objectsInScene = new List<GameObject>(); // Every object possibly usable for the enigme
-    [SerializeField] private List<GameObject> objectsUsedInEnigme; // Every object dynamically chose for the enigme
+    [SerializeField] private List<GameObject> objectsUsedInEnigme = new List<GameObject>(); // Every object dynamically chose for the enigme
+
+    [SerializeField] private List<Vector3> allObjectsPositions = new List<Vector3>(); // Every object dynamically chose for the enigme
+
 
     [SerializeField] private int amountObjectsUsed = 3; // How many objects are used for this enigme
 
@@ -28,16 +31,38 @@ public class Enigme_FindObjects : Enigme
     {
         if (Instance == null)
         {
+            CollectAllPositionsFromScene();
+
             Instance = this;
             base.Initialize();
         }
 
         ClearText();
+        SetObjects();
         timer = timeLimit;
         objectsUsedInEnigme = MakeObjectsList();
         StartTimer();
 
         panel.SetActive(true);
+    }
+    private void CollectAllPositionsFromScene()
+    {
+        GameObject container = GameObject.FindWithTag("PositionContainer");
+
+        if (container == null)
+        {
+            Debug.LogError("Le GameObject 'Position' est introuvable dans la scène !");
+            return;
+        }
+
+        allObjectsPositions.Clear();
+
+        foreach (Transform child in container.transform)
+        {
+            allObjectsPositions.Add(child.position);
+        }
+
+        Debug.Log($"Nombre de positions récupérées : {allObjectsPositions.Count}");
     }
 
     void StartTimer()
@@ -173,6 +198,25 @@ public class Enigme_FindObjects : Enigme
         for (int i = 0;i < text.Length; i++)
         {
             text[i].fontStyle = default;
+        }
+    }
+
+    private void SetObjects()
+    {
+        List<Vector3> tempoPositionList = allObjectsPositions;
+
+        for (var i = 0; i<objectsInScene.Count; i++)
+        {
+
+            int index = Random.Range(0, tempoPositionList.Count);
+
+            GameObject obj = objectsInScene[i];
+
+            obj.transform.localScale = Vector3.one;
+
+            obj.transform.position = tempoPositionList[index];
+
+            tempoPositionList.RemoveAt(index);
         }
     }
 }

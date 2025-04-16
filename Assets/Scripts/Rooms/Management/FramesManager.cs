@@ -117,7 +117,7 @@ public class FramesManager : MonoBehaviour
     {
         Vector3 startPosition = mainCamera.transform.position;
         float elapsedTime = 0f;
-        float duration = 2f; 
+        float duration = 1f; 
 
         while (elapsedTime < duration)
         {

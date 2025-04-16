@@ -8,6 +8,7 @@ TagManager:
   - Arrows
   - ActualCadre
   - Rope
+  - PositionContainer
   layers:
   - Default
   - TransparentFX
