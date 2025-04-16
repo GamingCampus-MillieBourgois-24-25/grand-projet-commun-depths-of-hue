@@ -116,22 +116,26 @@ public class FramesManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator MoveCamera(Vector3 positionCible)
     {
-        Debug.Log(positionCible + "target");
-        while (Vector3.Distance(mainCamera.transform.position, positionCible) > 0.1f)
+        Vector3 startPosition = mainCamera.transform.position;
+        float elapsedTime = 0f;
+        float duration = 1f; // ou utilise la distance / vitesse si tu veux un déplacement fluide dépendant de la distance
+
+        while (elapsedTime < duration)
         {
-            Vector3 targetPos = mainCamera.transform.position;
-
-            Debug.Log(targetPos + "original");
-
             mainCamera.transform.position = Vector3.Lerp(
-                targetPos,
+                startPosition,
                 positionCible,
-                cameraSpeed * Time.deltaTime
+                elapsedTime / duration
             );
+
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
-        
+
+        // Assure que la position finale est bien exacte
+        mainCamera.transform.position = positionCible;
     }
+
 
     /// <summary>
     /// Updates the switching frame buttons display depending on the current's frame connections
