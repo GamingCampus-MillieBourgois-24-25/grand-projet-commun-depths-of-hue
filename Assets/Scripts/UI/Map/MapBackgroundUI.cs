@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MapBackgroundUI : MonoBehaviour
@@ -7,19 +8,26 @@ public class MapBackgroundUI : MonoBehaviour
     [SerializeField] private Sprite[] backgroundSprites;
     [SerializeField] private int columns = 3;
     [SerializeField] private int rows = 3;
-    private Camera mainCamera;
+    private Camera cam;
     private GameObject[,] gridCadres;
     [SerializeField] private bool isForBackgroundLayer;
+    
+    public List<GameObject> backgrounds = new List<GameObject>();
 
-    private void Start()
+    private void OnEnable()
     {
-        mainCamera = Camera.main;
+        cam = Camera.main;
+        if (backgrounds.Count > 0)
+        {
+            UpdateBackgroundPositions();
+            return;
+        }
 
         Vector2 screenSize = GetScreenSizeInUnits(); // taille de l’écran en unités monde
         Vector2 cellSize = new Vector2(screenSize.x / columns, screenSize.y / rows);
         Vector2 origin = new Vector2(-screenSize.x / 2f, -screenSize.y / 2f); // coin bas gauche **relatif au centre de caméra**
 
-        Vector3 cameraCenter = mainCamera.transform.position;
+        Vector3 cameraCenter = cam.transform.position;
         cameraCenter.z = 0f; // on reste en 2D
 
         gridCadres = new GameObject[columns, rows];
@@ -39,6 +47,7 @@ public class MapBackgroundUI : MonoBehaviour
             Vector3 worldPosition = cameraCenter + localPosition;
 
             GameObject go = Instantiate(imagePrefab[i], worldPosition, Quaternion.identity, transform);
+            backgrounds.Add(go);
 
             SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
             sr.sprite = backgroundSprites[i];
@@ -53,8 +62,42 @@ public class MapBackgroundUI : MonoBehaviour
 
     private Vector2 GetScreenSizeInUnits()
     {
-        float height = mainCamera.orthographicSize * 2f;
-        float width = height * mainCamera.aspect;
+        float height = cam.orthographicSize * 2f;
+        float width = height * cam.aspect;
         return new Vector2(width, height);
+    }
+    
+    public void UpdateBackgroundPositions()
+    {
+        if (backgrounds.Count != columns * rows) return;
+
+        Vector2 screenSize = GetScreenSizeInUnits();
+        Vector2 cellSize = new Vector2(screenSize.x / columns, screenSize.y / rows);
+        Vector2 origin = new Vector2(-screenSize.x / 2f, -screenSize.y / 2f);
+
+        Vector3 cameraCenter = cam.transform.position;
+        cameraCenter.z = 0f;
+
+        for (int i = 0; i < backgrounds.Count; i++)
+        {
+            int x = i % columns;
+            int y = i / columns;
+            if (y >= rows) break;
+
+            Vector3 localPosition = new Vector3(
+                origin.x + cellSize.x * (x + 0.5f),
+                origin.y + cellSize.y * (y + 0.5f),
+                0f);
+
+            Vector3 worldPosition = cameraCenter + localPosition;
+
+            GameObject bg = backgrounds[i];
+            bg.transform.position = worldPosition;
+
+            SpriteRenderer sr = bg.GetComponent<SpriteRenderer>();
+            float scaleX = cellSize.x / sr.sprite.bounds.size.x;
+            float scaleY = cellSize.y / sr.sprite.bounds.size.y;
+            bg.transform.localScale = new Vector3(scaleX, scaleY, 1f);
+        }
     }
 }
