@@ -13,10 +13,10 @@ public class Raycat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // Clic souris (PC)
-        {
-            DetectAndExecute(Input.mousePosition);
-        }
+        //if (Input.GetMouseButtonDown(0)) // Clic souris (PC)
+        //{
+        //    DetectAndExecute(Input.mousePosition);
+        //}
 
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) // Tactile (mobile)
         {

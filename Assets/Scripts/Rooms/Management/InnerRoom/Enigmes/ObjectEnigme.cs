@@ -22,8 +22,7 @@ public class ObjectEnigme : MonoBehaviour
 
     }
 
-    
-
+   
 
     public void MoveFragment(Vector3 targetPosition, Vector3 finalScale)
     {

@@ -32,6 +32,9 @@ public class ZoomCamera : MonoBehaviour
 
     void Update()
     {
+
+        initialPosition = transform.position;
+
         if (cam.orthographicSize >= 4.99f)
         {
             transform.position = Vector3.Lerp(transform.position, initialPosition, Time.deltaTime * 5f);

@@ -43,7 +43,6 @@ public class FramesManager : MonoBehaviour
     public Frame currentFrame;
     public Frame[] frames;
     [SerializeField] private string initalFrame = "main_frame"; //First frame always called main_frame
-    [SerializeField] private float cameraSpeed = 2f;
 
     private Coroutine currentCameraCoroutine;
 
@@ -116,27 +115,32 @@ public class FramesManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator MoveCamera(Vector3 positionCible)
     {
-        Debug.Log(positionCible);
-        while (Vector3.Distance(mainCamera.transform.position, positionCible) > 0.1f)
-        {
-            Vector3 currentPos = mainCamera.transform.position;
+        Vector3 startPosition = mainCamera.transform.position;
+        float elapsedTime = 0f;
+        float duration = 2f; 
 
+        while (elapsedTime < duration)
+        {
             mainCamera.transform.position = Vector3.Lerp(
-                currentPos,
+                startPosition,
                 positionCible,
-                cameraSpeed * Time.deltaTime
+                elapsedTime / duration
             );
+
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
-        
+
+   
+        mainCamera.transform.position = positionCible;
     }
+
 
     /// <summary>
     /// Updates the switching frame buttons display depending on the current's frame connections
     /// </summary>
     void UpdateDirectionButtons()
     {
-        Debug.Log("sfs");
         // Reset all buttons
         upButton.gameObject.SetActive(false);
         rightButton.gameObject.SetActive(false);
