@@ -18,7 +18,7 @@ public class Inventaire : MonoBehaviour
 
     void Start()
     {
-        save.LoadGame();
+        save.LoadCategory("inventory");
         string searchTerm = "perle";
         List<ItemData> matchingItems = FindItemsByPartialName( searchTerm);
 
@@ -38,7 +38,7 @@ public class Inventaire : MonoBehaviour
             Destroy(obj);
             part.transform.position = obj.transform.position;
             part.Play();
-            save.SaveGame();
+            save.SaveCategory("inventory");
             Debug.Log(item.itemName + " ajouté à l'inventaire.");
         }
         else
@@ -101,6 +101,7 @@ public class Inventaire : MonoBehaviour
         ids.Clear();
         if(inventaire.Count == 0) 
         { 
+            
             return null; 
         }
         foreach(var item in inventaire) 
@@ -110,7 +111,10 @@ public class Inventaire : MonoBehaviour
         return ids;
     }
 
-    public void SetId(List<string> _ids) { ids = _ids; }
+    public void SetId(List<string> _ids) { 
+        print(_ids);
+        ids = _ids; 
+    }
     public void SetInventaire(List<ItemData> _inventaire) { inventaire = _inventaire; }
     public void AddItemSave()
     {
