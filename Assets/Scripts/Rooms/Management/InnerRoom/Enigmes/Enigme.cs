@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public abstract class Enigme : MonoBehaviour
 {
-    protected bool isResolved = false;
+    public bool isResolved = false;
     protected bool isStarted = false;
 
 
@@ -34,6 +34,7 @@ public abstract class Enigme : MonoBehaviour
     {
         isStarted = false;
         isResolved = true;
+        Debug.Log("OahI");
         OnSuccess?.Invoke();
     }
 

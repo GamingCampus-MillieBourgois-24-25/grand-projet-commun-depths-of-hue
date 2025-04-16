@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class ItemDouble : MonoBehaviour
 {
-    private int ID;
+    [SerializeField] private int ID;
+    public Enigme_Doble enigmeD;
 
-    // Start is called before the first frame update
-    void Start()
+    public void OnObjectClicked()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        enigmeD.ObjectClicked(gameObject);
     }
 
     public int GetId() {  return ID; }

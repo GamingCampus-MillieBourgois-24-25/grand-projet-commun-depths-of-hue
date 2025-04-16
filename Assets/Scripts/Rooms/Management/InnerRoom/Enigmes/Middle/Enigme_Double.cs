@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enigme_Doble : Enigme
@@ -7,10 +8,14 @@ public class Enigme_Doble : Enigme
     private GameObject firstSelected;
     private GameObject secondSelected;
     private int nbDouble;
-    [SerializeField] List<GameObject> ItemsDouble;
-    void Start()
+   [SerializeField] private List<GameObject> ItemsDouble;
+    [SerializeField] private Camera cam;
+    
+    public override void Initialize()
     {
-        
+        base.Initialize();
+        nbDouble = ItemsDouble.Count / 2;
+        SpawnObjects();
     }
 
     public void ObjectClicked(GameObject obj)
@@ -40,6 +45,8 @@ public class Enigme_Doble : Enigme
         {
             firstSelected.SetActive(false);
             secondSelected.SetActive(false);
+            firstSelected = null;
+            secondSelected = null;
             nbDouble--;
         }
         else
@@ -51,11 +58,13 @@ public class Enigme_Doble : Enigme
 
     protected override void Success()
     {
-        if(nbDouble == 0)
+        if(nbDouble == 0 && !isResolved)
         {
-            isStarted = false;
-            isResolved = true;
-            OnSuccess?.Invoke();
+            base.Success();
+            Debug.Log("fpfpf");
+       
+            FramesManager.Instance.LockFrame("main_frame");
+            FramesManager.Instance.UnlockFrame("Pillar");
         }
     }
 
@@ -71,5 +80,59 @@ public class Enigme_Doble : Enigme
 
             UpdateEnigme(Time.deltaTime);
         }
+    }
+
+    public void SpawnObjects()
+    {
+        Vector3 bottomLeft = cam.ViewportToWorldPoint(new Vector3(0, 0, cam.nearClipPlane));
+        Vector3 topRight = cam.ViewportToWorldPoint(new Vector3(1, 1, cam.nearClipPlane));
+
+        float minX = bottomLeft.x + 1f;
+        float maxX = topRight.x - 1f;
+        float minY = bottomLeft.y + 1f;
+        float maxY = topRight.y - 1f;
+
+        List<Vector2> occupiedPositions = new List<Vector2>();
+
+        foreach (var obj in ItemsDouble)
+        {
+            Vector2 spawnPosition = GetRandomPosition(minX, maxX, minY, maxY, occupiedPositions);
+            if (spawnPosition != Vector2.zero)
+            {
+                Vector3 newPosition = new Vector3(spawnPosition.x, spawnPosition.y, obj.transform.position.z);
+                obj.transform.position = newPosition;
+                obj.GetComponent<ItemDouble>().enigmeD = this;
+                occupiedPositions.Add(spawnPosition);
+            }
+        }
+    }
+
+
+    public Vector2 GetRandomPosition(float minX, float maxX, float minY, float maxY, List<Vector2> occupiedPositions)
+    {
+        Vector2 position;
+        bool isValidPosition = false;
+
+        while (!isValidPosition)
+        {
+            position = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
+            isValidPosition = true;
+
+            foreach (var occupied in occupiedPositions)
+            {
+                if (Vector2.Distance(position, occupied) < 2f)
+                {
+                    isValidPosition = false;
+                    break;
+                }
+            }
+
+            if (isValidPosition)
+            {
+                return position;
+            }
+        }
+
+        return Vector2.zero;
     }
 }

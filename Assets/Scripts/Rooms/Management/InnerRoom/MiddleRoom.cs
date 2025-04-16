@@ -15,16 +15,12 @@ public class MiddleRoom : EnigmeRoom
         base.Initialize();
         Debug.Log("YALALALA");
     }
-    protected override void OnPostEnigme()
+
+    public override void EndRoomSequence()
     {
-        if (IsRoomComplete())
-        {
-            EndRoomSequence();
-        }
-        else
-        {
-            FramesManager.Instance.LockFrame("Cave");
-        }
+        base.EndRoomSequence();
+
+        ReturnToHub();
     }
 
 }

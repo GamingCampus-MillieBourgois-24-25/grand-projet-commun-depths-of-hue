@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,9 +18,11 @@ public class Enigme_Pillar : Enigme
     public Raycat ray;
     public List<Pillar> pillars;
 
+    
 
-    void Start()
+    public override void Initialize()
     {
+        base.Initialize();
         if (popUp == null || textPrefab == null)
         {
             Debug.LogError("popUp ou textPrefab n'est pas assigné dans l'inspecteur.");
@@ -29,6 +32,7 @@ public class Enigme_Pillar : Enigme
         popUp.SetActive(false);
         SpawnPillars();
     }
+
     public void UpdatePopup()
     {
         pillar = ray.GetObj().GetComponent<Pillar>();
@@ -223,9 +227,8 @@ public class Enigme_Pillar : Enigme
             }
         }
         print("c'est win");
-        isStarted = false;
-        isResolved = true;
-        OnSuccess?.Invoke();
+        base.Success();
+        
     }
 
     void OnTextClicked(string itemName)
