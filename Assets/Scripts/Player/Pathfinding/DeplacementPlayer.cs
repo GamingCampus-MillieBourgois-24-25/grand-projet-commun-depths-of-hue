@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.EnhancedTouch;
-using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 public class DeplacementPlayer : MonoBehaviour
 {
@@ -34,19 +32,8 @@ public class DeplacementPlayer : MonoBehaviour
 
     #endregion
     
-    private void Awake()
-    {
-        EnhancedTouchSupport.Enable();
-    }
-
-    private void OnEnable()
-    {
-        TouchSimulation.Enable();
-    }
-
     private void Start()
     {
-        Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
         _camera = Camera.main;
         player.freezeRotation = true;
         
@@ -84,29 +71,6 @@ public class DeplacementPlayer : MonoBehaviour
         rotation.x = 0;
         rotation.y = 0;
         transform.eulerAngles = rotation;
-        
-        foreach (var touch in Touch.activeTouches)
-        {
-            if (touch.isTap)
-            {
-                Vector2 touchPosition = touch.screenPosition;
-                RaycastHit2D hit = Physics2D.Raycast(_camera.ScreenToWorldPoint(touchPosition), Vector2.zero);
-                if (hit.collider)
-                {
-                    Debug.Log("Objet touché : " + hit.collider.gameObject.name);
-                    MonoBehaviour script = hit.collider.GetComponent<MonoBehaviour>();
-
-                    if (script)
-                    {
-                        script.Invoke("OnObjectClicked", 0f);
-                    }
-                    else
-                    {
-                        print("il n'y a rien");
-                    }
-                }
-            }
-        }
 
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
