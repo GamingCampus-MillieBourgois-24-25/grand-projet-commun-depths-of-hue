@@ -8,7 +8,8 @@ public class ObjectEnigme : MonoBehaviour
     [ContextMenu("Debug")]
     public void OnObjectClicked()
     {
-        if (EnigmaTimerManager.Instance != null)
+       
+        if (Enigme_FindObjects.Instance != null)
         {
             Enigme_FindObjects.Instance.CheckItem(this.gameObject);
         }

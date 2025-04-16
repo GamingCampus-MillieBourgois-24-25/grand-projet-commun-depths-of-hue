@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Room1 : EnigmeRoom
+public class MiddleRoom : EnigmeRoom
 {
+    // Start is called before the first frame update
+    private void Start()
+    {
+        Initialize();
+    }
     public override void Initialize()
     {
         base.Initialize();
         Debug.Log("YALALALA");
     }
-
     protected override void OnPostEnigme()
     {
         if (IsRoomComplete())
@@ -21,5 +26,5 @@ public class Room1 : EnigmeRoom
             FramesManager.Instance.LockFrame("Cave");
         }
     }
-}
 
+}

@@ -6,8 +6,9 @@ public class Pillar : MonoBehaviour
 {
     public GameObject popup;
     private GameObject Obj;
-    public PillarSpawner spawner;
+    public Enigme_Pillar spawner;
     private bool isObj;
+    private string Id;
     
 
     public void OnObjectClicked()
@@ -50,4 +51,7 @@ public class Pillar : MonoBehaviour
     public GameObject GetObj() { return Obj; }
 
     public bool GetTake() { return isObj; }
+
+    public void SetId(string _id) { Id = _id; }
+    public string GetId() { return Id; }
 }

@@ -1,19 +1,22 @@
-using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor.Experimental.GraphView;
 
-public class PillarSpawner : MonoBehaviour
+public class Enigme_Pillar : Enigme
 {
     Pillar pillar = null;
     public GameObject pillarPrefab;
     public List<string> items;
-    public GameObject textPrefab; // Doit être un prefab dans les assets
+    public List<string> OrderEnigme;
+    public GameObject textPrefab;
     public GameObject popUp;
     public List<GameObject> sceneObjects;
     public float spacing = 2f;
-    public Raycat ray; // Assurez-vous que Raycat est correctement défini
+    public Raycat ray;
+    public List<Pillar> pillars;
+
 
     void Start()
     {
@@ -28,14 +31,12 @@ public class PillarSpawner : MonoBehaviour
     }
     public void UpdatePopup()
     {
-        print(ray.GetObj().GetComponent<Pillar>());
         pillar = ray.GetObj().GetComponent<Pillar>();
         if (pillar == null)
         {
-            print("cooc");
             return;
         }
-        
+
         ClearPopup();
 
         if (pillar.GetTake())
@@ -195,7 +196,36 @@ public class PillarSpawner : MonoBehaviour
 
             pillarScript.popup = popUp;
             pillarScript.spawner = this;
+            pillarScript.SetId(OrderEnigme[i]);
+            pillars.Add(pillarScript);
         }
+    }
+    public override void UpdateEnigme(float deltaTime)
+    {
+        Success();
+    }
+
+    private void Update()
+    {
+        if (isStarted)
+        {
+
+            UpdateEnigme(Time.deltaTime);
+        }
+    }
+    protected override void Success()
+    {
+        foreach (var pillar in pillars)
+        {
+            if (pillar.GetObj() == null || pillar.GetObj().name != pillar.GetId())
+            {
+                return;
+            }
+        }
+        print("c'est win");
+        isStarted = false;
+        isResolved = true;
+        OnSuccess?.Invoke();
     }
 
     void OnTextClicked(string itemName)
@@ -233,6 +263,6 @@ public class PillarSpawner : MonoBehaviour
             Debug.LogWarning($"Aucun objet nommé '{itemName}' n'a été trouvé dans le tableau sceneObjects.");
         }
 
-        
+
     }
 }
