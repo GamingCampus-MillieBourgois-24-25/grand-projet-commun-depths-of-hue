@@ -11,6 +11,7 @@ public class Enigme_FindObjects : Enigme
     public int currentRound = 0;
 
     public TextMeshProUGUI[] text;
+    public GameObject panel;
 
 
     [SerializeField] private float timeLimit = 60f;
@@ -35,6 +36,8 @@ public class Enigme_FindObjects : Enigme
         timer = timeLimit;
         objectsUsedInEnigme = MakeObjectsList();
         StartTimer();
+
+        panel.SetActive(true);
     }
 
     void StartTimer()
@@ -106,12 +109,12 @@ public class Enigme_FindObjects : Enigme
     /// Parameter expects an item.
     /// </summary>
     /// <param name="item"></param>
-    public void CheckItem(GameObject item)
+    public void CheckItem(ObjectEnigme item)
     {
         if (item == null) return;
 
   
-        if (objectsUsedInEnigme.Contains(item))
+        if (objectsUsedInEnigme.Contains(item.gameObject))
         {
           
             for (int i = 0; i < text.Length; i++)
@@ -120,7 +123,7 @@ public class Enigme_FindObjects : Enigme
                 {
                     text[i].fontStyle = FontStyles.Strikethrough; 
 
-                    objectsUsedInEnigme.Remove(item);
+                    objectsUsedInEnigme.Remove(item.gameObject);
 
                     CheckEndOfRound();
                    
@@ -129,7 +132,8 @@ public class Enigme_FindObjects : Enigme
                 }
             }
 
-            item.SetActive(false); 
+            item.MoveFragment(item.transform.position + new Vector3(-10,0,0), new Vector3(0.0f, 0.0f, 0.0f)) ;
+            //item.SetActive(false); 
         }
     }
 
@@ -147,11 +151,14 @@ public class Enigme_FindObjects : Enigme
             }
             else
             {
+                panel.SetActive(false);
                 Success(); // End the enigme and invoke succes event
+
             }
         }
 
     }
+
     /// <summary>
     /// This function returns the state of the round ending. True = ended.
     /// </summary>

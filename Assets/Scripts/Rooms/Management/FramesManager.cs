@@ -15,6 +15,9 @@ public class FramesManager : MonoBehaviour
     [SerializeField] private Sprite lockedFrame;
     [SerializeField] private Sprite unlockedFrame;
 
+
+    public static FramesManager Instance;
+
     [System.Serializable]
     public class Frame
     {
@@ -40,7 +43,6 @@ public class FramesManager : MonoBehaviour
     public Frame currentFrame;
     public Frame[] frames;
     [SerializeField] private string initalFrame = "main_frame"; //First frame always called main_frame
-    [SerializeField] private float cameraSpeed = 2f;
 
     private Coroutine currentCameraCoroutine;
 
@@ -52,6 +54,18 @@ public class FramesManager : MonoBehaviour
         mainCamera = Camera.main;
         SwitchFrame(initalFrame);
 
+    }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     /// <summary>
@@ -101,17 +115,26 @@ public class FramesManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator MoveCamera(Vector3 positionCible)
     {
-        while (Vector3.Distance(mainCamera.transform.position, positionCible) > 0.1f)
+        Vector3 startPosition = mainCamera.transform.position;
+        float elapsedTime = 0f;
+        float duration = 2f; 
+
+        while (elapsedTime < duration)
         {
             mainCamera.transform.position = Vector3.Lerp(
-                mainCamera.transform.position,
+                startPosition,
                 positionCible,
-                cameraSpeed * Time.deltaTime
+                elapsedTime / duration
             );
+
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
-        
+
+   
+        mainCamera.transform.position = positionCible;
     }
+
 
     /// <summary>
     /// Updates the switching frame buttons display depending on the current's frame connections
@@ -225,6 +248,34 @@ public class FramesManager : MonoBehaviour
         foreach (var obj in currentFrame.ActiveProps)
         {
             obj.SetActive(true);
+        }
+    }
+
+    public void UnlockFrame(string frame_id)
+    {
+        //Target frame reference
+        Frame targetFrame = System.Array.Find(frames, s => s.id == frame_id);
+
+        if (targetFrame != null)
+        {
+            targetFrame.FrameState = RoomStateEnum.Unlocked;
+            UpdateDirectionButtons();
+        }
+        else
+        {
+            print("no frame");
+        }
+    }
+    
+    public void LockFrame(string frame_id)
+    {
+        //Target frame reference
+        Frame targetFrame = System.Array.Find(frames, s => s.id == frame_id);
+
+        if (targetFrame != null)
+        {
+            targetFrame.FrameState = RoomStateEnum.Locked;
+            UpdateDirectionButtons() ;
         }
     }
 }

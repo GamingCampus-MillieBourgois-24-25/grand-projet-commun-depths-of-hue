@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BackgroundGridGenerator : MonoBehaviour
@@ -10,11 +11,18 @@ public class BackgroundGridGenerator : MonoBehaviour
     private Camera mainCamera;
     private GameObject[,] gridCadres;
     [SerializeField] private bool isForBackgroundLayer;
+    
+    public List<GameObject> backgrounds = new List<GameObject>();
     public delegate void OnFinishSpawnCadres();
     public static event OnFinishSpawnCadres OnSpawnCadre;
 
-    private void Start()
+    public delegate void SendCadre(GestionCadre cadre);
+    public static event SendCadre OnSendCadre;
+
+    private void OnEnable()
     {
+        if (backgrounds.Count > 0) return;
+        
         mainCamera = Camera.main;
         Vector2 screenSize = GetScreenSizeInUnits();
         
@@ -27,6 +35,7 @@ public class BackgroundGridGenerator : MonoBehaviour
             
             Vector3 position = new Vector3(x * screenSize.x, -y * screenSize.y, 0);
             GameObject go = Instantiate(imagePrefab[i], position, Quaternion.identity, transform);
+            backgrounds.Add(go);
 
             SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
             sr.sprite = backgroundSprites[i];
@@ -49,6 +58,7 @@ public class BackgroundGridGenerator : MonoBehaviour
                 
                 GestionCadre gestionCadre = cadre.GetComponent<GestionCadre>();
                 if (!gestionCadre) continue;
+                OnSendCadre?.Invoke(gestionCadre);
 
                 if (cadre.CompareTag("ActualCadre") && player)
                 {
