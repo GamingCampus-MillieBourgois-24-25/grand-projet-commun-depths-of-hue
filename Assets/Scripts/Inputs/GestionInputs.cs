@@ -1,37 +1,75 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 public class GestionInputs : MonoBehaviour
 {
     private Controls controls;
     private Camera _camera;
-
-    private void Start()
+    
+    private void Awake()
     {
-        _camera = Camera.main;
+        EnhancedTouchSupport.Enable();
     }
 
     private void OnEnable()
     {
-        //controls = new Controls();
-        //controls.Enable();
-        //controls.Mouse.Clic.performed += HandleClicMouse;
+        TouchSimulation.Enable();
     }
 
-    private void OnDisable()
+    private void Start()
     {
-        //controls.Mouse.Clic.performed -= HandleClicMouse;
+        Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
+        _camera = Camera.main;
     }
 
-    private void HandleClicMouse(InputAction.CallbackContext context)
+    private void Update()
     {
-        Vector3 mousePosition = Input.mousePosition;
-        RaycastHit2D hit = Physics2D.Raycast(_camera.ScreenToWorldPoint(mousePosition), Vector2.zero);
-        if (hit.transform.CompareTag("Arrows"))
+        foreach (var touch in Touch.activeTouches)
         {
-            Debug.Log("Mouse clicked : ");
+            if (touch.isTap)
+            {
+                Vector3 touchPosition = touch.screenPosition;
+                Ray ray = _camera.ScreenPointToRay(touchPosition);
+                RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+                if (hit.collider)
+                {
+                    Debug.Log("Objet touché : " + hit.collider.gameObject.name);
+                    // MonoBehaviour script = hit.collider.GetComponent<MonoBehaviour>();
+                    //
+                    // if (script)
+                    // {
+                    //     script.Invoke("OnObjectClicked", 0f);
+                    // }
+                    // else
+                    // {
+                    //     print("il n'y a rien");
+                    // }
+
+                    // if (hit.collider.CompareTag("Ancre"))
+                    // {
+                    //     MapNavigateCadre hitMapNavigate = hit.collider.GetComponent<MapNavigateCadre>();
+                    //     if (hitMapNavigate) hitMapNavigate.ClickMapNavigate();
+                    // }
+                }
+            }
         }
         
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 touchPosition = Input.mousePosition;
+            Ray ray = _camera.ScreenPointToRay(touchPosition);
+            RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+            if (!hit.collider) return;
+            if (hit.collider.CompareTag("Ancre"))
+            {
+                MapNavigateCadre hitMapNavigate = hit.collider.GetComponent<MapNavigateCadre>();
+                if (hitMapNavigate) hitMapNavigate.ClickMapNavigate();
+            }
+        }
+        else
+        {
+            Debug.Log("rien n'est touché");
+        }
     }
 }
