@@ -19,13 +19,13 @@ public class Inventaire : MonoBehaviour
     void Start()
     {
         save.LoadGame();
-        string searchTerm = "perle";
-        List<ItemData> matchingItems = FindItemsByPartialName( searchTerm);
+        // string searchTerm = "perle";
+        // List<ItemData> matchingItems = FindItemsByPartialName( searchTerm);
 
-        foreach (ItemData item in matchingItems)
-        {
-            Debug.Log("Objet trouvé : " + item.itemName);
-        }
+        // foreach (ItemData item in matchingItems)
+        // {
+        //     Debug.Log("Objet trouvï¿½ : " + item.itemName);
+        // }
         
     }
 
@@ -39,11 +39,11 @@ public class Inventaire : MonoBehaviour
             part.transform.position = obj.transform.position;
             part.Play();
             save.SaveGame();
-            Debug.Log(item.itemName + " ajouté à l'inventaire.");
+            Debug.Log(item.itemName + " ajoutï¿½ ï¿½ l'inventaire.");
         }
         else
         {
-            Debug.Log(item.itemName + " est déjà dans l'inventaire.");
+            Debug.Log(item.itemName + " est dï¿½jï¿½ dans l'inventaire.");
         }
     }
 
@@ -53,7 +53,7 @@ public class Inventaire : MonoBehaviour
         {
             inventaire.Remove(item);
             inv.UpdateUI();
-            Debug.Log(item.itemName + " retiré de l'inventaire.");
+            Debug.Log(item.itemName + " retirï¿½ de l'inventaire.");
         }
         else
         {
@@ -66,7 +66,7 @@ public class Inventaire : MonoBehaviour
         List<ItemData> foundItems = inventaire.Where(item => item.itemName.IndexOf(partialName, System.StringComparison.OrdinalIgnoreCase) >= 0).ToList();
         if (foundItems.Count == 0)
         {
-            throw new System.Exception("Aucun objet trouvé contenant : " + partialName);
+            throw new System.Exception("Aucun objet trouvï¿½ contenant : " + partialName);
         }
         return foundItems;
     }
@@ -76,21 +76,21 @@ public class Inventaire : MonoBehaviour
         ItemData item = inventaire.FirstOrDefault(item => item.itemName.Equals(itemName, System.StringComparison.OrdinalIgnoreCase));
         if (item == null)
         {
-            throw new System.Exception("Aucun objet trouvé avec le nom : " + itemName);
+            throw new System.Exception("Aucun objet trouvï¿½ avec le nom : " + itemName);
         }
         return item;
     }
 
     public List<Sprite> GetAllSprites()
     {
-        if (inventaire.Count == 0)
-        {
-            throw new System.Exception("L'inventaire est vide, aucun sprite disponible.");
-        }
+        // if (inventaire.Count == 0)
+        // {
+        //     throw new System.Exception("L'inventaire est vide, aucun sprite disponible.");
+        // }
         List<Sprite> sprites = inventaire.Select(item => item.itemSprite).Where(sprite => sprite != null).ToList();
         if (sprites.Count == 0)
         {
-            throw new System.Exception("Aucun sprite valide trouvé dans l'inventaire.");
+            throw new System.Exception("Aucun sprite valide trouvï¿½ dans l'inventaire.");
         }
         return sprites;
     }
