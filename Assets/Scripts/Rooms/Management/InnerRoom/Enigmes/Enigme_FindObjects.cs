@@ -109,12 +109,12 @@ public class Enigme_FindObjects : Enigme
     /// Parameter expects an item.
     /// </summary>
     /// <param name="item"></param>
-    public void CheckItem(GameObject item)
+    public void CheckItem(ObjectEnigme item)
     {
         if (item == null) return;
 
   
-        if (objectsUsedInEnigme.Contains(item))
+        if (objectsUsedInEnigme.Contains(item.gameObject))
         {
           
             for (int i = 0; i < text.Length; i++)
@@ -123,7 +123,7 @@ public class Enigme_FindObjects : Enigme
                 {
                     text[i].fontStyle = FontStyles.Strikethrough; 
 
-                    objectsUsedInEnigme.Remove(item);
+                    objectsUsedInEnigme.Remove(item.gameObject);
 
                     CheckEndOfRound();
                    
@@ -132,7 +132,8 @@ public class Enigme_FindObjects : Enigme
                 }
             }
 
-            item.SetActive(false); 
+            item.MoveFragment(item.transform.position + new Vector3(-10,0,0), new Vector3(0.0f, 0.0f, 0.0f)) ;
+            //item.SetActive(false); 
         }
     }
 

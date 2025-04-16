@@ -116,10 +116,13 @@ public class FramesManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator MoveCamera(Vector3 positionCible)
     {
+        Debug.Log(positionCible);
         while (Vector3.Distance(mainCamera.transform.position, positionCible) > 0.1f)
         {
+            Vector3 currentPos = mainCamera.transform.position;
+
             mainCamera.transform.position = Vector3.Lerp(
-                mainCamera.transform.position,
+                currentPos,
                 positionCible,
                 cameraSpeed * Time.deltaTime
             );
@@ -133,6 +136,7 @@ public class FramesManager : MonoBehaviour
     /// </summary>
     void UpdateDirectionButtons()
     {
+        Debug.Log("sfs");
         // Reset all buttons
         upButton.gameObject.SetActive(false);
         rightButton.gameObject.SetActive(false);
