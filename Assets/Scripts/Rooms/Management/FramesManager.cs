@@ -138,7 +138,7 @@ public class FramesManager : MonoBehaviour
     /// </summary>
     void UpdateDirectionButtons()
     {
-        Debug.Log("eeoeooeoe");
+   
         // Reset all buttons
         upButton.gameObject.SetActive(false);
         rightButton.gameObject.SetActive(false);
