@@ -24,6 +24,7 @@ public class EnigmeRoom : Room
     {
         foreach (var enigme in enigmes)// subscribe to each enigme OnSucces event.
         {
+            enigme.OnSuccess -= OnEnigmeResolved;
             enigme.OnSuccess += OnEnigmeResolved;
         }
         InitilizeCurrentEnigma();
