@@ -15,10 +15,11 @@ public struct SudokuPlay
 
 public enum ColorSudoku
 {
-    Red,
-    Purple,
-    Blue,
-    Yellow
+    None,  // 0
+    Red,   // 1
+    Purple,  // 2
+    Blue,// 3
+    Yellow // 4
 }
 public class Sudoku : Enigme
 {
@@ -31,13 +32,18 @@ public class Sudoku : Enigme
 
     [SerializeField] private GameObject startPosition;
 
-    private int currentCount = 1;
+    private int currentCount = 0;
     private int colorId = 0;
     [SerializeField] private TMP_Text choiceCount;
     [SerializeField] private Image choiceColorImage;
 
     [SerializeField]
     private List<Color> colorList = new List<Color>();
+
+    [SerializeField] private int numberOfBlankCases = 8;
+    
+    private SudokuGenerator sudokuGenerator;
+    
     public override void Initialize()
     {
         if (Instance == null)
@@ -46,11 +52,53 @@ public class Sudoku : Enigme
             base.Initialize();
         }
 
+        sudokuGenerator = GetComponent<SudokuGenerator>();
+        var fullSolution = sudokuGenerator.CreateSolvedGrid();
+
+        sudokuGrid = new SudokuPlay[gridSize, gridSize];
+        System.Random rand = new System.Random();
+
+        int totalCells = gridSize * gridSize;
+
+        List<(int, int)> allPositions = new List<(int, int)>();
+        for (int i = 0; i < gridSize; i++)
+        for (int j = 0; j < gridSize; j++)
+            allPositions.Add((i, j));
+        
+        for (int i = allPositions.Count - 1; i > 0; i--)
+        {
+            int j = rand.Next(i + 1);
+            (allPositions[i], allPositions[j]) = (allPositions[j], allPositions[i]);
+        }
+        
+        HashSet<(int, int)> blankPositions = new HashSet<(int, int)>(allPositions.GetRange(0, numberOfBlankCases));
+
+
+        for (int i = 0; i < gridSize; i++)
+        {
+            for (int j = 0; j < gridSize; j++)
+            {
+                if (blankPositions.Contains((i, j)))
+                {
+                    sudokuGrid[i, j] = new SudokuPlay
+                    {
+                        countPiece = 0,
+                        color = ColorSudoku.None
+                    };
+                }
+                else
+                {
+                    sudokuGrid[i, j] = fullSolution[i, j];
+                }
+            }
+        }
+
+
         InstantiateGrid();
-        float pos = -(gridSize / 2 * 110);
-        startPosition.transform.localPosition = new Vector3(pos, pos, 0);
-        Debug.Log("YALALALAOOOOOOOOOOOOOO");
+        float pos = gridSize / 2 * 110;
+        startPosition.transform.localPosition = new Vector3(-pos, pos, 0);
     }
+
     
     private void InitializeGrid()
     {
@@ -85,6 +133,11 @@ public class Sudoku : Enigme
                 {
                     return false;
                 }
+
+                if (rowCell.color == ColorSudoku.None || colCell.color == ColorSudoku.None)
+                {
+                    return false;
+                }
             }
         }
         return true;
@@ -99,7 +152,15 @@ public class Sudoku : Enigme
             play.color = (ColorSudoku)colorId;
             sudokuGrid[row, col] = play;
             cell.GetComponent<Image>().color = colorList[colorId];
-            cell.GetComponentInChildren<TMP_Text>().text = currentCount.ToString();
+            if (currentCount != 0)
+            {
+                cell.GetComponentInChildren<TMP_Text>().text = currentCount.ToString();
+            }
+            else
+            {
+                cell.GetComponentInChildren<TMP_Text>().text = "";
+            }
+            ResetChoice();
             if (IsGameWon())
             {
                 Debug.Log("You won the game!");
@@ -109,19 +170,45 @@ public class Sudoku : Enigme
 
     public void InstantiateGrid()
     {
-        InitializeGrid();
         for (int i = 0; i < gridSize; i++)
         {
             for (int j = 0; j < gridSize; j++)
             {
-                GameObject cell = Instantiate(cellPrefab, new Vector3(0,0,0), Quaternion.identity);
+                GameObject cell = Instantiate(cellPrefab, new Vector3(0, 0, 0), Quaternion.identity);
                 cell.transform.SetParent(startPosition.transform);
-                cell.transform.localPosition = new Vector3(i * 110, j * 110, 0);
-                cell.GetComponent<CellSudoku>().x = i;
-                cell.GetComponent<CellSudoku>().y = j;
+                cell.transform.localPosition = new Vector3(j * 110, -i * 110, 0);
+                var cellScript = cell.GetComponent<CellSudoku>();
+                cellScript.x = i;
+                cellScript.y = j;
+
+                int colorIndex = (int)sudokuGrid[i, j].color;
+
+                var cellImage = cell.GetComponent<Image>();
+                if (colorIndex >= 0 && colorIndex < colorList.Count)
+                {
+                    cellImage.color = colorList[colorIndex];
+                }
+                else
+                {
+                    cellImage.color = Color.white;
+                }
+
+                var text = cell.GetComponentInChildren<TMP_Text>();
+                if (sudokuGrid[i, j].countPiece != 0)
+                {
+                    text.text = sudokuGrid[i, j].countPiece.ToString();
+                    cellScript.isEditable = false;
+                    cellScript.UpdateNotEditable();
+                }
+                else
+                {
+                    text.text = "";
+                    cellScript.isEditable = true; 
+                }
             }
         }
     }
+
 
     public void ChangePlay(int buttonId, bool isColor)
     {
@@ -132,10 +219,24 @@ public class Sudoku : Enigme
         }
         else
         {
-            currentCount = buttonId+1;
-            choiceCount.text = currentCount.ToString();
+            currentCount = buttonId;
+            if (currentCount != 0)
+            {
+                choiceCount.text = currentCount.ToString();
+            }
+            else
+            {
+                choiceCount.text = "";
+            }
         }
     }
-    
+
+    private void ResetChoice()
+    {
+        currentCount = 0;
+        colorId = 0;
+        ChangePlay(0,false);
+        ChangePlay(0,true);
+    }
     
 }

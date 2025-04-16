@@ -1,12 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CellSudoku : MonoBehaviour
 {
     public int x;
 
     public int y;
+    
+    public bool isEditable = true;
+
+    [SerializeField] private GameObject notEditableImage;
+
+    public void UpdateNotEditable()
+    {
+        if (!isEditable)
+        {
+            Debug.Log("HERE");
+            notEditableImage.SetActive(true);
+        }
+           
+    }
 
     public void Test()
     {
@@ -27,6 +44,13 @@ public class CellSudoku : MonoBehaviour
 
     public void PlayChoice()
     {
-        Sudoku.Instance.PlayHand(x,y, this);
+        if (isEditable)
+        {
+            Sudoku.Instance.PlayHand(x, y, this);
+        }
+        else
+        {
+            Debug.Log("This cell is not editable.");
+        }
     }
 }
