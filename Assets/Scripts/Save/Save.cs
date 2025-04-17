@@ -13,10 +13,13 @@ public class Save : MonoBehaviour
 
     public delegate void SaveStartGamePlayer();
     public static event SaveStartGamePlayer OnSaveStartPlayer;
+    
+    public delegate void SaveStartGameActualCadre();
+    public static event SaveStartGameActualCadre OnSaveStartActualCadre;
 
     #endregion
 
-    void Awake()
+    private void Awake()
     {
         savePath = Application.persistentDataPath + "/gameSave.json";
         // if (inventaire == null)
@@ -54,6 +57,12 @@ public class Save : MonoBehaviour
                     mapInfo = ConvertDictToList(showMap.GetMapStatus())
                 };
                 break;
+            case "explorationcadre":
+                saveData.cadreData = new CadreData
+                {
+                    actualCadre = showMap.ActualCadre
+                };
+                break;
             default:
                 Debug.LogWarning($"Category {category} not recognized!");
                 return;
@@ -74,6 +83,10 @@ public class Save : MonoBehaviour
             mapData = new MapData
             {
                 mapInfo = ConvertDictToList(showMap.GetMapStatus())
+            },
+            cadreData = new CadreData
+            {
+                actualCadre = showMap.ActualCadre
             }
         };
 
@@ -106,8 +119,22 @@ public class Save : MonoBehaviour
                     }
                     else
                     {
-                        print(saveData.mapData.mapInfo);
                         showMap.SetMapStatus(ConvertListToDict(saveData.mapData.mapInfo));
+                    }
+                }
+                break;
+            case "explorationcadre":
+                if (saveData.cadreData != null)
+                {
+                    if (string.IsNullOrEmpty(saveData.cadreData.actualCadre))
+                    {
+                        Debug.Log("New Save Actual Cadre");
+                        OnSaveStartActualCadre?.Invoke();
+                    }
+                    else
+                    {
+                        print(saveData.cadreData.actualCadre);
+                        showMap.SetActualCadre(saveData.cadreData.actualCadre);
                     }
                 }
                 break;
@@ -191,7 +218,7 @@ public class Save : MonoBehaviour
     {
         public InventoryData inventoryData;
         public MapData mapData;
-        
+        public CadreData cadreData;
     }
 
     [System.Serializable]
@@ -199,7 +226,9 @@ public class Save : MonoBehaviour
     {
         public List<string> scriptableObjectIDs;
     }
-    
+
+    #region Serialize Map Cadre Data
+
     [System.Serializable]
     public class SerializableKeyValuePair
     {
@@ -212,4 +241,16 @@ public class Save : MonoBehaviour
     {
         public List<SerializableKeyValuePair> mapInfo;
     }
+
+    #endregion
+
+    #region Serialize Cadre Spawn Player
+
+    [System.Serializable]
+    private class CadreData
+    {
+        public string actualCadre;
+    }
+
+    #endregion
 }

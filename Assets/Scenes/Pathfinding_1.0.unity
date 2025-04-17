@@ -1257,6 +1257,7 @@ MonoBehaviour:
   rows: 5
   isForBackgroundLayer: 1
   showMap: {fileID: 0}
+  save: {fileID: 0}
   backgrounds: []
   cadres: []
 --- !u!4 &698892862
@@ -1494,6 +1495,7 @@ MonoBehaviour:
   rows: 5
   isForBackgroundLayer: 0
   showMap: {fileID: 831218824}
+  save: {fileID: 1644571682}
   backgrounds: []
   cadres: []
 --- !u!4 &830650848
@@ -1640,6 +1642,7 @@ MonoBehaviour:
   gridGenerator: {fileID: 830650847}
   mapBackgroundUI: {fileID: 1320954150}
   playerAnimator: {fileID: 10275503}
+  player: {fileID: 10275491}
   sauvegarde: {fileID: 1644571682}
   originalMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   blurMaterial: {fileID: 2100000, guid: b1e5f7c3212c46943861597e75a80a4d, type: 2}
@@ -3012,10 +3015,10 @@ SceneRoots:
   - {fileID: 426424520}
   - {fileID: 1388753101}
   - {fileID: 269009707}
+  - {fileID: 1644571681}
   - {fileID: 830650848}
   - {fileID: 698892862}
   - {fileID: 1320954151}
   - {fileID: 1528302685}
   - {fileID: 831218823}
   - {fileID: 1397296722}
-  - {fileID: 1644571681}

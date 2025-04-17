@@ -14,6 +14,7 @@ public class ShowMap : MonoBehaviour
     [SerializeField] private BackgroundGridGenerator gridGenerator;
     [SerializeField] private MapBackgroundUI mapBackgroundUI;
     [SerializeField] private Animator playerAnimator;
+    [SerializeField] private GameObject player;
     
     private Dictionary<string, bool> statusMap = new Dictionary<string, bool>();
     [Header("Sauvegarde")]
@@ -22,6 +23,9 @@ public class ShowMap : MonoBehaviour
     private List<GameObject> cadresMap = new List<GameObject>();
     private bool receiveFromBGGridGenerator = false;
     private bool receiveFromSauvegarde = false;
+    private string actualCadre;
+    
+    public string ActualCadre { get => actualCadre; set => actualCadre = value; }
     
     [Header("Materials")]
     [SerializeField] private Material originalMaterial;
@@ -36,13 +40,18 @@ public class ShowMap : MonoBehaviour
     private void Start()
     {
         isOpen = false;
-        if (sauvegarde) sauvegarde.LoadCategory("mapcadre");
+        if (sauvegarde)
+        {
+            sauvegarde.LoadCategory("explorationcadre");
+            sauvegarde.LoadCategory("mapcadre");
+        }
     }
 
     private void OnEnable()
     {
         MapNavigateCadre.OnHide += ClickMapIcon;
         Save.OnSaveStartPlayer += SetReceiveFromSauvegarde;
+        Save.OnSaveStartActualCadre += SetActualCadreFirstSave;
         GestionCadre.OnSendNewStatus += ModifyStatusCadre;
     }
 
@@ -50,6 +59,7 @@ public class ShowMap : MonoBehaviour
     {
         MapNavigateCadre.OnHide -= ClickMapIcon;
         Save.OnSaveStartPlayer -= SetReceiveFromSauvegarde;
+        Save.OnSaveStartActualCadre -= SetActualCadreFirstSave;
         GestionCadre.OnSendNewStatus -= ModifyStatusCadre;
     }
 
@@ -117,10 +127,10 @@ public class ShowMap : MonoBehaviour
 
     private void ModifyStatusCadre(GestionCadre _cadre)
     {
-        Debug.Log("ICIICCI");
+        ActualCadre = _cadre.gameObject.name;
+        sauvegarde.SaveCategory("explorationcadre");
         if (!statusMap.ContainsKey(_cadre.gameObject.name)) return;
         statusMap[_cadre.gameObject.name] = true;
-        Debug.Log("NEW SAVE");
         sauvegarde.SaveCategory("mapcadre");
         UpdateStatusCadre();
     }
@@ -151,5 +161,30 @@ public class ShowMap : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void SetActualCadreFirstSave()
+    {
+        foreach (var t in cadres.Where(t => t.CompareTag("ActualCadre")))
+        {
+            ActualCadre = t.name;
+            sauvegarde.SaveCategory("explorationcadre");
+            TeleportPlayer(t);
+        }
+    }
+
+    public void SetActualCadre(string _actualCadre)
+    {
+        foreach (var t in cadres.Where(t => t.name == _actualCadre))
+        {
+            t.tag = "ActualCadre";
+            TeleportPlayer(t);
+        }
+    }
+
+    private void TeleportPlayer(GestionCadre _cadre)
+    {
+        player.transform.position = _cadre.center.position;
+        _cadre.SetArrowsVisibilities();
     }
 }

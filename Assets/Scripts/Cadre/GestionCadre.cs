@@ -219,22 +219,23 @@ public class GestionCadre : MonoBehaviour
         }
 
         // le middle cadre - l'actual cadre (universel pour toute direction)
-        if (!centerMiddle) FindCenterMiddle();
-        var heading = centerMiddle.position - transform.position;
-        var distance = heading.magnitude;
-        Vector3 directionTemp = heading / distance;
-        direction = new Vector3(
-            Mathf.RoundToInt(directionTemp.x),
-            Mathf.RoundToInt(directionTemp.y),
-            Mathf.RoundToInt(directionTemp.z)
-        );
-        targetCadre = cadre;
+        ManageRotation(cadre);
         Debug.Log(direction);
         
         player.SetPlayerDestination(cadre.transform.TransformPoint(cadre.GetComponent<GestionCadre>().center.localPosition), cadre.GetComponent<GestionCadre>());
         player.MovePlayer();
+        OnSendNewStatus?.Invoke(cadre.GetComponent<GestionCadre>());
 
-        ManageRotationMovement(cadre, true);
+        ManageRotationMovement(cadre, cadre.name != "CadreMidTemple(Clone)");
+    }
+
+    private void ManageRotation(GameObject _cadre)
+    {
+        if (_cadre.name == "CadreMidTemple(Clone)") return;
+        if (!centerMiddle) FindCenterMiddle();
+
+        direction = Vector3.Normalize(centerMiddle.transform.position - transform.position);
+        targetCadre = _cadre;
     }
 
     private void FindCenterMiddle()
@@ -247,6 +248,8 @@ public class GestionCadre : MonoBehaviour
     {
         // le target cadre - l'actual cadre
         if (!targetCadre) return;
+        if (targetCadre.name == "CadreMidTemple(Clone)") return;
+        
         var heading = targetCadre.transform.position - transform.position;
         var distance = heading.magnitude;
         Vector3 directionTemp = heading / distance;
