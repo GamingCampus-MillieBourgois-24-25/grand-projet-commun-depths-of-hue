@@ -7,13 +7,6 @@ using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "NewDialogue", menuName = "Dialogue")]
-public class DialogueGroup : ScriptableObject
-{
-    public List<DialogueData> dialogues;
-    public string tableKey;
-}
-
 [Serializable]
 public class DialogueData
 {

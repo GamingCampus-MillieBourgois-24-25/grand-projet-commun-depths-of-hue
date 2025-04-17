@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: DialoguesText_fr-FR
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr-FR
+  m_SharedData: {fileID: 11400000, guid: 089a8ce5a2373aa4e80f4ccf0347f527, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 172177031168
+    m_Localized: "Cette statue\u2026 elle semble m\u2019appeler."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 208478732288
+    m_Localized: "\xC9coute le chant... ressens les courants\u2026 suis les couleurs..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 332298780672
+    m_Localized: "Une v\xE9rit\xE9 t\u2019attend... mais chaque serrure a son myst\xE8re."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 336795074560
+    m_Localized: "*tend la cl\xE9 dor\xE9e au plongeur*"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 345892519936
+    m_Localized: "Ce n\u2019est pas encore le bon chant\u2026"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
