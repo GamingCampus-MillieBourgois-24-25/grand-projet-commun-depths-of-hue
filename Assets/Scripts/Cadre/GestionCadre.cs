@@ -9,9 +9,12 @@ public class GestionCadre : MonoBehaviour
     [SerializeField] private DeplacementPlayer player;
     private Animator playerAnimator;
     public Transform center;
+    public Transform centerMiddle;
     private float angleZStart = 0f;
     private float angleZStartSide = 0f;
     private bool isRotating = false;
+    private Vector3 direction;
+    private GameObject targetCadre = null;
     
     [Header("Manage Arrows")]
     [SerializeField] private bool ArrowLeft;
@@ -41,6 +44,7 @@ public class GestionCadre : MonoBehaviour
     private readonly Dictionary<GameObject, bool> arrowsVisibilities = new Dictionary<GameObject, bool>();
     private readonly Dictionary<GameObject, bool> stockCadreTarget = new Dictionary<GameObject, bool>();
     private readonly Dictionary<GameObject, GameObject> arrowToCadre = new();
+    private List<GestionCadre> allCadres = new();
 
     #region Getter Bool
     public bool ArrowLeftBool => ArrowLeft;
@@ -74,11 +78,19 @@ public class GestionCadre : MonoBehaviour
     private void OnEnable()
     {
         BackgroundGridGenerator.OnSpawnCadre += FoundTargetCadre;
+        if (gameObject.CompareTag("ActualCadre")) MapNavigateCadre.OnMove += MapNavigateCadreFunc;
+        if (gameObject.CompareTag("ActualCadre")) GetMiddleCadre.OnCalculNewRotation += CalculNewRotation;
+        BackgroundGridGenerator.OnSendCadre += AddToAllCadre;
+        GetMiddleCadre.OnGetMiddleCadre += SetCenterMiddle;
     }
     
     private void OnDisable()
     {
         BackgroundGridGenerator.OnSpawnCadre -= FoundTargetCadre;
+        if (gameObject.CompareTag("ActualCadre")) MapNavigateCadre.OnMove -= MapNavigateCadreFunc;
+        if (gameObject.CompareTag("ActualCadre")) GetMiddleCadre.OnCalculNewRotation -= CalculNewRotation;
+        BackgroundGridGenerator.OnSendCadre -= AddToAllCadre;
+        GetMiddleCadre.OnGetMiddleCadre -= SetCenterMiddle;
     }
 
     private void FoundTargetCadre()
@@ -89,6 +101,16 @@ public class GestionCadre : MonoBehaviour
         if (arrowRight && targetCadreRight) arrowToCadre[arrowRight] = targetCadreRight;
         if (arrowUp && targetCadreUp) arrowToCadre[arrowUp] = targetCadreUp;
         if (arrowDown && targetCadreDown) arrowToCadre[arrowDown] = targetCadreDown;
+    }
+
+    private void AddToAllCadre(GestionCadre obj)
+    {
+        if (!allCadres.Contains(obj)) allCadres.Add(obj);
+    }
+
+    private void SetCenterMiddle(Transform _center)
+    {
+        centerMiddle = _center;
     }
     #endregion
 
@@ -151,12 +173,15 @@ public class GestionCadre : MonoBehaviour
                 arrow.SetActive(false);
             }
         }
+        
+        Debug.Log("reset all arrows from : " + gameObject.name);
     }
     #endregion
 
     // permet de naviguer au prochain cadre ciblé
     public void NavigateCadre(GameObject _original)
     {
+        gameObject.tag = "Untagged";
         ResetArrows();
 
         if (!arrowsVisibilities.ContainsKey(_original) || !arrowsVisibilities[_original]) return;
@@ -164,71 +189,198 @@ public class GestionCadre : MonoBehaviour
         
         player.SetPlayerDestination(cadre.transform.TransformPoint(cadre.GetComponent<GestionCadre>().center.localPosition), cadre.GetComponent<GestionCadre>());
         player.MovePlayer();
-        
-        #region Gestion Rotation par Arrows
-        float angleZ = 0;
-        switch (_original.name)
+        cadre.gameObject.tag = "ActualCadre";
+
+        ManageRotationMovement(_original);
+    }
+    
+    private void MapNavigateCadreFunc(string _targetCadre)
+    {
+        ResetArrows();
+        ResetAllArrows();
+
+        GameObject cadre = CompareName(_targetCadre);
+
+        if (!cadre)
         {
-            case "ArrowDown":
-                angleZ = 180f;
-                if (player.PlayerPressLeftArrow || player.PlayerPressRightArrow)
-                {
-                    angleZStart = angleZStartSide;
-                }
-                else
-                {
-                    angleZStart = 0f;
-                }
-                ResetBoolAnimation("IsWalk");
-                if (!player.PlayerPressDownArrow && !isRotating)
-                {
-                    StartCoroutine(RotateZOverTime(player.transform, angleZ, 2f));
-                    isRotating = true;
-                }
-                player.PlayerPressDownArrow = true;
-                player.PlayerPressUpArrow = false;
-                ResetBoolSideArrowInPlayer();
-                break;
-            case "ArrowLeft":
-                angleZ = 0;
-                ResetBoolAnimation("IsLeft");
-                angleZStartSide = -90f;
-                player.PlayerPressLeftArrow = true;
-                player.PlayerPressRightArrow = false;
-                player.transform.rotation = Quaternion.Euler(0, 0, angleZ);
-                ResetBoolUpArrowInPlayer();
-                break;
-            case "ArrowRight":
-                angleZ = 0;
-                ResetBoolAnimation("IsRight");
-                angleZStartSide = 90f;
-                player.PlayerPressRightArrow = true;
-                player.PlayerPressLeftArrow = false;
-                player.transform.rotation = Quaternion.Euler(0, 0, angleZ);
-                ResetBoolUpArrowInPlayer();
-                break;
-            case "ArrowUp":
-                angleZ = 0f;
-                if (player.PlayerPressLeftArrow || player.PlayerPressRightArrow)
-                {
-                    angleZStart = angleZStartSide;
-                }
-                else
-                {
-                    angleZStart = 180f;
-                }
-                ResetBoolAnimation("IsWalk");
-                if (!player.PlayerPressUpArrow && !isRotating)
-                {
-                    StartCoroutine(RotateZOverTime(player.transform, angleZ, 2f));
-                    isRotating = true;
-                }
-                player.PlayerPressUpArrow = true;
-                player.PlayerPressDownArrow = false;
-                ResetBoolSideArrowInPlayer();
-                break;
+            Debug.LogError("cadre null");
         }
-        #endregion
+
+        // le middle cadre - l'actual cadre (universel pour toute direction)
+        var heading = centerMiddle.position - transform.position;
+        var distance = heading.magnitude;
+        Vector3 directionTemp = heading / distance;
+        direction = new Vector3(
+            Mathf.RoundToInt(directionTemp.x),
+            Mathf.RoundToInt(directionTemp.y),
+            Mathf.RoundToInt(directionTemp.z)
+        );
+        targetCadre = cadre;
+        Debug.Log(direction);
+        
+        player.SetPlayerDestination(cadre.transform.TransformPoint(cadre.GetComponent<GestionCadre>().center.localPosition), cadre.GetComponent<GestionCadre>());
+        player.MovePlayer();
+
+        ManageRotationMovement(cadre, true);
+    }
+
+    private void CalculNewRotation()
+    {
+        // le target cadre - l'actual cadre
+        if (!targetCadre) return;
+        var heading = targetCadre.transform.position - transform.position;
+        var distance = heading.magnitude;
+        Vector3 directionTemp = heading / distance;
+        direction = new Vector3(
+            Mathf.RoundToInt(directionTemp.x),
+            Mathf.RoundToInt(directionTemp.y),
+            Mathf.RoundToInt(directionTemp.z)
+        );
+        
+        ManageRotationMovement(targetCadre, true);
+    }
+
+    private void ResetAllArrows()
+    {
+        foreach (var cadre in allCadres)
+        {
+            if (cadre.arrowDown) cadre.arrowDown.SetActive(false);
+            if (cadre.arrowLeft) cadre.arrowLeft.SetActive(false);
+            if (cadre.arrowRight) cadre.arrowRight.SetActive(false);
+            if (cadre.arrowUp) cadre.arrowUp.SetActive(false);
+        }
+    }
+    
+    #region Gestion Rotation par Arrows
+    private void ManageRotationMovement(GameObject _original, bool isForMap = false)
+    {
+        float angleZ = 0;
+        Vector3 _direction = isForMap ? direction : GetDirection(_original.name);
+        Vector3Int _dirInt = Vector3Int.RoundToInt(_direction);
+
+        if (_dirInt == Vector3.down)
+        {
+            angleZ = 180f;
+            RotationBottom(angleZ);
+        }
+        else if (_dirInt == Vector3.left || _dirInt == Vector3.left + Vector3.down)
+        {
+            angleZ = 0;
+            RotationLeft(angleZ);
+        }
+        else if (_dirInt == Vector3.right || _dirInt == Vector3.right + Vector3.down)
+        {
+            angleZ = 0;
+            RotationRight(angleZ);
+        }
+        else if (_dirInt == Vector3.up)
+        {
+            angleZ = 0;
+            RotationUp(angleZ);
+        }
+    }
+
+    private Vector3 GetDirection(string _arrows)
+    {
+        return _arrows switch
+        {
+            "ArrowDown" => Vector3.down,
+            "ArrowUp" => Vector3.up,
+            "ArrowLeft" => Vector3.left,
+            "ArrowRight" => Vector3.right,
+            _ => Vector3.zero
+        };
+    }
+    #endregion
+
+    #region RotationBottom
+
+    private void RotationBottom(float _angleZ)
+    {
+        float angleZ = _angleZ;
+        if (player.PlayerPressLeftArrow || player.PlayerPressRightArrow)
+        {
+            angleZStart = angleZStartSide;
+        }
+        else
+        {
+            angleZStart = 0f;
+        }
+        ResetBoolAnimation("IsWalk");
+        if (!player.PlayerPressDownArrow && !isRotating)
+        {
+            StartCoroutine(RotateZOverTime(player.transform, angleZ, 2f));
+            isRotating = true;
+        }
+        player.PlayerPressDownArrow = true;
+        player.PlayerPressUpArrow = false;
+        ResetBoolSideArrowInPlayer();
+    }
+
+    #endregion
+    #region RotationUp
+
+    private void RotationUp(float _angleZ)
+    {
+        float angleZ = _angleZ;
+        if (player.PlayerPressLeftArrow || player.PlayerPressRightArrow)
+        {
+            angleZStart = angleZStartSide;
+        }
+        else
+        {
+            angleZStart = 180f;
+        }
+        ResetBoolAnimation("IsWalk");
+        if (!player.PlayerPressUpArrow && !isRotating)
+        {
+            StartCoroutine(RotateZOverTime(player.transform, angleZ, 2f));
+            isRotating = true;
+        }
+        player.PlayerPressUpArrow = true;
+        player.PlayerPressDownArrow = false;
+        ResetBoolSideArrowInPlayer();
+    }
+
+    #endregion
+    #region RotationLeft
+
+    private void RotationLeft(float _angleZ)
+    {
+        float angleZ = _angleZ;
+        ResetBoolAnimation("IsLeft");
+        angleZStartSide = -90f;
+        player.PlayerPressLeftArrow = true;
+        player.PlayerPressRightArrow = false;
+        player.transform.rotation = Quaternion.Euler(0, 0, angleZ);
+        ResetBoolUpArrowInPlayer();
+    }
+
+    #endregion
+    #region RotationRight
+
+    private void RotationRight(float _angleZ)
+    {
+        float angleZ = _angleZ;
+        ResetBoolAnimation("IsRight");
+        angleZStartSide = 90f;
+        player.PlayerPressRightArrow = true;
+        player.PlayerPressLeftArrow = false;
+        player.transform.rotation = Quaternion.Euler(0, 0, angleZ);
+        ResetBoolUpArrowInPlayer();
+    }
+
+    #endregion
+    
+    private GameObject CompareName(string _target)
+    {
+        if (allCadres.Count == 0) Debug.LogError("allCadres est null");
+        foreach (var kvp in allCadres)
+        {
+            if (kvp.name != _target) continue;
+            return kvp.gameObject;
+        }
+        return null;
     }
 
     private void ResetBoolAnimation(string _animToSkip)

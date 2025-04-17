@@ -88,14 +88,62 @@ public class DynamicPuzzleGeneratorEditor : EditorWindow
         {
             Directory.CreateDirectory(outputFolder);
         }
+        else
+        {
+            DeleteFiles(outputFolder, $"{outputFolder}/Textures");
+        }
+     
 
         if (!Directory.Exists($"{outputFolder}/Textures"))
         {
             Directory.CreateDirectory($"{outputFolder}/Textures");
         }
 
+        else
+        {
+            DeleteFiles($"{outputFolder}/Textures", "none");
+        }
+
         AssetDatabase.Refresh();
     }
+
+    /// <summary>
+    /// Deletes files from a folder
+    /// </summary>
+    /// <param name="directoryPath"></param>
+    void DeleteFiles(string directoryPath, string exceptionDirectory)
+    {
+        // Normalise le chemin de l'exception
+        exceptionDirectory = Path.GetFullPath(exceptionDirectory).TrimEnd(Path.DirectorySeparatorChar);
+
+        // Supprime les fichiers
+        string[] files = Directory.GetFiles(directoryPath);
+        foreach (string file in files)
+        {
+            string normalizedFile = Path.GetFullPath(file);
+
+            // Ignore le .meta du dossier à garder
+            if (!normalizedFile.StartsWith(exceptionDirectory))
+            {
+                File.Delete(normalizedFile);
+            }
+
+        }
+
+        // Supprime les sous-dossiers
+        string[] dirs = Directory.GetDirectories(directoryPath);
+        foreach (string dir in dirs)
+        {
+            string normalizedDir = Path.GetFullPath(dir).TrimEnd(Path.DirectorySeparatorChar);
+            if (normalizedDir != exceptionDirectory)
+            {
+                Directory.Delete(normalizedDir, true);
+            }
+            
+        }
+    }
+
+
 
     void GeneratePuzzlePiece(int x, int y, int width, int height)
     {
