@@ -3,6 +3,20 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+
+[System.Serializable]
+public class PositionData
+{
+    public string roomName;
+    public Vector3 worldPosition;
+
+    public PositionData(string roomName, Vector3 worldPosition)
+    {
+        this.roomName = roomName;
+        this.worldPosition = worldPosition;
+    }
+}
+
 public class Enigme_FindObjects : Enigme
 {
     public static Enigme_FindObjects Instance;
@@ -17,12 +31,16 @@ public class Enigme_FindObjects : Enigme
     [SerializeField] private float timeLimit = 60f;
     private float timer; //current time
 
-    
 
-    [SerializeField] private List <GameObject> objectsInScene = new List<GameObject>(); // Every object possibly usable for the enigme
-    [SerializeField] private List<GameObject> objectsUsedInEnigme = new List<GameObject>(); // Every object dynamically chose for the enigme
 
-    [SerializeField] private List<Vector3> allObjectsPositions = new List<Vector3>(); // Every object dynamically chose for the enigme
+    [SerializeField] private List<GameObject> objectsInScene; // Every object possibly usable for the enigme
+    [SerializeField] private List<GameObject> objectsUsedInEnigme; // Every object dynamically chose for the enigme
+
+    public List<PositionData> allObjectsPositions = new List<PositionData>();
+
+
+
+
 
 
     [SerializeField] private int amountObjectsUsed = 3; // How many objects are used for this enigme
@@ -31,19 +49,41 @@ public class Enigme_FindObjects : Enigme
     {
         if (Instance == null)
         {
+            CollectAllPropsFromScene();
             CollectAllPositionsFromScene();
 
             Instance = this;
+
             base.Initialize();
+
+            panel.SetActive(true);
         }
 
         ClearText();
-        SetObjects();
+        SetObject();
         timer = timeLimit;
         objectsUsedInEnigme = MakeObjectsList();
         StartTimer();
 
-        panel.SetActive(true);
+        
+    }
+
+    private void CollectAllPropsFromScene()
+    {
+        GameObject container = GameObject.FindWithTag("PropsContainer");
+
+        if (container == null)
+        {
+            Debug.LogError("Le GameObject avec le tag 'PositionContainer' est introuvable !");
+            return;
+        }
+
+        objectsInScene.Clear();
+
+        foreach (Transform prop in container.transform)
+        {
+            objectsInScene.Add(prop.gameObject);
+        }
     }
     private void CollectAllPositionsFromScene()
     {
@@ -51,19 +91,27 @@ public class Enigme_FindObjects : Enigme
 
         if (container == null)
         {
-            Debug.LogError("Le GameObject 'Position' est introuvable dans la scène !");
+            Debug.LogError("Le GameObject avec le tag 'PositionContainer' est introuvable !");
             return;
         }
 
         allObjectsPositions.Clear();
 
-        foreach (Transform child in container.transform)
+        foreach (Transform room in container.transform)
         {
-            allObjectsPositions.Add(child.position);
+            string roomName = room.name;
+
+            foreach (Transform pos in room)
+            {
+                Vector3 worldPos = pos.position;
+                allObjectsPositions.Add(new PositionData(roomName, worldPos + room.position));
+            }
         }
 
-        Debug.Log($"Nombre de positions récupérées : {allObjectsPositions.Count}");
+        Debug.Log($"Nombre total de positions récupérées : {allObjectsPositions.Count}");
     }
+
+
 
     void StartTimer()
     {
@@ -85,7 +133,7 @@ public class Enigme_FindObjects : Enigme
 
         for (int i = 0; i < amountObjectsUsed && temp.Count > 0; i++) //Choose random items
         {
-            
+
 
             int index = Random.Range(0, temp.Count);
             list.Add(temp[index]);
@@ -105,13 +153,13 @@ public class Enigme_FindObjects : Enigme
     {
         if (isStarted)
         {
-            
+
             UpdateEnigme(Time.deltaTime);
         }
     }
     public override void UpdateEnigme(float deltaTime)
     {
-        
+
         if (isResolved) return;
 
 
@@ -121,7 +169,7 @@ public class Enigme_FindObjects : Enigme
         {
             EnigmaTimerManager.Instance?.UpdateTimerDisplay(timer); //Updates the timer display
         }
-        
+
 
         if (timer <= 0f)
         {
@@ -138,26 +186,26 @@ public class Enigme_FindObjects : Enigme
     {
         if (item == null) return;
 
-  
+
         if (objectsUsedInEnigme.Contains(item.gameObject))
         {
-          
+
             for (int i = 0; i < text.Length; i++)
             {
                 if (text[i].text == item.name)
                 {
-                    text[i].fontStyle = FontStyles.Strikethrough; 
+                    text[i].fontStyle = FontStyles.Strikethrough;
 
                     objectsUsedInEnigme.Remove(item.gameObject);
 
                     CheckEndOfRound();
-                   
+
 
                     break;
                 }
             }
 
-            item.MoveFragment(item.transform.position + new Vector3(-10,0,0), new Vector3(0.0f, 0.0f, 0.0f)) ;
+            item.MoveFragment(item.transform.position + new Vector3(-10, 0, 0), new Vector3(0.0f, 0.0f, 0.0f));
             //item.SetActive(false); 
         }
     }
@@ -172,7 +220,8 @@ public class Enigme_FindObjects : Enigme
             if (currentRound < (maxRound - 1))
             {
                 currentRound++;
-                Initialize(); //Restart a round
+                StartCoroutine(Wait(3)); 
+                
             }
             else
             {
@@ -185,38 +234,68 @@ public class Enigme_FindObjects : Enigme
     }
 
     /// <summary>
+    /// Wait coroutine 
+    /// Parameter exepcting a second amount
+    /// </summary>
+    /// <param name="sec"></param>
+    /// <returns></returns>
+    IEnumerator Wait(float sec)
+    {
+        float elapsedTime = 0f;
+        float duration = sec;
+
+        while (elapsedTime < duration)
+        {
+           
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        Initialize();
+    }
+
+    /// <summary>
     /// This function returns the state of the round ending. True = ended.
     /// </summary>
     /// <returns></returns>
     private bool IsRoundEnded()
     {
-        return (objectsUsedInEnigme.Count == 0); 
+        return (objectsUsedInEnigme.Count == 0);
     }
 
     private void ClearText()
     {
-        for (int i = 0;i < text.Length; i++)
+        for (int i = 0; i < text.Length; i++)
         {
             text[i].fontStyle = default;
         }
     }
 
-    private void SetObjects()
+    /// <summary>
+    /// Reset objetcs position randomly + reset their scale
+    /// </summary>
+    private void SetObject()
     {
-        List<Vector3> tempoPositionList = allObjectsPositions;
+        var availablePositions = new List<PositionData>(allObjectsPositions);
 
-        for (var i = 0; i<objectsInScene.Count; i++)
+        foreach (GameObject obj in objectsInScene)
         {
+            if (availablePositions.Count == 0) break;
 
-            int index = Random.Range(0, tempoPositionList.Count);
+            int index = Random.Range(0, availablePositions.Count);
+            PositionData posData = availablePositions[index];
 
-            GameObject obj = objectsInScene[i];
-
+            obj.transform.position = posData.worldPosition;
             obj.transform.localScale = Vector3.one;
 
-            obj.transform.position = tempoPositionList[index];
 
-            tempoPositionList.RemoveAt(index);
+            if (FramesManager.Instance != null)
+            {
+                FramesManager.Instance.AddFrameProp(posData.roomName, obj);
+            }
+
+            availablePositions.RemoveAt(index);
         }
     }
 }
