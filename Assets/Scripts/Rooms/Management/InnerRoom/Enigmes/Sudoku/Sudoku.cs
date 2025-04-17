@@ -43,6 +43,7 @@ public class Sudoku : Enigme
     [SerializeField] private int numberOfBlankCases = 8;
     
     private SudokuGenerator sudokuGenerator;
+    private SudokuPlay[,] fullSolution;
     
     public override void Initialize()
     {
@@ -53,7 +54,7 @@ public class Sudoku : Enigme
         }
 
         sudokuGenerator = GetComponent<SudokuGenerator>();
-        var fullSolution = sudokuGenerator.CreateSolvedGrid();
+        fullSolution = sudokuGenerator.CreateSolvedGrid();
 
         sudokuGrid = new SudokuPlay[gridSize, gridSize];
         System.Random rand = new System.Random();
@@ -150,21 +151,31 @@ public class Sudoku : Enigme
             SudokuPlay play = new SudokuPlay();
             play.countPiece = currentCount;
             play.color = (ColorSudoku)colorId;
+            if (play.countPiece == 0 && play.color != ColorSudoku.None)
+            {
+                play.countPiece = sudokuGrid[row, col].countPiece;
+            }
+            else if (play.countPiece != 0 && play.color == ColorSudoku.None)
+            {
+                play.color = sudokuGrid[row, col].color;
+            }
             sudokuGrid[row, col] = play;
-            cell.GetComponent<Image>().color = colorList[colorId];
-            if (currentCount != 0)
-            {
-                cell.GetComponentInChildren<TMP_Text>().text = currentCount.ToString();
-            }
-            else
-            {
-                cell.GetComponentInChildren<TMP_Text>().text = "";
-            }
+            ChangeColorCell(cell,play.countPiece,(int)play.color);
             ResetChoice();
-            if (IsGameWon())
-            {
-                Debug.Log("You won the game!");
-            }
+            CheckWin();
+        }
+    }
+
+    private void ChangeColorCell(CellSudoku cell, int countPiece, int colorId)
+    {
+        cell.GetComponent<Image>().color = colorList[colorId];
+        if (countPiece != 0)
+        {
+            cell.GetComponentInChildren<TMP_Text>().text = countPiece.ToString();
+        }
+        else
+        {
+            cell.GetComponentInChildren<TMP_Text>().text = "";
         }
     }
 
@@ -220,14 +231,7 @@ public class Sudoku : Enigme
         else
         {
             currentCount = buttonId;
-            if (currentCount != 0)
-            {
-                choiceCount.text = currentCount.ToString();
-            }
-            else
-            {
-                choiceCount.text = "";
-            }
+            choiceCount.text = currentCount != 0 ? currentCount.ToString() : "";
         }
     }
 
@@ -237,6 +241,52 @@ public class Sudoku : Enigme
         colorId = 0;
         ChangePlay(0,false);
         ChangePlay(0,true);
+    }
+    
+    public void ProvideHint()
+    {
+        List<CellSudoku> hintableCells = new List<CellSudoku>();
+    
+        foreach (Transform child in startPosition.transform)
+        {
+            CellSudoku cell = child.GetComponent<CellSudoku>();
+            if (cell.isEditable)
+            {
+                SudokuPlay currentPlay = sudokuGrid[cell.x, cell.y];
+                SudokuPlay correctPlay = fullSolution[cell.x, cell.y];
+                
+                if (currentPlay.countPiece == 0 || 
+                    currentPlay.countPiece != correctPlay.countPiece || 
+                    currentPlay.color != correctPlay.color)
+                {
+                    hintableCells.Add(cell);
+                }
+            }
+        }
+
+        if (hintableCells.Count == 0)
+        {
+            Debug.Log("No cells need hints - all editable cells are correct!");
+            return;
+        }
+        
+        System.Random rand = new System.Random();
+        CellSudoku hintCell = hintableCells[rand.Next(hintableCells.Count)];
+        SudokuPlay correctPlayToFill = fullSolution[hintCell.x, hintCell.y];
+        
+        sudokuGrid[hintCell.x, hintCell.y] = correctPlayToFill;
+        hintCell.GetComponent<Image>().color = colorList[(int)correctPlayToFill.color];
+        hintCell.GetComponentInChildren<TMP_Text>().text = correctPlayToFill.countPiece.ToString();
+        hintCell.isEditable = false;
+        hintCell.UpdateNotEditable();
+        CheckWin();
+    }
+
+    private void CheckWin()
+    {
+        if (!IsGameWon()) return;
+        Debug.Log("You won the game!");
+        //Success();
     }
     
 }

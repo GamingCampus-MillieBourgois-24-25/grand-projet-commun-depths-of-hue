@@ -19,7 +19,6 @@ public class CellSudoku : MonoBehaviour
     {
         if (!isEditable)
         {
-            Debug.Log("HERE");
             notEditableImage.SetActive(true);
         }
            
