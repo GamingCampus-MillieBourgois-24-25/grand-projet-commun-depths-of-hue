@@ -12,6 +12,7 @@ public class BackgroundGridGenerator : MonoBehaviour
     private GameObject[,] gridCadres;
     [SerializeField] private bool isForBackgroundLayer;
     [SerializeField] private ShowMap showMap;
+    [SerializeField] private Save save;
     
     public List<GameObject> backgrounds = new List<GameObject>();
     public List<GestionCadre> cadres = new List<GestionCadre>();
@@ -63,12 +64,12 @@ public class BackgroundGridGenerator : MonoBehaviour
                 OnSendCadre?.Invoke(gestionCadre);
                 cadres.Add(gestionCadre);
 
-                if (cadre.CompareTag("ActualCadre") && player)
-                {
-                    // set le player au bon endroit (là ou le joueur a quitter)
-                    player.transform.position = gestionCadre.center.position;
-                    gestionCadre.SetArrowsVisibilities();
-                }
+                // if (cadre.CompareTag("ActualCadre") && player)
+                // {
+                //     // set le player au bon endroit (là ou le joueur a quitter)
+                //     player.transform.position = gestionCadre.center.position;
+                //     gestionCadre.SetArrowsVisibilities();
+                // }
 
                 #region Attribution des cadre target à tous les cadres selon les directions coché
 
@@ -95,7 +96,6 @@ public class BackgroundGridGenerator : MonoBehaviour
                 OnSpawnCadre?.Invoke();
             }
         }
-
         if (showMap) showMap.SetReceiveFromBGGridGenerator(cadres);
     }
 
