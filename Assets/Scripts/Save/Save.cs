@@ -7,14 +7,22 @@ public class Save : MonoBehaviour
 {
     private string savePath;
     [SerializeField] Inventaire inventaire;
+    [SerializeField] ShowMap showMap;
+
+    #region Event
+
+    public delegate void SaveStartGamePlayer();
+    public static event SaveStartGamePlayer OnSaveStartPlayer;
+
+    #endregion
 
     void Awake()
     {
         savePath = Application.persistentDataPath + "/gameSave.json";
-        if (inventaire == null)
-        {
-            Debug.LogError("Inventaire not found in the scene!");
-        }
+        // if (inventaire == null)
+        // {
+        //     Debug.LogError("Inventaire not found in the scene!");
+        // }
         EnsureSaveFileExists();
     }
 
@@ -40,14 +48,12 @@ public class Save : MonoBehaviour
                 };
                 break;
             // Add more categories as needed
-            /*case "player":
-                saveData.playerData = new PlayerData
+            case "mapcadre":
+                saveData.mapData = new MapData
                 {
-                    // Add player-specific data here
-                    position = Vector3.zero,
-                    health = 100
+                    mapInfo = ConvertDictToList(showMap.GetMapStatus())
                 };
-                break;*/
+                break;
             default:
                 Debug.LogWarning($"Category {category} not recognized!");
                 return;
@@ -65,11 +71,10 @@ public class Save : MonoBehaviour
             {
                 scriptableObjectIDs = inventaire.GetId()
             },
-            /*playerData = new PlayerData
+            mapData = new MapData
             {
-                position = Vector3.zero,
-                health = 100
-            }*/
+                mapInfo = ConvertDictToList(showMap.GetMapStatus())
+            }
         };
 
         SaveToFile(saveData);
@@ -89,6 +94,21 @@ public class Save : MonoBehaviour
                     inventaire.SetId(saveData.inventoryData.scriptableObjectIDs);
                     inventaire.AddItemSave();
                     
+                }
+                break;
+            case "mapcadre":
+                if (saveData.mapData != null)
+                {
+                    if (saveData.mapData.mapInfo == null || saveData.mapData.mapInfo.Count == 0)
+                    {
+                        Debug.Log("New Save Cadre");
+                        OnSaveStartPlayer?.Invoke();
+                    }
+                    else
+                    {
+                        print(saveData.mapData.mapInfo);
+                        showMap.SetMapStatus(ConvertListToDict(saveData.mapData.mapInfo));
+                    }
                 }
                 break;
             default:
@@ -145,11 +165,32 @@ public class Save : MonoBehaviour
         string json = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(savePath, json);
     }
+    
+    private List<SerializableKeyValuePair> ConvertDictToList(Dictionary<string, bool> dict)
+    {
+        var list = new List<SerializableKeyValuePair>();
+        foreach (var kvp in dict)
+        {
+            list.Add(new SerializableKeyValuePair { key = kvp.Key, value = kvp.Value });
+        }
+        return list;
+    }
+
+    private Dictionary<string, bool> ConvertListToDict(List<SerializableKeyValuePair> list)
+    {
+        var dict = new Dictionary<string, bool>();
+        foreach (var kvp in list)
+        {
+            dict[kvp.key] = kvp.value;
+        }
+        return dict;
+    }
 
     [System.Serializable]
     private class SaveData
     {
         public InventoryData inventoryData;
+        public MapData mapData;
         
     }
 
@@ -158,6 +199,17 @@ public class Save : MonoBehaviour
     {
         public List<string> scriptableObjectIDs;
     }
-
     
+    [System.Serializable]
+    public class SerializableKeyValuePair
+    {
+        public string key;
+        public bool value;
+    }
+
+    [System.Serializable]
+    private class MapData
+    {
+        public List<SerializableKeyValuePair> mapInfo;
+    }
 }

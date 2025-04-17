@@ -67,9 +67,5 @@ public class GestionInputs : MonoBehaviour
                 if (hitMapNavigate) hitMapNavigate.ClickMapNavigate();
             }
         }
-        else
-        {
-            Debug.Log("rien n'est touché");
-        }
     }
 }

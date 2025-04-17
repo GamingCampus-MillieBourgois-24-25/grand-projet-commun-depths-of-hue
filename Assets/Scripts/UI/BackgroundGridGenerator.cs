@@ -11,8 +11,10 @@ public class BackgroundGridGenerator : MonoBehaviour
     private Camera mainCamera;
     private GameObject[,] gridCadres;
     [SerializeField] private bool isForBackgroundLayer;
+    [SerializeField] private ShowMap showMap;
     
     public List<GameObject> backgrounds = new List<GameObject>();
+    public List<GestionCadre> cadres = new List<GestionCadre>();
     public delegate void OnFinishSpawnCadres();
     public static event OnFinishSpawnCadres OnSpawnCadre;
 
@@ -59,6 +61,7 @@ public class BackgroundGridGenerator : MonoBehaviour
                 GestionCadre gestionCadre = cadre.GetComponent<GestionCadre>();
                 if (!gestionCadre) continue;
                 OnSendCadre?.Invoke(gestionCadre);
+                cadres.Add(gestionCadre);
 
                 if (cadre.CompareTag("ActualCadre") && player)
                 {
@@ -92,6 +95,8 @@ public class BackgroundGridGenerator : MonoBehaviour
                 OnSpawnCadre?.Invoke();
             }
         }
+
+        if (showMap) showMap.SetReceiveFromBGGridGenerator(cadres);
     }
 
     private Vector2 GetScreenSizeInUnits()

@@ -10,9 +10,10 @@ public class MapBackgroundUI : MonoBehaviour
     [SerializeField] private int rows = 3;
     private Camera cam;
     private GameObject[,] gridCadres;
-    [SerializeField] private bool isForBackgroundLayer;
     
     public List<GameObject> backgrounds = new List<GameObject>();
+    public List<GameObject> cadresMap = new List<GameObject>();
+    [SerializeField] private ShowMap showMap;
 
     private void OnEnable()
     {
@@ -48,6 +49,7 @@ public class MapBackgroundUI : MonoBehaviour
 
             GameObject go = Instantiate(imagePrefab[i], worldPosition, Quaternion.identity, transform);
             backgrounds.Add(go);
+            if (go.CompareTag("MapCadre")) cadresMap.Add(go);
 
             SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
             sr.sprite = backgroundSprites[i];
@@ -58,6 +60,8 @@ public class MapBackgroundUI : MonoBehaviour
 
             gridCadres[x, y] = go;
         }
+        
+        showMap.SetMapCadre(cadresMap);
     }
 
     private Vector2 GetScreenSizeInUnits()
