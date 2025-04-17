@@ -4,22 +4,16 @@ using UnityEngine;
 
 public class Room1 : EnigmeRoom
 {
+    [ContextMenu("Initialize room1")]
     public override void Initialize()
     {
-        base.Initialize();
-        Debug.Log("YALALALA");
+        foreach (var enigme in enigmes)// subscribe to each enigme OnSucces event.
+        {
+            enigme.OnSuccess -= OnEnigmeResolved; // if already subscribed
+            enigme.OnSuccess += OnEnigmeResolved;
+        }
+        Debug.Log("hein ?");
     }
 
-    protected override void OnPostEnigme()
-    {
-        if (IsRoomComplete())
-        {
-            EndRoomSequence();
-        }
-        else
-        {
-            FramesManager.Instance.LockFrame("Cave");
-        }
-    }
 }
 

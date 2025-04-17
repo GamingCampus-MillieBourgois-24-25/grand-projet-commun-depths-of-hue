@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnigmeRoom : Room
 {
-    [SerializeField] private List<Enigme> enigmes;
+    [SerializeField] protected List<Enigme> enigmes;
     private int enigmesResolved = 0;
 
     [SerializeField] private GameObject successBanner;
@@ -32,7 +32,7 @@ public class EnigmeRoom : Room
     /// <summary>
     /// This function is used to initialize and launch the first enigme not resolved yet in the enigmas list.
     /// </summary>
-    protected virtual void InitilizeCurrentEnigma()
+    public virtual void InitilizeCurrentEnigma()
     {
         foreach (var enigme in enigmes)
         {
@@ -51,7 +51,7 @@ public class EnigmeRoom : Room
     /// <summary>
     /// This function is called whenever an enigme is resolved.
     /// </summary>
-    private void OnEnigmeResolved()
+    protected void OnEnigmeResolved()
     {
         SuccessSequence();
         enigmesResolved++;
