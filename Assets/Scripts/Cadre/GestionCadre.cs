@@ -60,6 +60,16 @@ public class GestionCadre : MonoBehaviour
     public GameObject TargetCadreDownGO { set => targetCadreDown = value; }
     #endregion
 
+    #region Event
+
+    public delegate void SendNewStatus(GestionCadre _cadre);
+    public static event SendNewStatus OnSendNewStatus;
+
+    public delegate void ShowUIGame(bool _isShow);
+    public static event ShowUIGame OnShowUI;
+
+    #endregion
+
 
     private void Awake()
     {
@@ -181,6 +191,7 @@ public class GestionCadre : MonoBehaviour
     // permet de naviguer au prochain cadre ciblé
     public void NavigateCadre(GameObject _original)
     {
+        OnShowUI?.Invoke(false);
         gameObject.tag = "Untagged";
         ResetArrows();
 
@@ -190,6 +201,7 @@ public class GestionCadre : MonoBehaviour
         player.SetPlayerDestination(cadre.transform.TransformPoint(cadre.GetComponent<GestionCadre>().center.localPosition), cadre.GetComponent<GestionCadre>());
         player.MovePlayer();
         cadre.gameObject.tag = "ActualCadre";
+        OnSendNewStatus?.Invoke(cadre.GetComponent<GestionCadre>());
 
         ManageRotationMovement(_original);
     }
@@ -207,6 +219,7 @@ public class GestionCadre : MonoBehaviour
         }
 
         // le middle cadre - l'actual cadre (universel pour toute direction)
+        if (!centerMiddle) FindCenterMiddle();
         var heading = centerMiddle.position - transform.position;
         var distance = heading.magnitude;
         Vector3 directionTemp = heading / distance;
@@ -222,6 +235,12 @@ public class GestionCadre : MonoBehaviour
         player.MovePlayer();
 
         ManageRotationMovement(cadre, true);
+    }
+
+    private void FindCenterMiddle()
+    {
+        GameObject centerMiddleFound = GameObject.FindGameObjectWithTag("centerMidCadre");
+        centerMiddle = centerMiddleFound.transform;
     }
 
     private void CalculNewRotation()
