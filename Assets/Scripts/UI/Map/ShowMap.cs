@@ -25,7 +25,8 @@ public class ShowMap : MonoBehaviour
     private bool receiveFromSauvegarde = false;
     private string actualCadre;
     
-    public string ActualCadre { get => actualCadre; set => actualCadre = value; }
+    public string ActualCadre { get => actualCadre;
+        private set => actualCadre = value; }
     
     [Header("Materials")]
     [SerializeField] private Material originalMaterial;
@@ -53,6 +54,7 @@ public class ShowMap : MonoBehaviour
         Save.OnSaveStartPlayer += SetReceiveFromSauvegarde;
         Save.OnSaveStartActualCadre += SetActualCadreFirstSave;
         GestionCadre.OnSendNewStatus += ModifyStatusCadre;
+        ManagerNavigateCadre.OnSendNewStatus += ModifyStatusCadre;
     }
 
     private void OnDisable()
@@ -61,6 +63,7 @@ public class ShowMap : MonoBehaviour
         Save.OnSaveStartPlayer -= SetReceiveFromSauvegarde;
         Save.OnSaveStartActualCadre -= SetActualCadreFirstSave;
         GestionCadre.OnSendNewStatus -= ModifyStatusCadre;
+        ManagerNavigateCadre.OnSendNewStatus -= ModifyStatusCadre;
     }
 
     public void ClickMapIcon()
@@ -125,10 +128,13 @@ public class ShowMap : MonoBehaviour
         return statusMap;
     }
 
-    private void ModifyStatusCadre(GestionCadre _cadre)
+    private void ModifyStatusCadre(GestionCadre _cadre, GameObject _go = null)
     {
-        ActualCadre = _cadre.gameObject.name;
-        sauvegarde.SaveCategory("explorationcadre");
+        if (_go)
+        {
+            ActualCadre = _go.name;
+            sauvegarde.SaveCategory("explorationcadre");
+        }
         if (!statusMap.ContainsKey(_cadre.gameObject.name)) return;
         statusMap[_cadre.gameObject.name] = true;
         sauvegarde.SaveCategory("mapcadre");

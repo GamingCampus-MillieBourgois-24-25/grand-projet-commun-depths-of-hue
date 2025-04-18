@@ -62,6 +62,7 @@ public class BackgroundGridGenerator : MonoBehaviour
                 GestionCadre gestionCadre = cadre.GetComponent<GestionCadre>();
                 if (!gestionCadre) continue;
                 OnSendCadre?.Invoke(gestionCadre);
+                
                 cadres.Add(gestionCadre);
 
                 // if (cadre.CompareTag("ActualCadre") && player)
