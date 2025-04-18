@@ -31,11 +31,52 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 336795074560
-    m_Localized: "*tend la cl\xE9 dor\xE9e au plongeur*"
+    m_Localized: "*Tend la cl\xE9 dor\xE9e au plongeur*"
     m_Metadata:
       m_Items: []
   - m_Id: 345892519936
     m_Localized: "Ce n\u2019est pas encore le bon chant\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 249806828929024
+    m_Localized: "Ces dessins... ils correspondent \xE0 la carte."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 249920096108544
+    m_Localized: "La voie est ouverte... mais chaque pas t\u2019\xE9loigne de ce
+      que tu croyais savoir."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 250028044910592
+    m_Localized: "Je dois continuer\u2026 Une autre v\xE9rit\xE9 m\u2019attend derri\xE8re
+      cette porte."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 250075738341376
+    m_Localized: "Tes souvenirs sont confus\u2026 laisse-moi te rappeler que la carte
+      n\u2019est pas comme \xE7a."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 253622387277824
+    m_Localized: "Comme une impression d\u2019\xEAtre d\xE9j\xE0 venu ici... pourtant
+      c\u2019est bien la premi\xE8re fois que j\u2019explore cette pi\xE8ce."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 255562349346816
+    m_Localized: "Hmm\u2026 La m\xE9moire n'est pas une simple archive du pass\xE9,
+      mais une reconstruction dynamique influenc\xE9e par nos \xE9motions, nos attentes
+      et notre perception du pr\xE9sent. Toutes mes ann\xE9es d\u2019expertise dans
+      le domaine n\u2019ont fait que confirmer cela."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 255632390029312
+    m_Localized: "Ecco\u2026 Acho\u2026 Eblyss\u2026 je n\u2019arrive pas \xE0 m\u2019en
+      souvenir\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 255648621985792
+    m_Localized: "Avec mes connaissances, je devrais \xEAtre comme un poisson dans
+      l\u2019eau, et pourtant\u2026 nous en sommes toujours l\xE0."
     m_Metadata:
       m_Items: []
   references:

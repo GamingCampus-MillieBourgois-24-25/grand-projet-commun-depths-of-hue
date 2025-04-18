@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
@@ -13,6 +14,22 @@ public class DialogueData
     public string npc;
     public Sprite image;
     public string dialogueKey;
+}
+
+public enum DialogueGroupKey
+{
+    startGame,
+    chantsSirene,
+    carteDestin,
+    introspection,
+    newRoom
+}
+
+[System.Serializable]
+public class DialogueKeyPair
+{
+    public DialogueGroupKey key;
+    public List<DialogueGroup> value;
 }
 
 public class DialogueManager : MonoBehaviour
@@ -28,8 +45,9 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private float textSpeed = 0.05f;
-    [SerializeField] private DialogueGroup dialoguesToPreload;
-
+    [ReorderableList] public List<DialogueKeyPair> listDialogues;
+    private DialogueGroup currentDialogue;
+    
     private StringTable dialogueTable;
     private int index = 0;
     private bool isBusy = false;
@@ -47,10 +65,17 @@ public class DialogueManager : MonoBehaviour
             textComponent.text = string.Empty;
         }
 
-        if (dialoguesToPreload != null)
+        if (listDialogues != null)
         {
-            LoadLocalizationFromTable(dialoguesToPreload.tableKey);
-            StartCoroutine(WriteDialogue(dialoguesToPreload));
+            foreach (var dialogueGroupList in listDialogues)
+            {
+                foreach (var dialogue in dialogueGroupList.value)
+                {
+                    LoadLocalizationFromTable(dialogue.tableKey);
+                }
+            }
+
+            StartDialogue(0,DialogueGroupKey.chantsSirene);
         }
     }
 
@@ -114,5 +139,27 @@ public class DialogueManager : MonoBehaviour
     public bool IsBusy()
     {
         return isBusy;
+    }
+
+    public void StartGOOD()
+    {
+        StartDialogue(1,DialogueGroupKey.chantsSirene);
+    }
+
+    public void StartBAD()
+    {
+        StartDialogue(2,DialogueGroupKey.chantsSirene);
+    }
+    public void StartDialogue(int idDialogue,DialogueGroupKey keyGroup)
+    {
+        if (listDialogues == null) return;
+        foreach (var dialoguePair in listDialogues)
+        {
+            if (dialoguePair.key == keyGroup)
+            {
+                currentDialogue = dialoguePair.value[idDialogue];
+            }
+        }
+        StartCoroutine(WriteDialogue(currentDialogue));
     }
 }

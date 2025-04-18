@@ -35,6 +35,40 @@ MonoBehaviour:
     m_Key: ChantSirenes_badS
     m_Metadata:
       m_Items: []
+  - m_Id: 249806828929024
+    m_Key: CarteDestin_Enter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 249920096108544
+    m_Key: CarteDestin_good1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 250028044910592
+    m_Key: CarteDestin_good2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 250075738341376
+    m_Key: 'CarteDestin_bad
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 253622387277824
+    m_Key: NewRoom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 255562349346816
+    m_Key: Introspec_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 255632390029312
+    m_Key: Introspec_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 255648621985792
+    m_Key: Introspec_3
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
