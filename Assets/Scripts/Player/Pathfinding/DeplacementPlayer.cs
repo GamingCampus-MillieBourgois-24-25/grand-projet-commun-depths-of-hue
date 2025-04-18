@@ -76,9 +76,10 @@ public class DeplacementPlayer : MonoBehaviour
     private void Update()
     {
         // pas de rotation chelou sur ces axes
-        var rotation = transform.eulerAngles;
+        Vector3 rotation = transform.eulerAngles;
         rotation.x = 0;
         rotation.y = 0;
+        rotation.z = 0;
         transform.eulerAngles = rotation;
 
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
@@ -98,5 +99,10 @@ public class DeplacementPlayer : MonoBehaviour
         playerDestination = _playerDestination;
         actualCadre = _cadre;
         uniqueSendEvent = false;
+    }
+    
+    void LateUpdate()
+    {
+        transform.rotation = Quaternion.identity;
     }
 }

@@ -97,7 +97,7 @@ public class Save : MonoBehaviour
     public void LoadCategory(string category)
     {
         SaveData saveData = LoadExistingData();
-        Debug.Log("Contenu du saveData : " + JsonUtility.ToJson(saveData, true));
+        //Debug.Log("Contenu du saveData : " + JsonUtility.ToJson(saveData, true));
         switch (category.Trim().ToLower())
         {
             case "inventory":
