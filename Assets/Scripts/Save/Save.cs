@@ -7,14 +7,25 @@ public class Save : MonoBehaviour
 {
     private string savePath;
     [SerializeField] Inventaire inventaire;
+    [SerializeField] ShowMap showMap;
 
-    void Awake()
+    #region Event
+
+    public delegate void SaveStartGamePlayer();
+    public static event SaveStartGamePlayer OnSaveStartPlayer;
+    
+    public delegate void SaveStartGameActualCadre();
+    public static event SaveStartGameActualCadre OnSaveStartActualCadre;
+
+    #endregion
+
+    private void Awake()
     {
         savePath = Application.persistentDataPath + "/gameSave.json";
-        if (inventaire == null)
-        {
-            Debug.LogError("Inventaire not found in the scene!");
-        }
+        // if (inventaire == null)
+        // {
+        //     Debug.LogError("Inventaire not found in the scene!");
+        // }
         EnsureSaveFileExists();
     }
 
@@ -40,14 +51,18 @@ public class Save : MonoBehaviour
                 };
                 break;
             // Add more categories as needed
-            /*case "player":
-                saveData.playerData = new PlayerData
+            case "mapcadre":
+                saveData.mapData = new MapData
                 {
-                    // Add player-specific data here
-                    position = Vector3.zero,
-                    health = 100
+                    mapInfo = ConvertDictToList(showMap.GetMapStatus())
                 };
-                break;*/
+                break;
+            case "explorationcadre":
+                saveData.cadreData = new CadreData
+                {
+                    actualCadre = showMap.ActualCadre
+                };
+                break;
             default:
                 Debug.LogWarning($"Category {category} not recognized!");
                 return;
@@ -65,11 +80,14 @@ public class Save : MonoBehaviour
             {
                 scriptableObjectIDs = inventaire.GetId()
             },
-            /*playerData = new PlayerData
+            mapData = new MapData
             {
-                position = Vector3.zero,
-                health = 100
-            }*/
+                mapInfo = ConvertDictToList(showMap.GetMapStatus())
+            },
+            cadreData = new CadreData
+            {
+                actualCadre = showMap.ActualCadre
+            }
         };
 
         SaveToFile(saveData);
@@ -89,6 +107,35 @@ public class Save : MonoBehaviour
                     inventaire.SetId(saveData.inventoryData.scriptableObjectIDs);
                     inventaire.AddItemSave();
                     
+                }
+                break;
+            case "mapcadre":
+                if (saveData.mapData != null)
+                {
+                    if (saveData.mapData.mapInfo == null || saveData.mapData.mapInfo.Count == 0)
+                    {
+                        Debug.Log("New Save Cadre");
+                        OnSaveStartPlayer?.Invoke();
+                    }
+                    else
+                    {
+                        showMap.SetMapStatus(ConvertListToDict(saveData.mapData.mapInfo));
+                    }
+                }
+                break;
+            case "explorationcadre":
+                if (saveData.cadreData != null)
+                {
+                    if (string.IsNullOrEmpty(saveData.cadreData.actualCadre))
+                    {
+                        Debug.Log("New Save Actual Cadre");
+                        OnSaveStartActualCadre?.Invoke();
+                    }
+                    else
+                    {
+                        print(saveData.cadreData.actualCadre);
+                        showMap.SetActualCadre(saveData.cadreData.actualCadre);
+                    }
                 }
                 break;
             default:
@@ -145,12 +192,33 @@ public class Save : MonoBehaviour
         string json = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(savePath, json);
     }
+    
+    private List<SerializableKeyValuePair> ConvertDictToList(Dictionary<string, bool> dict)
+    {
+        var list = new List<SerializableKeyValuePair>();
+        foreach (var kvp in dict)
+        {
+            list.Add(new SerializableKeyValuePair { key = kvp.Key, value = kvp.Value });
+        }
+        return list;
+    }
+
+    private Dictionary<string, bool> ConvertListToDict(List<SerializableKeyValuePair> list)
+    {
+        var dict = new Dictionary<string, bool>();
+        foreach (var kvp in list)
+        {
+            dict[kvp.key] = kvp.value;
+        }
+        return dict;
+    }
 
     [System.Serializable]
     private class SaveData
     {
         public InventoryData inventoryData;
-        
+        public MapData mapData;
+        public CadreData cadreData;
     }
 
     [System.Serializable]
@@ -159,5 +227,30 @@ public class Save : MonoBehaviour
         public List<string> scriptableObjectIDs;
     }
 
-    
+    #region Serialize Map Cadre Data
+
+    [System.Serializable]
+    public class SerializableKeyValuePair
+    {
+        public string key;
+        public bool value;
+    }
+
+    [System.Serializable]
+    private class MapData
+    {
+        public List<SerializableKeyValuePair> mapInfo;
+    }
+
+    #endregion
+
+    #region Serialize Cadre Spawn Player
+
+    [System.Serializable]
+    private class CadreData
+    {
+        public string actualCadre;
+    }
+
+    #endregion
 }

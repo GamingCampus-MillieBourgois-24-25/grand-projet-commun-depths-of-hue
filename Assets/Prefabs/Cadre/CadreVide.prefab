@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1883524472601542376}
   - component: {fileID: 7639306784059403759}
   - component: {fileID: 2039785990347958226}
-  - component: {fileID: 4964681290440356594}
   m_Layer: 0
   m_Name: CadreVide
   m_TagString: Untagged
@@ -131,37 +130,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.26, y: 4.17}
   m_EdgeRadius: 0
---- !u!114 &4964681290440356594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9109634955974416034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d1ed2a27ac9de3438b667a67ba8dbbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  center: {fileID: 0}
-  ArrowLeft: 0
-  targetCadreLeft: {fileID: 0}
-  arrowLeft: {fileID: 0}
-  tagToFoundCadreLeft: 
-  angleTargetLeft: 0
-  ArrowRight: 0
-  targetCadreRight: {fileID: 0}
-  arrowRight: {fileID: 0}
-  tagToFoundCadreRight: 
-  angleTargetRight: 0
-  ArrowUp: 0
-  targetCadreUp: {fileID: 0}
-  arrowUp: {fileID: 0}
-  tagToFoundCadreUp: 
-  angleTargetUp: 0
-  ArrowDown: 0
-  targetCadreDown: {fileID: 0}
-  arrowDown: {fileID: 0}
-  tagToFoundCadreDown: 
-  angleTargetDown: 0

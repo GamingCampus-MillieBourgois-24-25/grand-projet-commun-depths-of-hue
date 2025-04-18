@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ShowMap : MonoBehaviour
@@ -14,22 +14,53 @@ public class ShowMap : MonoBehaviour
     [SerializeField] private BackgroundGridGenerator gridGenerator;
     [SerializeField] private MapBackgroundUI mapBackgroundUI;
     [SerializeField] private Animator playerAnimator;
+    [SerializeField] private GameObject player;
+    
+    private Dictionary<string, bool> statusMap = new Dictionary<string, bool>();
+    [Header("Sauvegarde")]
+    [SerializeField] private Save sauvegarde;
+    private List<GestionCadre> cadres = new List<GestionCadre>();
+    private List<GameObject> cadresMap = new List<GameObject>();
+    private bool receiveFromBGGridGenerator = false;
+    private bool receiveFromSauvegarde = false;
+    private string actualCadre;
+    
+    public string ActualCadre { get => actualCadre; set => actualCadre = value; }
+    
+    [Header("Materials")]
+    [SerializeField] private Material originalMaterial;
+    [SerializeField] private Material blurMaterial;
+    
+    [Header("Sprites")]
+    [SerializeField] private Sprite ancre;
+    [SerializeField] private Sprite lockedBubble;
 
     private bool isOpen;
 
     private void Start()
     {
         isOpen = false;
+        if (sauvegarde)
+        {
+            sauvegarde.LoadCategory("explorationcadre");
+            sauvegarde.LoadCategory("mapcadre");
+        }
     }
 
     private void OnEnable()
     {
         MapNavigateCadre.OnHide += ClickMapIcon;
+        Save.OnSaveStartPlayer += SetReceiveFromSauvegarde;
+        Save.OnSaveStartActualCadre += SetActualCadreFirstSave;
+        GestionCadre.OnSendNewStatus += ModifyStatusCadre;
     }
 
     private void OnDisable()
     {
         MapNavigateCadre.OnHide -= ClickMapIcon;
+        Save.OnSaveStartPlayer -= SetReceiveFromSauvegarde;
+        Save.OnSaveStartActualCadre -= SetActualCadreFirstSave;
+        GestionCadre.OnSendNewStatus -= ModifyStatusCadre;
     }
 
     public void ClickMapIcon()
@@ -51,7 +82,109 @@ public class ShowMap : MonoBehaviour
         if (isOpen && playerAnimator)
         {
             playerAnimator.SetBool(IsWalk, true);
-        } 
+        }
+
+        UpdateStatusCadre();
+        
         isOpen = !isOpen;
+    }
+
+    private void SetReceiveFromSauvegarde()
+    {
+        receiveFromSauvegarde = true;
+        SaveStartingPlayer();
+    }
+
+    public void SetReceiveFromBGGridGenerator(List<GestionCadre> _cadres)
+    {
+        receiveFromBGGridGenerator = true;
+        cadres = _cadres;
+        SaveStartingPlayer();
+    }
+
+    private void SaveStartingPlayer()
+    {
+        if (!sauvegarde) return;
+        if (receiveFromSauvegarde && receiveFromBGGridGenerator)
+        {
+            foreach (var cadre in cadres)
+            {
+                statusMap.Add(cadre.gameObject.name, cadre.gameObject.CompareTag("ActualCadre"));
+            }
+            sauvegarde.SaveCategory("mapcadre");
+        }
+    }
+    
+    public void SetMapStatus(Dictionary<string, bool> _mapInfo)
+    {
+        statusMap = _mapInfo;
+    }
+    
+    public Dictionary<string, bool> GetMapStatus()
+    {
+        return statusMap;
+    }
+
+    private void ModifyStatusCadre(GestionCadre _cadre)
+    {
+        ActualCadre = _cadre.gameObject.name;
+        sauvegarde.SaveCategory("explorationcadre");
+        if (!statusMap.ContainsKey(_cadre.gameObject.name)) return;
+        statusMap[_cadre.gameObject.name] = true;
+        sauvegarde.SaveCategory("mapcadre");
+        UpdateStatusCadre();
+    }
+    
+    public void SetMapCadre(List<GameObject> _cadres)
+    {
+        cadresMap.AddRange(_cadres);
+    }
+
+    private void UpdateStatusCadre()
+    {
+        sauvegarde.LoadCategory("mapcadre");
+        
+        foreach (var t in cadresMap)
+        {
+            if (!t) return;
+            foreach (var cadre in statusMap)
+            {
+                string key = cadre.Key;
+                key = "Map" + key;
+                
+                bool value = cadre.Value;
+
+                if (t.name == key)
+                {
+                    t.GetComponent<InformationCadreMap>().Material.material = value ? originalMaterial : blurMaterial;
+                    t.GetComponent<InformationCadreMap>().Locked.sprite = value ? ancre : lockedBubble;
+                }
+            }
+        }
+    }
+
+    private void SetActualCadreFirstSave()
+    {
+        foreach (var t in cadres.Where(t => t.CompareTag("ActualCadre")))
+        {
+            ActualCadre = t.name;
+            sauvegarde.SaveCategory("explorationcadre");
+            TeleportPlayer(t);
+        }
+    }
+
+    public void SetActualCadre(string _actualCadre)
+    {
+        foreach (var t in cadres.Where(t => t.name == _actualCadre))
+        {
+            t.tag = "ActualCadre";
+            TeleportPlayer(t);
+        }
+    }
+
+    private void TeleportPlayer(GestionCadre _cadre)
+    {
+        player.transform.position = _cadre.center.position;
+        _cadre.SetArrowsVisibilities();
     }
 }
