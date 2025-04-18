@@ -7,7 +7,7 @@ public class JenkinsBuild
     public static void BuildAndroid()
     {
         string buildPath = "Builds/Android";
-        string[] scenes = { "Assets/Scenes/SampleScene.unity" };
+        string[] scenes = { "Assets/Scenes/MainMenu.unity" };
 
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions
         {
