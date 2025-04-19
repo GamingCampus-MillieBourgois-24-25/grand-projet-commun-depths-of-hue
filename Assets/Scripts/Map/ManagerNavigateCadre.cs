@@ -9,7 +9,6 @@ public class ManagerNavigateCadre : MonoBehaviour
     private List<GestionCadre> allCadres = new List<GestionCadre>();
     private GestionCadre actualCadre;
     private GestionCadre targetCadre;
-    private GestionCadre gestionCadreVar;
     
     public delegate void SendNewStatus(GestionCadre _cadre, GameObject _go);
     public static event SendNewStatus OnSendNewStatus;
@@ -76,14 +75,12 @@ public class ManagerNavigateCadre : MonoBehaviour
     
     private void ManageRotation(GameObject _cadre)
     {
-        if (_cadre.name == "CadreMidTemple(Clone)") return;
         GestionCadre gestionCadre = _cadre.GetComponent<GestionCadre>();
         if (!gestionCadre.centerMiddle) FindCenterMiddle(gestionCadre);
 
         var heading = (GestionException(_cadre) ? gestionCadre.center.position : gestionCadre.centerMiddle.position) - actualCadre.transform.position;
         var distance = heading.magnitude;
         Vector3 directionTemp = heading / distance;
-        gestionCadreVar = gestionCadre;
         gestionCadre.SetDirection = new Vector3(
             Mathf.RoundToInt(directionTemp.x),
             Mathf.RoundToInt(directionTemp.y),
@@ -116,7 +113,7 @@ public class ManagerNavigateCadre : MonoBehaviour
         if (!targetCadre) return;
         if (targetCadre.name == "CadreMidTemple(Clone)") return;
 
-        var heading = targetCadre.center.position - gestionCadreVar.centerMiddle.position;
+        var heading = targetCadre.center.position - targetCadre.centerMiddle.position;
         var distance = heading.magnitude;
         Vector3 directionTemp = heading / distance;
         targetCadre.SetDirection = new Vector3(
