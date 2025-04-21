@@ -42,9 +42,10 @@ GameObject:
   - component: {fileID: 8988972396517130402}
   - component: {fileID: 708433876571048853}
   - component: {fileID: 5855720953780053751}
+  - component: {fileID: -2679188202392630742}
   m_Layer: 0
   m_Name: MapCadreMidTemple
-  m_TagString: Untagged
+  m_TagString: MapCadre
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -163,6 +164,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.3537908, y: 3.9277513}
   m_EdgeRadius: 0
+--- !u!114 &-2679188202392630742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5387358801498526230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3574f2b635f01bd4cb7421c67e84fee7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 708433876571048853}
+  locked: {fileID: 7106252945642026889}
 --- !u!1001 &600874859946809588
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -236,6 +251,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 317c1e4dc49566e47bbb8d1a9dbda792, type: 3}
+--- !u!212 &7106252945642026889 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7694619758993829757, guid: 317c1e4dc49566e47bbb8d1a9dbda792,
+    type: 3}
+  m_PrefabInstance: {fileID: 600874859946809588}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8110127109174978113 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8708353242338459317, guid: 317c1e4dc49566e47bbb8d1a9dbda792,

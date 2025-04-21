@@ -9,6 +9,8 @@ TagManager:
   - ActualCadre
   - Rope
   - Ancre
+  - MapCadre
+  - centerMidCadre
   layers:
   - Default
   - TransparentFX
