@@ -126,7 +126,7 @@ public class Save : MonoBehaviour
             case "explorationcadre":
                 if (saveData.cadreData != null)
                 {
-                    if (string.IsNullOrEmpty(saveData.cadreData.actualCadre))
+                    if (string.IsNullOrEmpty(saveData.cadreData.actualCadre) || saveData.cadreData == null)
                     {
                         Debug.Log("New Save Actual Cadre");
                         OnSaveStartActualCadre?.Invoke();
