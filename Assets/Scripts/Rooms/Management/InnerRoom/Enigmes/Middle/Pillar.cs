@@ -7,7 +7,7 @@ public class Pillar : MonoBehaviour
 {
     [SerializeField] private GameObject popup;
     [SerializeField] private Enigme_Pillar spawner;
-    [SerializeField] private Raycat ray;
+    [SerializeField] private GestionInputs ray;
 
 
     private GameObject Obj;
@@ -27,7 +27,7 @@ public class Pillar : MonoBehaviour
         set => spawner = value;
     }
 
-    public Raycat Ray
+    public GestionInputs Ray
     {
         get => ray;
         set => ray = value;
@@ -49,6 +49,13 @@ public class Pillar : MonoBehaviour
     {
         get => Id;
         set => Id = value;
+    }
+
+
+
+    void OnEnable()
+    {
+        GestionInputs.OnClickOnNothing += HandleClickOnNothing;
     }
 
     public void OnObjectClicked()
@@ -81,14 +88,9 @@ public class Pillar : MonoBehaviour
         popupRect.position = screenPosition;
     }
 
-    void OnEnable()
-    {
-        Raycat.OnClickOnNothing += HandleClickOnNothing;
-    }
-
     void HandleClickOnNothing()
     {
-        
+        print("return false");
             
         popup.SetActive(false);
     }

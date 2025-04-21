@@ -10,7 +10,7 @@ public class Enigme_Pillar : Enigme
     public GameObject pillarPrefab;
     public GameObject textPrefab;
     public GameObject popUp;
-    public Raycat ray;
+    public GestionInputs ray;
 
     [Header("Data")]
     public List<string> items;
@@ -61,7 +61,7 @@ public class Enigme_Pillar : Enigme
         set => spacing = value;
     }
 
-    public Raycat Ray
+    public GestionInputs Ray
     {
         get => ray;
         set => ray = value;

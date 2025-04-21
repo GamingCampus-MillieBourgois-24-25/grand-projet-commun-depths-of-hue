@@ -21,13 +21,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Rooms/Room_Puzzle.unity
     guid: 763c6af2ae2101949a391490558b4984
   - enabled: 1
-<<<<<<< HEAD
     path: Assets/Scenes/Rooms/Enigme Middle.unity
     guid: c44383a231a32b04294cf4107879682b
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: d7f82a497520dfb4f8bbc2b521861599,
       type: 2}
-=======
     path: Assets/Scenes/Rooms/Room_Sudoku.unity
     guid: 7889cec098083a347ac6122022f38d12
   m_configObjects:
@@ -37,4 +35,3 @@ EditorBuildSettings:
       type: 2}
     com.unity.localization.settings: {fileID: 11400000, guid: 33bf3bdc998aa4749b8e53a15fb4bde9,
       type: 2}
->>>>>>> de377a2f22e57989d454e9d9160411113a5fe25f

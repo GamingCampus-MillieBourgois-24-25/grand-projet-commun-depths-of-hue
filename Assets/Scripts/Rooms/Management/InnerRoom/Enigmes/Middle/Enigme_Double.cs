@@ -20,6 +20,7 @@ public class Enigme_Doble : Enigme
         nbDouble = ItemsDouble.Count / 2;
         SpawnObjects();
         UpdateTexte();
+        FramesManager.Instance.LockFrame("Pillar");
     }
 
     public void ObjectClicked(GameObject obj)
@@ -30,7 +31,7 @@ public class Enigme_Doble : Enigme
         {
             Material outlineMaterial = new Material(materialToApply);
             firstSelected = obj;
-            AddMaterialToRenderer(obj,outlineMaterial);
+            firstSelected.GetComponent<Outline>().enabled = true;
         }
         else
         {
@@ -39,67 +40,7 @@ public class Enigme_Doble : Enigme
         }
     }
 
-    public static void AddMaterialToRenderer(GameObject obj, Material newMaterial)
-    {
-        if (obj == null || newMaterial == null)
-        {
-            Debug.LogWarning("GameObject ou Material est null.");
-            return;
-        }
-
-        Renderer rend = obj.GetComponent<Renderer>();
-        if (rend == null)
-        {
-            Debug.LogWarning("Aucun Renderer trouvé sur l'objet.");
-            return;
-        }
-
-        Material[] currentMaterials = rend.materials;
-        Material[] updatedMaterials = new Material[currentMaterials.Length + 1];
-
-        for (int i = 0; i < currentMaterials.Length; i++)
-        {
-            updatedMaterials[i] = currentMaterials[i];
-        }
-
-        updatedMaterials[updatedMaterials.Length - 1] = newMaterial;
-        rend.materials = updatedMaterials;
-    }
-
-    public static void RemoveMaterialRenderer(GameObject obj)
-    {
-        if (obj == null)
-        {
-            Debug.LogWarning("GameObject est null.");
-            return;
-        }
-
-        Renderer rend = obj.GetComponent<Renderer>();
-        if (rend == null)
-        {
-            Debug.LogWarning("Aucun Renderer trouvé sur l'objet.");
-            return;
-        }
-
-        Material[] currentMaterials = rend.materials;
-
-        if (currentMaterials.Length <= 1)
-        {
-            Debug.LogWarning("Impossible de retirer le matériau : il n'en reste qu'un ou aucun.");
-            return;
-        }
-
-        Material[] updatedMaterials = new Material[currentMaterials.Length - 1];
-
-        for (int i = 0; i < updatedMaterials.Length; i++)
-        {
-            updatedMaterials[i] = currentMaterials[i];
-        }
-
-        rend.materials = updatedMaterials;
-    }
-
-
+  
     public void UpdateTexte()
     {
         text.text = nbDouble.ToString();
@@ -115,16 +56,18 @@ public class Enigme_Doble : Enigme
         }
         if (firstObj.GetId() == secondObj.GetId())
         {
-            RemoveMaterialRenderer(firstSelected);
+            firstSelected.GetComponent<Outline>().enabled = false;
             firstSelected.SetActive(false);
             secondSelected.SetActive(false);
             firstSelected = null;
             secondSelected = null;
             nbDouble--;
             UpdateTexte();
+            Success();
         }
         else
         {
+            firstSelected.GetComponent<Outline>().enabled = false;
             firstSelected = null;
             secondSelected = null;
         }
@@ -142,7 +85,7 @@ public class Enigme_Doble : Enigme
         }
     }
 
-    public override void UpdateEnigme(float deltaTime)
+    /*public override void UpdateEnigme(float deltaTime)
     {
         Success();
     }
@@ -154,7 +97,7 @@ public class Enigme_Doble : Enigme
 
             UpdateEnigme(Time.deltaTime);
         }
-    }
+    }*/
 
     public void SpawnObjects()
     {
