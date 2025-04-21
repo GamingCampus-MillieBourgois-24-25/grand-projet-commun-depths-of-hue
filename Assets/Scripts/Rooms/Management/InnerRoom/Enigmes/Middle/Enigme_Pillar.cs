@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,18 +6,84 @@ using UnityEngine.UI;
 
 public class Enigme_Pillar : Enigme
 {
-    Pillar pillar = null;
+    [Header("Prefabs & References")]
     public GameObject pillarPrefab;
-    public List<string> items;
-    public List<string> OrderEnigme;
     public GameObject textPrefab;
     public GameObject popUp;
+    public Raycat ray;
+
+    [Header("Data")]
+    public List<string> items;
+    public List<Material> materials;
+
+    [Header("Scene Objects")]
     public List<GameObject> sceneObjects;
     public float spacing = 2f;
-    public Raycat ray;
-    public List<Pillar> pillars;
 
-    
+    private Pillar pillar = null;
+    private List<Pillar> pillars = new List<Pillar>();
+    private List<string> OrderEnigme = new List<string>();
+    private List<Material> pillarMaterials = new List<Material>();
+
+    public GameObject PillarPrefab
+    {
+        get => pillarPrefab;
+        set => pillarPrefab = value;
+    }
+
+    public List<string> Items
+    {
+        get => items;
+        set => items = value;
+    }
+
+    public GameObject TextPrefab
+    {
+        get => textPrefab;
+        set => textPrefab = value;
+    }
+
+    public GameObject PopUp
+    {
+        get => popUp;
+        set => popUp = value;
+    }
+
+    public List<GameObject> SceneObjects
+    {
+        get => sceneObjects;
+        set => sceneObjects = value;
+    }
+
+    public float Spacing
+    {
+        get => spacing;
+        set => spacing = value;
+    }
+
+    public Raycat Ray
+    {
+        get => ray;
+        set => ray = value;
+    }
+
+    public List<Pillar> Pillars
+    {
+        get => pillars;
+        set => pillars = value;
+    }
+
+    public List<Material> Materials
+    {
+        get => materials;
+        set => materials = value;
+    }
+
+    private void Start()
+    {
+        popUp.SetActive(false);
+        RandomPillar();
+    }
 
     public override void Initialize()
     {
@@ -35,75 +100,52 @@ public class Enigme_Pillar : Enigme
 
     public void UpdatePopup()
     {
-        pillar = ray.GetObj().GetComponent<Pillar>();
-        if (pillar == null)
-        {
-            return;
-        }
+        pillar = ray.GetObj()?.GetComponent<Pillar>();
+        if (pillar == null) return;
 
         ClearPopup();
 
-        if (pillar.GetTake())
-        {
-            print("take");
-            PopUpTake();
-        }
-        else
-        {
-            print("choice");
-            PopUpItem();
-        }
+        if (pillar.IsObj) PopUpTake();
+        else PopUpItem();
     }
+
     private void ClearPopup()
     {
         foreach (Transform child in popUp.transform)
         {
-            if (child.gameObject != null)
-            {
-                Destroy(child.gameObject);
-            }
+            if (child != null) Destroy(child.gameObject);
         }
     }
+
     private void PopUpTake()
     {
         GameObject newText = Instantiate(textPrefab, popUp.transform);
-        if (newText != null)
+        if (newText == null) return;
+
+        TextMeshProUGUI textMesh = newText.GetComponent<TextMeshProUGUI>();
+        if (textMesh != null)
         {
-            TextMeshProUGUI textMesh = newText.GetComponent<TextMeshProUGUI>();
-            if (textMesh != null)
-            {
-                textMesh.enabled = true;
-                textMesh.text = "reprendre";
-                textMesh.ForceMeshUpdate();
-                textMesh.tag = "Cube";
+            textMesh.text = "reprendre";
+            textMesh.enabled = true;
+            textMesh.ForceMeshUpdate();
+            textMesh.tag = "Cube";
 
-                Button textButton = newText.GetComponent<Button>();
-                if (textButton == null)
-                {
-                    textButton = newText.AddComponent<Button>();
-                }
-
-                textButton.onClick.AddListener(OnResumeClicked);
-            }
-
-            RectTransform textRect = newText.GetComponent<RectTransform>();
-            if (textRect != null)
-            {
-                textRect.anchoredPosition = Vector2.zero;
-            }
+            Button textButton = newText.GetComponent<Button>() ?? newText.AddComponent<Button>();
+            textButton.onClick.AddListener(OnResumeClicked);
         }
+
+        RectTransform textRect = newText.GetComponent<RectTransform>();
+        if (textRect != null) textRect.anchoredPosition = Vector2.zero;
 
         RectTransform popUpRect = popUp.GetComponent<RectTransform>();
-        if (popUpRect != null)
-        {
-            popUpRect.sizeDelta = new Vector2(200, 50);
-        }
+        if (popUpRect != null) popUpRect.sizeDelta = new Vector2(200, 50);
     }
+
     private void PopUpItem()
     {
         float totalHeight = 0f;
         float maxWidth = 0f;
-        float textSpacing = 25f;
+        float spacingY = 25f;
         float horizontalPadding = 20f;
 
         for (int i = 0; i < items.Count; i++)
@@ -117,66 +159,51 @@ public class Enigme_Pillar : Enigme
             }
 
             TextMeshProUGUI textMesh = newText.GetComponent<TextMeshProUGUI>();
-            if (textMesh != null)
+            if (textMesh == null)
             {
-                textMesh.enabled = true;
-                textMesh.text = item;
-                textMesh.ForceMeshUpdate();
-                textMesh.tag = "Cube";
-
-                totalHeight += textMesh.preferredHeight + textSpacing;
-                if (textMesh.preferredWidth > maxWidth)
-                {
-                    maxWidth = textMesh.preferredWidth;
-                }
-
-                Button textButton = newText.GetComponent<Button>();
-                if (textButton == null)
-                {
-                    textButton = newText.AddComponent<Button>();
-                }
-                textButton.enabled = true;
-                textButton.onClick.AddListener(() => OnTextClicked(item));
-            }
-            else
-            {
-                Debug.LogError("Le composant TextMeshProUGUI n'a pas été trouvé sur le prefab instancié.");
+                Debug.LogError("TextMeshProUGUI manquant sur textPrefab.");
                 Destroy(newText);
                 continue;
             }
 
+            textMesh.text = item;
+            textMesh.enabled = true;
+            textMesh.ForceMeshUpdate();
+
+            totalHeight += textMesh.preferredHeight + spacingY;
+            maxWidth = Mathf.Max(maxWidth, textMesh.preferredWidth);
+
+            Button textButton = newText.GetComponent<Button>() ?? newText.AddComponent<Button>();
+            textButton.onClick.AddListener(() => OnTextClicked(item));
+
             RectTransform textRect = newText.GetComponent<RectTransform>();
             if (textRect != null)
             {
-                textRect.anchoredPosition = new Vector2(0, -totalHeight + (textMesh.preferredHeight / 2) + textSpacing * i);
+                textRect.anchoredPosition = new Vector2(0, -totalHeight + (textMesh.preferredHeight / 2) + spacingY * i);
             }
         }
 
         RectTransform popUpRect = popUp.GetComponent<RectTransform>();
-        if (popUpRect != null)
-        {
-            popUpRect.sizeDelta = new Vector2(maxWidth + horizontalPadding, totalHeight);
-        }
+        if (popUpRect != null) popUpRect.sizeDelta = new Vector2(maxWidth + horizontalPadding, totalHeight);
     }
 
-    void OnResumeClicked()
+    private void OnResumeClicked()
     {
-        items.Add(pillar.GetObj().name);
-        sceneObjects.Add(pillar.GetObj());
-        pillar.GetObj().transform.position = new Vector3(1000, 1000, 0);
+        if (pillar == null) return;
+
+        items.Add(pillar.Objet.name);
+        sceneObjects.Add(pillar.Objet);
+        pillar.Objet.transform.position = new Vector3(1000, 1000, 0);
+
         pillar.SetTake();
-        pillar.SetObj(null);
-        popUp.gameObject.SetActive(false);
+        pillar.Objet = null;
+
+        popUp.SetActive(false);
     }
 
-
-    void SpawnPillars()
+    private void SpawnPillars()
     {
-        if (pillarPrefab == null)
-        {
-            Debug.LogError("pillarPrefab n'est pas assigné.");
-            return;
-        }
+        if (pillarPrefab == null) return;
 
         int count = items.Count;
         float offset = (count - 1) * spacing / 2f;
@@ -184,88 +211,115 @@ public class Enigme_Pillar : Enigme
         for (int i = 0; i < count; i++)
         {
             float x = i * spacing - offset;
-            Vector3 position = new Vector3(x, 0f, 0f);
-            GameObject pillar = Instantiate(pillarPrefab, position, Quaternion.identity);
-            if (pillar == null)
+            Vector3 position = new Vector3(x, -2f, 0f);
+            Quaternion rotation = Quaternion.Euler(-90f, 180f, 0f);
+
+            GameObject newPillar = Instantiate(pillarPrefab, position, rotation);
+            if (newPillar == null)
             {
                 Debug.LogError("Échec de l'instanciation de pillarPrefab.");
                 continue;
             }
 
-            Pillar pillarScript = pillar.GetComponent<Pillar>();
-            if (pillarScript == null)
-            {
-                pillarScript = pillar.AddComponent<Pillar>();
-            }
+            Pillar pillarScript = newPillar.GetComponent<Pillar>() ?? newPillar.AddComponent<Pillar>();
 
-            pillarScript.popup = popUp;
-            pillarScript.spawner = this;
-            pillarScript.SetId(OrderEnigme[i]);
+            newPillar.GetComponent<MeshRenderer>().material = pillarMaterials[i];
+            pillarScript.Popup = popUp;
+            pillarScript.Spawner = this;
+            pillarScript.Ray = ray;
+            pillarScript.ID =OrderEnigme[i];
+
             pillars.Add(pillarScript);
         }
     }
-    public override void UpdateEnigme(float deltaTime)
-    {
-        Success();
-    }
 
-    private void Update()
+    private void RandomPillar()
     {
-        if (isStarted)
+        List<string> itemsCopy = new List<string>(items);
+        List<Material> materialsCopy = new List<Material>(materials);
+
+        for (int i = 0; i < items.Count; i++)
         {
+            int itemIndex = UnityEngine.Random.Range(0, itemsCopy.Count);
+            int matIndex = UnityEngine.Random.Range(0, materialsCopy.Count);
 
-            UpdateEnigme(Time.deltaTime);
+            OrderEnigme.Add(itemsCopy[itemIndex]);
+            pillarMaterials.Add(materialsCopy[matIndex]);
+
+            itemsCopy.RemoveAt(itemIndex);
+            materialsCopy.RemoveAt(matIndex);
         }
     }
-    protected override void Success()
-    {
-        foreach (var pillar in pillars)
-        {
-            if (pillar.GetObj() == null || pillar.GetObj().name != pillar.GetId())
-            {
-                return;
-            }
-        }
-        print("c'est win");
-        base.Success();
-        
-    }
 
-    void OnTextClicked(string itemName)
+    private void OnTextClicked(string itemName)
     {
-        List<GameObject> objectsToKeep = new List<GameObject>();
+        List<GameObject> remainingObjects = new List<GameObject>();
 
         foreach (GameObject obj in sceneObjects)
         {
             if (obj != null)
             {
                 obj.SetActive(false);
-                objectsToKeep.Add(obj);
+                remainingObjects.Add(obj);
             }
         }
 
-        GameObject targetObject = objectsToKeep.Find(obj => obj != null && obj.name == itemName);
-        if (targetObject != null)
+        GameObject selectedObject = remainingObjects.Find(obj => obj.name == itemName);
+        if (selectedObject != null)
         {
-            targetObject.SetActive(true);
+            selectedObject.SetActive(true);
+
             if (ray != null)
             {
-                targetObject.transform.position = ray.GetPosition();
+                Vector3 newPosition = ray.GetPosition();
+                newPosition.y += CalculateDistanceToBottom(selectedObject);
+                selectedObject.transform.position = newPosition;
             }
-            objectsToKeep.Remove(targetObject);
+
+            remainingObjects.Remove(selectedObject);
             items.Remove(itemName);
+
             UpdatePopup();
             popUp.SetActive(false);
+
             sceneObjects.Clear();
-            sceneObjects.AddRange(objectsToKeep);
+            sceneObjects.AddRange(remainingObjects);
+
             pillar.SetTake();
-            pillar.SetObj(targetObject);
+            pillar.Objet = selectedObject;
+
+            Success();
         }
         else
         {
-            Debug.LogWarning($"Aucun objet nommé '{itemName}' n'a été trouvé dans le tableau sceneObjects.");
+            Debug.LogWarning($"Objet '{itemName}' non trouvé dans la scène.");
+        }
+    }
+
+    private float CalculateDistanceToBottom(GameObject obj)
+    {
+        Bounds bounds;
+        if (obj.TryGetComponent(out Renderer renderer))
+        {
+            bounds = renderer.bounds;
+        }
+        else if (obj.TryGetComponent(out Collider collider))
+        {
+            bounds = collider.bounds;
+        }
+        else return 0f;
+
+        return bounds.extents.y;
+    }
+
+    protected override void Success()
+    {
+        foreach (var pillar in pillars)
+        {
+            if (pillar.Objet == null || pillar.Objet.name != pillar.ID) return;
         }
 
-
+        Debug.Log("C'est gagné !");
+        base.Success();
     }
 }

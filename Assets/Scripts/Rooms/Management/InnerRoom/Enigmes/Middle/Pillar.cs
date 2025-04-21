@@ -1,19 +1,71 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using System;
 
 public class Pillar : MonoBehaviour
 {
-    public GameObject popup;
+    [SerializeField] private GameObject popup;
+    [SerializeField] private Enigme_Pillar spawner;
+    [SerializeField] private Raycat ray;
+
+
     private GameObject Obj;
-    public Enigme_Pillar spawner;
     private bool isObj;
     private string Id;
-    
+    private static string previousClickedObj;
+
+    public GameObject Popup
+    {
+        get => popup;
+        set => popup = value;
+    }
+
+    public Enigme_Pillar Spawner
+    {
+        get => spawner;
+        set => spawner = value;
+    }
+
+    public Raycat Ray
+    {
+        get => ray;
+        set => ray = value;
+    }
+
+    public GameObject Objet
+    {
+        get => Obj;
+        set => Obj = value;
+    }
+
+    public bool IsObj
+    {
+        get => isObj;
+        set => isObj = !IsObj;
+    }
+
+    public string ID
+    {
+        get => Id;
+        set => Id = value;
+    }
 
     public void OnObjectClicked()
     {
+        string currentClickedObj = ray.GetObj().GetComponent<Pillar>().ID;
+        if (Input.touchCount > 0 &&
+            EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId) &&
+            popup.activeSelf &&
+            previousClickedObj == currentClickedObj)
+        {
+            
+            return;
+        }
+        previousClickedObj = currentClickedObj;
+
         spawner.UpdatePopup();
+
         if (popup == null || gameObject == null)
         {
             Debug.LogWarning("Popup ou targetObject est null !");
@@ -22,13 +74,12 @@ public class Pillar : MonoBehaviour
 
         popup.SetActive(true);
 
-        Vector3 worldPosition = gameObject.transform.position + Vector3.up * 2f; 
+        Vector3 worldPosition = gameObject.transform.position + Vector3.up * 2f;
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
 
         RectTransform popupRect = popup.GetComponent<RectTransform>();
         popupRect.position = screenPosition;
     }
-
 
     void OnEnable()
     {
@@ -37,21 +88,16 @@ public class Pillar : MonoBehaviour
 
     void HandleClickOnNothing()
     {
-        if (Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-            return;
+        
+            
         popup.SetActive(false);
     }
+
+
 
     public void SetTake()
     {
         isObj = !isObj;
     }
 
-    public void SetObj(GameObject _obj) { Obj = _obj; }
-    public GameObject GetObj() { return Obj; }
-
-    public bool GetTake() { return isObj; }
-
-    public void SetId(string _id) { Id = _id; }
-    public string GetId() { return Id; }
 }

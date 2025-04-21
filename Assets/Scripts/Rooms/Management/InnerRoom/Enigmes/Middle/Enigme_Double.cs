@@ -1,6 +1,5 @@
-using System.Collections;
+using TMPro;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enigme_Doble : Enigme
@@ -8,14 +7,19 @@ public class Enigme_Doble : Enigme
     private GameObject firstSelected;
     private GameObject secondSelected;
     private int nbDouble;
-   [SerializeField] private List<GameObject> ItemsDouble;
+    [SerializeField] private List<GameObject> ItemsDouble;
     [SerializeField] private Camera cam;
-    
+    [SerializeField] private Material materialToApply;
+
+    [SerializeField] private TMP_Text text;
+    [SerializeField] private GameObject zoneText;
+
     public override void Initialize()
     {
         base.Initialize();
         nbDouble = ItemsDouble.Count / 2;
         SpawnObjects();
+        UpdateTexte();
     }
 
     public void ObjectClicked(GameObject obj)
@@ -24,13 +28,81 @@ public class Enigme_Doble : Enigme
 
         if (firstSelected == null)
         {
+            Material outlineMaterial = new Material(materialToApply);
             firstSelected = obj;
+            AddMaterialToRenderer(obj,outlineMaterial);
         }
         else
         {
             secondSelected = obj;
             CheckObj();
         }
+    }
+
+    public static void AddMaterialToRenderer(GameObject obj, Material newMaterial)
+    {
+        if (obj == null || newMaterial == null)
+        {
+            Debug.LogWarning("GameObject ou Material est null.");
+            return;
+        }
+
+        Renderer rend = obj.GetComponent<Renderer>();
+        if (rend == null)
+        {
+            Debug.LogWarning("Aucun Renderer trouvé sur l'objet.");
+            return;
+        }
+
+        Material[] currentMaterials = rend.materials;
+        Material[] updatedMaterials = new Material[currentMaterials.Length + 1];
+
+        for (int i = 0; i < currentMaterials.Length; i++)
+        {
+            updatedMaterials[i] = currentMaterials[i];
+        }
+
+        updatedMaterials[updatedMaterials.Length - 1] = newMaterial;
+        rend.materials = updatedMaterials;
+    }
+
+    public static void RemoveMaterialRenderer(GameObject obj)
+    {
+        if (obj == null)
+        {
+            Debug.LogWarning("GameObject est null.");
+            return;
+        }
+
+        Renderer rend = obj.GetComponent<Renderer>();
+        if (rend == null)
+        {
+            Debug.LogWarning("Aucun Renderer trouvé sur l'objet.");
+            return;
+        }
+
+        Material[] currentMaterials = rend.materials;
+
+        if (currentMaterials.Length <= 1)
+        {
+            Debug.LogWarning("Impossible de retirer le matériau : il n'en reste qu'un ou aucun.");
+            return;
+        }
+
+        Material[] updatedMaterials = new Material[currentMaterials.Length - 1];
+
+        for (int i = 0; i < updatedMaterials.Length; i++)
+        {
+            updatedMaterials[i] = currentMaterials[i];
+        }
+
+        rend.materials = updatedMaterials;
+    }
+
+
+    public void UpdateTexte()
+    {
+        text.text = nbDouble.ToString();
     }
 
     public void CheckObj()
@@ -43,11 +115,13 @@ public class Enigme_Doble : Enigme
         }
         if (firstObj.GetId() == secondObj.GetId())
         {
+            RemoveMaterialRenderer(firstSelected);
             firstSelected.SetActive(false);
             secondSelected.SetActive(false);
             firstSelected = null;
             secondSelected = null;
             nbDouble--;
+            UpdateTexte();
         }
         else
         {
@@ -61,10 +135,10 @@ public class Enigme_Doble : Enigme
         if(nbDouble == 0 && !isResolved)
         {
             base.Success();
-            Debug.Log("fpfpf");
        
             FramesManager.Instance.LockFrame("main_frame");
             FramesManager.Instance.UnlockFrame("Pillar");
+            zoneText.SetActive(false);
         }
     }
 

@@ -117,11 +117,8 @@ public class FramesManager : MonoBehaviour
     {
         Vector3 startPosition = mainCamera.transform.position;
         float elapsedTime = 0f;
-<<<<<<< HEAD
-        float duration = 1f; // ou utilise la distance / vitesse si tu veux un déplacement fluide dépendant de la distance
-=======
-        float duration = 2f; 
->>>>>>> 6fa6b0ab1e5e514abf985c6bc6ca28f51c1d3fd3
+        float duration = 1f;
+
 
         while (elapsedTime < duration)
         {
@@ -134,12 +131,6 @@ public class FramesManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
-<<<<<<< HEAD
-        // Assure que la position finale est bien exacte
-=======
-   
->>>>>>> 6fa6b0ab1e5e514abf985c6bc6ca28f51c1d3fd3
         mainCamera.transform.position = positionCible;
     }
 

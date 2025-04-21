@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
 
 public class Raycat : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class Raycat : MonoBehaviour
 
     void DetectAndExecute(Vector2 screenPosition)
     {
+        
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
         RaycastHit hit;
    
