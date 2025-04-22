@@ -8,7 +8,7 @@ public class Save : MonoBehaviour
     private string savePath;
     [SerializeField] Inventaire inventaire;
     [SerializeField] ShowMap showMap;
-
+    [SerializeField] AudioOptionManager audio;
     #region Event
 
     public delegate void SaveStartGamePlayer();
@@ -18,7 +18,6 @@ public class Save : MonoBehaviour
     public static event SaveStartGameActualCadre OnSaveStartActualCadre;
 
     #endregion
-
     private void Awake()
     {
         savePath = Application.persistentDataPath + "/gameSave.json";
@@ -63,6 +62,14 @@ public class Save : MonoBehaviour
                     actualCadre = showMap.ActualCadre
                 };
                 break;
+            case "audio":
+                saveData.audiomanager = new Audio
+                {
+                    music = audio.MusicSlider.value,
+                    soundEffect = audio.SoundEffectsSlider.value,
+                    isSave = true
+                };
+                break;
             default:
                 Debug.LogWarning($"Category {category} not recognized!");
                 return;
@@ -87,6 +94,11 @@ public class Save : MonoBehaviour
             cadreData = new CadreData
             {
                 actualCadre = showMap.ActualCadre
+            },
+            audiomanager = new Audio
+            {
+                music = audio.MusicSlider.value,
+                soundEffect = audio.SoundEffectsSlider.value,
             }
         };
 
@@ -136,6 +148,15 @@ public class Save : MonoBehaviour
                     }
                 }
                 break;
+            case "audio":
+                if(saveData.audiomanager != null)
+                {
+                    audio.MusicSlider.value = saveData.audiomanager.music;
+                    audio.SoundEffectsSlider.value = saveData.audiomanager.soundEffect;
+                    audio.IsLoad = saveData.audiomanager.isSave;
+
+                }
+                break;
             default:
                 Debug.LogWarning($"Category {category} not recognized!");
                 return;
@@ -159,6 +180,13 @@ public class Save : MonoBehaviour
             // Apply player data here
             // Example: dataManager.SetPlayerPosition(saveData.playerData.position);
         }*/
+        if (saveData.audiomanager != null)
+        {
+            audio.MusicSlider.value = saveData.audiomanager.music;
+            audio.SoundEffectsSlider.value = saveData.audiomanager.soundEffect;
+            audio.IsLoad = saveData.audiomanager.isSave;
+
+        }
 
         Debug.Log($"All categories loaded from: {savePath}");
     }
@@ -217,12 +245,21 @@ public class Save : MonoBehaviour
         public InventoryData inventoryData;
         public MapData mapData;
         public CadreData cadreData;
+        public Audio audiomanager;
     }
 
     [System.Serializable]
     private class InventoryData
     {
         public List<string> scriptableObjectIDs;
+    }
+
+    [System.Serializable]
+    private class Audio
+    {
+        public float music;
+        public float soundEffect;
+        public bool isSave;
     }
 
     #region Serialize Map Cadre Data
