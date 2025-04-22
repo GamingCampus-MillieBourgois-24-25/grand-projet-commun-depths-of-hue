@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class EnigmeRoom : Room
 {
-    [SerializeField] private List<Enigme> enigmes;
-    public int enigmesResolved = 0;
+    [SerializeField] protected List<Enigme> enigmes;
+    private int enigmesResolved = 0;
 
     [SerializeField] private GameObject successBanner;
     [SerializeField] private CanvasGroup bannerCanvasGroup;
@@ -24,7 +24,7 @@ public class EnigmeRoom : Room
     {
         foreach (var enigme in enigmes)// subscribe to each enigme OnSucces event.
         {
-            enigme.OnSuccess -= OnEnigmeResolved;
+            enigme.OnSuccess -= OnEnigmeResolved; // if already subscribed
             enigme.OnSuccess += OnEnigmeResolved;
         }
         InitilizeCurrentEnigma();
@@ -33,7 +33,7 @@ public class EnigmeRoom : Room
     /// <summary>
     /// This function is used to initialize and launch the first enigme not resolved yet in the enigmas list.
     /// </summary>
-    protected virtual void InitilizeCurrentEnigma()
+    public virtual void InitilizeCurrentEnigma()
     {
         foreach (var enigme in enigmes)
         {
@@ -53,7 +53,7 @@ public class EnigmeRoom : Room
     /// <summary>
     /// This function is called whenever an enigme is resolved.
     /// </summary>
-    private void OnEnigmeResolved()
+    protected void OnEnigmeResolved()
     {
         SuccessSequence();
         Debug.Log("+++");
@@ -137,13 +137,13 @@ public class EnigmeRoom : Room
             .OnStepComplete(() =>
             {
                 bounceCount++;
-                if (bounceCount % 2 == 0) // rebond complet terminé
+                if (bounceCount % 2 == 0) // rebond complet terminï¿½
                 {
 
                     if (bounceCount >= maxBounces * 2)
                     {
 
-                        // Lancement de la suite (fade out + déplacement)
+                        // Lancement de la suite (fade out + dï¿½placement)
                         ContinueBannerExit(xEnd);
                     }
                 }

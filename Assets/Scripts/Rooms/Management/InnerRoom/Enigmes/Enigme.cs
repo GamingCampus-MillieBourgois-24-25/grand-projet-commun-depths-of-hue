@@ -1,6 +1,4 @@
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
 
 public abstract class Enigme : MonoBehaviour
 {
@@ -9,8 +7,10 @@ public abstract class Enigme : MonoBehaviour
 
 
 
-    public System.Action OnSuccess; //Event enigme succeeded
-    public System.Action OnFail; // Event enigme failed
+    public delegate void EnigmeEventHandler();
+
+    public event EnigmeEventHandler OnSuccess;
+    public event EnigmeEventHandler OnFail;
 
 
     /// <summary>
@@ -18,7 +18,6 @@ public abstract class Enigme : MonoBehaviour
     /// </summary>
     public virtual void Initialize()
     {
-        
         isStarted = true;
     }
 

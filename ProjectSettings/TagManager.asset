@@ -8,6 +8,8 @@ TagManager:
   - Arrows
   - ActualCadre
   - Rope
+  - PositionContainer
+  - PropsContainer
   - Ancre
   - MapCadre
   - centerMidCadre

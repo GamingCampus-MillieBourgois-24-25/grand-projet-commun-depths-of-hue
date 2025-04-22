@@ -24,7 +24,7 @@ public class FramesManager : MonoBehaviour
         public string id; // "Main_frame", "cave"...
 
         public Transform cameraPosition;
-        public GameObject[] ActiveProps; // Props being used in a frame
+        public List <GameObject> ActiveProps; // Props being used in a frame
 
         public RoomStateEnum InitialFrameState;
         public RoomStateEnum FrameState;
@@ -60,6 +60,7 @@ public class FramesManager : MonoBehaviour
     {
         if (Instance == null)
         {
+            Debug.Log("cr�ation d'instance");
             Instance = this;
         }
         else
@@ -67,6 +68,52 @@ public class FramesManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+
+    public void AddFrameProp(string frameId, GameObject prop)
+    {
+        Frame targetFrame = System.Array.Find(frames, s => s.id == frameId);
+
+        if (targetFrame  != null)
+        {
+            targetFrame.ActiveProps.Add(prop);
+        }
+        else
+        {
+            Debug.Log("frame not found");
+
+        }
+    }
+
+    public void ClearFramePropList(string frameId)
+    {
+        Frame targetFrame = System.Array.Find(frames, s => s.id == frameId);
+
+        if (targetFrame != null)
+        {
+            targetFrame.ActiveProps.Clear();
+        }
+        else
+        {
+            Debug.Log("frame not found");
+
+        }
+    }
+    public void RemoveFrameProp(string frameId, GameObject prop)
+    {
+        Frame targetFrame = System.Array.Find(frames, s => s.id == frameId);
+
+        if (targetFrame  != null)
+        {
+            targetFrame.ActiveProps.Remove(prop);
+        }
+        else
+        {
+            Debug.Log("frame not found");
+
+        }
+    }
+
 
     /// <summary>
     /// Switch frame. It deactivates non used props and active the used ones.
