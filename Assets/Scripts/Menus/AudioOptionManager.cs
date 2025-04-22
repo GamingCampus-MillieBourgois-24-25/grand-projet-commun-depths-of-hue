@@ -3,9 +3,28 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class AudioOptionManager : MonoBehaviour
-{
-    public Slider musicSlider;
-    public Slider soundEffectsSlider;
+{  
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider soundEffectsSlider;
+    private bool isLoad;
+    public Slider MusicSlider
+    {
+        get { return musicSlider; }
+        set { musicSlider = value; }
+    }
+
+    public Slider SoundEffectsSlider
+    {
+        get { return soundEffectsSlider; }
+        set { soundEffectsSlider = value; }
+    }
+
+    public bool IsLoad
+    {
+        get { return isLoad; }
+        set {  isLoad = value; }
+    }
+
     public static float musicVolume {  get; private set; }
     public static float soundEffectsVolume { get; private set; }
 
@@ -14,11 +33,15 @@ public class AudioOptionManager : MonoBehaviour
 
     private void Start()
     {
-        musicSlider.value = startMusicVolume;
-        AudioManager.Instance.UpdateMixerVolume();
+        if (!isLoad)
+        {
 
-        soundEffectsSlider.value = startSoundEffectsVolume;
-        AudioManager.Instance.UpdateMixerVolume();
+            musicSlider.value = startMusicVolume;
+            AudioManager.Instance.UpdateMixerVolume();
+
+            soundEffectsSlider.value = startSoundEffectsVolume;
+            AudioManager.Instance.UpdateMixerVolume();
+        }
     }
 
     public void OnMusicSliderValueChange()
@@ -32,4 +55,5 @@ public class AudioOptionManager : MonoBehaviour
         soundEffectsVolume = Mathf.Log10(soundEffectsSlider.value) * 20;
         AudioManager.Instance.UpdateMixerVolume();
     }
+    
 }

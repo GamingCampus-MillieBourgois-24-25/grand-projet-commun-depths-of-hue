@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.EnhancedTouch;
-using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 public class DeplacementPlayer : MonoBehaviour
 {
@@ -20,6 +18,7 @@ public class DeplacementPlayer : MonoBehaviour
     private GestionCadre actualCadre;
 
     private Camera _camera;
+    private bool uniqueSendEvent;
 
     #region Gestion Bool Gestion Cadre For Animation
 
@@ -33,22 +32,19 @@ public class DeplacementPlayer : MonoBehaviour
     public bool PlayerPressDownArrow { get => playerPressDownArrow; set => playerPressDownArrow = value; }
 
     #endregion
+
+    #region Event
+
+    public delegate void ShowUIGame(bool _isShow);
+    public static event ShowUIGame OnShowUI;
+
+    #endregion
     
-    private void Awake()
-    {
-        EnhancedTouchSupport.Enable();
-    }
-
-    private void OnEnable()
-    {
-        TouchSimulation.Enable();
-    }
-
     private void Start()
     {
-        Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
         _camera = Camera.main;
         player.freezeRotation = true;
+        uniqueSendEvent = false;
         
         Animator animator = GetComponent<Animator>();
         animator.SetBool(IsWalk, true);
@@ -80,37 +76,21 @@ public class DeplacementPlayer : MonoBehaviour
     private void Update()
     {
         // pas de rotation chelou sur ces axes
-        var rotation = transform.eulerAngles;
+        Vector3 rotation = transform.eulerAngles;
         rotation.x = 0;
         rotation.y = 0;
+        rotation.z = 0;
         transform.eulerAngles = rotation;
-        
-        foreach (var touch in Touch.activeTouches)
-        {
-            if (touch.isTap)
-            {
-                Vector2 touchPosition = touch.screenPosition;
-                RaycastHit2D hit = Physics2D.Raycast(_camera.ScreenToWorldPoint(touchPosition), Vector2.zero);
-                if (hit.collider)
-                {
-                    Debug.Log("Objet touché : " + hit.collider.gameObject.name);
-                    MonoBehaviour script = hit.collider.GetComponent<MonoBehaviour>();
-
-                    if (script)
-                    {
-                        script.Invoke("OnObjectClicked", 0f);
-                    }
-                    else
-                    {
-                        print("il n'y a rien");
-                    }
-                }
-            }
-        }
 
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            if (actualCadre) actualCadre.SetArrowsVisibilities();
+            if (!actualCadre) return;
+            actualCadre.SetArrowsVisibilities();
+            if (!uniqueSendEvent)
+            {
+                OnShowUI?.Invoke(true);
+                uniqueSendEvent = true;
+            }
         }
     }
     
@@ -118,5 +98,11 @@ public class DeplacementPlayer : MonoBehaviour
     {
         playerDestination = _playerDestination;
         actualCadre = _cadre;
+        uniqueSendEvent = false;
+    }
+    
+    void LateUpdate()
+    {
+        transform.rotation = Quaternion.identity;
     }
 }

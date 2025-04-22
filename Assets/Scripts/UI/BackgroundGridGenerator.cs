@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BackgroundGridGenerator : MonoBehaviour
@@ -10,11 +11,21 @@ public class BackgroundGridGenerator : MonoBehaviour
     private Camera mainCamera;
     private GameObject[,] gridCadres;
     [SerializeField] private bool isForBackgroundLayer;
+    [SerializeField] private ShowMap showMap;
+    [SerializeField] private Save save;
+    
+    public List<GameObject> backgrounds = new List<GameObject>();
+    public List<GestionCadre> cadres = new List<GestionCadre>();
     public delegate void OnFinishSpawnCadres();
     public static event OnFinishSpawnCadres OnSpawnCadre;
 
-    private void Start()
+    public delegate void SendCadre(GestionCadre cadre);
+    public static event SendCadre OnSendCadre;
+
+    private void OnEnable()
     {
+        if (backgrounds.Count > 0) return;
+        
         mainCamera = Camera.main;
         Vector2 screenSize = GetScreenSizeInUnits();
         
@@ -27,6 +38,7 @@ public class BackgroundGridGenerator : MonoBehaviour
             
             Vector3 position = new Vector3(x * screenSize.x, -y * screenSize.y, 0);
             GameObject go = Instantiate(imagePrefab[i], position, Quaternion.identity, transform);
+            backgrounds.Add(go);
 
             SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
             sr.sprite = backgroundSprites[i];
@@ -49,13 +61,9 @@ public class BackgroundGridGenerator : MonoBehaviour
                 
                 GestionCadre gestionCadre = cadre.GetComponent<GestionCadre>();
                 if (!gestionCadre) continue;
-
-                if (cadre.CompareTag("ActualCadre") && player)
-                {
-                    // set le player au bon endroit (là ou le joueur a quitter)
-                    player.transform.position = gestionCadre.center.position;
-                    gestionCadre.SetArrowsVisibilities();
-                }
+                OnSendCadre?.Invoke(gestionCadre);
+                
+                cadres.Add(gestionCadre);
 
                 #region Attribution des cadre target à tous les cadres selon les directions coché
 
@@ -82,6 +90,7 @@ public class BackgroundGridGenerator : MonoBehaviour
                 OnSpawnCadre?.Invoke();
             }
         }
+        if (showMap) showMap.SetReceiveFromBGGridGenerator(cadres);
     }
 
     private Vector2 GetScreenSizeInUnits()

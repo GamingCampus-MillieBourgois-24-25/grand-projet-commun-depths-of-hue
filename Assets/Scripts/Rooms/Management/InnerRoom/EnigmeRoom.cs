@@ -13,6 +13,7 @@ public class EnigmeRoom : Room
     [SerializeField] private CanvasGroup bannerCanvasGroup;
     [SerializeField] private RectTransform bannerTransform;
 
+
     [ContextMenu("Initialize")]
 
 
@@ -43,6 +44,7 @@ public class EnigmeRoom : Room
             else
             {
                 enigme.Initialize();
+
                 break;
             }
         }
@@ -54,6 +56,7 @@ public class EnigmeRoom : Room
     protected void OnEnigmeResolved()
     {
         SuccessSequence();
+        Debug.Log("+++");
         enigmesResolved++;
               
     }
@@ -76,6 +79,8 @@ public class EnigmeRoom : Room
     /// <returns></returns>
     public bool IsRoomComplete()
     {
+        Debug.Log ("count : " + enigmes.Count);
+        Debug.Log("completed : " + enigmesResolved);
         return enigmesResolved >= enigmes.Count;
     }
 
@@ -88,6 +93,7 @@ public class EnigmeRoom : Room
         Debug.Log("fini");
         roomData.CurrentState = RoomStateEnum.Completed;
         roomData.roomState = roomData.CurrentState;
+
 
     }
 
@@ -131,13 +137,13 @@ public class EnigmeRoom : Room
             .OnStepComplete(() =>
             {
                 bounceCount++;
-                if (bounceCount % 2 == 0) // rebond complet terminé
+                if (bounceCount % 2 == 0) // rebond complet terminï¿½
                 {
 
                     if (bounceCount >= maxBounces * 2)
                     {
 
-                        // Lancement de la suite (fade out + déplacement)
+                        // Lancement de la suite (fade out + dï¿½placement)
                         ContinueBannerExit(xEnd);
                     }
                 }

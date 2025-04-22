@@ -10,6 +10,9 @@ TagManager:
   - Rope
   - PositionContainer
   - PropsContainer
+  - Ancre
+  - MapCadre
+  - centerMidCadre
   layers:
   - Default
   - TransparentFX
