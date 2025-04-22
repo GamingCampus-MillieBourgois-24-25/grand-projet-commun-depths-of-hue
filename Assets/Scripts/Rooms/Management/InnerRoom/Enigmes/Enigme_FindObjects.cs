@@ -32,6 +32,10 @@ public class Enigme_FindObjects : Enigme
     private float timer; //current time
 
 
+    [SerializeField] private Material frost;
+    public GameObject fogPlane;
+
+
 
     [SerializeField] private List<GameObject> objectsInScene; // Every object possibly usable for the enigme
     [SerializeField] private List<GameObject> objectsUsedInEnigme; // Every object dynamically chose for the enigme
@@ -47,6 +51,7 @@ public class Enigme_FindObjects : Enigme
 
     public override void Initialize()
     {
+
         if (Instance == null)
         {
             CollectAllPropsFromScene();
@@ -55,18 +60,23 @@ public class Enigme_FindObjects : Enigme
             Instance = this;
 
             base.Initialize();
-
-            panel.SetActive(true);
+          
         }
+        RoundRoutine();     
+    }
 
+    public void RoundRoutine()
+    {
+        objectsUsedInEnigme = MakeObjectsList();
         ClearText();
         SetObject();
         timer = timeLimit;
-        objectsUsedInEnigme = MakeObjectsList();
+        panel.SetActive(true);
         StartTimer();
-
-        
     }
+
+
+
 
     private void CollectAllPropsFromScene()
     {
@@ -252,7 +262,7 @@ public class Enigme_FindObjects : Enigme
             yield return null;
         }
 
-        Initialize();
+        RoundRoutine();
     }
 
     /// <summary>

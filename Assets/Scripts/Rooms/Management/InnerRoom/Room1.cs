@@ -12,7 +12,6 @@ public class Room1 : EnigmeRoom
             enigme.OnSuccess -= OnEnigmeResolved; // if already subscribed
             enigme.OnSuccess += OnEnigmeResolved;
         }
-        Debug.Log("hein ?");
     }
 
 }

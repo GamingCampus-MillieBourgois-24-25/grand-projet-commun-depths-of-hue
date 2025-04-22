@@ -1515,7 +1515,7 @@ Transform:
   m_GameObject: {fileID: 520362625}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 10}
+  m_LocalPosition: {x: -1.33, y: 1, z: 10.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2239,6 +2239,8 @@ MonoBehaviour:
   - {fileID: 111328066}
   panel: {fileID: 309803753}
   timeLimit: 60
+  frost: {fileID: 0}
+  fogPlane: {fileID: 0}
   objectsInScene:
   - {fileID: 223403863}
   - {fileID: 977634012}
@@ -2376,7 +2378,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 846172826}
         m_TargetAssemblyTypeName: Room, Assembly-CSharp
         m_MethodName: ReturnToHub
         m_Mode: 1
