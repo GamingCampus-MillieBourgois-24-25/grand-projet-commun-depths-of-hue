@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 8759799139317087253}
   - component: {fileID: 7661109948240669264}
   - component: {fileID: 3138852547270968434}
-  - component: {fileID: 976125726000321766}
   - component: {fileID: 4760293875388031785}
   m_Layer: 0
   m_Name: Cadre
@@ -165,36 +164,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.26, y: 4.17}
   m_EdgeRadius: 0
---- !u!114 &976125726000321766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1883164224496714758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d1ed2a27ac9de3438b667a67ba8dbbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  center: {fileID: 6323275882483479143}
-  ArrowLeft: 1
-  targetCadreLeft: {fileID: 0}
-  arrowLeft: {fileID: 5863360313374607992}
-  angleTargetLeft: 0
-  ArrowRight: 0
-  targetCadreRight: {fileID: 0}
-  arrowRight: {fileID: 8877044749741995337}
-  angleTargetRight: 0
-  ArrowUp: 0
-  targetCadreUp: {fileID: 0}
-  arrowUp: {fileID: 8456962451658223060}
-  angleTargetUp: 0
-  ArrowDown: 1
-  targetCadreDown: {fileID: 0}
-  arrowDown: {fileID: 6514597791819445152}
-  angleTargetDown: 0
 --- !u!114 &4760293875388031785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,8 +385,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d512e44ea1e33a544852689f536faaa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cadre: {fileID: 976125726000321766}
-  targetCadre: {fileID: 0}
+  cadre: {fileID: 0}
+  targetArrow: {fileID: 0}
 --- !u!1 &6514597791819445152
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,8 +490,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d512e44ea1e33a544852689f536faaa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cadre: {fileID: 976125726000321766}
-  targetCadre: {fileID: 0}
+  cadre: {fileID: 0}
+  targetArrow: {fileID: 0}
 --- !u!1 &8456962451658223060
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,8 +595,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d512e44ea1e33a544852689f536faaa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cadre: {fileID: 976125726000321766}
-  targetCadre: {fileID: 0}
+  cadre: {fileID: 0}
+  targetArrow: {fileID: 0}
 --- !u!1 &8877044749741995337
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,5 +700,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d512e44ea1e33a544852689f536faaa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cadre: {fileID: 976125726000321766}
-  targetCadre: {fileID: 0}
+  cadre: {fileID: 0}
+  targetArrow: {fileID: 0}

@@ -570,7 +570,7 @@ GameObject:
   - component: {fileID: 4964681290440356594}
   m_Layer: 0
   m_Name: CadreHautTemple
-  m_TagString: ActualCadre
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -703,6 +703,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   center: {fileID: 1323547347077761219}
+  centerMiddle: {fileID: 0}
   ArrowLeft: 0
   targetCadreLeft: {fileID: 0}
   arrowLeft: {fileID: 3343379724257393347}

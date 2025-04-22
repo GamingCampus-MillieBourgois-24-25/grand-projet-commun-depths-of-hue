@@ -17,8 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 2f9a468ca18a55e488f86b7fbab9bc1a
   m_SerializeEntries:
-  - m_GUID: ee1c136612e009447bba7ebcf10d19c8
-    m_Address: Test_fr-FR
+  - m_GUID: 62a6f66a4781900439d003b3813c21c9
+    m_Address: DialoguesText_fr-FR
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fr-FR

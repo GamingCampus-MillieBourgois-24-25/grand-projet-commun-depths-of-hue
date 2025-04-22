@@ -18,6 +18,7 @@ public class DeplacementPlayer : MonoBehaviour
     private GestionCadre actualCadre;
 
     private Camera _camera;
+    private bool uniqueSendEvent;
 
     #region Gestion Bool Gestion Cadre For Animation
 
@@ -31,11 +32,19 @@ public class DeplacementPlayer : MonoBehaviour
     public bool PlayerPressDownArrow { get => playerPressDownArrow; set => playerPressDownArrow = value; }
 
     #endregion
+
+    #region Event
+
+    public delegate void ShowUIGame(bool _isShow);
+    public static event ShowUIGame OnShowUI;
+
+    #endregion
     
     private void Start()
     {
         _camera = Camera.main;
         player.freezeRotation = true;
+        uniqueSendEvent = false;
         
         Animator animator = GetComponent<Animator>();
         animator.SetBool(IsWalk, true);
@@ -67,14 +76,21 @@ public class DeplacementPlayer : MonoBehaviour
     private void Update()
     {
         // pas de rotation chelou sur ces axes
-        var rotation = transform.eulerAngles;
+        Vector3 rotation = transform.eulerAngles;
         rotation.x = 0;
         rotation.y = 0;
+        rotation.z = 0;
         transform.eulerAngles = rotation;
 
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            if (actualCadre) actualCadre.SetArrowsVisibilities();
+            if (!actualCadre) return;
+            actualCadre.SetArrowsVisibilities();
+            if (!uniqueSendEvent)
+            {
+                OnShowUI?.Invoke(true);
+                uniqueSendEvent = true;
+            }
         }
     }
     
@@ -82,5 +98,11 @@ public class DeplacementPlayer : MonoBehaviour
     {
         playerDestination = _playerDestination;
         actualCadre = _cadre;
+        uniqueSendEvent = false;
+    }
+    
+    void LateUpdate()
+    {
+        transform.rotation = Quaternion.identity;
     }
 }

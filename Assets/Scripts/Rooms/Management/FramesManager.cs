@@ -117,7 +117,8 @@ public class FramesManager : MonoBehaviour
     {
         Vector3 startPosition = mainCamera.transform.position;
         float elapsedTime = 0f;
-        float duration = 2f; 
+        float duration = 1f;
+
 
         while (elapsedTime < duration)
         {
@@ -130,8 +131,6 @@ public class FramesManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
-   
         mainCamera.transform.position = positionCible;
     }
 
@@ -141,6 +140,7 @@ public class FramesManager : MonoBehaviour
     /// </summary>
     void UpdateDirectionButtons()
     {
+   
         // Reset all buttons
         upButton.gameObject.SetActive(false);
         rightButton.gameObject.SetActive(false);
