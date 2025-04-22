@@ -21,6 +21,7 @@ public class MapBackgroundUI : MonoBehaviour
         if (backgrounds.Count > 0)
         {
             UpdateBackgroundPositions();
+            ReAdujstPosition();
             return;
         }
 
@@ -62,6 +63,7 @@ public class MapBackgroundUI : MonoBehaviour
         }
         
         showMap.SetMapCadre(cadresMap);
+        ReAdujstPosition();
     }
 
     private Vector2 GetScreenSizeInUnits()
@@ -70,8 +72,8 @@ public class MapBackgroundUI : MonoBehaviour
         float width = height * cam.aspect;
         return new Vector2(width, height);
     }
-    
-    public void UpdateBackgroundPositions()
+
+    private void UpdateBackgroundPositions()
     {
         if (backgrounds.Count != columns * rows) return;
 
@@ -103,5 +105,12 @@ public class MapBackgroundUI : MonoBehaviour
             float scaleY = cellSize.y / sr.sprite.bounds.size.y;
             bg.transform.localScale = new Vector3(scaleX, scaleY, 1f);
         }
+    }
+
+    private void ReAdujstPosition()
+    {
+        Vector3 pos = gameObject.transform.position;
+        pos.y += 0.4f;
+        gameObject.transform.position = pos;
     }
 }

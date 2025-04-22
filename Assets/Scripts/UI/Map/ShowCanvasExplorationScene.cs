@@ -8,12 +8,14 @@ public class ShowCanvasExplorationScene : MonoBehaviour
     private void OnEnable()
     {
         DeplacementPlayer.OnShowUI += SetShowCanvas;
+        MapNavigateCadre.OnShowUI += SetShowCanvas;
         GestionCadre.OnShowUI += SetShowCanvas;
     }
     
     private void OnDisable()
     {
         DeplacementPlayer.OnShowUI -= SetShowCanvas;
+        MapNavigateCadre.OnShowUI -= SetShowCanvas;
         GestionCadre.OnShowUI -= SetShowCanvas;
     }
 

@@ -233,7 +233,6 @@ public class GestionCadre : MonoBehaviour
 
         if (_dirInt == Vector3.down)
         {
-            Debug.Log("BOTTOM");
             RotationBottom();
         }
         else if (_dirInt == Vector3.left || _dirInt == Vector3.left + Vector3.down)
@@ -268,9 +267,6 @@ public class GestionCadre : MonoBehaviour
     private void RotationBottom()
     {
         ResetBoolAnimation("IsBottom");
-        // player.PlayerPressDownArrow = true;
-        // player.PlayerPressUpArrow = false;
-        // ResetBoolSideArrowInPlayer();
     }
 
     #endregion
@@ -279,9 +275,6 @@ public class GestionCadre : MonoBehaviour
     private void RotationUp()
     {
         ResetBoolAnimation("IsWalk");
-        // player.PlayerPressUpArrow = true;
-        // player.PlayerPressDownArrow = false;
-        // ResetBoolSideArrowInPlayer();
     }
 
     #endregion
@@ -290,9 +283,6 @@ public class GestionCadre : MonoBehaviour
     private void RotationLeft()
     {
         ResetBoolAnimation("IsLeft");
-        // player.PlayerPressLeftArrow = true;
-        // player.PlayerPressRightArrow = false;
-        // ResetBoolUpArrowInPlayer();
     }
 
     #endregion
@@ -301,9 +291,6 @@ public class GestionCadre : MonoBehaviour
     private void RotationRight()
     {
         ResetBoolAnimation("IsRight");
-        // player.PlayerPressRightArrow = true;
-        // player.PlayerPressLeftArrow = false;
-        // ResetBoolUpArrowInPlayer();
     }
 
     #endregion
@@ -321,50 +308,4 @@ public class GestionCadre : MonoBehaviour
             playerAnimator.SetBool(Animator.StringToHash(t), false);
         }
     }
-    
-    // public void StartRotateZOverTime(Transform obj, float targetZAngle, float duration)
-    // {
-    //     if (isRotating) return;
-    //
-    //     isRotating = true;
-    //     rotatingObj = obj;
-    //     rotationDuration = duration;
-    //     rotationTargetZ = targetZAngle;
-    //     rotationStartZ = obj.eulerAngles.z;
-    //     rotationElapsedTime = 0f;
-    // }
-
-    // private void ResetBoolSideArrowInPlayer()
-    // {
-    //     player.PlayerPressLeftArrow = false;
-    //     player.PlayerPressRightArrow = false;
-    // }
-    //
-    // private void ResetBoolUpArrowInPlayer()
-    // {
-    //     player.PlayerPressUpArrow = false;
-    //     player.PlayerPressDownArrow = false;
-    // }
-    
-    private void Update()
-    {
-        if (isRotating)
-        {
-            rotationElapsedTime += Time.deltaTime;
-
-            float t = Mathf.Clamp01(rotationElapsedTime / rotationDuration);
-            float shortestAngle = Mathf.DeltaAngle(rotationStartZ, rotationTargetZ);
-            float currentZ = rotationStartZ + shortestAngle * t;
-
-            Vector3 currentEuler = rotatingObj.eulerAngles;
-            rotatingObj.rotation = Quaternion.Euler(currentEuler.x, currentEuler.y, currentZ);
-
-            if (t >= 1f)
-            {
-                rotatingObj.rotation = Quaternion.Euler(currentEuler.x, currentEuler.y, rotationTargetZ);
-                isRotating = false;
-            }
-        }
-    }
-
 }

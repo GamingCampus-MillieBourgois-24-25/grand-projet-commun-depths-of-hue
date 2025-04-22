@@ -38,6 +38,13 @@ public class ShowMap : MonoBehaviour
 
     private bool isOpen;
 
+    #region Event
+
+    public delegate void SendShowMapEvent(ShowMap _showMap);
+    public static event SendShowMapEvent OnSendShowMapEvent;
+
+    #endregion
+
     private void Start()
     {
         isOpen = false;
@@ -88,6 +95,7 @@ public class ShowMap : MonoBehaviour
         }
 
         UpdateStatusCadre();
+        OnSendShowMapEvent?.Invoke(this);
         
         isOpen = !isOpen;
     }
