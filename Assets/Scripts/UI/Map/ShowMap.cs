@@ -38,6 +38,13 @@ public class ShowMap : MonoBehaviour
 
     private bool isOpen;
 
+    #region Event
+
+    public delegate void SendShowMapEvent(ShowMap _showMap);
+    public static event SendShowMapEvent OnSendShowMapEvent;
+
+    #endregion
+
     private void Start()
     {
         isOpen = false;
@@ -88,6 +95,7 @@ public class ShowMap : MonoBehaviour
         }
 
         UpdateStatusCadre();
+        OnSendShowMapEvent?.Invoke(this);
         
         isOpen = !isOpen;
     }
@@ -108,14 +116,32 @@ public class ShowMap : MonoBehaviour
     private void SaveStartingPlayer()
     {
         if (!sauvegarde) return;
-        if (receiveFromSauvegarde && receiveFromBGGridGenerator)
+        if (!receiveFromSauvegarde || !receiveFromBGGridGenerator) return;
+        bool foundActualCadre = false;
+
+        foreach (var cadre in cadres)
         {
-            foreach (var cadre in cadres)
+            if (cadre.gameObject.CompareTag("ActualCadre"))
             {
-                statusMap.Add(cadre.gameObject.name, cadre.gameObject.CompareTag("ActualCadre"));
+                statusMap.Add(cadre.gameObject.name, true);
+                foundActualCadre = true;
             }
-            sauvegarde.SaveCategory("mapcadre");
+            else
+            {
+                statusMap.Add(cadre.gameObject.name, false);
+            }
         }
+
+        if (!foundActualCadre)
+        {
+            var defaultCadre = cadres.FirstOrDefault(t => t.name == "CadreHautTemple(Clone)");
+            if (defaultCadre)
+            {
+                statusMap.Add(defaultCadre.gameObject.name, true);
+            }
+        }
+
+        sauvegarde.SaveCategory("mapcadre");
     }
     
     public void SetMapStatus(Dictionary<string, bool> _mapInfo)
@@ -171,20 +197,32 @@ public class ShowMap : MonoBehaviour
 
     private void SetActualCadreFirstSave()
     {
-        foreach (var t in cadres.Where(t => t.CompareTag("ActualCadre")))
-        {
-            ActualCadre = t.name;
-            sauvegarde.SaveCategory("explorationcadre");
-            TeleportPlayer(t);
-        }
+        var defaultCadre = cadres.FirstOrDefault(t => t.name == "CadreHautTemple(Clone)");
+        if (!defaultCadre) return;
+        defaultCadre.tag = "ActualCadre";
+        TeleportPlayer(defaultCadre);
+        ActualCadre = "CadreHautTemple(Clone)";
+        sauvegarde.SaveCategory("explorationcadre");
     }
 
     public void SetActualCadre(string _actualCadre)
     {
+        bool found = false;
+        
         foreach (var t in cadres.Where(t => t.name == _actualCadre))
         {
             t.tag = "ActualCadre";
             TeleportPlayer(t);
+            found = true;
+            break;
+        }
+
+        if (found) return;
+        {
+            var defaultCadre = cadres.FirstOrDefault(t => t.name == "CadreHautTemple(Clone)");
+            if (!defaultCadre) return;
+            defaultCadre.tag = "ActualCadre";
+            TeleportPlayer(defaultCadre);
         }
     }
 
@@ -192,5 +230,6 @@ public class ShowMap : MonoBehaviour
     {
         player.transform.position = _cadre.center.position;
         _cadre.SetArrowsVisibilities();
+        _cadre.StockVisiblities();
     }
 }

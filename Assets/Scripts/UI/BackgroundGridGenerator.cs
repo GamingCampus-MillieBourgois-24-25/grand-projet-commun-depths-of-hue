@@ -65,13 +65,6 @@ public class BackgroundGridGenerator : MonoBehaviour
                 
                 cadres.Add(gestionCadre);
 
-                // if (cadre.CompareTag("ActualCadre") && player)
-                // {
-                //     // set le player au bon endroit (là ou le joueur a quitter)
-                //     player.transform.position = gestionCadre.center.position;
-                //     gestionCadre.SetArrowsVisibilities();
-                // }
-
                 #region Attribution des cadre target à tous les cadres selon les directions coché
 
                 bool isArrowLeft = gestionCadre.ArrowLeftBool;
