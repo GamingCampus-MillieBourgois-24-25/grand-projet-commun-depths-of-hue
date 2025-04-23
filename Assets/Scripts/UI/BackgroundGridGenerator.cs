@@ -4,7 +4,6 @@ using UnityEngine;
 public class BackgroundGridGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject[] imagePrefab;
-    [SerializeField] private GameObject player;
     [SerializeField] private Sprite[] backgroundSprites;
     [SerializeField] private int columns = 3;
     [SerializeField] private int rows = 3;
