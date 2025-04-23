@@ -55,11 +55,7 @@ public class GestionInputs : MonoBehaviour
 
                     }
 
-                    // if (hit.collider.CompareTag("Ancre"))
-                    // {
-                    //     MapNavigateCadre hitMapNavigate = hit.collider.GetComponent<MapNavigateCadre>();
-                    //     if (hitMapNavigate) hitMapNavigate.ClickMapNavigate();
-                    // }
+                    MapNavigateCadre();
                 }
                 else
                 {
@@ -70,18 +66,23 @@ public class GestionInputs : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 touchPosition = Input.mousePosition;
-            Ray ray = _camera.ScreenPointToRay(touchPosition);
-            RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
-            if (!hit.collider) return;
-            if (hit.collider.CompareTag("Ancre"))
-            {
-                MapNavigateCadre hitMapNavigate = hit.collider.GetComponent<MapNavigateCadre>();
-                if (hitMapNavigate) hitMapNavigate.ClickMapNavigate();
-            }
+            MapNavigateCadre();
         }
     }
 
     public Vector3 GetPosition() { return positionObj; }
     public GameObject GetObj() { return Obj; }
+
+    private void MapNavigateCadre()
+    {
+        Vector3 touchPosition = Input.mousePosition;
+        Ray ray = _camera.ScreenPointToRay(touchPosition);
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+        if (!hit.collider) return;
+        if (hit.collider.CompareTag("Ancre"))
+        {
+            MapNavigateCadre hitMapNavigate = hit.collider.GetComponent<MapNavigateCadre>();
+            if (hitMapNavigate) hitMapNavigate.ClickMapNavigate();
+        }
+    }
 }
