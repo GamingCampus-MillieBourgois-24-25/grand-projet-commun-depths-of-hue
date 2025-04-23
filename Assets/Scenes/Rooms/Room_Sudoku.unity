@@ -3068,6 +3068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72ec6b424bedba142ae271294321e966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isResolved: 0
   gridSize: 4
   cellPrefab: {fileID: 7648516946977174678, guid: e8b420c64a6517444bc07ede1577dfc5,
     type: 3}

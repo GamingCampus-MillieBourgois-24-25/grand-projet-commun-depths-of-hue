@@ -54,7 +54,7 @@ public class GestionInputs : MonoBehaviour
                         script.Invoke("OnObjectClicked", 0f);
 
                     }
-
+                    
                     // if (hit.collider.CompareTag("Ancre"))
                     // {
                     //     MapNavigateCadre hitMapNavigate = hit.collider.GetComponent<MapNavigateCadre>();
@@ -84,4 +84,5 @@ public class GestionInputs : MonoBehaviour
 
     public Vector3 GetPosition() { return positionObj; }
     public GameObject GetObj() { return Obj; }
+    
 }
