@@ -749,7 +749,6 @@ GameObject:
   - component: {fileID: 223403866}
   - component: {fileID: 223403865}
   - component: {fileID: 223403864}
-  - component: {fileID: 223403868}
   m_Layer: 0
   m_Name: PropMain
   m_TagString: Cube
@@ -844,18 +843,6 @@ Transform:
   - {fileID: 62629577}
   m_Father: {fileID: 365079411}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &223403868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223403863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &264653532
 GameObject:
   m_ObjectHideFlags: 0
@@ -1534,6 +1521,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 0
+  enigmeD: {fileID: 0}
 --- !u!4 &522898997 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9198418634206041322, guid: 960ecc975f1447449ada1cbd81b38790,
@@ -1689,11 +1678,7 @@ Transform:
   m_GameObject: {fileID: 607636897}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-<<<<<<< HEAD
   m_LocalPosition: {x: -29.73, y: 1.1611633, z: 0}
-=======
-  m_LocalPosition: {x: -26, y: 1.1611633, z: 0}
->>>>>>> 6fa6b0ab1e5e514abf985c6bc6ca28f51c1d3fd3
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1849,6 +1834,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 0
+  enigmeD: {fileID: 0}
 --- !u!65 &713476112
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2104,6 +2091,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 0
+  enigmeD: {fileID: 0}
 --- !u!1 &833633457
 GameObject:
   m_ObjectHideFlags: 0
@@ -2234,6 +2223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c928c508df3d1bd45a4d646e0717bc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isResolved: 0
   maxRound: 2
   currentRound: 0
   text:
@@ -2790,6 +2780,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 0
+  enigmeD: {fileID: 0}
 --- !u!65 &977634015
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2980,6 +2972,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 0
+  enigmeD: {fileID: 0}
 --- !u!1 &1031107012
 GameObject:
   m_ObjectHideFlags: 0
@@ -3059,6 +3053,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 0
+  enigmeD: {fileID: 0}
 --- !u!65 &1062247171
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3417,6 +3413,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 0
+  enigmeD: {fileID: 0}
 --- !u!65 &1222946114
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3845,6 +3843,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 0
+  enigmeD: {fileID: 0}
 --- !u!1 &1634755460
 GameObject:
   m_ObjectHideFlags: 0
@@ -4300,6 +4300,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 0
+  enigmeD: {fileID: 0}
 --- !u!65 &1677223008
 BoxCollider:
   m_ObjectHideFlags: 0
