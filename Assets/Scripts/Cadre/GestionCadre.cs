@@ -207,7 +207,7 @@ public class GestionCadre : MonoBehaviour
         player.SetPlayerDestination(cadre.transform.TransformPoint(cadre.GetComponent<GestionCadre>().center.localPosition), cadre.GetComponent<GestionCadre>());
         player.MovePlayer();
         cadre.gameObject.tag = "ActualCadre";
-        OnSendTargetStringCadre?.Invoke(cadre.name);
+        OnSendTargetStringCadre?.Invoke(cadre.name == "CadreMidTemple(Clone)" ? "" : cadre.name);
         OnSendNewStatus?.Invoke(cadre.GetComponent<GestionCadre>(), cadre);
         OnSendInfoPlayerMovement?.Invoke();
 
