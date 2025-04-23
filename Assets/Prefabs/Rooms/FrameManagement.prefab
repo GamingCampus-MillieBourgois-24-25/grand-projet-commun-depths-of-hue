@@ -641,9 +641,14 @@ MonoBehaviour:
     InitialFrameState: 0
     FrameState: 0
     connections: []
-  frames: []
+  frames:
+  - id: main_frame
+    cameraPosition: {fileID: 0}
+    ActiveProps: []
+    InitialFrameState: 1
+    FrameState: 1
+    connections: []
   initalFrame: main_frame
-  cameraSpeed: 2
 --- !u!1 &6846135006728658994
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,7 +847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

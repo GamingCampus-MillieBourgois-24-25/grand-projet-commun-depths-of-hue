@@ -6,12 +6,13 @@ using UnityEngine;
 
 public class EnigmeRoom : Room
 {
-    [SerializeField] private List<Enigme> enigmes;
+    [SerializeField] protected List<Enigme> enigmes;
     private int enigmesResolved = 0;
 
     [SerializeField] private GameObject successBanner;
     [SerializeField] private CanvasGroup bannerCanvasGroup;
     [SerializeField] private RectTransform bannerTransform;
+
 
     [ContextMenu("Initialize")]
 
@@ -23,6 +24,7 @@ public class EnigmeRoom : Room
     {
         foreach (var enigme in enigmes)// subscribe to each enigme OnSucces event.
         {
+            enigme.OnSuccess -= OnEnigmeResolved; // if already subscribed
             enigme.OnSuccess += OnEnigmeResolved;
         }
         InitilizeCurrentEnigma();
@@ -31,7 +33,7 @@ public class EnigmeRoom : Room
     /// <summary>
     /// This function is used to initialize and launch the first enigme not resolved yet in the enigmas list.
     /// </summary>
-    protected virtual void InitilizeCurrentEnigma()
+    public virtual void InitilizeCurrentEnigma()
     {
         foreach (var enigme in enigmes)
         {
@@ -42,6 +44,7 @@ public class EnigmeRoom : Room
             else
             {
                 enigme.Initialize();
+
                 break;
             }
         }
@@ -50,9 +53,10 @@ public class EnigmeRoom : Room
     /// <summary>
     /// This function is called whenever an enigme is resolved.
     /// </summary>
-    private void OnEnigmeResolved()
+    protected void OnEnigmeResolved()
     {
         SuccessSequence();
+        Debug.Log("+++");
         enigmesResolved++;
               
     }
@@ -75,6 +79,8 @@ public class EnigmeRoom : Room
     /// <returns></returns>
     public bool IsRoomComplete()
     {
+        Debug.Log ("count : " + enigmes.Count);
+        Debug.Log("completed : " + enigmesResolved);
         return enigmesResolved >= enigmes.Count;
     }
 
@@ -87,6 +93,7 @@ public class EnigmeRoom : Room
         Debug.Log("fini");
         roomData.CurrentState = RoomStateEnum.Completed;
         roomData.roomState = roomData.CurrentState;
+
 
     }
 
@@ -130,13 +137,13 @@ public class EnigmeRoom : Room
             .OnStepComplete(() =>
             {
                 bounceCount++;
-                if (bounceCount % 2 == 0) // rebond complet terminé
+                if (bounceCount % 2 == 0) // rebond complet terminï¿½
                 {
 
                     if (bounceCount >= maxBounces * 2)
                     {
 
-                        // Lancement de la suite (fade out + déplacement)
+                        // Lancement de la suite (fade out + dï¿½placement)
                         ContinueBannerExit(xEnd);
                     }
                 }

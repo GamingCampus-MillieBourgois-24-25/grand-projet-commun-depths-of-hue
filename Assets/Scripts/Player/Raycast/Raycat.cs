@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEngine.EventSystems;
 
 public class Raycat : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public static event Action OnClickOnNothing;
+
+    private Vector3 positionObj;
+    private GameObject Obj;
     void Start()
     {
         
@@ -18,7 +23,7 @@ public class Raycat : MonoBehaviour
         //    DetectAndExecute(Input.mousePosition);
         //}
 
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) // Tactile (mobile)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) 
         {
         
             DetectAndExecute(Input.GetTouch(0).position);
@@ -27,23 +32,32 @@ public class Raycat : MonoBehaviour
 
     void DetectAndExecute(Vector2 screenPosition)
     {
+        
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
         RaycastHit hit;
    
         if (Physics.Raycast(ray, out hit))
         {
-   
-            MonoBehaviour script = hit.collider.GetComponent<MonoBehaviour>(); // Récupère le premier script attaché
+            MonoBehaviour script = hit.collider.GetComponent<MonoBehaviour>();
+
+            Collider collider = hit.collider;
+
+            Obj = collider.gameObject;
+
+            positionObj = collider.bounds.center + new Vector3(0, collider.bounds.extents.y, 0);
 
             if (script != null)
             {
-
                 script.Invoke("OnObjectClicked", 0f);
-            }
-            else
-            {
-                print("il n'y a rien");
+                
             }
         }
+        else
+        {
+            OnClickOnNothing?.Invoke();
+        }
     }
+
+    public Vector3 GetPosition() { return  positionObj; }
+    public GameObject GetObj() { return Obj; }
 }

@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Room2 : Room
+public class Room2 : EnigmeRoom
 {
-    public override void Initialize()
-    {
-        
-    }
+   
 }

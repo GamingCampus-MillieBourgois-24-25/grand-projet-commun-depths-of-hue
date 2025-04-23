@@ -1,0 +1,325 @@
+using System;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Enigme_Pillar : Enigme
+{
+    [Header("Prefabs & References")]
+    public GameObject pillarPrefab;
+    public GameObject textPrefab;
+    public GameObject popUp;
+    public GestionInputs ray;
+
+    [Header("Data")]
+    public List<string> items;
+    public List<Material> materials;
+
+    [Header("Scene Objects")]
+    public List<GameObject> sceneObjects;
+    public float spacing = 2f;
+
+    private Pillar pillar = null;
+    private List<Pillar> pillars = new List<Pillar>();
+    private List<string> OrderEnigme = new List<string>();
+    private List<Material> pillarMaterials = new List<Material>();
+
+    public GameObject PillarPrefab
+    {
+        get => pillarPrefab;
+        set => pillarPrefab = value;
+    }
+
+    public List<string> Items
+    {
+        get => items;
+        set => items = value;
+    }
+
+    public GameObject TextPrefab
+    {
+        get => textPrefab;
+        set => textPrefab = value;
+    }
+
+    public GameObject PopUp
+    {
+        get => popUp;
+        set => popUp = value;
+    }
+
+    public List<GameObject> SceneObjects
+    {
+        get => sceneObjects;
+        set => sceneObjects = value;
+    }
+
+    public float Spacing
+    {
+        get => spacing;
+        set => spacing = value;
+    }
+
+    public GestionInputs Ray
+    {
+        get => ray;
+        set => ray = value;
+    }
+
+    public List<Pillar> Pillars
+    {
+        get => pillars;
+        set => pillars = value;
+    }
+
+    public List<Material> Materials
+    {
+        get => materials;
+        set => materials = value;
+    }
+
+    private void Start()
+    {
+        popUp.SetActive(false);
+        RandomPillar();
+    }
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        if (popUp == null || textPrefab == null)
+        {
+            Debug.LogError("popUp ou textPrefab n'est pas assigné dans l'inspecteur.");
+            return;
+        }
+
+        popUp.SetActive(false);
+        SpawnPillars();
+    }
+
+    public void UpdatePopup()
+    {
+        pillar = ray.GetObj()?.GetComponent<Pillar>();
+        if (pillar == null) return;
+
+        ClearPopup();
+
+        if (pillar.IsObj) PopUpTake();
+        else PopUpItem();
+    }
+
+    private void ClearPopup()
+    {
+        foreach (Transform child in popUp.transform)
+        {
+            if (child != null) Destroy(child.gameObject);
+        }
+    }
+
+    private void PopUpTake()
+    {
+        GameObject newText = Instantiate(textPrefab, popUp.transform);
+        if (newText == null) return;
+
+        TextMeshProUGUI textMesh = newText.GetComponent<TextMeshProUGUI>();
+        if (textMesh != null)
+        {
+            textMesh.text = "reprendre";
+            textMesh.enabled = true;
+            textMesh.ForceMeshUpdate();
+            textMesh.tag = "Cube";
+
+            Button textButton = newText.GetComponent<Button>() ?? newText.AddComponent<Button>();
+            textButton.onClick.AddListener(OnResumeClicked);
+        }
+
+        RectTransform textRect = newText.GetComponent<RectTransform>();
+        if (textRect != null) textRect.anchoredPosition = Vector2.zero;
+
+        RectTransform popUpRect = popUp.GetComponent<RectTransform>();
+        if (popUpRect != null) popUpRect.sizeDelta = new Vector2(200, 50);
+    }
+
+    private void PopUpItem()
+    {
+        float totalHeight = 0f;
+        float maxWidth = 0f;
+        float spacingY = 25f;
+        float horizontalPadding = 20f;
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            string item = items[i];
+            GameObject newText = Instantiate(textPrefab, popUp.transform);
+            if (newText == null)
+            {
+                Debug.LogError("Échec de l'instanciation de textPrefab.");
+                continue;
+            }
+
+            TextMeshProUGUI textMesh = newText.GetComponent<TextMeshProUGUI>();
+            if (textMesh == null)
+            {
+                Debug.LogError("TextMeshProUGUI manquant sur textPrefab.");
+                Destroy(newText);
+                continue;
+            }
+
+            textMesh.text = item;
+            textMesh.enabled = true;
+            textMesh.ForceMeshUpdate();
+
+            totalHeight += textMesh.preferredHeight + spacingY;
+            maxWidth = Mathf.Max(maxWidth, textMesh.preferredWidth);
+
+            Button textButton = newText.GetComponent<Button>() ?? newText.AddComponent<Button>();
+            textButton.onClick.AddListener(() => OnTextClicked(item));
+
+            RectTransform textRect = newText.GetComponent<RectTransform>();
+            if (textRect != null)
+            {
+                textRect.anchoredPosition = new Vector2(0, -totalHeight + (textMesh.preferredHeight / 2) + spacingY * i);
+            }
+        }
+
+        RectTransform popUpRect = popUp.GetComponent<RectTransform>();
+        if (popUpRect != null) popUpRect.sizeDelta = new Vector2(maxWidth + horizontalPadding, totalHeight);
+    }
+
+    private void OnResumeClicked()
+    {
+        if (pillar == null) return;
+
+        items.Add(pillar.Objet.name);
+        sceneObjects.Add(pillar.Objet);
+        pillar.Objet.transform.position = new Vector3(1000, 1000, 0);
+
+        pillar.SetTake();
+        pillar.Objet = null;
+
+        popUp.SetActive(false);
+    }
+
+    private void SpawnPillars()
+    {
+        if (pillarPrefab == null) return;
+
+        int count = items.Count;
+        float offset = (count - 1) * spacing / 2f;
+
+        for (int i = 0; i < count; i++)
+        {
+            float x = i * spacing - offset;
+            Vector3 position = new Vector3(x, -2f, 0f);
+            Quaternion rotation = Quaternion.Euler(-90f, 180f, 0f);
+
+            GameObject newPillar = Instantiate(pillarPrefab, position, rotation);
+            if (newPillar == null)
+            {
+                Debug.LogError("Échec de l'instanciation de pillarPrefab.");
+                continue;
+            }
+
+            Pillar pillarScript = newPillar.GetComponent<Pillar>() ?? newPillar.AddComponent<Pillar>();
+
+            newPillar.GetComponent<MeshRenderer>().material = pillarMaterials[i];
+            pillarScript.Popup = popUp;
+            pillarScript.Spawner = this;
+            pillarScript.Ray = ray;
+            pillarScript.ID =OrderEnigme[i];
+
+            pillars.Add(pillarScript);
+        }
+    }
+
+    private void RandomPillar()
+    {
+        List<string> itemsCopy = new List<string>(items);
+        List<Material> materialsCopy = new List<Material>(materials);
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            int itemIndex = UnityEngine.Random.Range(0, itemsCopy.Count);
+            int matIndex = UnityEngine.Random.Range(0, materialsCopy.Count);
+
+            OrderEnigme.Add(itemsCopy[itemIndex]);
+            pillarMaterials.Add(materialsCopy[matIndex]);
+
+            itemsCopy.RemoveAt(itemIndex);
+            materialsCopy.RemoveAt(matIndex);
+        }
+    }
+
+    private void OnTextClicked(string itemName)
+    {
+        List<GameObject> remainingObjects = new List<GameObject>();
+
+        foreach (GameObject obj in sceneObjects)
+        {
+            if (obj != null)
+            {
+                obj.SetActive(false);
+                remainingObjects.Add(obj);
+            }
+        }
+
+        GameObject selectedObject = remainingObjects.Find(obj => obj.name == itemName);
+        if (selectedObject != null)
+        {
+            selectedObject.SetActive(true);
+
+            if (ray != null)
+            {
+                Vector3 newPosition = ray.GetPosition();
+                newPosition.y += CalculateDistanceToBottom(selectedObject);
+                selectedObject.transform.position = newPosition;
+            }
+
+            remainingObjects.Remove(selectedObject);
+            items.Remove(itemName);
+
+            UpdatePopup();
+            popUp.SetActive(false);
+
+            sceneObjects.Clear();
+            sceneObjects.AddRange(remainingObjects);
+
+            pillar.SetTake();
+            pillar.Objet = selectedObject;
+
+            Success();
+        }
+        else
+        {
+            Debug.LogWarning($"Objet '{itemName}' non trouvé dans la scène.");
+        }
+    }
+
+    private float CalculateDistanceToBottom(GameObject obj)
+    {
+        Bounds bounds;
+        if (obj.TryGetComponent(out Renderer renderer))
+        {
+            bounds = renderer.bounds;
+        }
+        else if (obj.TryGetComponent(out Collider collider))
+        {
+            bounds = collider.bounds;
+        }
+        else return 0f;
+
+        return bounds.extents.y;
+    }
+
+    protected override void Success()
+    {
+        foreach (var pillar in pillars)
+        {
+            if (pillar.Objet == null || pillar.Objet.name != pillar.ID) return;
+        }
+
+        Debug.Log("C'est gagné !");
+        base.Success();
+    }
+}

@@ -8,6 +8,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject _pauseCanvasGameObject;
     [SerializeField] private float transitionTimeSettings = 0.5f;
     [SerializeField] private float transitionTimeCredits = 1f;
+    [SerializeField] private Save save;
     public Animator transitionSettings;
     public Animator transitionCredits;
 
@@ -35,11 +36,13 @@ public class MenuManager : MonoBehaviour
     public void OpenSettings()
     {
         _settingsCanvasGameObject.SetActive(true);
+        save.LoadCategory("audio");
     }
 
     public void CloseSettings()
     {
         StartCoroutine(CloseSettingsTransition());
+        save.SaveCategory("audio");
     }
     
     public void OpenCredits()
