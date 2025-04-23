@@ -59,7 +59,6 @@ public class DeplacementPlayer : MonoBehaviour
     public void MovePlayer()
     {
         if (!navMeshAgent.enabled) return;
-
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
         navMeshAgent.SetDestination(playerDestination);
