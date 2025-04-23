@@ -85,20 +85,20 @@ public class Save : MonoBehaviour
         {
             inventoryData = new InventoryData
             {
-                scriptableObjectIDs = inventaire.GetId()
+                scriptableObjectIDs = inventaire != null ? inventaire.GetId() : new List<string>()
             },
             mapData = new MapData
             {
-                mapInfo = ConvertDictToList(showMap.GetMapStatus())
+                mapInfo =  showMap != null ? ConvertDictToList(showMap.GetMapStatus()) : new List<SerializableKeyValuePair>()
             },
             cadreData = new CadreData
             {
-                actualCadre = showMap.ActualCadre
+                actualCadre = showMap != null ? showMap.ActualCadre : ""
             },
             audiomanager = new Audio
             {
-                music = audio.MusicSlider.value,
-                soundEffect = audio.SoundEffectsSlider.value,
+                music = audio != null ? audio.MusicSlider.value : 1f,
+                soundEffect = audio != null ? audio.SoundEffectsSlider.value : 1f,
             }
         };
 
