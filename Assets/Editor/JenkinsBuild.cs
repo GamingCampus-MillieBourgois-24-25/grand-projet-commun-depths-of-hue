@@ -1,3 +1,5 @@
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
@@ -7,7 +9,8 @@ public class JenkinsBuild
     public static void BuildAndroid()
     {
         string buildPath = "Builds/Android";
-        string[] scenes = { "Assets/Scenes/MainMenu.unity" };
+        string[] scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray();
+        
 
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions
         {
