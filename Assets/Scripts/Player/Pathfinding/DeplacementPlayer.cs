@@ -9,6 +9,8 @@ public class DeplacementPlayer : MonoBehaviour
     [Header("Property")]
     [SerializeField] private Rigidbody2D player;
     [SerializeField] private NavMeshAgent navMeshAgent;
+    [SerializeField] private Animator compagnon;
+    [SerializeField] private Transform targetCompagnon;
     
     [Header("Animations List")]
     [SerializeField] private List<string> listAnimations;
@@ -30,6 +32,9 @@ public class DeplacementPlayer : MonoBehaviour
     public bool PlayerPressRightArrow { get => playerPressRightArrow; set => playerPressRightArrow = value; }
     public bool PlayerPressUpArrow { get => playerPressUpArrow; set => playerPressUpArrow = value; }
     public bool PlayerPressDownArrow { get => playerPressDownArrow; set => playerPressDownArrow = value; }
+    
+    public Animator Compagnon { get => compagnon; set => compagnon = value; }
+    public Transform TargetCompagnon { get => targetCompagnon; set => targetCompagnon = value; }
 
     #endregion
 
@@ -48,6 +53,7 @@ public class DeplacementPlayer : MonoBehaviour
         
         Animator animator = GetComponent<Animator>();
         animator.SetBool(IsWalk, true);
+        compagnon.SetBool(IsWalk, true);
         //GameObject foundActualCadre = GameObject.FindWithTag("ActualCadre");
         //actualCadre = foundActualCadre.GetComponent<GestionCadre>();
         //actualCadre.SetArrowsVisibilities();

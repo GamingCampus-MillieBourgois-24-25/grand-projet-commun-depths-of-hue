@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GestionCadre : MonoBehaviour
 {
-    private static readonly int IsWalk = Animator.StringToHash("IsWalk");
-    private static readonly int IsLeft = Animator.StringToHash("IsLeft");
     [SerializeField] private DeplacementPlayer player;
     private Animator playerAnimator;
     public Transform center;
@@ -79,6 +77,9 @@ public class GestionCadre : MonoBehaviour
     
     public delegate void SendTargetStringCadre(string _cadre);
     public static event SendTargetStringCadre OnSendTargetStringCadre;
+    
+    public delegate void SendInfoPlayerMovement();
+    public static event SendInfoPlayerMovement OnSendInfoPlayerMovement;
 
     #endregion
 
@@ -209,6 +210,7 @@ public class GestionCadre : MonoBehaviour
         cadre.gameObject.tag = "ActualCadre";
         OnSendTargetStringCadre?.Invoke(cadre.name);
         OnSendNewStatus?.Invoke(cadre.GetComponent<GestionCadre>(), cadre);
+        OnSendInfoPlayerMovement?.Invoke();
 
         ManageRotationMovement(_original);
     }
@@ -297,15 +299,17 @@ public class GestionCadre : MonoBehaviour
 
     private void ResetBoolAnimation(string _animToSkip)
     {
-        if (!playerAnimator || !player) return;
+        if (!playerAnimator || !player || !player.Compagnon) return;
         foreach (var t in player.ListAnimations)
         {
             if (t == _animToSkip)
             {
                 playerAnimator.SetBool(Animator.StringToHash(t), true);
+                player.Compagnon.SetBool(Animator.StringToHash(t), true);
                 continue;
             }
             playerAnimator.SetBool(Animator.StringToHash(t), false);
+            player.Compagnon.SetBool(Animator.StringToHash(t), false);
         }
     }
 }
