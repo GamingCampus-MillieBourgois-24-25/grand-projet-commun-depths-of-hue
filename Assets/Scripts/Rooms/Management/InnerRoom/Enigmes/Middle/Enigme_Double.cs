@@ -118,7 +118,6 @@ public class Enigme_Doble : Enigme
             {
                 Vector3 newPosition = new Vector3(spawnPosition.x, spawnPosition.y, obj.transform.position.z);
                 obj.transform.position = newPosition;
-                obj.GetComponent<ItemDouble>().enigmeD = this;
                 occupiedPositions.Add(spawnPosition);
             }
         }
@@ -151,5 +150,11 @@ public class Enigme_Doble : Enigme
         }
 
         return Vector2.zero;
+    }
+
+    public override void CheckItem(GameObject item)
+    {
+        base.CheckItem(item);
+        ObjectClicked(item);
     }
 }

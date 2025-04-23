@@ -1521,8 +1521,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 0
-  enigmeD: {fileID: 0}
 --- !u!4 &522898997 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9198418634206041322, guid: 960ecc975f1447449ada1cbd81b38790,
@@ -1834,8 +1832,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 0
-  enigmeD: {fileID: 0}
 --- !u!65 &713476112
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2091,8 +2087,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 0
-  enigmeD: {fileID: 0}
 --- !u!1 &833633457
 GameObject:
   m_ObjectHideFlags: 0
@@ -2224,6 +2218,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isResolved: 0
+  objectsInEnigme:
+  - {fileID: 223403863}
+  - {fileID: 977634012}
+  - {fileID: 1222946111}
+  - {fileID: 1062247168}
+  - {fileID: 713476109}
+  - {fileID: 1677223005}
+  - {fileID: 829696383}
+  - {fileID: 996532906}
+  - {fileID: 520362625}
+  - {fileID: 1611615188}
   maxRound: 2
   currentRound: 0
   text:
@@ -2235,17 +2240,6 @@ MonoBehaviour:
   timeLimit: 60
   frost: {fileID: 0}
   fogPlane: {fileID: 0}
-  objectsInScene:
-  - {fileID: 223403863}
-  - {fileID: 977634012}
-  - {fileID: 1222946111}
-  - {fileID: 1062247168}
-  - {fileID: 713476109}
-  - {fileID: 1677223005}
-  - {fileID: 829696383}
-  - {fileID: 996532906}
-  - {fileID: 1611615188}
-  - {fileID: 520362625}
   objectsUsedInEnigme:
   - {fileID: 1677223005}
   - {fileID: 520362625}
@@ -2268,9 +2262,11 @@ MonoBehaviour:
   roomData: {fileID: 0}
   enigmes:
   - {fileID: 846172825}
+  currentEnigme: {fileID: 0}
   successBanner: {fileID: 846172829}
   bannerCanvasGroup: {fileID: 846172828}
   bannerTransform: {fileID: 846172827}
+  Raycat: {fileID: 1643466331}
 --- !u!224 &846172827 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3253093678470670734, guid: 88add5dc7d127424485752bbb1344178,
@@ -2780,8 +2776,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 0
-  enigmeD: {fileID: 0}
 --- !u!65 &977634015
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2972,8 +2966,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 0
-  enigmeD: {fileID: 0}
 --- !u!1 &1031107012
 GameObject:
   m_ObjectHideFlags: 0
@@ -3053,8 +3045,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 0
-  enigmeD: {fileID: 0}
 --- !u!65 &1062247171
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3413,8 +3403,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 0
-  enigmeD: {fileID: 0}
 --- !u!65 &1222946114
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3843,8 +3831,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 0
-  enigmeD: {fileID: 0}
 --- !u!1 &1634755460
 GameObject:
   m_ObjectHideFlags: 0
@@ -4300,8 +4286,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aac2d00253404428d0960cd34d0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 0
-  enigmeD: {fileID: 0}
 --- !u!65 &1677223008
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class Raycat : MonoBehaviour
 {
     public static event Action OnClickOnNothing;
+    public static event Action<GameObject> OnClickOnGameObject;
 
     private Vector3 positionObj;
     private GameObject Obj;
@@ -38,17 +39,12 @@ public class Raycat : MonoBehaviour
    
         if (Physics.Raycast(ray, out hit))
         {
-            MonoBehaviour script = hit.collider.GetComponent<MonoBehaviour>();
+            GameObject go = hit.transform.gameObject;
 
-            Collider collider = hit.collider;
-
-            Obj = collider.gameObject;
-
-            positionObj = collider.bounds.center + new Vector3(0, collider.bounds.extents.y, 0);
-
-            if (script != null)
+            if (go != null)
             {
-                script.Invoke("OnObjectClicked", 0f);
+                Debug.Log("sssss");
+                OnClickOnGameObject?.Invoke(go);
                 
             }
         }

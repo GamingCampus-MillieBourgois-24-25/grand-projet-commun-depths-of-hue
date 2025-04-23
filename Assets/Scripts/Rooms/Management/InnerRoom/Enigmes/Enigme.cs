@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Enigme : MonoBehaviour
@@ -5,7 +6,10 @@ public abstract class Enigme : MonoBehaviour
     public bool isResolved = false;
     protected bool isStarted = false;
 
+    [SerializeField] protected GameObject itemsContainer;
 
+
+    protected List<GameObject> objectsInEnigme;  // Every object possibly usable for the enigme
 
     public delegate void EnigmeEventHandler();
 
@@ -19,6 +23,16 @@ public abstract class Enigme : MonoBehaviour
     public virtual void Initialize()
     {
         isStarted = true;
+
+        if (itemsContainer != null)
+        {
+            objectsInEnigme = new List<GameObject>();
+
+            foreach (Transform child in itemsContainer.transform)
+            {
+                objectsInEnigme.Add(child.gameObject);
+            }
+        }      
     }
 
     public virtual void UpdateEnigme(float deltaTime)
@@ -37,7 +51,7 @@ public abstract class Enigme : MonoBehaviour
         OnSuccess?.Invoke();
     }
 
-    
+
 
     /// <summary>
     /// Enigme failed instructions.
@@ -55,5 +69,15 @@ public abstract class Enigme : MonoBehaviour
     public bool GetIsResolved()
     {
         return isResolved;
+    }
+
+    /// <summary>
+    /// Function used to check the item 
+    /// </summary>
+    /// <param name="item"></param>
+    public virtual void CheckItem(GameObject item)
+    {
+        //Content//
+        Debug.Log("sp");
     }
 }
