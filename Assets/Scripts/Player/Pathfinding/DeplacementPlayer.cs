@@ -54,10 +54,6 @@ public class DeplacementPlayer : MonoBehaviour
         Animator animator = GetComponent<Animator>();
         animator.SetBool(IsWalk, true);
         compagnon.SetBool(IsWalk, true);
-        //GameObject foundActualCadre = GameObject.FindWithTag("ActualCadre");
-        //actualCadre = foundActualCadre.GetComponent<GestionCadre>();
-        //actualCadre.SetArrowsVisibilities();
-        //player.transform.position = actualCadre.center.position;
     }
 
     public void MovePlayer()
@@ -88,6 +84,7 @@ public class DeplacementPlayer : MonoBehaviour
         rotation.z = 0;
         transform.eulerAngles = rotation;
 
+        if (!navMeshAgent.isOnNavMesh) return;
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
             if (!actualCadre) return;
@@ -107,7 +104,7 @@ public class DeplacementPlayer : MonoBehaviour
         uniqueSendEvent = false;
     }
     
-    void LateUpdate()
+    private void LateUpdate()
     {
         transform.rotation = Quaternion.identity;
     }

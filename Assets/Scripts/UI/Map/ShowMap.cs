@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ShowMap : MonoBehaviour
 {
@@ -232,7 +233,9 @@ public class ShowMap : MonoBehaviour
     private void TeleportPlayer(GestionCadre _cadre)
     {
         player.transform.position = _cadre.center.position;
+        compagnon.GetComponent<NavMeshAgent>().updatePosition = false;
         compagnon.transform.position = player.GetComponent<DeplacementPlayer>().TargetCompagnon.position;
+        compagnon.GetComponent<NavMeshAgent>().updatePosition = true;
         _cadre.SetArrowsVisibilities();
         _cadre.StockVisiblities();
     }

@@ -17,6 +17,7 @@ public class FollowPlayer : MonoBehaviour
     private void OnEnable()
     {
         GestionCadre.OnSendInfoPlayerMovement += SetNewDestination;
+        gameObject.transform.position = targetPlayer.position;
     }
     
     private void OnDisable()
@@ -32,6 +33,8 @@ public class FollowPlayer : MonoBehaviour
 
     private void Update()
     {
+        if (!navMeshAgent.isOnNavMesh) return;
+        
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
             navMeshAgent.SetDestination(targetPlayer.position);
