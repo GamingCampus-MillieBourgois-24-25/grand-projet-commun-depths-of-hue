@@ -9,8 +9,13 @@ public class DoorController : MonoBehaviour
     [SerializeField] private bool isLocked;
     [SerializeField] private GameObject lockedVisual;
     [SerializeField] private GameObject unlockedVisual;
+    [SerializeField] private int direction;
 
+    #region Getter
+    public int Direction => direction;
 
+    #endregion
+    
     /// <summary>
     /// Called by HUB manager, initialize door depending on its state
     /// </summary>
@@ -28,11 +33,11 @@ public class DoorController : MonoBehaviour
 
         }
         
-        Debug.Log($"Porte {targetRoomId} initialisée : Verrouillée = {isLocked}");
+        Debug.Log($"Porte {targetRoomId} initialisï¿½e : Verrouillï¿½e = {isLocked}");
     }
 
 
-    private void Update()
+    /*private void Update()
     {
         if (Input.GetMouseButtonDown(0)) // Clic gauche
         {
@@ -48,7 +53,7 @@ public class DoorController : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     /// <summary>
     /// Update the door visuals.
