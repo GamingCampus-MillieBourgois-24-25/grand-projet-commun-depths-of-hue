@@ -1,5 +1,6 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HubManager : MonoBehaviour
@@ -21,6 +22,16 @@ public class HubManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        BackgroundGridGenerator.OnSendSetupDoors += FoundDoors;
+    }
+
+    private void OnDisable()
+    {
+        BackgroundGridGenerator.OnSendSetupDoors -= FoundDoors;
+    }
+
     private void Start()
     {
         InitializeDoors();
@@ -29,7 +40,7 @@ public class HubManager : MonoBehaviour
     /// <summary>
     /// Initialize each door in the room, resulting in a state update + visual update
     /// </summary>
-    void InitializeDoors()
+    private void InitializeDoors()
     {
         if(doors != null)
         {        
@@ -38,5 +49,12 @@ public class HubManager : MonoBehaviour
                 door.Initialize(); // Initialize each door
             }
         }
+    }
+
+    private void FoundDoors()
+    {
+        doors = GameObject.FindObjectsOfType<DoorController>(true)
+            .Where(d => d.gameObject.CompareTag("Doors"))
+            .ToArray();
     }
 }
