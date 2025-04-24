@@ -26,6 +26,8 @@ public class SoundEnigme : Enigme
 
     public override void Initialize()
     {
+        panel.SetActive(true);
+
         if (Instance == null)
         {
             Instance = this;

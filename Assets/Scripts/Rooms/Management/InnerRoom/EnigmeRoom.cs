@@ -23,6 +23,7 @@ public class EnigmeRoom : Room
 
     protected virtual void Start()
     {
+        Debug.Log("abonén");
         GestionInputs.OnClickOnGameObject += HandleObjectClick;
     }
 
