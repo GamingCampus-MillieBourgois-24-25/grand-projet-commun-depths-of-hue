@@ -20,6 +20,8 @@ public enum ColorSudoku
 }
 public class Sudoku : Enigme
 {
+    [SerializeField] private GameObject SudokuCanvas;
+
     public static Sudoku Instance;
     
     private SudokuPlay[,] sudokuGrid;
@@ -44,6 +46,8 @@ public class Sudoku : Enigme
     
     public override void Initialize()
     {
+        SudokuCanvas.SetActive(true);
+
         if (Instance == null)
         {
             Instance = this;
@@ -285,5 +289,8 @@ public class Sudoku : Enigme
         Debug.Log("You won the game!");
         //Success();
     }
-    
+    public void Quit()
+    {
+        SudokuCanvas.SetActive(false);
+    }
 }

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class MapPuzzle : Enigme
 {
+    [SerializeField] private GameObject mapCanvas;
+
     public List<MapLocations> rightOrderList = new List<MapLocations>();
     public List<GameObject> chosenOrderList = new List<GameObject>();
     private List<LineRenderer> listLineRenderer = new List<LineRenderer>();
@@ -12,6 +14,9 @@ public class MapPuzzle : Enigme
 
     public override void Initialize()
     {
+        mapCanvas.SetActive(true);
+
+
         if (Instance == null)
         {
             Instance = this;
@@ -77,4 +82,28 @@ public class MapPuzzle : Enigme
         }
         Debug.Log("WIN");
     }
+
+    public void Quit()
+    {
+ 
+        mapCanvas.SetActive(false);
+
+
+        foreach (var line in listLineRenderer)
+        {
+            Destroy(line.gameObject);
+        }
+        listLineRenderer.Clear();
+
+        foreach (var obj in chosenOrderList)
+        {
+            var loc = obj.GetComponent<Location>();
+            if (loc != null)
+            {
+                loc.UnvisitLoc();
+            }
+        }
+        chosenOrderList.Clear();
+    }
+
 }

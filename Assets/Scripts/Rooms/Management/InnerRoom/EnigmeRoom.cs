@@ -8,7 +8,7 @@ public class EnigmeRoom : Room
 {
     [SerializeField] protected List<Enigme> enigmes;
     private int enigmesResolved = 0;
-
+      
     [SerializeField] private GameObject successBanner;
     [SerializeField] private CanvasGroup bannerCanvasGroup;
     [SerializeField] private RectTransform bannerTransform;
