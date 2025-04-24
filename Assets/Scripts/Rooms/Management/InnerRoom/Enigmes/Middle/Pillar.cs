@@ -79,7 +79,7 @@ public class Pillar : MonoBehaviour
         }
         previousClickedObj = currentClickedObj;
 
-        spawner.UpdatePopup();
+        /*spawner.UpdatePopup();*/
 
         if (popup == null || gameObject == null)
         {

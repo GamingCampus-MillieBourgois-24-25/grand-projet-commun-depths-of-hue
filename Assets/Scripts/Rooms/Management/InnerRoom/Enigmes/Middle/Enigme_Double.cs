@@ -10,7 +10,7 @@ public class Enigme_Doble : Enigme
     [SerializeField] private List<GameObject> ItemsDouble;
     [SerializeField] private Camera cam;
     [SerializeField] private Material materialToApply;
-
+    [SerializeField] private ImgBackGroundEnigme img;
     [SerializeField] private TMP_Text text;
     [SerializeField] private GameObject zoneText;
 
@@ -20,6 +20,8 @@ public class Enigme_Doble : Enigme
         nbDouble = ItemsDouble.Count / 2;
         SpawnObjects();
         UpdateTexte();
+        Vector3 vector = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + 5);
+        img.transform.position = vector;
         FramesManager.Instance.LockFrame("Pillar");
     }
 

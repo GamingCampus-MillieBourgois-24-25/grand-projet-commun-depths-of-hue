@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,10 +21,12 @@ public class Enigme_Pillar : Enigme
     public List<GameObject> sceneObjects;
     public float spacing = 2f;
 
-    private Pillar pillar = null;
+    private GameObject pillarTake = null;
     private List<Pillar> pillars = new List<Pillar>();
     private List<string> OrderEnigme = new List<string>();
     private List<Material> pillarMaterials = new List<Material>();
+
+    [SerializeField] ImgBackGroundEnigme img;
 
     public GameObject PillarPrefab
     {
@@ -93,19 +96,21 @@ public class Enigme_Pillar : Enigme
             Debug.LogError("popUp ou textPrefab n'est pas assigné dans l'inspecteur.");
             return;
         }
-
+        Vector3 vector = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.y + 5);
+        img.transform.position = vector;
         popUp.SetActive(false);
         SpawnPillars();
     }
 
     public void UpdatePopup()
     {
-        pillar = ray.GetObj()?.GetComponent<Pillar>();
-        if (pillar == null) return;
 
         ClearPopup();
 
-        if (pillar.IsObj) PopUpTake();
+        if (pillarTake.GetComponent<Pillar>().IsObj)
+        {
+            PopUpTake();
+        }
         else PopUpItem();
     }
 
@@ -189,14 +194,14 @@ public class Enigme_Pillar : Enigme
 
     private void OnResumeClicked()
     {
-        if (pillar == null) return;
+        if (pillarTake == null) return;
 
-        items.Add(pillar.Objet.name);
-        sceneObjects.Add(pillar.Objet);
-        pillar.Objet.transform.position = new Vector3(1000, 1000, 0);
+        items.Add(pillarTake.GetComponent<Pillar>().Objet.name);
+        sceneObjects.Add(pillarTake.GetComponent<Pillar>().Objet);
+        pillarTake.GetComponent<Pillar>().Objet.transform.position = new Vector3(1000, 1000, 0);
 
-        pillar.SetTake();
-        pillar.Objet = null;
+        pillarTake.GetComponent<Pillar>().SetTake();
+        pillarTake.GetComponent<Pillar>().Objet = null;
 
         popUp.SetActive(false);
     }
@@ -227,7 +232,7 @@ public class Enigme_Pillar : Enigme
             pillarScript.Popup = popUp;
             pillarScript.Spawner = this;
             pillarScript.Ray = ray;
-            pillarScript.ID =OrderEnigme[i];
+            pillarScript.ID = OrderEnigme[i];
 
             pillars.Add(pillarScript);
         }
@@ -240,14 +245,13 @@ public class Enigme_Pillar : Enigme
 
         for (int i = 0; i < items.Count; i++)
         {
-            int itemIndex = UnityEngine.Random.Range(0, itemsCopy.Count);
-            int matIndex = UnityEngine.Random.Range(0, materialsCopy.Count);
+            int Index = UnityEngine.Random.Range(0, itemsCopy.Count);
 
-            OrderEnigme.Add(itemsCopy[itemIndex]);
-            pillarMaterials.Add(materialsCopy[matIndex]);
+            OrderEnigme.Add(itemsCopy[Index]);
+            pillarMaterials.Add(materialsCopy[Index]);
 
-            itemsCopy.RemoveAt(itemIndex);
-            materialsCopy.RemoveAt(matIndex);
+            itemsCopy.RemoveAt(Index);
+            materialsCopy.RemoveAt(Index);
         }
     }
 
@@ -269,9 +273,11 @@ public class Enigme_Pillar : Enigme
         {
             selectedObject.SetActive(true);
 
-            if (ray != null)
+            if (pillarTake != null)
             {
-                Vector3 newPosition = ray.GetPosition();
+                Vector3 pillarTop = pillarTake.GetComponent<Renderer>().bounds.center + new Vector3(0, pillarTake.GetComponent<Renderer>().bounds.extents.y, 0);
+
+                Vector3 newPosition = pillarTop;
                 newPosition.y += CalculateDistanceToBottom(selectedObject);
                 selectedObject.transform.position = newPosition;
             }
@@ -285,8 +291,8 @@ public class Enigme_Pillar : Enigme
             sceneObjects.Clear();
             sceneObjects.AddRange(remainingObjects);
 
-            pillar.SetTake();
-            pillar.Objet = selectedObject;
+            pillarTake.GetComponent<Pillar>().SetTake();
+            pillarTake.GetComponent<Pillar>().Objet = selectedObject;
 
             Success();
         }
@@ -312,14 +318,16 @@ public class Enigme_Pillar : Enigme
         return bounds.extents.y;
     }
 
+    
+
     protected override void Success()
     {
+        print("check");
         foreach (var pillar in pillars)
         {
             if (pillar.Objet == null || pillar.Objet.name != pillar.ID) return;
         }
 
-        Debug.Log("C'est gagné !");
         base.Success();
     }
     public override void CheckItem(GameObject item)
@@ -330,6 +338,8 @@ public class Enigme_Pillar : Enigme
             if (item == pillar.gameObject)
             {
                 pillar.OnObjectClicked(item);
+                pillarTake = item;
+                UpdatePopup();
 
             }
         }
