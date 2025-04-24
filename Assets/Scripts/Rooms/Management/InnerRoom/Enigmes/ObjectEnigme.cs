@@ -6,23 +6,28 @@ using UnityEngine;
 public class ObjectEnigme : MonoBehaviour
 {
 
-    [ContextMenu("Debug")]
-    public void OnObjectClicked()
-    {
-       
-        if (Enigme_FindObjects.Instance != null)
-        {
-            Enigme_FindObjects.Instance.CheckItem(this);
-        }
-        else
-        {
-            Debug.Log("no instance");
-        }
+    //[SerializeField] private int DoubleID;
+
+    //[ContextMenu("Debug")]
+    //public void OnObjectClicked(GameObject )
+    //{
+    //    if (Enigme_FindObjects.Instance != null)
+    //    {
+    //        Enigme_FindObjects.Instance.CheckItem(this);
+    //    }
+    //    else if(Enigme_Doble.Instance != null)
+    //    {
+    //        enigmeD.ObjectClicked(gameObject);
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("no instance");
+    //    }
 
 
-    }
+    //}
+    //public int GetId() { return ID; }
 
-   
 
     public void MoveFragment(Vector3 targetPosition, Vector3 finalScale)
     {

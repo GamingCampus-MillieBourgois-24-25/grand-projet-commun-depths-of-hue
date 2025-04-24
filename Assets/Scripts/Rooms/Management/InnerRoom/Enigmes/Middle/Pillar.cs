@@ -56,11 +56,19 @@ public class Pillar : MonoBehaviour
     void OnEnable()
     {
         GestionInputs.OnClickOnNothing += HandleClickOnNothing;
+     
     }
 
-    public void OnObjectClicked()
+    public void OnObjectClicked(GameObject pillar)
     {
-        string currentClickedObj = ray.GetObj().GetComponent<Pillar>().ID;
+
+        string currentClickedObj = pillar.GetComponent<Pillar>().ID;
+
+        if (currentClickedObj != null)
+        {
+            Debug.Log("y'a un componentn");
+        }
+
         if (Input.touchCount > 0 &&
             EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId) &&
             popup.activeSelf &&
@@ -71,7 +79,7 @@ public class Pillar : MonoBehaviour
         }
         previousClickedObj = currentClickedObj;
 
-        spawner.UpdatePopup();
+        /*spawner.UpdatePopup();*/
 
         if (popup == null || gameObject == null)
         {
