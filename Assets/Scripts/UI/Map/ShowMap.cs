@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ShowMap : MonoBehaviour
 {
@@ -14,7 +15,9 @@ public class ShowMap : MonoBehaviour
     [SerializeField] private BackgroundGridGenerator gridGenerator;
     [SerializeField] private MapBackgroundUI mapBackgroundUI;
     [SerializeField] private Animator playerAnimator;
+    [SerializeField] private Animator compagnonAnimator;
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject compagnon;
     
     private Dictionary<string, bool> statusMap = new Dictionary<string, bool>();
     [Header("Sauvegarde")]
@@ -89,9 +92,10 @@ public class ShowMap : MonoBehaviour
             foreach (var mainGrid in mapBackgroundUI.backgrounds) mainGrid.SetActive(!isOpen);
         }
 
-        if (isOpen && playerAnimator)
+        if (isOpen && playerAnimator && compagnonAnimator)
         {
             playerAnimator.SetBool(IsWalk, true);
+            compagnonAnimator.SetBool(IsWalk, true);
         }
 
         UpdateStatusCadre();
@@ -229,6 +233,9 @@ public class ShowMap : MonoBehaviour
     private void TeleportPlayer(GestionCadre _cadre)
     {
         player.transform.position = _cadre.center.position;
+        compagnon.GetComponent<NavMeshAgent>().updatePosition = false;
+        compagnon.transform.position = player.GetComponent<DeplacementPlayer>().TargetCompagnon.position;
+        compagnon.GetComponent<NavMeshAgent>().updatePosition = true;
         _cadre.SetArrowsVisibilities();
         _cadre.StockVisiblities();
     }

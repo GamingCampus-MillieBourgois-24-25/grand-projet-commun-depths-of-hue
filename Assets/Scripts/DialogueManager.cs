@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
 using UnityEngine.UI;
+using Random = System.Random;
 
 [Serializable]
 public class DialogueData
@@ -51,10 +52,24 @@ public class DialogueManager : MonoBehaviour
     private StringTable dialogueTable;
     private int index = 0;
     private bool isBusy = false;
+    
+    public float timeBeforeInactivityText = 15f;
+    private float currentTimer;
+    private bool isCountingDown = true;
+
+    public static DialogueManager Instance;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(this.gameObject);
+        
         if (dialogFrame != null)
         {
             dialogFrame.SetActive(false);
@@ -77,6 +92,11 @@ public class DialogueManager : MonoBehaviour
 
             StartDialogue(0,DialogueGroupKey.chantsSirene);
         }
+    }
+
+    private void Update()
+    {
+        InactivityTimer();
     }
 
     public void LoadLocalizationFromTable(string tableKey)
@@ -135,7 +155,7 @@ public class DialogueManager : MonoBehaviour
         dialogFrame.SetActive(false);
         isBusy = false;
     }
-
+    
     public bool IsBusy()
     {
         return isBusy;
@@ -150,6 +170,7 @@ public class DialogueManager : MonoBehaviour
     {
         StartDialogue(2,DialogueGroupKey.chantsSirene);
     }
+    
     public void StartDialogue(int idDialogue,DialogueGroupKey keyGroup)
     {
         if (listDialogues == null) return;
@@ -161,5 +182,35 @@ public class DialogueManager : MonoBehaviour
             }
         }
         StartCoroutine(WriteDialogue(currentDialogue));
+    }
+
+    private void InactivityTimer()
+    {
+        if (!isCountingDown) return;
+        currentTimer += Time.deltaTime;
+        if (!(currentTimer >= timeBeforeInactivityText)) return;
+        Random rand = new Random();
+        int countMax = 0;
+        foreach (var dialoguePair in listDialogues)
+        {
+            if (dialoguePair.key == DialogueGroupKey.introspection)
+            {
+                countMax = dialoguePair.value.Count;
+                break;
+            }
+        }
+        int randId = rand.Next(0, countMax);
+        StartDialogue(randId,DialogueGroupKey.introspection);
+        currentTimer = 0f;
+    }
+
+    public void StartNewRoomDialogue()
+    {
+        StartDialogue(0,DialogueGroupKey.newRoom);
+    }
+
+    public void StartEnterPuzzleRoom(DialogueGroupKey puzzleKey)
+    {
+        StartDialogue(0,puzzleKey);
     }
 }
