@@ -44,12 +44,19 @@ public class MapPuzzle : Enigme
 
     public void RemoveLastPosition()
     {
-        if (chosenOrderList.Count >= 2)
+        switch (chosenOrderList.Count)
         {
-            LineRenderer line = listLineRenderer[^1];
-            listLineRenderer.Remove(line);
-            Destroy(line);
+            case <= 0:
+                return;
+            case >= 2:
+            {
+                LineRenderer line = listLineRenderer[^1];
+                listLineRenderer.Remove(line);
+                Destroy(line);
+                break;
+            }
         }
+
         chosenOrderList[^1].GetComponent<Location>().UnvisitLoc();
         chosenOrderList.Remove(chosenOrderList[^1]);
     }
