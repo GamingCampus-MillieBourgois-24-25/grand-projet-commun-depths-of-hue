@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -35,9 +36,6 @@ public class Enigme_FindObjects : Enigme
     [SerializeField] private Material frost;
     public GameObject fogPlane;
 
-
-
-    [SerializeField] private List<GameObject> objectsInScene; // Every object possibly usable for the enigme
     [SerializeField] private List<GameObject> objectsUsedInEnigme; // Every object dynamically chose for the enigme
 
     public List<PositionData> allObjectsPositions = new List<PositionData>();
@@ -88,11 +86,11 @@ public class Enigme_FindObjects : Enigme
             return;
         }
 
-        objectsInScene.Clear();
+        objectsInEnigme.Clear();
 
         foreach (Transform prop in container.transform)
         {
-            objectsInScene.Add(prop.gameObject);
+            objectsInEnigme.Add(prop.gameObject);
         }
     }
     private void CollectAllPositionsFromScene()
@@ -137,7 +135,7 @@ public class Enigme_FindObjects : Enigme
     private List<GameObject> MakeObjectsList()
     {
         List<GameObject> list = new List<GameObject>(); //Temporary list
-        var temp = new List<GameObject>(objectsInScene); // Clone objects in scene (to remove elements)
+        var temp = new List<GameObject>(objectsInEnigme); // Clone objects in scene (to remove elements)
 
         int io = 0;
 
@@ -192,7 +190,7 @@ public class Enigme_FindObjects : Enigme
     /// Parameter expects an item.
     /// </summary>
     /// <param name="item"></param>
-    public void CheckItem(ObjectEnigme item)
+    public override void CheckItem(GameObject item)
     {
         if (item == null) return;
 
@@ -215,11 +213,47 @@ public class Enigme_FindObjects : Enigme
                 }
             }
 
-            item.MoveFragment(item.transform.position + new Vector3(-10, 0, 0), new Vector3(0.0f, 0.0f, 0.0f));
+            MoveFragment(item ,item.transform.position + new Vector3(-10, 0, 0), new Vector3(0.0f, 0.0f, 0.0f));
             //item.SetActive(false); 
         }
     }
 
+    public void MoveFragment(GameObject item,Vector3 targetPosition, Vector3 finalScale)
+    {
+        Vector3 start = item.transform.position;
+        float duration = 2f;
+
+        float radius = 2.5f; // plus grand = spirale plus large
+        int spinCount = 2; // nombre de tours
+        float angle = 0f;
+
+        DOTween.To(() => angle, x => {
+            angle = x;
+            float t = angle / (360f * spinCount);
+
+            // Interpolation linéaire de la position de base à finale
+            Vector3 center = Vector3.Lerp(start, targetPosition, t);
+
+            // Création d’un offset circulaire
+            float radians = Mathf.Deg2Rad * angle;
+            Vector3 offset = new Vector3(
+                Mathf.Cos(radians),
+                Mathf.Sin(radians),
+                0f
+            ) * radius * (1 - t);
+
+            // Applique la position finale
+            item.transform.position = center + offset;
+
+        }, 360f * spinCount, duration).SetEase(Ease.InOutSine);
+
+        // Scale
+        item.transform.DOScale(finalScale, duration).SetEase(Ease.OutBack);
+
+        // Rotation sur lui-même
+        item.transform.DORotate(new Vector3(360f, 360f, 360f), duration, RotateMode.FastBeyond360)
+                 .SetEase(Ease.InOutSine);
+    }
     /// <summary>
     /// This function is used to check the end of the current round. It will react accordingy.
     /// </summary>
@@ -289,7 +323,7 @@ public class Enigme_FindObjects : Enigme
     {
         var availablePositions = new List<PositionData>(allObjectsPositions);
 
-        foreach (GameObject obj in objectsInScene)
+        foreach (GameObject obj in objectsInEnigme)
         {
             if (availablePositions.Count == 0) break;
 

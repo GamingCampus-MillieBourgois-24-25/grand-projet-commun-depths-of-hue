@@ -7,6 +7,11 @@ using UnityEngine;
 public class EnigmeRoom : Room
 {
     [SerializeField] protected List<Enigme> enigmes;
+
+    public GestionInputs RaycastF;
+
+    public Enigme currentEnigme;
+
     private int enigmesResolved = 0;
       
     [SerializeField] private GameObject successBanner;
@@ -15,6 +20,11 @@ public class EnigmeRoom : Room
 
 
     [ContextMenu("Initialize")]
+
+    protected virtual void Start()
+    {
+        GestionInputs.OnClickOnGameObject += HandleObjectClick;
+    }
 
 
     /// <summary>
@@ -43,8 +53,8 @@ public class EnigmeRoom : Room
             }
             else
             {
+                currentEnigme = enigme;
                 enigme.Initialize();
-
                 break;
             }
         }
@@ -164,5 +174,19 @@ public class EnigmeRoom : Room
             successBanner.SetActive(false);
             OnPostEnigme(); 
         });
+    }
+
+    /// <summary>
+    /// Manage object's click behavior depending on the enigme
+    /// </summary>
+    /// <param name="robject"></param>
+    protected virtual void HandleObjectClick(GameObject robject)
+    {
+
+        if (currentEnigme != null)
+        {
+
+            currentEnigme.CheckItem(robject);
+        }
     }
 }
