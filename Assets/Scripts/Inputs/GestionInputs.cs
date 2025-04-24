@@ -34,10 +34,13 @@ public class GestionInputs : MonoBehaviour
 
     private void Update()
     {
+        
         foreach (var touch in Touch.activeTouches)
         {
+            
             if (touch.isTap)
             {
+                Debug.Log("push");
                 Vector3 touchPosition = touch.screenPosition;
                 Ray ray = _camera.ScreenPointToRay(touchPosition);
                 RaycastHit hit;
@@ -49,7 +52,6 @@ public class GestionInputs : MonoBehaviour
 
                     if (go != null)
                     {
-                        Debug.Log("sssss");
                         OnClickOnGameObject?.Invoke(go);
 
                     

@@ -322,4 +322,16 @@ public class Enigme_Pillar : Enigme
         Debug.Log("C'est gagné !");
         base.Success();
     }
+    public override void CheckItem(GameObject item)
+    {
+        base.CheckItem(item);
+        foreach (var pillar in pillars)
+        {
+            if (item == pillar.gameObject)
+            {
+                pillar.OnObjectClicked(item);
+
+            }
+        }
+    }
 }
