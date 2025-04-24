@@ -13,6 +13,13 @@ public class GestionInputs : MonoBehaviour
     private Vector3 positionObj;
     private GameObject Obj;
 
+    #region Event
+
+    public delegate void PlayerGoFrontEnigme(Vector3 _position, DoorController _doorController, int _direction);
+    public static event PlayerGoFrontEnigme OnPlayerGoFront;
+
+    #endregion
+
     private void Awake()
     {
         EnhancedTouchSupport.Enable();
@@ -54,12 +61,9 @@ public class GestionInputs : MonoBehaviour
                         script.Invoke("OnObjectClicked", 0f);
 
                     }
-                    
-                    // if (hit.collider.CompareTag("Ancre"))
-                    // {
-                    //     MapNavigateCadre hitMapNavigate = hit.collider.GetComponent<MapNavigateCadre>();
-                    //     if (hitMapNavigate) hitMapNavigate.ClickMapNavigate();
-                    // }
+
+                    MapNavigateCadre();
+                    StartEnigme(touchPosition);
                 }
                 else
                 {
@@ -71,18 +75,36 @@ public class GestionInputs : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 touchPosition = Input.mousePosition;
-            Ray ray = _camera.ScreenPointToRay(touchPosition);
-            RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
-            if (!hit.collider) return;
-            if (hit.collider.CompareTag("Ancre"))
-            {
-                MapNavigateCadre hitMapNavigate = hit.collider.GetComponent<MapNavigateCadre>();
-                if (hitMapNavigate) hitMapNavigate.ClickMapNavigate();
-            }
+            MapNavigateCadre();
+            StartEnigme(touchPosition);
         }
     }
 
     public Vector3 GetPosition() { return positionObj; }
     public GameObject GetObj() { return Obj; }
+
+    private void MapNavigateCadre()
+    {
+        Vector3 touchPosition = Input.mousePosition;
+        Ray ray = _camera.ScreenPointToRay(touchPosition);
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+        if (!hit.collider) return;
+        if (hit.collider.CompareTag("Ancre"))
+        {
+            MapNavigateCadre hitMapNavigate = hit.collider.GetComponent<MapNavigateCadre>();
+            if (hitMapNavigate) hitMapNavigate.ClickMapNavigate();
+        }
+    }
     
+    private void StartEnigme(Vector3 _touchPosition)
+    {
+        Ray ray = _camera.ScreenPointToRay(_touchPosition);
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+        if (!hit.collider) return;
+        if (hit.collider.CompareTag("Doors"))
+        {
+            DoorController hitDoorController = hit.collider.GetComponent<DoorController>();
+            OnPlayerGoFront?.Invoke(hitDoorController.gameObject.transform.position, hitDoorController, hitDoorController.Direction);
+        }
+    }
 }
