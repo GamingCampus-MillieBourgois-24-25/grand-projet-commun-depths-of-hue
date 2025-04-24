@@ -95,10 +95,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e2ad91520f771cc45a6b335ef093ceee,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1126682671285927583}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e2ad91520f771cc45a6b335ef093ceee,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: -1498562783918236025}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e2ad91520f771cc45a6b335ef093ceee,
         type: 3}
@@ -111,20 +107,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 548635764199186244}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1126682671285927583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 818613361962377749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3be1bfa655ada034dbb20a3edf2bbbc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ID: 0
-  enigmeD: {fileID: 0}
 --- !u!64 &-1498562783918236025
 MeshCollider:
   m_ObjectHideFlags: 0
