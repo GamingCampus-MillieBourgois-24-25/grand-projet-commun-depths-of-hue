@@ -96,7 +96,7 @@ public class Enigme_Pillar : Enigme
             Debug.LogError("popUp ou textPrefab n'est pas assigné dans l'inspecteur.");
             return;
         }
-        Vector3 vector = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.y + 5);
+        Vector3 vector = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y,5);
         img.transform.position = vector;
         popUp.SetActive(false);
         SpawnPillars();

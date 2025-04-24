@@ -20,7 +20,7 @@ public class Enigme_Doble : Enigme
         nbDouble = ItemsDouble.Count / 2;
         SpawnObjects();
         UpdateTexte();
-        Vector3 vector = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + 5);
+        Vector3 vector = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 5);
         img.transform.position = vector;
         FramesManager.Instance.LockFrame("Pillar");
     }
