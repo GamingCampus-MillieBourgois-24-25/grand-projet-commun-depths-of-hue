@@ -1,10 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BackgroundGridGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject[] imagePrefab;
-    [SerializeField] private GameObject player;
     [SerializeField] private Sprite[] backgroundSprites;
     [SerializeField] private int columns = 3;
     [SerializeField] private int rows = 3;
@@ -13,14 +13,23 @@ public class BackgroundGridGenerator : MonoBehaviour
     [SerializeField] private bool isForBackgroundLayer;
     [SerializeField] private ShowMap showMap;
     [SerializeField] private Save save;
+    [SerializeField] private GameObject navMeshCenter;
     
     public List<GameObject> backgrounds = new List<GameObject>();
     public List<GestionCadre> cadres = new List<GestionCadre>();
+
+    #region Event
+
     public delegate void OnFinishSpawnCadres();
     public static event OnFinishSpawnCadres OnSpawnCadre;
 
     public delegate void SendCadre(GestionCadre cadre);
     public static event SendCadre OnSendCadre;
+    
+    public delegate void SendSetupDoors();
+    public static event SendSetupDoors OnSendSetupDoors;
+
+    #endregion
 
     private void OnEnable()
     {
@@ -28,6 +37,14 @@ public class BackgroundGridGenerator : MonoBehaviour
         
         mainCamera = Camera.main;
         Vector2 screenSize = GetScreenSizeInUnits();
+        
+        if (navMeshCenter)
+        {
+            Vector3 posNavmesh = navMeshCenter.transform.position;
+            posNavmesh.x = screenSize.x * 2;
+            posNavmesh.x += 1f;
+            navMeshCenter.transform.position = posNavmesh;
+        }
         
         gridCadres = new GameObject[columns, rows];
 
@@ -91,6 +108,11 @@ public class BackgroundGridGenerator : MonoBehaviour
             }
         }
         if (showMap) showMap.SetReceiveFromBGGridGenerator(cadres);
+    }
+
+    private void Start()
+    {
+        OnSendSetupDoors?.Invoke();
     }
 
     private Vector2 GetScreenSizeInUnits()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,6 +10,8 @@ public class DeplacementPlayer : MonoBehaviour
     [Header("Property")]
     [SerializeField] private Rigidbody2D player;
     [SerializeField] private NavMeshAgent navMeshAgent;
+    [SerializeField] private Animator compagnon;
+    [SerializeField] private Transform targetCompagnon;
     
     [Header("Animations List")]
     [SerializeField] private List<string> listAnimations;
@@ -19,6 +22,8 @@ public class DeplacementPlayer : MonoBehaviour
 
     private Camera _camera;
     private bool uniqueSendEvent;
+    private bool isForDeplacementEnigme;
+    private DoorController actualDoor;
 
     #region Gestion Bool Gestion Cadre For Animation
 
@@ -30,6 +35,9 @@ public class DeplacementPlayer : MonoBehaviour
     public bool PlayerPressRightArrow { get => playerPressRightArrow; set => playerPressRightArrow = value; }
     public bool PlayerPressUpArrow { get => playerPressUpArrow; set => playerPressUpArrow = value; }
     public bool PlayerPressDownArrow { get => playerPressDownArrow; set => playerPressDownArrow = value; }
+    
+    public Animator Compagnon { get => compagnon; set => compagnon = value; }
+    public Transform TargetCompagnon { get => targetCompagnon; set => targetCompagnon = value; }
 
     #endregion
 
@@ -45,19 +53,26 @@ public class DeplacementPlayer : MonoBehaviour
         _camera = Camera.main;
         player.freezeRotation = true;
         uniqueSendEvent = false;
+        isForDeplacementEnigme = false;
         
         Animator animator = GetComponent<Animator>();
         animator.SetBool(IsWalk, true);
-        //GameObject foundActualCadre = GameObject.FindWithTag("ActualCadre");
-        //actualCadre = foundActualCadre.GetComponent<GestionCadre>();
-        //actualCadre.SetArrowsVisibilities();
-        //player.transform.position = actualCadre.center.position;
+        compagnon.SetBool(IsWalk, true);
+    }
+
+    private void OnEnable()
+    {
+        GestionInputs.OnPlayerGoFront += SetPlayerDestination;
+    }
+    
+    private void OnDisable()
+    {
+        GestionInputs.OnPlayerGoFront -= SetPlayerDestination;
     }
 
     public void MovePlayer()
     {
         if (!navMeshAgent.enabled) return;
-
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
         navMeshAgent.SetDestination(playerDestination);
@@ -82,6 +97,17 @@ public class DeplacementPlayer : MonoBehaviour
         rotation.z = 0;
         transform.eulerAngles = rotation;
 
+        if (!navMeshAgent.isOnNavMesh) return;
+
+        if (!isForDeplacementEnigme)
+        {
+            if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+            {
+                if (actualDoor) actualDoor.OnClicked();
+            }
+        }
+        
+        if (isForDeplacementEnigme) return;
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
             if (!actualCadre) return;
@@ -101,8 +127,58 @@ public class DeplacementPlayer : MonoBehaviour
         uniqueSendEvent = false;
     }
     
-    void LateUpdate()
+    private void SetPlayerDestination(Vector3 _playerDestination, DoorController _doorController, int _direction)
+    {
+        playerDestination = _playerDestination;
+        uniqueSendEvent = false;
+        actualDoor = _doorController;
+        MovePlayer();
+        SetAnimationBasedOnDirection(_direction);
+    }
+
+    private void SetAnimationBasedOnDirection(int _direction)
+    {
+        Animator animator = GetComponent<Animator>();
+        if (!animator) return;
+        
+        switch (_direction)
+        {
+            case 0:
+                ResetBoolAnimation("IsWalk");
+                break;
+            case 1:
+                ResetBoolAnimation("IsRight");
+                break;
+            case -1:
+                ResetBoolAnimation("IsLeft");
+                break;
+            case -2:
+                ResetBoolAnimation("IsDown");
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+    
+    private void LateUpdate()
     {
         transform.rotation = Quaternion.identity;
+    }
+    
+    private void ResetBoolAnimation(string _animToSkip)
+    {
+        if (!player) return;
+        Animator animator = GetComponent<Animator>();
+        if (!animator) return;
+        
+        foreach (var t in listAnimations)
+        {
+            if (t == _animToSkip)
+            {
+                animator.SetBool(Animator.StringToHash(t), true);
+                continue;
+            }
+            animator.SetBool(Animator.StringToHash(t), false);
+        }
     }
 }
