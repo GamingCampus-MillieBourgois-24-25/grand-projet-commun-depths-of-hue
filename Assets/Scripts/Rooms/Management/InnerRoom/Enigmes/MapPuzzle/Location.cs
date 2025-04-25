@@ -21,7 +21,7 @@ public class Location : MonoBehaviour
 
     private void Start()
     {
-        bubbleSelected = transform.GetChild(0).gameObject;
+        bubbleSelected = transform.GetChild(1).gameObject;
         bubbleSelected.SetActive(false);
     }
 
