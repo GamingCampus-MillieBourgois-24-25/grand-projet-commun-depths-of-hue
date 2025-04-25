@@ -91,7 +91,7 @@ public class Enigme_Pillar : Enigme
         base.Initialize();
         if (popUp == null || textPrefab == null)
         {
-            Debug.LogError("popUp ou textPrefab n'est pas assign� dans l'inspecteur.");
+            Debug.LogError("popUp ou textPrefab n'est pas assigne dans l'inspecteur.");
             return;
         }
         Vector3 vector = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y,5);
