@@ -8,9 +8,12 @@ using UnityEngine.UI;
 public class SoundEnigme : Enigme
 {
     public List<Corail> corals;  
-    public List<int> correctSequence; 
-    private List<int> playerSequence;  
+    public List<Corail> correctSequence; 
+    private List<Corail> playerSequence;  
     public GameObject statue;
+
+    public int amountOfNotes;
+
 
     public GameObject panel;
     public CanvasGroup panelImage;
@@ -26,6 +29,10 @@ public class SoundEnigme : Enigme
 
     public override void Initialize()
     {
+        corals.Clear();
+        correctSequence.Clear();
+   
+
         panel.SetActive(true);
 
         if (Instance == null)
@@ -35,10 +42,14 @@ public class SoundEnigme : Enigme
         }
         base.Initialize();
 
-        for (int i = 0; i < corals.Count; i++)
+        
+
+        for (int i = 0; i < objectsInEnigme.Count; i++)
         {
-            int index = i;
-            corals[i].OnCorailClicked += () => OnCoralClicked(index, corals[index]);
+            if (objectsInEnigme[i].GetComponent<Corail>() != null)
+            {
+                corals.Add(objectsInEnigme[i].GetComponent<Corail>());
+            }
         }
         
     }
@@ -50,7 +61,7 @@ public class SoundEnigme : Enigme
         sequenced = true;
         StartCoroutine(FadeOverlay(1));
         GenerateMelody();
-        playerSequence = new List<int>();
+        playerSequence = new List<Corail>();
     }
 
     IEnumerator FadeOverlay(float targetAlpha)
@@ -73,49 +84,48 @@ public class SoundEnigme : Enigme
 
     void GenerateMelody()
     {
-        correctSequence = new List<int>();
-        for (int i = 0; i < corals.Count; i++)
+        correctSequence = new List<Corail>();
+        for (int i = 0; i < amountOfNotes; i++)
         {
-            correctSequence.Add(UnityEngine.Random.Range(0, corals.Count));
-            corals[i].PlaySound();
+            int index = UnityEngine.Random.Range(0, corals.Count);
+
+            correctSequence.Add(corals[index]);
+
+            PlayCoral(corals[index]);
+
             
         }
     }
 
-    public void OnCoralClicked(int coralIndex, Corail coral)
+    public void OnCoralClicked(Corail coral)
     {
         if (sequenced == true)
         {
 
-        
-        Debug.Log("coral : " +coralIndex);
-
-        playerSequence.Add(coralIndex);
+            playerSequence.Add(coral);
 
 
-        for (int i = 0; i < playerSequence.Count; i++)
-        {
-            if (playerSequence[i] != correctSequence[i])
+            for (int i = 0; i < playerSequence.Count; i++)
             {
-                coral.SwapSound(lose);
-                coral.PlaySound();
-                ResetPuzzle();
-                return;
+                if (playerSequence[i] != correctSequence[i])
+                {
+                    Debug.Log("raté");
+                    ResetPuzzle();
+                    return;
+                }
             }
-        }
-        coral.PlaySound();
+            PlayCoral(coral);
 
-        if (playerSequence.Count == correctSequence.Count)
-        {
-            SolvePuzzle();
-        }
+            if (playerSequence.Count == correctSequence.Count)
+            {
+                SolvePuzzle();
+            }
         }
         else
         {
-            coral.PlaySound();
+            PlayCoral(coral);
         }
     }
-
     void ResetPuzzle()
     {
         sequenced = false;
@@ -129,6 +139,79 @@ public class SoundEnigme : Enigme
     {
         StartCoroutine(RotateStatueTowardsCamera());
     }
+
+    void PlayCoral(Corail coral)
+    {
+        StartCoroutine(PlaySoundWithGlow(coral));
+    }
+
+    IEnumerator PlaySoundWithGlow(Corail coral)
+    {
+        EnableGlow(coral);
+
+        AudioClip sound = coral.GetAudioClip();
+
+        statue.GetComponent <AudioSource>().PlayOneShot(sound);
+
+        yield return new WaitForSeconds(sound.length);
+
+        DisableGlow(coral);
+ 
+    }
+    void EnableGlow(Corail coral)
+    {
+        foreach (Material mat in coral.GetMaterials())
+        {
+            mat.EnableKeyword("_EMISSION");
+
+            Color baseColor = mat.GetColor("_BaseColor"); // ou "_Color" selon ton shader
+            mat.SetColor("_EmissionColor", baseColor * 2);
+
+            StartCoroutine(PulseGlow(mat));
+        }
+    }
+
+    void DisableGlow(Corail coral)
+    {
+        foreach (Material mat in coral.GetMaterials())
+        {
+            mat.DisableKeyword("_EMISSION");
+            mat.SetColor("_EmissionColor", Color.black);
+        }
+    }
+    IEnumerator PulseGlow(Material mat, float pulseDuration = 1.5f, float fadeOutDuration = 1f)
+    {
+        float time = 0f;
+        float pulseSpeed = 1f; // vitesse du pulsé
+        Color baseColor = mat.GetColor("_BaseColor"); // ou "_Color" si ton shader n'a pas _BaseColor
+
+        // Phase de pulse
+        while (time < pulseDuration)
+        {
+            time += Time.deltaTime;
+            float intensity = (Mathf.Sin(time * pulseSpeed * Mathf.PI * 2f) + 1f) / 2f;
+            mat.SetColor("_EmissionColor", baseColor * Mathf.Lerp(0.5f, 1.5f, intensity));
+            yield return null;
+        }
+
+        // Phase de fade-out
+        Color currentColor = mat.GetColor("_EmissionColor");
+        float fadeTime = 0f;
+        while (fadeTime < fadeOutDuration)
+        {
+            fadeTime += Time.deltaTime;
+            float t = fadeTime / fadeOutDuration;
+            mat.SetColor("_EmissionColor", Color.Lerp(currentColor, baseColor * 0f, t));
+            yield return null;
+        }
+
+        mat.DisableKeyword("_EMISSION");
+        mat.SetColor("_EmissionColor", Color.black);
+    }
+
+    
+
+    
 
     IEnumerator RotateStatueTowardsCamera()
     {
@@ -172,6 +255,16 @@ public class SoundEnigme : Enigme
         panelBackground.color = originalColor;
     }
 
-    
+    public override void CheckItem(GameObject item)
+    {
+        base.CheckItem(item);
+        
+        Corail itemCorail = item.GetComponent<Corail>();
+
+        if (itemCorail != null)
+        {
+            OnCoralClicked(itemCorail);
+        }
+    }
 
 }

@@ -28,6 +28,8 @@ public class Room2 : EnigmeRoom
         SudokuCanvas.SetActive(false);
         SoundCanvas.SetActive(false);
 
+
+
         currentEnigme = enigmes[enigme];
 
         enigmes[enigme].Initialize();
@@ -38,7 +40,6 @@ public class Room2 : EnigmeRoom
         Debug.Log(robject);
         if (robject == sirene)
         {
-            Debug.Log("fs");
             InitializeSpecificEnigme(2);
         }
 
