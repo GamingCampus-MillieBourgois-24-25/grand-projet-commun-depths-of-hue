@@ -33,6 +33,7 @@ public class Room2 : EnigmeRoom
         currentEnigme = enigmes[enigme];
 
         enigmes[enigme].Initialize();
+        DialogueManager.Instance.StartEnterPuzzleRoom(enigmes[enigme].enigmeDialogKey);
     }
 
     protected override void HandleObjectClick(GameObject robject)

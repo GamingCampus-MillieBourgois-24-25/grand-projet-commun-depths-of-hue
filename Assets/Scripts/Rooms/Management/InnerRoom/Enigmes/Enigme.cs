@@ -8,6 +8,8 @@ public abstract class Enigme : MonoBehaviour
 
     [SerializeField] protected GameObject itemsContainer;
 
+    public DialogueGroupKey enigmeDialogKey;
+
 
     public List<GameObject> objectsInEnigme;  // Every object possibly usable for the enigme
 
