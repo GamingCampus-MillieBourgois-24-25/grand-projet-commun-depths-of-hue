@@ -23,7 +23,8 @@ public enum DialogueGroupKey
     chantsSirene,
     carteDestin,
     introspection,
-    newRoom
+    newRoom,
+    sudokuLike
 }
 
 [System.Serializable]
@@ -90,7 +91,7 @@ public class DialogueManager : MonoBehaviour
                 }
             }
 
-            StartDialogue(0,DialogueGroupKey.chantsSirene);
+            //StartDialogue(0,DialogueGroupKey.chantsSirene);
         }
     }
 
@@ -159,16 +160,6 @@ public class DialogueManager : MonoBehaviour
     public bool IsBusy()
     {
         return isBusy;
-    }
-
-    public void StartGOOD()
-    {
-        StartDialogue(1,DialogueGroupKey.chantsSirene);
-    }
-
-    public void StartBAD()
-    {
-        StartDialogue(2,DialogueGroupKey.chantsSirene);
     }
     
     public void StartDialogue(int idDialogue,DialogueGroupKey keyGroup)

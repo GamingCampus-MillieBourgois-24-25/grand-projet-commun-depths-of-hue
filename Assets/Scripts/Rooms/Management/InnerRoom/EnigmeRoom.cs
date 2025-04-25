@@ -13,8 +13,6 @@ public class EnigmeRoom : Room
     public Enigme currentEnigme;
 
     private int enigmesResolved = 0;
-
-    private bool isVisited = false;
       
     [SerializeField] private GameObject successBanner;
     [SerializeField] private CanvasGroup bannerCanvasGroup;
@@ -193,13 +191,4 @@ public class EnigmeRoom : Room
         }
     }
 
-    public void VisitRoom()
-    {
-        isVisited = true;
-    }
-
-    public bool GetIsVisited()
-    {
-        return isVisited;
-    }
 }

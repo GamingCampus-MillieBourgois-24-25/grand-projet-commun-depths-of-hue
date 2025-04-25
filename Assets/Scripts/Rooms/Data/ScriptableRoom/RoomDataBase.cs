@@ -9,8 +9,9 @@ public class RoomDataBase : ScriptableObject
 
     [ScenePath] 
     public string sceneName;
- 
 
+    private bool isVisited = false;
+    
     [Header("Default State")]
     public RoomStateEnum initialState;
 
@@ -22,5 +23,15 @@ public class RoomDataBase : ScriptableObject
         get => (RoomStateEnum)PlayerPrefs.GetInt(roomId + "_state", (int)initialState);
         set => PlayerPrefs.SetInt(roomId + "_state", (int)value);
 
+    }
+    
+    public void VisitRoom()
+    {
+        isVisited = true;
+    }
+
+    public bool GetIsVisited()
+    {
+        return isVisited;
     }
 }
