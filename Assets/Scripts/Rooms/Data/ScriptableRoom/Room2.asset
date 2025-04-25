@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomId: Room2
   sceneName: Room_2
-  initialState: 0
-  roomState: 0
+  initialState: 1
+  roomState: 1

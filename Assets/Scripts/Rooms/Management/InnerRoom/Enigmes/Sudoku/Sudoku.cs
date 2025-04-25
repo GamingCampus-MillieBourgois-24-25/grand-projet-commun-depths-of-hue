@@ -186,6 +186,7 @@ public class Sudoku : Enigme
             child.SetActive(true);
             child.GetComponent<Image>().sprite = countSpriteList[countPiece-1];
             cell.GetComponent<Image>().color = colorList[0];
+            cell.GetComponentInChildren<TMP_Text>().text = "";
             //cell.GetComponentInChildren<TMP_Text>().text = countPiece.ToString();
         }
         else
@@ -322,8 +323,11 @@ public class Sudoku : Enigme
         SudokuPlay correctPlayToFill = fullSolution[hintCell.x, hintCell.y];
         
         sudokuGrid[hintCell.x, hintCell.y] = correctPlayToFill;
-        hintCell.GetComponent<Image>().color = colorList[(int)correctPlayToFill.color];
-        hintCell.GetComponentInChildren<TMP_Text>().text = correctPlayToFill.countPiece.ToString();
+        GameObject childCell = hintCell.transform.GetChild(1).gameObject;
+        
+        childCell.GetComponent<Image>().color = colorList[(int)correctPlayToFill.color];
+        childCell.GetComponent<Image>().sprite = countSpriteList[correctPlayToFill.countPiece-1];
+        childCell.SetActive(true);
         hintCell.isEditable = false;
         hintCell.UpdateNotEditable();
         CheckWin();
@@ -333,7 +337,8 @@ public class Sudoku : Enigme
     {
         if (!IsGameWon()) return;
         Debug.Log("You won the game!");
-        //Success();
+        canvasEnigme.gameObject.SetActive(false);
+        Success();
     }
     public void Quit()
     {
