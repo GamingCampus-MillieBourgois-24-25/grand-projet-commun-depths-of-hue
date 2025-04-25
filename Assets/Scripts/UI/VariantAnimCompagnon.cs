@@ -5,8 +5,10 @@ public class VariantAnimCompagnon : MonoBehaviour
     [SerializeField] private Animator animator;
     private bool anim;
     
+    #region Animator
     private static readonly int Walk = Animator.StringToHash("Walk");
     private static readonly int WalkVariant = Animator.StringToHash("WalkVariant");
+    #endregion
 
     private void Start()
     {
