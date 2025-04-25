@@ -41,10 +41,9 @@ public class GestionInputs : MonoBehaviour
 
     private void Update()
     {
-        
         foreach (var touch in Touch.activeTouches)
         {
-            
+
             if (touch.isTap)
             {
                 Debug.Log("push");
@@ -60,36 +59,37 @@ public class GestionInputs : MonoBehaviour
                     if (go != null)
                     {
                         OnClickOnGameObject?.Invoke(go);
+                        print("je click");
 
-                    
+                        return;
                     }
-                //MonoBehaviour script = hit.collider.GetComponent<MonoBehaviour>();
+                    //MonoBehaviour script = hit.collider.GetComponent<MonoBehaviour>();
 
-                //Collider collider = hit.collider;
+                    //Collider collider = hit.collider;
 
-                //Obj = collider.gameObject;
+                    //Obj = collider.gameObject;
 
-                //positionObj = collider.bounds.center + new Vector3(0, collider.bounds.extents.y, 0);
+                    //positionObj = collider.bounds.center + new Vector3(0, collider.bounds.extents.y, 0);
 
-                //if (script != null)
-                //{
-                //    script.Invoke("OnObjectClicked", 0f);
+                    //if (script != null)
+                    //{
+                    //    script.Invoke("OnObjectClicked", 0f);
 
-                //}
+                    //}
 
-                // if (hit.collider.CompareTag("Ancre"))
-                // {
-                //     MapNavigateCadre hitMapNavigate = hit.collider.GetComponent<MapNavigateCadre>();
-                //     if (hitMapNavigate) hitMapNavigate.ClickMapNavigate();
-                // }
-                } 
+                    // if (hit.collider.CompareTag("Ancre"))
+                    // {
+                    //     MapNavigateCadre hitMapNavigate = hit.collider.GetComponent<MapNavigateCadre>();
+                    //     if (hitMapNavigate) hitMapNavigate.ClickMapNavigate();
+                    // }
+                }
                 else
                 {
                     OnClickOnNothing?.Invoke();
+                    return;
                 }
             }
         }
-        
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 touchPosition = Input.mousePosition;
