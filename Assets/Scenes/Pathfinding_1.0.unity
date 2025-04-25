@@ -3962,13 +3962,13 @@ PrefabInstance:
         type: 3}
       propertyPath: backgroundSprites.Array.data[17]
       value: 
-      objectReference: {fileID: 21300000, guid: 1bdc6592323163e458082eb6a361d604,
+      objectReference: {fileID: 21300000, guid: 2c2e7e338fb00ed47b732c1011890da6,
         type: 3}
     - target: {fileID: 3209198012909911360, guid: abc66b0f74507aa4ea49bd432fda8368,
         type: 3}
       propertyPath: backgroundSprites.Array.data[22]
       value: 
-      objectReference: {fileID: 21300000, guid: acbd87e58b5bc834b8919e47ee540fd7,
+      objectReference: {fileID: 21300000, guid: 971a8f28f2e45a342a83c134f52e2537,
         type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
