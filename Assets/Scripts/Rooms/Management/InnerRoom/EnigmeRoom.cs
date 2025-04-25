@@ -13,7 +13,7 @@ public class EnigmeRoom : Room
     public Enigme currentEnigme;
 
     private int enigmesResolved = 0;
-
+      
     [SerializeField] private GameObject successBanner;
     [SerializeField] private CanvasGroup bannerCanvasGroup;
     [SerializeField] private RectTransform bannerTransform;
@@ -23,6 +23,7 @@ public class EnigmeRoom : Room
 
     protected virtual void Start()
     {
+        Debug.Log("abonén");
         GestionInputs.OnClickOnGameObject += HandleObjectClick;
     }
 
