@@ -79,6 +79,12 @@ MonoBehaviour:
       l\u2019eau, et pourtant\u2026 nous en sommes toujours l\xE0."
     m_Metadata:
       m_Items: []
+  - m_Id: 2801136168665088
+    m_Localized: "Quatre chiffres... quatre couleurs. Peut-\xEAtre qu'aucun ne doit
+      se r\xE9p\xEAter sur une ligne ou une colonne. Un Sudoku ? Non, quelque chose
+      de plus..."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -190,4 +190,5 @@ public class EnigmeRoom : Room
             currentEnigme.CheckItem(robject);
         }
     }
+
 }

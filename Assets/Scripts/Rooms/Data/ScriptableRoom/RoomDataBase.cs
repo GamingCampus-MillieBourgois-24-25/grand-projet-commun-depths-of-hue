@@ -9,18 +9,29 @@ public class RoomDataBase : ScriptableObject
 
     [ScenePath] 
     public string sceneName;
- 
 
+    private bool isVisited = false;
+    
     [Header("Default State")]
     public RoomStateEnum initialState;
 
     public RoomStateEnum roomState;
 
-    // Propriété avec sauvegarde automatique
+    // PropriÃ©tÃ© avec sauvegarde automatique
     public RoomStateEnum CurrentState
     {
         get => (RoomStateEnum)PlayerPrefs.GetInt(roomId + "_state", (int)initialState);
         set => PlayerPrefs.SetInt(roomId + "_state", (int)value);
 
+    }
+    
+    public void VisitRoom()
+    {
+        isVisited = true;
+    }
+
+    public bool GetIsVisited()
+    {
+        return isVisited;
     }
 }

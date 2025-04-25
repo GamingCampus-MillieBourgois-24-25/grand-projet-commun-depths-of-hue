@@ -32,7 +32,12 @@ public class RoomManager : MonoBehaviour
         }
 
         currentRoom = targetRoom;
-
+        if (!currentRoom.GetIsVisited())
+        {
+            currentRoom.VisitRoom();
+            DialogueManager.Instance.StartNewRoomDialogue();
+        }
+        
         SceneManager.sceneLoaded += OnSceneLoaded; // On scene loaded event subscription
         TransitionManager.Instance.StartEnigme(targetRoom.sceneName);
         //SceneManager.LoadScene(targetRoom.sceneName); //Load the scene
