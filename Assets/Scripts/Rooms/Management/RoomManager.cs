@@ -32,7 +32,7 @@ public class RoomManager : MonoBehaviour
         }
 
         currentRoom = targetRoom;
-
+        
         SceneManager.sceneLoaded += OnSceneLoaded; // On scene loaded event subscription
         SceneManager.LoadScene(targetRoom.sceneName); //Load the scene
     }

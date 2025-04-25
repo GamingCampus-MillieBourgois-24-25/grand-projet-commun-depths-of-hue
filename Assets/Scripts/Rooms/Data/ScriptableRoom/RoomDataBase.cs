@@ -16,7 +16,7 @@ public class RoomDataBase : ScriptableObject
 
     public RoomStateEnum roomState;
 
-    // Propriété avec sauvegarde automatique
+    // PropriÃ©tÃ© avec sauvegarde automatique
     public RoomStateEnum CurrentState
     {
         get => (RoomStateEnum)PlayerPrefs.GetInt(roomId + "_state", (int)initialState);

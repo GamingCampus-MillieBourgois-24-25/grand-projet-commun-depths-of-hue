@@ -12,6 +12,9 @@ public class TransitionManager : MonoBehaviour
     [SerializeField] private bool skipEndTransition = false;
 
     public static TransitionManager Instance;
+    private static readonly int SkipEndTransition = Animator.StringToHash("SkipEndTransition");
+    private static readonly int Start = Animator.StringToHash("Start");
+
     public void Awake()
     {
         if (Instance != null)
@@ -25,7 +28,7 @@ public class TransitionManager : MonoBehaviour
 
         if (skipEndTransition)
         {
-            transition.SetBool("SkipEndTransition", true);
+            transition.SetBool(SkipEndTransition, true);
         }
     }
 
@@ -43,14 +46,14 @@ public class TransitionManager : MonoBehaviour
 
     IEnumerator LoadScene(string sceneName)
     {
-        transition.SetTrigger("Start");
+        transition.SetTrigger(Start);
         yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(sceneName);
     }
 
     IEnumerator MainMenu(string sceneName)
     {
-        transitionToMainMenu.SetTrigger("Start");
+        transitionToMainMenu.SetTrigger(Start);
         yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(sceneName);
     }
