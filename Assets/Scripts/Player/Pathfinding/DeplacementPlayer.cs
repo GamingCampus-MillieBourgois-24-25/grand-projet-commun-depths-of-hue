@@ -106,8 +106,8 @@ public class DeplacementPlayer : MonoBehaviour
             {
                 if (actualDoor)
                 {
-                    actualDoor.OnClicked();
                     isForDeplacementEnigme = true;
+                    actualDoor.OnClicked();
                 }
             }
         }
