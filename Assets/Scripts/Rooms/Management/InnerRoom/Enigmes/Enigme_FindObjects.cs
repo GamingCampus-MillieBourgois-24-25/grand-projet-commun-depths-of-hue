@@ -20,7 +20,6 @@ public class PositionData
 
 public class Enigme_FindObjects : Enigme
 {
-    public static Enigme_FindObjects Instance;
 
     [SerializeField] int maxRound = 3;
     public int currentRound = 0;
@@ -50,16 +49,10 @@ public class Enigme_FindObjects : Enigme
     public override void Initialize()
     {
 
-        if (Instance == null)
-        {
-            CollectAllPropsFromScene();
-            CollectAllPositionsFromScene();
+        CollectAllPositionsFromScene();
 
-            Instance = this;
-
-            base.Initialize();
-          
-        }
+        base.Initialize();
+                
         RoundRoutine();     
     }
 
@@ -75,24 +68,6 @@ public class Enigme_FindObjects : Enigme
 
 
 
-
-    private void CollectAllPropsFromScene()
-    {
-        GameObject container = GameObject.FindWithTag("PropsContainer");
-
-        if (container == null)
-        {
-            Debug.LogError("Le GameObject avec le tag 'PositionContainer' est introuvable !");
-            return;
-        }
-
-        objectsInEnigme.Clear();
-
-        foreach (Transform prop in container.transform)
-        {
-            objectsInEnigme.Add(prop.gameObject);
-        }
-    }
     private void CollectAllPositionsFromScene()
     {
         GameObject container = GameObject.FindWithTag("PositionContainer");
@@ -331,7 +306,7 @@ public class Enigme_FindObjects : Enigme
             PositionData posData = availablePositions[index];
 
             obj.transform.position = posData.worldPosition;
-            obj.transform.localScale = Vector3.one;
+            obj.transform.localScale = new Vector3(45,45,45);
 
 
             if (FramesManager.Instance != null)

@@ -16,15 +16,5 @@ public class Room1 : EnigmeRoom
         }
     }
 
-    private void HandleObjectClick(GameObject robject)
-    {
-
-        if (currentEnigme != null)
-        {
-
-            currentEnigme.CheckItem(robject);
-        }
-    }
-
 }
 

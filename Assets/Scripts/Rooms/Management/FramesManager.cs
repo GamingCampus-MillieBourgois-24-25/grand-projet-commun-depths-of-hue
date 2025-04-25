@@ -6,10 +6,18 @@ using UnityEngine.UI;
 
 public class FramesManager : MonoBehaviour
 {
+    [Header ("Unlocked")]
     [SerializeField] private Button upButton;
     [SerializeField] private Button rightButton;
     [SerializeField] private Button downButton;
     [SerializeField] private Button leftButton;
+
+    [Header("Locked")]
+    [SerializeField] private Button upButtonLocked;
+    [SerializeField] private Button rightButtonLocked;
+    [SerializeField] private Button downButtonLocked;
+    [SerializeField] private Button leftButtonLocked;
+
     [SerializeField] private TextMeshProUGUI ZoneText;
 
     [SerializeField] private Sprite lockedFrame;
@@ -194,6 +202,11 @@ public class FramesManager : MonoBehaviour
         downButton.gameObject.SetActive(false);
         leftButton.gameObject.SetActive(false);
 
+        upButtonLocked.gameObject.SetActive(false);
+        downButtonLocked.gameObject.SetActive(false);
+        leftButtonLocked.gameObject.SetActive(false);
+        rightButtonLocked.gameObject.SetActive(false);
+
         // Set active buttons based on connections
         foreach (var connection in currentFrame.connections)
         {
@@ -201,10 +214,13 @@ public class FramesManager : MonoBehaviour
             {
                 case DirectionsEnum.up:
                     upButton.gameObject.SetActive(true);
+                    upButtonLocked.gameObject.SetActive(false);
                     Frame targetFrameUp = System.Array.Find(frames, s => s.id == connection.connectedFrameId);
                     if (targetFrameUp.FrameState == RoomStateEnum.Locked)
                     {
-                        upButton.image.sprite = lockedFrame;
+                        upButton.gameObject.SetActive(false);
+                        upButtonLocked.gameObject.SetActive(true);
+
                     }
                     upButton.onClick.RemoveAllListeners();
                     upButton.onClick.AddListener(() => SwitchFrame(connection.connectedFrameId));
@@ -212,10 +228,12 @@ public class FramesManager : MonoBehaviour
 
                 case DirectionsEnum.down:
                     downButton.gameObject.SetActive(true);
+                    downButtonLocked.gameObject.SetActive(false);
                     Frame targetFrameDown = System.Array.Find(frames, s => s.id == connection.connectedFrameId);
                     if (targetFrameDown.FrameState == RoomStateEnum.Locked)
                     {
-                        downButton.image.sprite = lockedFrame;
+                        downButton.gameObject.SetActive(false);
+                        downButtonLocked.gameObject.SetActive(true);
                     }
                     downButton.onClick.RemoveAllListeners();
                     downButton.onClick.AddListener(() => SwitchFrame(connection.connectedFrameId));
@@ -223,11 +241,12 @@ public class FramesManager : MonoBehaviour
 
                 case DirectionsEnum.left:
                     leftButton.gameObject.SetActive(true);
+                    leftButtonLocked.gameObject.SetActive(false);
                     Frame targetFrameLeft = System.Array.Find(frames, s => s.id == connection.connectedFrameId);
                     if (targetFrameLeft.FrameState == RoomStateEnum.Locked)
                     {
-                        Debug.Log(targetFrameLeft.FrameState);
-                        leftButton.image.sprite = lockedFrame;
+                        leftButton.gameObject.SetActive(false);
+                        leftButtonLocked.gameObject.SetActive(true);
                     }
                     else
                     {
@@ -240,10 +259,12 @@ public class FramesManager : MonoBehaviour
 
                 case DirectionsEnum.right:
                     rightButton.gameObject.SetActive(true);
+                    rightButtonLocked.gameObject.SetActive(false);
                     Frame targetFrameRight = System.Array.Find(frames, s => s.id == connection.connectedFrameId);
                     if (targetFrameRight.FrameState == RoomStateEnum.Locked)
                     {
-                        rightButton.image.sprite = lockedFrame;
+                        rightButton.gameObject.SetActive(false);
+                        rightButtonLocked.gameObject.SetActive(true);
                     }
                     rightButton.onClick.RemoveAllListeners();
                     rightButton.onClick.AddListener(() => SwitchFrame(connection.connectedFrameId));

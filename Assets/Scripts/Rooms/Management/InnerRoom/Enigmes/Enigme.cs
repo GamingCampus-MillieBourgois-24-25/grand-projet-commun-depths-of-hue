@@ -9,7 +9,7 @@ public abstract class Enigme : MonoBehaviour
     [SerializeField] protected GameObject itemsContainer;
 
 
-    protected List<GameObject> objectsInEnigme;  // Every object possibly usable for the enigme
+    public List<GameObject> objectsInEnigme;  // Every object possibly usable for the enigme
 
     public delegate void EnigmeEventHandler();
 
