@@ -4344,6 +4344,7 @@ GameObject:
   - component: {fileID: 1850617061}
   - component: {fileID: 1850617057}
   - component: {fileID: 1850617060}
+  - component: {fileID: 1850617062}
   m_Layer: 0
   m_Name: Compagnon
   m_TagString: Untagged
@@ -4429,6 +4430,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1850617062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850617056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 104e1cd8b23ef1e4a843c7640a19d08b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1850617057}
 --- !u!1 &1865880543
 GameObject:
   m_ObjectHideFlags: 0
