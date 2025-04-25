@@ -11,7 +11,7 @@ public abstract class Enigme : MonoBehaviour
     public DialogueGroupKey enigmeDialogKey;
 
 
-    protected List<GameObject> objectsInEnigme;  // Every object possibly usable for the enigme
+    public List<GameObject> objectsInEnigme;  // Every object possibly usable for the enigme
 
     public delegate void EnigmeEventHandler();
 
