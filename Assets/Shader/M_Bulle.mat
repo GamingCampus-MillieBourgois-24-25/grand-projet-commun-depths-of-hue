@@ -7,13 +7,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Outline_FullScreen
-  m_Shader: {fileID: -6465566751694194690, guid: 285b2219e9320c84186974697396dcd7, type: 3}
+  m_Name: M_Bulle
+  m_Shader: {fileID: -6465566751694194690, guid: 275f2eab0c8565944ba1b94e0c1169f3,
+    type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -37,16 +38,23 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Fullscreen_AlphaBlendOperation: 0
-    - _Fullscreen_BlendMode: 1
-    - _Fullscreen_ColorBlendOperation: 0
-    - _Fullscreen_DepthWrite: 1
-    - _Fullscreen_DstAlphaBlend: 10
-    - _Fullscreen_DstColorBlend: 10
-    - _Fullscreen_SrcAlphaBlend: 1
-    - _Fullscreen_SrcColorBlend: 5
-    - _Thickness: 0.0025
+    - _Power: 5
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _Speed: 1
     m_Colors:
-    - _Color: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 0}
+    - _Color: {r: 0.7741685, g: 3.101927, b: 3.335849, a: 0}
   m_BuildTextureStacks: []
-  m_AllowLocking: 1
+--- !u!114 &600615919683377493
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
