@@ -62,8 +62,9 @@ public class Sudoku : Enigme
             Instance = this;
         }
         base.Initialize();
-
+        
         sudokuGenerator = GetComponent<SudokuGenerator>();
+        if (fullSolution != null) return;
         fullSolution = sudokuGenerator.CreateSolvedGrid();
 
         sudokuGrid = new SudokuPlay[gridSize, gridSize];
