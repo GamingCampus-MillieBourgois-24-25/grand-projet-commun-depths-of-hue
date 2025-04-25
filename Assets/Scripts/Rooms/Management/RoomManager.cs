@@ -32,6 +32,7 @@ public class RoomManager : MonoBehaviour
         }
 
         currentRoom = targetRoom;
+        DialogueManager.Instance.StartNewRoomDialogue();
         
         SceneManager.sceneLoaded += OnSceneLoaded; // On scene loaded event subscription
         SceneManager.LoadScene(targetRoom.sceneName); //Load the scene
