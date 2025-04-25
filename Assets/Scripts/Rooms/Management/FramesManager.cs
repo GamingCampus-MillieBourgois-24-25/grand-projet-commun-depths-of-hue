@@ -20,9 +20,15 @@ public class FramesManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI ZoneText;
 
+
     [SerializeField] private Sprite lockedFrame;
     [SerializeField] private Sprite unlockedFrame;
 
+    [Header("Bubble particles")]
+    [SerializeField] private ParticleSystem randomParticleSystem;
+    [SerializeField] private float maxParticleDepth = 25f;
+    [SerializeField] private float minDelay = 2f;
+    [SerializeField] private float maxDelay = 5f;
 
     public static FramesManager Instance;
 
@@ -61,8 +67,49 @@ public class FramesManager : MonoBehaviour
     {
         mainCamera = Camera.main;
         SwitchFrame(initalFrame);
+        StartCoroutine(SpawnParticlesRoutine());
+        RandomParticleEffectLoop();
 
     }
+
+    /// <summary>
+    /// Plays bubble particle effect
+    /// </summary>
+    private void RandomParticleEffectLoop()
+    {
+
+            Vector3 randomPos = GetRandomPositionInView();
+            randomParticleSystem.transform.position = randomPos;
+            randomParticleSystem.gameObject.SetActive(true);
+            randomParticleSystem.Play();
+        
+    }
+    /// <summary>
+    /// Coroutine waiting seconds before activating bubbles
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator SpawnParticlesRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(8);
+            RandomParticleEffectLoop();
+        }
+    }
+
+    /// <summary>
+    /// Get position within the screen view in world space to spawn bubble particles
+    /// </summary>
+    /// <returns></returns>
+    Vector3 GetRandomPositionInView()
+    {
+        float depth = Random.Range(15f, maxParticleDepth);
+        float randomX = Random.Range(0f, 1f);
+        float randomY = Random.Range(0f, 0.5f); // ↘️ partie basse de l'écran
+        Vector3 viewportPos = new Vector3(randomX, randomY, depth);
+        return Camera.main.ViewportToWorldPoint(viewportPos);
+    }
+
 
     private void Awake()
     {
@@ -77,7 +124,12 @@ public class FramesManager : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Add props to a frame.
+    /// Parameters exepcting a frame id and a prop to add
+    /// </summary>
+    /// <param name="frameId"></param>
+    /// <param name="prop"></param>
     public void AddFrameProp(string frameId, GameObject prop)
     {
         Frame targetFrame = System.Array.Find(frames, s => s.id == frameId);
@@ -93,6 +145,12 @@ public class FramesManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Clears prop list for a frame.
+    /// Parameters exepcting a frame id.
+    /// </summary>
+    /// <param name="frameId"></param>
+    /// <param name="prop"></param>
     public void ClearFramePropList(string frameId)
     {
         Frame targetFrame = System.Array.Find(frames, s => s.id == frameId);
@@ -107,6 +165,12 @@ public class FramesManager : MonoBehaviour
 
         }
     }
+    /// <summary>
+    /// Delete props to a frame.
+    /// Parameters exepcting a frame id and a prop to delete
+    /// </summary>
+    /// <param name="frameId"></param>
+    /// <param name="prop"></param>
     public void RemoveFrameProp(string frameId, GameObject prop)
     {
         Frame targetFrame = System.Array.Find(frames, s => s.id == frameId);
