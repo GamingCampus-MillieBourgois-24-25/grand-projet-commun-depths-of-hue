@@ -436,7 +436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f3e6f73535e1a44ab3769002934929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetRoomId: Sudoku
+  targetRoomId: Room1
   isLocked: 0
   lockedVisual: {fileID: 5776149189813747382, guid: 62e2c9d2ef0fa884d8f3052617b77934,
     type: 3}
