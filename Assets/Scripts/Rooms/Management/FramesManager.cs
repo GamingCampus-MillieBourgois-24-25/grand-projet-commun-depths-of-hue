@@ -37,6 +37,8 @@ public class FramesManager : MonoBehaviour
     {
         public string id; // "Main_frame", "cave"...
 
+        public GameObject PropsContainer;
+
         public Transform cameraPosition;
         public List <GameObject> ActiveProps; // Props being used in a frame
 
@@ -65,6 +67,22 @@ public class FramesManager : MonoBehaviour
 
     void Start()
     {
+        foreach (var frame in frames)
+        {
+            frame.ActiveProps = new List<GameObject>();
+
+            if (frame.PropsContainer != null) 
+            {
+
+                foreach (Transform child in frame.PropsContainer.transform)
+                {
+                    frame.ActiveProps.Add(child.gameObject);
+                }
+            }
+
+           
+        }
+
         mainCamera = Camera.main;
         SwitchFrame(initalFrame);
         StartCoroutine(SpawnParticlesRoutine());
@@ -214,7 +232,7 @@ public class FramesManager : MonoBehaviour
 
 
             // Move camera
-            currentCameraCoroutine= StartCoroutine(MoveCamera(targetFrame.cameraPosition.position));
+            currentCameraCoroutine= StartCoroutine(MoveCamera(targetFrame.cameraPosition));
             currentFrame = targetFrame;
             UpdateDirectionButtons();
         }
@@ -232,9 +250,10 @@ public class FramesManager : MonoBehaviour
     /// </summary>
     /// <param name="positionCible"></param>
     /// <returns></returns>
-    IEnumerator MoveCamera(Vector3 positionCible)
+    IEnumerator MoveCamera(Transform targetTransform)
     {
         Vector3 startPosition = mainCamera.transform.position;
+        Quaternion startRotation = mainCamera.transform.rotation;
         float elapsedTime = 0f;
         float duration = 0f;
 
@@ -243,14 +262,16 @@ public class FramesManager : MonoBehaviour
         {
             mainCamera.transform.position = Vector3.Lerp(
                 startPosition,
-                positionCible,
+                targetTransform.position,
                 elapsedTime / duration
             );
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        mainCamera.transform.position = positionCible;
+
+        mainCamera.transform.position = targetTransform.position;
+        mainCamera.transform.rotation = targetTransform.rotation;
     }
 
 
