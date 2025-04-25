@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,11 +17,19 @@ public class BackgroundGridGenerator : MonoBehaviour
     
     public List<GameObject> backgrounds = new List<GameObject>();
     public List<GestionCadre> cadres = new List<GestionCadre>();
+
+    #region Event
+
     public delegate void OnFinishSpawnCadres();
     public static event OnFinishSpawnCadres OnSpawnCadre;
 
     public delegate void SendCadre(GestionCadre cadre);
     public static event SendCadre OnSendCadre;
+    
+    public delegate void SendSetupDoors();
+    public static event SendSetupDoors OnSendSetupDoors;
+
+    #endregion
 
     private void OnEnable()
     {
@@ -99,6 +108,11 @@ public class BackgroundGridGenerator : MonoBehaviour
             }
         }
         if (showMap) showMap.SetReceiveFromBGGridGenerator(cadres);
+    }
+
+    private void Start()
+    {
+        OnSendSetupDoors?.Invoke();
     }
 
     private Vector2 GetScreenSizeInUnits()
