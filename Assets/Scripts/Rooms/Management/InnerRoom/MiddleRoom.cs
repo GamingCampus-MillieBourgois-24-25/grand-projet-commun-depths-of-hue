@@ -24,4 +24,18 @@ public class MiddleRoom : EnigmeRoom
         ReturnToHub();
     }
 
+    protected override void OnPostEnigme()
+    {
+        if (IsRoomComplete())
+        {
+            EndRoomSequence();
+        }
+        else
+        {
+            InitilizeCurrentEnigma();
+            FramesManager.Instance.LockFrame("main_frame");
+            FramesManager.Instance.UnlockFrame("Pillar");
+        }
+    }
+
 }
