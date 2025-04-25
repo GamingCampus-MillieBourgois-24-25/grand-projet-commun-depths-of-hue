@@ -39,7 +39,15 @@ public class TransitionManager : MonoBehaviour
         StartCoroutine(MainMenu("MainMenu"));
     }
 
-
+    public void StartEnigme(string _name)
+    {
+        StartCoroutine(LoadScene(_name));
+    }
+    
+    public void BackToExploration()
+    {
+        StartCoroutine(MainMenu("Pathfinding_1.0"));
+    }
 
     IEnumerator LoadScene(string sceneName)
     {

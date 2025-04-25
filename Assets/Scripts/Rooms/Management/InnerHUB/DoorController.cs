@@ -71,7 +71,6 @@ public class DoorController : MonoBehaviour
     {
         if (!isLocked)
         {
-
             RoomManager.Instance.LoadRoom(targetRoomId);
         }
         else
