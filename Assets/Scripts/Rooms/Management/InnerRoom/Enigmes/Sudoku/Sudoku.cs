@@ -245,24 +245,39 @@ public class Sudoku : Enigme
 
     public void ChangePlay(int buttonId, bool isColor)
     {
+        GameObject child = resultChoiceImage.transform.GetChild(0).gameObject;
         if (isColor)
         {
             colorId = buttonId;
             choiceColorImage.color = colorList[colorId];
-            resultChoiceImage.color = colorList[colorId];
+            
+            if (currentCount > 0)
+            {
+                child.GetComponent<Image>().color = colorList[colorId];
+            }
+            else
+            {
+                resultChoiceImage.color = colorList[colorId];
+            }
+            
         }
         else
         {
             currentCount = buttonId;
+            child.GetComponent<Image>().color = colorList[colorId];
+            resultChoiceImage.color = colorList[0];
             if (currentCount == 0)
             {
-                resultChoiceImage.sprite = null;
+                child.GetComponent<Image>().sprite = null;
                 choiceCount.text = "";
+                child.SetActive(false);
+                resultChoiceImage.color = colorList[colorId];
             }
             else
             {
-                resultChoiceImage.sprite = countSpriteList[currentCount-1];
+                child.GetComponent<Image>().sprite = countSpriteList[currentCount-1];
                 choiceCount.text = currentCount.ToString();
+                child.SetActive(true);
             }
         }
     }

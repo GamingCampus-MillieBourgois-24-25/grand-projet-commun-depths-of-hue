@@ -15,5 +15,5 @@ MonoBehaviour:
   dialogues:
   - npc: Player
     image: {fileID: 0}
-    dialogueKey: ChantSirenes_badS
+    dialogueKey: NewRoom
   tableKey: DialoguesText
