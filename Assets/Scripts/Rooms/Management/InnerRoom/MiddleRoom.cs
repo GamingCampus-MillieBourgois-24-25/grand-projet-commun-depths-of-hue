@@ -9,7 +9,7 @@ public class MiddleRoom : EnigmeRoom
     protected override void Start()
     {
         base.Start();
-        Initialize();
+        /*Initialize();*/
     }
     public override void Initialize()
     {
