@@ -124,9 +124,6 @@ public class Enigme_Doble : Enigme
         if(nbDouble == 0 && !isResolved)
         {
             base.Success();
-       
-            FramesManager.Instance.LockFrame("main_frame");
-            FramesManager.Instance.UnlockFrame("Pillar");
             zoneText.SetActive(false);
         }
     }
