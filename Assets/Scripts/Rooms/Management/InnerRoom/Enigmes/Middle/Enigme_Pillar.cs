@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -93,7 +91,7 @@ public class Enigme_Pillar : Enigme
         base.Initialize();
         if (popUp == null || textPrefab == null)
         {
-            Debug.LogError("popUp ou textPrefab n'est pas assigné dans l'inspecteur.");
+            Debug.LogError("popUp ou textPrefab n'est pas assignï¿½ dans l'inspecteur.");
             return;
         }
         Vector3 vector = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y,5);
@@ -159,7 +157,7 @@ public class Enigme_Pillar : Enigme
             GameObject newText = Instantiate(textPrefab, popUp.transform);
             if (newText == null)
             {
-                Debug.LogError("Échec de l'instanciation de textPrefab.");
+                Debug.LogError("ï¿½chec de l'instanciation de textPrefab.");
                 continue;
             }
 
@@ -222,7 +220,7 @@ public class Enigme_Pillar : Enigme
             GameObject newPillar = Instantiate(pillarPrefab, position, rotation);
             if (newPillar == null)
             {
-                Debug.LogError("Échec de l'instanciation de pillarPrefab.");
+                Debug.LogError("ï¿½chec de l'instanciation de pillarPrefab.");
                 continue;
             }
 
@@ -298,7 +296,7 @@ public class Enigme_Pillar : Enigme
         }
         else
         {
-            Debug.LogWarning($"Objet '{itemName}' non trouvé dans la scène.");
+            Debug.LogWarning($"Objet '{itemName}' non trouvï¿½ dans la scï¿½ne.");
         }
     }
 
