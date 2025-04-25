@@ -6,18 +6,29 @@ public class Enigme_Doble : Enigme
 {
     private GameObject firstSelected;
     private GameObject secondSelected;
+    private GameObject firstBulleSelected;
+    private GameObject secondBulleSelected;
     private int nbDouble;
     [SerializeField] private List<GameObject> ItemsDouble;
     [SerializeField] private Camera cam;
-    [SerializeField] private Material materialToApply;
     [SerializeField] private ImgBackGroundEnigme img;
     [SerializeField] private TMP_Text text;
     [SerializeField] private GameObject zoneText;
+    [SerializeField] private GameObject bubulle;
+    [SerializeField] private GestionInputs gestion;
+    private List<GameObject> bulles;
+    private float timer = 1f; // 1 seconde
+    private bool isTimerRunning = false;
 
+    private void Start()
+    {
+        
+    }
     public override void Initialize()
     {
         base.Initialize();
         nbDouble = ItemsDouble.Count / 2;
+        CreateBulle();
         SpawnObjects();
         UpdateTexte();
         Vector3 vector = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 5);
@@ -27,22 +38,46 @@ public class Enigme_Doble : Enigme
 
     public void ObjectClicked(GameObject obj)
     {
-        if (obj == firstSelected) return;
+        Bulle bubulle = obj.GetComponent<Bulle>();
+        if (bubulle.item == firstSelected) return;
 
-        if (firstSelected == null)
+        if (firstSelected == null && firstBulleSelected == null)
         {
-            Material outlineMaterial = new Material(materialToApply);
-            firstSelected = obj;
-            firstSelected.GetComponent<Outline>().enabled = true;
+            /*Material outlineMaterial = new Material(materialToApply);*/
+            firstSelected = bubulle.item;
+            firstBulleSelected = obj;
+            bubulle.item.transform.position = obj.transform.position;
+            bubulle.item.SetActive(true);
+            obj.SetActive(false);
         }
         else
         {
-            secondSelected = obj;
-            CheckObj();
+            secondSelected = bubulle.item;
+            secondBulleSelected = obj;
+            bubulle.item.transform.position = obj.transform.position;
+            bubulle.item.SetActive(true);
+            obj.SetActive(false);
+            isTimerRunning = true;
+            gestion.enabled = false;
         }
     }
 
-  
+
+    void Update()
+    {
+        if (isTimerRunning)
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                Debug.Log("Timer terminé !");
+                isTimerRunning = false;
+                CheckObj();
+                timer = 1f;
+            }
+        }
+    }
+
     public void UpdateTexte()
     {
         text.text = nbDouble.ToString();
@@ -58,20 +93,29 @@ public class Enigme_Doble : Enigme
         }
         if (firstObj.GetId() == secondObj.GetId())
         {
-            firstSelected.GetComponent<Outline>().enabled = false;
             firstSelected.SetActive(false);
             secondSelected.SetActive(false);
             firstSelected = null;
             secondSelected = null;
+            firstBulleSelected = null;
+            secondBulleSelected = null;
             nbDouble--;
             UpdateTexte();
             Success();
+            gestion.enabled = true;
         }
         else
         {
-            firstSelected.GetComponent<Outline>().enabled = false;
+            firstSelected.SetActive(false);
+            secondSelected.SetActive(false);
+            firstBulleSelected.SetActive(true);
+            secondBulleSelected.SetActive(true);
+            firstBulleSelected = null;
+            secondBulleSelected = null;
             firstSelected = null;
             secondSelected = null;
+            gestion.enabled = true;
+
         }
     }
 
@@ -87,19 +131,6 @@ public class Enigme_Doble : Enigme
         }
     }
 
-    /*public override void UpdateEnigme(float deltaTime)
-    {
-        Success();
-    }
-
-    private void Update()
-    {
-        if (isStarted)
-        {
-
-            UpdateEnigme(Time.deltaTime);
-        }
-    }*/
 
     public void SpawnObjects()
     {
@@ -113,7 +144,7 @@ public class Enigme_Doble : Enigme
 
         List<Vector2> occupiedPositions = new List<Vector2>();
 
-        foreach (var obj in ItemsDouble)
+        foreach (var obj in bulles)
         {
             Vector2 spawnPosition = GetRandomPosition(minX, maxX, minY, maxY, occupiedPositions);
             if (spawnPosition != Vector2.zero)
@@ -159,4 +190,50 @@ public class Enigme_Doble : Enigme
         base.CheckItem(item);
         ObjectClicked(item);
     }
+
+    public void CreateBulle()
+    {
+        if (ItemsDouble == null || ItemsDouble.Count == 0)
+        {
+            Debug.LogError("ItemsDouble est null ou vide !");
+            return;
+        }
+
+        if (bubulle == null)
+        {
+            Debug.LogError("Le prefab bubulle n'est pas assigné !");
+            return;
+        }
+        if (bulles == null)
+        {
+            bulles = new List<GameObject>();
+            Debug.LogWarning("La liste bulles était null et a été initialisée.");
+        }
+
+        List<GameObject> list = new List<GameObject>(ItemsDouble);
+        for (int i = 0; i < ItemsDouble.Count; i++)
+        {
+            if (list.Count == 0)
+            {
+                Debug.LogWarning("La liste est vide avant la fin de la boucle !");
+                break;
+            }
+
+            int index = Random.Range(0, list.Count);
+            GameObject nuwBulle = Instantiate(bubulle, Vector3.zero, Quaternion.identity);
+
+            Bulle bulleScript = nuwBulle.GetComponent<Bulle>();
+            if (bulleScript == null)
+            {
+                Debug.LogError("Le composant Bulle est manquant sur le prefab bubulle !");
+                Destroy(nuwBulle);
+                continue;
+            }
+
+            bulleScript.item = list[index];
+            list.RemoveAt(index);
+            bulles.Add(nuwBulle);
+        }
+    }
 }
+
