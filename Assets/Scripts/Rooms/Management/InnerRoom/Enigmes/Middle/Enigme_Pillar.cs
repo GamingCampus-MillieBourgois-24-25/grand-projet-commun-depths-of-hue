@@ -216,7 +216,7 @@ public class Enigme_Pillar : Enigme
         for (int i = 0; i < count; i++)
         {
             float x = i * spacing - offset;
-            Vector3 position = new Vector3(x, -2f, 0f);
+            Vector3 position = new Vector3(x, -4.15f, 0f);
             Quaternion rotation = Quaternion.Euler(-90f, 180f, 0f);
 
             GameObject newPillar = Instantiate(pillarPrefab, position, rotation);
