@@ -88,7 +88,6 @@ public class Pillar : MonoBehaviour
         }
 
         popup.SetActive(true);
-
         Vector3 worldPosition = gameObject.transform.position + Vector3.up * 2f;
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
 
