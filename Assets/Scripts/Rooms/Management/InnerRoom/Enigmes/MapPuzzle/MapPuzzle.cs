@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class MapPuzzle : Enigme
 {
+    [SerializeField] private GameObject mapCanvas;
+
     public List<MapLocations> rightOrderList = new List<MapLocations>();
     public List<GameObject> chosenOrderList = new List<GameObject>();
     private List<LineRenderer> listLineRenderer = new List<LineRenderer>();
@@ -12,6 +14,9 @@ public class MapPuzzle : Enigme
 
     public override void Initialize()
     {
+        mapCanvas.SetActive(true);
+
+
         if (Instance == null)
         {
             Instance = this;
@@ -31,8 +36,8 @@ public class MapPuzzle : Enigme
             GameObject obj2 = chosenOrderList[^1];
             Vector3[] pos =
             {
-                new Vector3(obj1.transform.position.x,obj1.transform.position.y,89),
-                new Vector3(obj2.transform.position.x,obj2.transform.position.y,89)
+                new Vector3(obj1.transform.position.x,obj1.transform.position.y,99),
+                new Vector3(obj2.transform.position.x,obj2.transform.position.y,99)
             };
             LineRenderer lineRenderer = Instantiate(prefabLine).GetComponent<LineRenderer>();
             listLineRenderer.Add(lineRenderer);
@@ -77,4 +82,28 @@ public class MapPuzzle : Enigme
         }
         Debug.Log("WIN");
     }
+
+    public void Quit()
+    {
+ 
+        mapCanvas.SetActive(false);
+
+
+        foreach (var line in listLineRenderer)
+        {
+            Destroy(line.gameObject);
+        }
+        listLineRenderer.Clear();
+
+        foreach (var obj in chosenOrderList)
+        {
+            var loc = obj.GetComponent<Location>();
+            if (loc != null)
+            {
+                loc.UnvisitLoc();
+            }
+        }
+        chosenOrderList.Clear();
+    }
+
 }

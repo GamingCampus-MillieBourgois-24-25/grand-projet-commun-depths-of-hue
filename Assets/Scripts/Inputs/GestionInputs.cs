@@ -46,7 +46,7 @@ public class GestionInputs : MonoBehaviour
 
             if (touch.isTap)
             {
-                Debug.Log("push");
+
                 Vector3 touchPosition = touch.screenPosition;
                 Ray ray = _camera.ScreenPointToRay(touchPosition);
                 RaycastHit hit;

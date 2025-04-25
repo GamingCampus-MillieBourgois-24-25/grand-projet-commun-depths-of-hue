@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -20,6 +21,8 @@ public enum ColorSudoku
 }
 public class Sudoku : Enigme
 {
+    [SerializeField] private GameObject SudokuCanvas;
+
     public static Sudoku Instance;
     
     private SudokuPlay[,] sudokuGrid;
@@ -33,24 +36,35 @@ public class Sudoku : Enigme
     private int colorId = 0;
     [SerializeField] private TMP_Text choiceCount;
     [SerializeField] private Image choiceColorImage;
+    [SerializeField] private Image resultChoiceImage;
 
     [SerializeField]
     private List<Color> colorList = new List<Color>();
+    [SerializeField]
+    private List<Sprite> countSpriteList = new List<Sprite>();
 
     [SerializeField] private int numberOfBlankCases = 8;
     
     private SudokuGenerator sudokuGenerator;
     private SudokuPlay[,] fullSolution;
-    
+
+    private void Start()
+    {
+        startPosition.SetActive(false);
+    }
+
     public override void Initialize()
     {
+        SudokuCanvas.SetActive(true);
+
         if (Instance == null)
         {
             Instance = this;
         }
         base.Initialize();
-
+        
         sudokuGenerator = GetComponent<SudokuGenerator>();
+        if (fullSolution != null) return;
         fullSolution = sudokuGenerator.CreateSolvedGrid();
 
         sudokuGrid = new SudokuPlay[gridSize, gridSize];
@@ -93,8 +107,7 @@ public class Sudoku : Enigme
 
 
         InstantiateGrid();
-        float pos = gridSize / 2 * 110;
-        startPosition.transform.localPosition = new Vector3(-pos, pos, 0);
+        startPosition.SetActive(true);
     }
 
     
@@ -165,14 +178,22 @@ public class Sudoku : Enigme
 
     private void ChangeColorCell(CellSudoku cell, int countPiece, int colorId)
     {
-        cell.GetComponent<Image>().color = colorList[colorId];
+        GameObject child = cell.transform.GetChild(1).gameObject;
+        child.GetComponent<Image>().color = colorList[colorId];
+        //cell.GetComponent<Image>().color = colorList[colorId];
         if (countPiece != 0)
         {
-            cell.GetComponentInChildren<TMP_Text>().text = countPiece.ToString();
+            child.SetActive(true);
+            child.GetComponent<Image>().sprite = countSpriteList[countPiece-1];
+            cell.GetComponent<Image>().color = colorList[0];
+            //cell.GetComponentInChildren<TMP_Text>().text = countPiece.ToString();
         }
         else
         {
-            cell.GetComponentInChildren<TMP_Text>().text = "";
+            child.SetActive(false);
+            child.GetComponent<Image>().sprite = null;
+            cell.GetComponent<Image>().color = colorList[colorId];
+            //cell.GetComponentInChildren<TMP_Text>().text = "";
         }
     }
 
@@ -184,14 +205,15 @@ public class Sudoku : Enigme
             {
                 GameObject cell = Instantiate(cellPrefab, new Vector3(0, 0, 0), Quaternion.identity);
                 cell.transform.SetParent(startPosition.transform);
-                cell.transform.localPosition = new Vector3(j * 110, -i * 110, 0);
                 var cellScript = cell.GetComponent<CellSudoku>();
                 cellScript.x = i;
                 cellScript.y = j;
 
                 int colorIndex = (int)sudokuGrid[i, j].color;
 
-                var cellImage = cell.GetComponent<Image>();
+                GameObject child = cell.transform.GetChild(1).gameObject;
+
+                var cellImage = child.GetComponent<Image>();
                 if (colorIndex >= 0 && colorIndex < colorList.Count)
                 {
                     cellImage.color = colorList[colorIndex];
@@ -201,16 +223,19 @@ public class Sudoku : Enigme
                     cellImage.color = Color.white;
                 }
 
-                var text = cell.GetComponentInChildren<TMP_Text>();
+                //var text = cell.GetComponentInChildren<TMP_Text>();
+
                 if (sudokuGrid[i, j].countPiece != 0)
                 {
-                    text.text = sudokuGrid[i, j].countPiece.ToString();
+                    //text.text = sudokuGrid[i, j].countPiece.ToString();
+                    child.SetActive(true);
+                    cellImage.sprite = countSpriteList[sudokuGrid[i, j].countPiece-1];
                     cellScript.isEditable = false;
                     cellScript.UpdateNotEditable();
                 }
                 else
                 {
-                    text.text = "";
+                    //text.text = "";
                     cellScript.isEditable = true; 
                 }
             }
@@ -224,11 +249,21 @@ public class Sudoku : Enigme
         {
             colorId = buttonId;
             choiceColorImage.color = colorList[colorId];
+            resultChoiceImage.color = colorList[colorId];
         }
         else
         {
             currentCount = buttonId;
-            choiceCount.text = currentCount != 0 ? currentCount.ToString() : "";
+            if (currentCount == 0)
+            {
+                resultChoiceImage.sprite = null;
+                choiceCount.text = "";
+            }
+            else
+            {
+                resultChoiceImage.sprite = countSpriteList[currentCount-1];
+                choiceCount.text = currentCount.ToString();
+            }
         }
     }
 
@@ -285,5 +320,8 @@ public class Sudoku : Enigme
         Debug.Log("You won the game!");
         //Success();
     }
-    
+    public void Quit()
+    {
+        SudokuCanvas.SetActive(false);
+    }
 }
