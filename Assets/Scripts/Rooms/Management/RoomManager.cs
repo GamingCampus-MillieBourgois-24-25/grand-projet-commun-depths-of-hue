@@ -32,11 +32,6 @@ public class RoomManager : MonoBehaviour
         }
 
         currentRoom = targetRoom;
-        if (!currentRoom.GetIsVisited())
-        {
-            currentRoom.VisitRoom();
-            DialogueManager.Instance.StartNewRoomDialogue();
-        }
         
         SceneManager.sceneLoaded += OnSceneLoaded; // On scene loaded event subscription
         TransitionManager.Instance.StartEnigme(targetRoom.sceneName);
@@ -74,6 +69,11 @@ public class RoomManager : MonoBehaviour
                 Debug.LogWarning("No RoomController found in scene!");
             }
 
+            if (!currentRoom.GetIsVisited())
+            {
+                currentRoom.VisitRoom();
+                DialogueManager.Instance.StartNewRoomDialogue();
+            }
             SceneManager.sceneLoaded -= OnSceneLoaded; // On scene loaded event unsubscription
         }
         

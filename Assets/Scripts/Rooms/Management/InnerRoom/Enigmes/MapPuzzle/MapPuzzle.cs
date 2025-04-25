@@ -36,10 +36,10 @@ public class MapPuzzle : Enigme
             GameObject obj2 = chosenOrderList[^1];
             Vector3[] pos =
             {
-                new Vector3(obj1.transform.position.x,obj1.transform.position.y,99),
-                new Vector3(obj2.transform.position.x,obj2.transform.position.y,99)
+                new Vector3(obj1.transform.position.x,obj1.transform.position.y,1.99f),
+                new Vector3(obj2.transform.position.x,obj2.transform.position.y,1.99f)
             };
-            LineRenderer lineRenderer = Instantiate(prefabLine).GetComponent<LineRenderer>();
+            LineRenderer lineRenderer = Instantiate(prefabLine,mapCanvas.transform).GetComponent<LineRenderer>();
             listLineRenderer.Add(lineRenderer);
             lineRenderer.SetPositions(pos);
             lineRenderer.gameObject.SetActive(true);
@@ -81,6 +81,8 @@ public class MapPuzzle : Enigme
             }
         }
         Debug.Log("WIN");
+        mapCanvas.SetActive(false);
+        Success();
     }
 
     public void Quit()
