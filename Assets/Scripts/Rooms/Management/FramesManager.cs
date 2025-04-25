@@ -6,15 +6,29 @@ using UnityEngine.UI;
 
 public class FramesManager : MonoBehaviour
 {
+    [Header ("Unlocked")]
     [SerializeField] private Button upButton;
     [SerializeField] private Button rightButton;
     [SerializeField] private Button downButton;
     [SerializeField] private Button leftButton;
+
+    [Header("Locked")]
+    [SerializeField] private Button upButtonLocked;
+    [SerializeField] private Button rightButtonLocked;
+    [SerializeField] private Button downButtonLocked;
+    [SerializeField] private Button leftButtonLocked;
+
     [SerializeField] private TextMeshProUGUI ZoneText;
+
 
     [SerializeField] private Sprite lockedFrame;
     [SerializeField] private Sprite unlockedFrame;
 
+    [Header("Bubble particles")]
+    [SerializeField] private ParticleSystem randomParticleSystem;
+    [SerializeField] private float maxParticleDepth = 25f;
+    [SerializeField] private float minDelay = 2f;
+    [SerializeField] private float maxDelay = 5f;
 
     public static FramesManager Instance;
 
@@ -22,6 +36,8 @@ public class FramesManager : MonoBehaviour
     public class Frame
     {
         public string id; // "Main_frame", "cave"...
+
+        public GameObject PropsContainer;
 
         public Transform cameraPosition;
         public List <GameObject> ActiveProps; // Props being used in a frame
@@ -51,10 +67,67 @@ public class FramesManager : MonoBehaviour
 
     void Start()
     {
+        foreach (var frame in frames)
+        {
+            frame.ActiveProps = new List<GameObject>();
+
+            if (frame.PropsContainer != null) 
+            {
+
+                foreach (Transform child in frame.PropsContainer.transform)
+                {
+                    frame.ActiveProps.Add(child.gameObject);
+                }
+            }
+
+           
+        }
+
         mainCamera = Camera.main;
         SwitchFrame(initalFrame);
+        StartCoroutine(SpawnParticlesRoutine());
+        RandomParticleEffectLoop();
 
     }
+
+    /// <summary>
+    /// Plays bubble particle effect
+    /// </summary>
+    private void RandomParticleEffectLoop()
+    {
+
+            Vector3 randomPos = GetRandomPositionInView();
+            randomParticleSystem.transform.position = randomPos;
+            randomParticleSystem.gameObject.SetActive(true);
+            randomParticleSystem.Play();
+        
+    }
+    /// <summary>
+    /// Coroutine waiting seconds before activating bubbles
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator SpawnParticlesRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(8);
+            RandomParticleEffectLoop();
+        }
+    }
+
+    /// <summary>
+    /// Get position within the screen view in world space to spawn bubble particles
+    /// </summary>
+    /// <returns></returns>
+    Vector3 GetRandomPositionInView()
+    {
+        float depth = Random.Range(15f, maxParticleDepth);
+        float randomX = Random.Range(0f, 1f);
+        float randomY = Random.Range(0f, 0.5f); // ↘️ partie basse de l'écran
+        Vector3 viewportPos = new Vector3(randomX, randomY, depth);
+        return Camera.main.ViewportToWorldPoint(viewportPos);
+    }
+
 
     private void Awake()
     {
@@ -69,7 +142,12 @@ public class FramesManager : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Add props to a frame.
+    /// Parameters exepcting a frame id and a prop to add
+    /// </summary>
+    /// <param name="frameId"></param>
+    /// <param name="prop"></param>
     public void AddFrameProp(string frameId, GameObject prop)
     {
         Frame targetFrame = System.Array.Find(frames, s => s.id == frameId);
@@ -85,6 +163,12 @@ public class FramesManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Clears prop list for a frame.
+    /// Parameters exepcting a frame id.
+    /// </summary>
+    /// <param name="frameId"></param>
+    /// <param name="prop"></param>
     public void ClearFramePropList(string frameId)
     {
         Frame targetFrame = System.Array.Find(frames, s => s.id == frameId);
@@ -99,6 +183,12 @@ public class FramesManager : MonoBehaviour
 
         }
     }
+    /// <summary>
+    /// Delete props to a frame.
+    /// Parameters exepcting a frame id and a prop to delete
+    /// </summary>
+    /// <param name="frameId"></param>
+    /// <param name="prop"></param>
     public void RemoveFrameProp(string frameId, GameObject prop)
     {
         Frame targetFrame = System.Array.Find(frames, s => s.id == frameId);
@@ -142,7 +232,7 @@ public class FramesManager : MonoBehaviour
 
 
             // Move camera
-            currentCameraCoroutine= StartCoroutine(MoveCamera(targetFrame.cameraPosition.position));
+            currentCameraCoroutine= StartCoroutine(MoveCamera(targetFrame.cameraPosition));
             currentFrame = targetFrame;
             UpdateDirectionButtons();
         }
@@ -160,9 +250,10 @@ public class FramesManager : MonoBehaviour
     /// </summary>
     /// <param name="positionCible"></param>
     /// <returns></returns>
-    IEnumerator MoveCamera(Vector3 positionCible)
+    IEnumerator MoveCamera(Transform targetTransform)
     {
         Vector3 startPosition = mainCamera.transform.position;
+        Quaternion startRotation = mainCamera.transform.rotation;
         float elapsedTime = 0f;
         float duration = 0f;
 
@@ -171,14 +262,16 @@ public class FramesManager : MonoBehaviour
         {
             mainCamera.transform.position = Vector3.Lerp(
                 startPosition,
-                positionCible,
+                targetTransform.position,
                 elapsedTime / duration
             );
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        mainCamera.transform.position = positionCible;
+
+        mainCamera.transform.position = targetTransform.position;
+        mainCamera.transform.rotation = targetTransform.rotation;
     }
 
 
@@ -194,6 +287,11 @@ public class FramesManager : MonoBehaviour
         downButton.gameObject.SetActive(false);
         leftButton.gameObject.SetActive(false);
 
+        upButtonLocked.gameObject.SetActive(false);
+        downButtonLocked.gameObject.SetActive(false);
+        leftButtonLocked.gameObject.SetActive(false);
+        rightButtonLocked.gameObject.SetActive(false);
+
         // Set active buttons based on connections
         foreach (var connection in currentFrame.connections)
         {
@@ -201,10 +299,13 @@ public class FramesManager : MonoBehaviour
             {
                 case DirectionsEnum.up:
                     upButton.gameObject.SetActive(true);
+                    upButtonLocked.gameObject.SetActive(false);
                     Frame targetFrameUp = System.Array.Find(frames, s => s.id == connection.connectedFrameId);
                     if (targetFrameUp.FrameState == RoomStateEnum.Locked)
                     {
-                        upButton.image.sprite = lockedFrame;
+                        upButton.gameObject.SetActive(false);
+                        upButtonLocked.gameObject.SetActive(true);
+
                     }
                     upButton.onClick.RemoveAllListeners();
                     upButton.onClick.AddListener(() => SwitchFrame(connection.connectedFrameId));
@@ -212,10 +313,12 @@ public class FramesManager : MonoBehaviour
 
                 case DirectionsEnum.down:
                     downButton.gameObject.SetActive(true);
+                    downButtonLocked.gameObject.SetActive(false);
                     Frame targetFrameDown = System.Array.Find(frames, s => s.id == connection.connectedFrameId);
                     if (targetFrameDown.FrameState == RoomStateEnum.Locked)
                     {
-                        downButton.image.sprite = lockedFrame;
+                        downButton.gameObject.SetActive(false);
+                        downButtonLocked.gameObject.SetActive(true);
                     }
                     downButton.onClick.RemoveAllListeners();
                     downButton.onClick.AddListener(() => SwitchFrame(connection.connectedFrameId));
@@ -223,11 +326,12 @@ public class FramesManager : MonoBehaviour
 
                 case DirectionsEnum.left:
                     leftButton.gameObject.SetActive(true);
+                    leftButtonLocked.gameObject.SetActive(false);
                     Frame targetFrameLeft = System.Array.Find(frames, s => s.id == connection.connectedFrameId);
                     if (targetFrameLeft.FrameState == RoomStateEnum.Locked)
                     {
-                        Debug.Log(targetFrameLeft.FrameState);
-                        leftButton.image.sprite = lockedFrame;
+                        leftButton.gameObject.SetActive(false);
+                        leftButtonLocked.gameObject.SetActive(true);
                     }
                     else
                     {
@@ -240,10 +344,12 @@ public class FramesManager : MonoBehaviour
 
                 case DirectionsEnum.right:
                     rightButton.gameObject.SetActive(true);
+                    rightButtonLocked.gameObject.SetActive(false);
                     Frame targetFrameRight = System.Array.Find(frames, s => s.id == connection.connectedFrameId);
                     if (targetFrameRight.FrameState == RoomStateEnum.Locked)
                     {
-                        rightButton.image.sprite = lockedFrame;
+                        rightButton.gameObject.SetActive(false);
+                        rightButtonLocked.gameObject.SetActive(true);
                     }
                     rightButton.onClick.RemoveAllListeners();
                     rightButton.onClick.AddListener(() => SwitchFrame(connection.connectedFrameId));

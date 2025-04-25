@@ -67,8 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2413806693520163455, guid: 3bddd7454d00ba148949d1eb5aa1cd4c,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3f81106c5706db94f919296e5b5b7caf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -172,8 +171,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2413806693520163455, guid: 3bddd7454d00ba148949d1eb5aa1cd4c,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: da0bd9254370ab841800b00dec71a286, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -436,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f3e6f73535e1a44ab3769002934929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetRoomId: Sudoku
+  targetRoomId: Room1
   isLocked: 0
   lockedVisual: {fileID: 5776149189813747382, guid: 62e2c9d2ef0fa884d8f3052617b77934,
     type: 3}
@@ -678,8 +676,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2413806693520163455, guid: 3bddd7454d00ba148949d1eb5aa1cd4c,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1542f61b03cef334a98af0bd8cc650cb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -783,8 +780,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2413806693520163455, guid: 3bddd7454d00ba148949d1eb5aa1cd4c,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 378905f0948e65a44bc5bd4475ba2fd6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

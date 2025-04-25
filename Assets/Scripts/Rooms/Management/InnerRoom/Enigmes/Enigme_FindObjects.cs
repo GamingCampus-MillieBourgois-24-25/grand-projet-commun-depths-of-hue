@@ -10,17 +10,18 @@ public class PositionData
 {
     public string roomName;
     public Vector3 worldPosition;
+    public Quaternion worldRotation;
 
-    public PositionData(string roomName, Vector3 worldPosition)
+    public PositionData(string roomName, Vector3 worldPosition, Quaternion worldRotation)
     {
         this.roomName = roomName;
         this.worldPosition = worldPosition;
+        this.worldRotation = worldRotation;
     }
 }
 
 public class Enigme_FindObjects : Enigme
 {
-    public static Enigme_FindObjects Instance;
 
     [SerializeField] int maxRound = 3;
     public int currentRound = 0;
@@ -40,8 +41,7 @@ public class Enigme_FindObjects : Enigme
 
     public List<PositionData> allObjectsPositions = new List<PositionData>();
 
-
-
+    private List<GameObject> instantiatedObjects = new List<GameObject>();
 
 
 
@@ -50,21 +50,23 @@ public class Enigme_FindObjects : Enigme
     public override void Initialize()
     {
 
-        if (Instance == null)
-        {
-            CollectAllPropsFromScene();
-            CollectAllPositionsFromScene();
+        CollectAllPositionsFromScene();
 
-            Instance = this;
-
-            base.Initialize();
-          
-        }
+        base.Initialize();
+                
         RoundRoutine();     
     }
 
     public void RoundRoutine()
     {
+        foreach (GameObject obj in objectsInEnigme) {
+
+            obj.transform.localScale = new Vector3(45, 45, 45);
+
+        }
+
+        ClearClones();
+
         objectsUsedInEnigme = MakeObjectsList();
         ClearText();
         SetObject();
@@ -75,24 +77,6 @@ public class Enigme_FindObjects : Enigme
 
 
 
-
-    private void CollectAllPropsFromScene()
-    {
-        GameObject container = GameObject.FindWithTag("PropsContainer");
-
-        if (container == null)
-        {
-            Debug.LogError("Le GameObject avec le tag 'PositionContainer' est introuvable !");
-            return;
-        }
-
-        objectsInEnigme.Clear();
-
-        foreach (Transform prop in container.transform)
-        {
-            objectsInEnigme.Add(prop.gameObject);
-        }
-    }
     private void CollectAllPositionsFromScene()
     {
         GameObject container = GameObject.FindWithTag("PositionContainer");
@@ -111,8 +95,20 @@ public class Enigme_FindObjects : Enigme
 
             foreach (Transform pos in room)
             {
-                Vector3 worldPos = pos.position;
-                allObjectsPositions.Add(new PositionData(roomName, worldPos + room.position));
+
+                Vector3 worldPos =  pos.position;
+                Quaternion worldRot = pos.rotation;
+           
+
+                allObjectsPositions.Add(new PositionData(roomName, worldPos, worldRot));
+                var meshRenderer = pos.GetComponent<MeshRenderer>();
+                if (meshRenderer != null) meshRenderer.enabled = false;
+
+                var meshFilter = pos.GetComponent<MeshFilter>();
+                if (meshRenderer != null)
+{
+    meshRenderer.enabled = false;
+}
             }
         }
 
@@ -218,13 +214,16 @@ public class Enigme_FindObjects : Enigme
         }
     }
 
-    public void MoveFragment(GameObject item,Vector3 targetPosition, Vector3 finalScale)
+    public void MoveFragment(GameObject item, Vector3 targetPosition, Vector3 finalScale)
     {
         Vector3 start = item.transform.position;
         float duration = 2f;
 
-        float radius = 2.5f; // plus grand = spirale plus large
-        int spinCount = 2; // nombre de tours
+        // La rotation d'origine de l'objet
+        Quaternion originalRotation = item.transform.rotation;
+
+        float radius = 2.5f; // Plus grand = spirale plus large
+        int spinCount = 2; // Nombre de tours
         float angle = 0f;
 
         DOTween.To(() => angle, x => {
@@ -252,8 +251,14 @@ public class Enigme_FindObjects : Enigme
 
         // Rotation sur lui-même
         item.transform.DORotate(new Vector3(360f, 360f, 360f), duration, RotateMode.FastBeyond360)
-                 .SetEase(Ease.InOutSine);
+                     .SetEase(Ease.InOutSine)
+                     .OnKill(() =>
+                     {
+                         // Une fois l'animation terminée, restaurer la rotation d'origine
+                         item.transform.rotation = originalRotation;
+                     });
     }
+
     /// <summary>
     /// This function is used to check the end of the current round. It will react accordingy.
     /// </summary>
@@ -322,24 +327,69 @@ public class Enigme_FindObjects : Enigme
     private void SetObject()
     {
         var availablePositions = new List<PositionData>(allObjectsPositions);
+        var objectTempoEnigme = new List<GameObject>(objectsInEnigme);
 
-        foreach (GameObject obj in objectsInEnigme)
+
+        foreach (GameObject objprime in objectsUsedInEnigme)
         {
-            if (availablePositions.Count == 0) break;
+            if (objectTempoEnigme.Contains(objprime))
+            {
+                objectTempoEnigme.Remove(objprime);
+            }
 
             int index = Random.Range(0, availablePositions.Count);
             PositionData posData = availablePositions[index];
 
-            obj.transform.position = posData.worldPosition;
-            obj.transform.localScale = Vector3.one;
-
+            objprime.transform.position = posData.worldPosition;
+            Debug.Log(posData.worldRotation.y);
+            Debug.Log(posData.worldRotation.eulerAngles.y);
+            objprime.transform.rotation = Quaternion.Euler(objprime.transform.rotation.eulerAngles.x, posData.worldRotation.eulerAngles.y, objprime.transform.eulerAngles.z);
+            
+            objprime.transform.localScale = new Vector3(45, 45, 45);
+            availablePositions.RemoveAt(index);
 
             if (FramesManager.Instance != null)
             {
-                FramesManager.Instance.AddFrameProp(posData.roomName, obj);
+                FramesManager.Instance.AddFrameProp(posData.roomName, objprime);
             }
+        }
+
+        while (availablePositions.Count > 0)
+        {
+            int index = Random.Range(0, availablePositions.Count);
+            GameObject obj = objectTempoEnigme[Random.Range(0, objectTempoEnigme.Count)];
+            PositionData posData = availablePositions[index];
+
+            GameObject clone = Instantiate(obj, posData.worldPosition, Quaternion.Euler(obj.transform.rotation.eulerAngles.x, posData.worldRotation.eulerAngles.y, obj.transform.rotation.eulerAngles.z));
+            ApplyRandomColor(clone);
+
+            //if (FramesManager.Instance != null)
+            //{
+            //    FramesManager.Instance.AddFrameProp(posData.roomName, clone);
+            //}
 
             availablePositions.RemoveAt(index);
+
+            instantiatedObjects.Add(clone); 
         }
     }
+    private void ApplyRandomColor(GameObject obj)
+    {
+        Renderer renderer = obj.GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            Color randomColor = new Color(Random.value, Random.value, Random.value);
+            renderer.material.color = randomColor;
+        }
+    }
+    public void ClearClones()
+    {
+        foreach (GameObject clone in instantiatedObjects)
+        {
+
+            Destroy(clone); // Supprimer l'objet de la scène
+        }
+        instantiatedObjects.Clear(); // Effacer la liste des clones
+    }
+
 }

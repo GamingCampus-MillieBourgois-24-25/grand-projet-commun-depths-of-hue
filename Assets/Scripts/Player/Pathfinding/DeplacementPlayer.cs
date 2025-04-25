@@ -76,6 +76,7 @@ public class DeplacementPlayer : MonoBehaviour
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
         navMeshAgent.SetDestination(playerDestination);
+        isForDeplacementEnigme = false;
     }
 
     private void OnDrawGizmos()
@@ -103,7 +104,11 @@ public class DeplacementPlayer : MonoBehaviour
         {
             if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
             {
-                if (actualDoor) actualDoor.OnClicked();
+                if (actualDoor)
+                {
+                    isForDeplacementEnigme = true;
+                    actualDoor.OnClicked();
+                }
             }
         }
         

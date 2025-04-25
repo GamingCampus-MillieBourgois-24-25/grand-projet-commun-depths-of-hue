@@ -19,15 +19,14 @@ public class EnigmeRoom : Room
     [SerializeField] private RectTransform bannerTransform;
 
 
-    [ContextMenu("Initialize")]
+    
 
     protected virtual void Start()
     {
-        Debug.Log("abonén");
         GestionInputs.OnClickOnGameObject += HandleObjectClick;
     }
 
-
+    [ContextMenu("Initialize")]
     /// <summary>
     /// This override is used intialize the room.
     /// </summary>
@@ -79,7 +78,7 @@ public class EnigmeRoom : Room
             EndRoomSequence();
         }
         else
-        {
+        {          
             InitilizeCurrentEnigma();
         }
     }
@@ -190,4 +189,5 @@ public class EnigmeRoom : Room
             currentEnigme.CheckItem(robject);
         }
     }
+
 }
