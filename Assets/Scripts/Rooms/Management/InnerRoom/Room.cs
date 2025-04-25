@@ -17,6 +17,7 @@ public class Room : MonoBehaviour
 
     public void ReturnToHub()
     {
-        SceneManager.LoadScene("Pathfinding_1.0");
+        TransitionManager.Instance.BackToExploration();
+        //SceneManager.LoadScene("Pathfinding_1.0");
     }
 }

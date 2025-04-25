@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Room_
   m_EditorClassIdentifier: 
   roomId: Quentin
-  sceneName: Enigme Middle
+  sceneName: Enigme_Middle
   initialState: 1
   roomState: 1

@@ -34,7 +34,8 @@ public class RoomManager : MonoBehaviour
         currentRoom = targetRoom;
 
         SceneManager.sceneLoaded += OnSceneLoaded; // On scene loaded event subscription
-        SceneManager.LoadScene(targetRoom.sceneName); //Load the scene
+        TransitionManager.Instance.StartEnigme(targetRoom.sceneName);
+        //SceneManager.LoadScene(targetRoom.sceneName); //Load the scene
     }
 
 
