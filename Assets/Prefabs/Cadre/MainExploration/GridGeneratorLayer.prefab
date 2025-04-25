@@ -55,22 +55,21 @@ MonoBehaviour:
   - {fileID: 9109634955974416034, guid: b98eacb2849577d4abd762572a37a4bf, type: 3}
   - {fileID: 9109634955974416034, guid: ca8cd90fe5ee1e9459fe4b3d49548f2d, type: 3}
   - {fileID: 9109634955974416034, guid: ca8cd90fe5ee1e9459fe4b3d49548f2d, type: 3}
-  - {fileID: 9109634955974416034, guid: ca8cd90fe5ee1e9459fe4b3d49548f2d, type: 3}
   - {fileID: 9109634955974416034, guid: b98eacb2849577d4abd762572a37a4bf, type: 3}
   - {fileID: 9109634955974416034, guid: b98eacb2849577d4abd762572a37a4bf, type: 3}
   - {fileID: 9109634955974416034, guid: b98eacb2849577d4abd762572a37a4bf, type: 3}
   - {fileID: 9109634955974416034, guid: b98eacb2849577d4abd762572a37a4bf, type: 3}
-  - {fileID: 9109634955974416034, guid: ca8cd90fe5ee1e9459fe4b3d49548f2d, type: 3}
-  - {fileID: 9109634955974416034, guid: ca8cd90fe5ee1e9459fe4b3d49548f2d, type: 3}
   - {fileID: 9109634955974416034, guid: b98eacb2849577d4abd762572a37a4bf, type: 3}
-  - {fileID: 9109634955974416034, guid: ca8cd90fe5ee1e9459fe4b3d49548f2d, type: 3}
-  - {fileID: 9109634955974416034, guid: ca8cd90fe5ee1e9459fe4b3d49548f2d, type: 3}
   - {fileID: 9109634955974416034, guid: ca8cd90fe5ee1e9459fe4b3d49548f2d, type: 3}
   - {fileID: 9109634955974416034, guid: ca8cd90fe5ee1e9459fe4b3d49548f2d, type: 3}
   - {fileID: 9109634955974416034, guid: b98eacb2849577d4abd762572a37a4bf, type: 3}
   - {fileID: 9109634955974416034, guid: ca8cd90fe5ee1e9459fe4b3d49548f2d, type: 3}
   - {fileID: 9109634955974416034, guid: ca8cd90fe5ee1e9459fe4b3d49548f2d, type: 3}
-  player: {fileID: 0}
+  - {fileID: 9109634955974416034, guid: ca8cd90fe5ee1e9459fe4b3d49548f2d, type: 3}
+  - {fileID: 9109634955974416034, guid: ca8cd90fe5ee1e9459fe4b3d49548f2d, type: 3}
+  - {fileID: 9109634955974416034, guid: b98eacb2849577d4abd762572a37a4bf, type: 3}
+  - {fileID: 9109634955974416034, guid: ca8cd90fe5ee1e9459fe4b3d49548f2d, type: 3}
+  - {fileID: 9109634955974416034, guid: ca8cd90fe5ee1e9459fe4b3d49548f2d, type: 3}
   backgroundSprites:
   - {fileID: 21300000, guid: d3ec515ede3c79543b4dc9fd271af6c7, type: 3}
   - {fileID: 21300000, guid: d3ec515ede3c79543b4dc9fd271af6c7, type: 3}
@@ -82,7 +81,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b89d52889932a144dad1657f5781775e, type: 3}
   - {fileID: 21300000, guid: d3ec515ede3c79543b4dc9fd271af6c7, type: 3}
   - {fileID: 21300000, guid: d3ec515ede3c79543b4dc9fd271af6c7, type: 3}
-  - {fileID: 21300000, guid: d3ec515ede3c79543b4dc9fd271af6c7, type: 3}
+  - {fileID: 21300000, guid: 6a95f732d7f022840a1899d2068428ed, type: 3}
   - {fileID: 21300000, guid: 701224595a76b924492b3466d12b9636, type: 3}
   - {fileID: 21300000, guid: a7c07fde000500f40a6b2f82d7c3b93c, type: 3}
   - {fileID: 21300000, guid: 512e8e93d571cd34791c1aaa68743b69, type: 3}
@@ -102,5 +101,6 @@ MonoBehaviour:
   isForBackgroundLayer: 1
   showMap: {fileID: 0}
   save: {fileID: 0}
+  navMeshCenter: {fileID: 0}
   backgrounds: []
   cadres: []
