@@ -20,10 +20,22 @@ public class Enigme_Doble : Enigme
     private float timer = 1f; // 1 seconde
     private bool isTimerRunning = false;
 
-    private void Start()
+    private void Awake()
     {
-        
+        PrepareBulles();
     }
+
+    private void PrepareBulles()
+    {
+        bulles = new List<GameObject>();
+        for (int i = 0; i < ItemsDouble.Count; i++)
+        {
+            GameObject newBulle = Instantiate(bubulle, Vector3.zero, Quaternion.identity);
+            newBulle.SetActive(false);
+            bulles.Add(newBulle);
+        }
+    }
+
     public override void Initialize()
     {
         base.Initialize();
@@ -156,31 +168,27 @@ public class Enigme_Doble : Enigme
 
     public Vector2 GetRandomPosition(float minX, float maxX, float minY, float maxY, List<Vector2> occupiedPositions)
     {
-        Vector2 position;
-        bool isValidPosition = false;
-
-        while (!isValidPosition)
+        const int maxAttempts = 30;
+        for (int attempt = 0; attempt < maxAttempts; attempt++)
         {
-            position = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
-            isValidPosition = true;
+            Vector2 position = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
+            bool isValid = true;
 
             foreach (var occupied in occupiedPositions)
             {
                 if (Vector2.Distance(position, occupied) < 2f)
                 {
-                    isValidPosition = false;
+                    isValid = false;
                     break;
                 }
             }
 
-            if (isValidPosition)
-            {
+            if (isValid)
                 return position;
-            }
         }
-
         return Vector2.zero;
     }
+
 
     public override void CheckItem(GameObject item)
     {
@@ -196,41 +204,20 @@ public class Enigme_Doble : Enigme
             return;
         }
 
-        if (bubulle == null)
-        {
-            Debug.LogError("Le prefab bubulle n'est pas assigné !");
-            return;
-        }
-        if (bulles == null)
-        {
-            bulles = new List<GameObject>();
-            Debug.LogWarning("La liste bulles était null et a été initialisée.");
-        }
-
         List<GameObject> list = new List<GameObject>(ItemsDouble);
-        for (int i = 0; i < ItemsDouble.Count; i++)
+        for (int i = 0; i < bulles.Count; i++)
         {
             if (list.Count == 0)
-            {
-                Debug.LogWarning("La liste est vide avant la fin de la boucle !");
                 break;
-            }
 
             int index = Random.Range(0, list.Count);
-            GameObject nuwBulle = Instantiate(bubulle, Vector3.zero, Quaternion.identity);
-
-            Bulle bulleScript = nuwBulle.GetComponent<Bulle>();
-            if (bulleScript == null)
-            {
-                Debug.LogError("Le composant Bulle est manquant sur le prefab bubulle !");
-                Destroy(nuwBulle);
-                continue;
-            }
-
+            GameObject bulleObj = bulles[i];
+            bulleObj.SetActive(true);
+            Bulle bulleScript = bulleObj.GetComponent<Bulle>();
             bulleScript.item = list[index];
             list.RemoveAt(index);
-            bulles.Add(nuwBulle);
         }
     }
+
 }
 
