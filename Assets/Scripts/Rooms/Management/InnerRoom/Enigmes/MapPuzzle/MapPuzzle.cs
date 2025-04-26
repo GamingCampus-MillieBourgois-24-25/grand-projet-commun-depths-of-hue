@@ -36,8 +36,8 @@ public class MapPuzzle : Enigme
             GameObject obj2 = chosenOrderList[^1];
             Vector3[] pos =
             {
-                new Vector3(obj1.transform.position.x,obj1.transform.position.y,1.99f),
-                new Vector3(obj2.transform.position.x,obj2.transform.position.y,1.99f)
+                new Vector3(obj1.transform.position.x,obj1.transform.position.y,obj1.transform.position.z-0.05f),
+                new Vector3(obj2.transform.position.x,obj2.transform.position.y,obj1.transform.position.z-0.05f)
             };
             LineRenderer lineRenderer = Instantiate(prefabLine,mapCanvas.transform).GetComponent<LineRenderer>();
             listLineRenderer.Add(lineRenderer);
