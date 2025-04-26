@@ -9,6 +9,8 @@ public class MapPuzzle : Enigme
     public List<GameObject> chosenOrderList = new List<GameObject>();
     private List<LineRenderer> listLineRenderer = new List<LineRenderer>();
     [SerializeField] private GameObject canvaEnigme;
+    [SerializeField] private PlayEffect playEffect;
+    [SerializeField] private AudioClip clip;
 
 
     public GameObject prefabLine;
@@ -47,6 +49,7 @@ public class MapPuzzle : Enigme
             listLineRenderer.Add(lineRenderer);
             lineRenderer.SetPositions(pos);
             lineRenderer.gameObject.SetActive(true);
+            if (playEffect && clip) playEffect.PlaySoundEffect(clip);
         }
         CheckOrder();
     }
