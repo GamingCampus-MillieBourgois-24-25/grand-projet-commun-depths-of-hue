@@ -13635,6 +13635,7 @@ MonoBehaviour:
   - {r: 0.7329851, g: 0.50284797, b: 0.9433962, a: 1}
   - {r: 0.54013884, g: 0.8530938, b: 0.9622642, a: 1}
   - {r: 0.9716981, g: 0.881409, b: 0.47209862, a: 1}
+  unmodifiableColor: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
   countSpriteList:
   - {fileID: 21300000, guid: 8b6922dfbeea78f49b5fb89e9c9455dd, type: 3}
   - {fileID: 21300000, guid: bffcb7ec7a78e5249a56125f6e02a23b, type: 3}
