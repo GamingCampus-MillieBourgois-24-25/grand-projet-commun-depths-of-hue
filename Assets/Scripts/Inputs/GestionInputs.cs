@@ -1,12 +1,12 @@
 using System;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 public class GestionInputs : MonoBehaviour
 {
-
-
+    [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
     private Controls controls;
     private Camera _camera;
 
@@ -123,6 +123,7 @@ public class GestionInputs : MonoBehaviour
         {
             DoorController hitDoorController = hit.collider.GetComponent<DoorController>();
             OnPlayerGoFront?.Invoke(hitDoorController.gameObject.transform.position, hitDoorController, hitDoorController.Direction);
+            if (cinemachineVirtualCamera) cinemachineVirtualCamera.Follow = null;
         }
     }
 

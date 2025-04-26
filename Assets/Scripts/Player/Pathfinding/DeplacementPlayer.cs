@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,6 +13,7 @@ public class DeplacementPlayer : MonoBehaviour
     [SerializeField] private NavMeshAgent navMeshAgent;
     [SerializeField] private Animator compagnon;
     [SerializeField] private Transform targetCompagnon;
+    [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
     
     [Header("Animations List")]
     [SerializeField] private List<string> listAnimations;
@@ -77,6 +79,7 @@ public class DeplacementPlayer : MonoBehaviour
         navMeshAgent.updateUpAxis = false;
         navMeshAgent.SetDestination(playerDestination);
         isForDeplacementEnigme = false;
+        CheckTargetCinemachine();
     }
 
     private void OnDrawGizmos()
@@ -123,6 +126,12 @@ public class DeplacementPlayer : MonoBehaviour
                 uniqueSendEvent = true;
             }
         }
+    }
+
+    private void CheckTargetCinemachine()
+    {
+        if (cinemachineVirtualCamera && cinemachineVirtualCamera.Follow) return;
+        cinemachineVirtualCamera.Follow = transform;
     }
     
     public void SetPlayerDestination(Vector3 _playerDestination, GestionCadre _cadre)

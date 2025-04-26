@@ -28,7 +28,10 @@ public class FollowPlayer : MonoBehaviour
     private void SetNewDestination()
     {
         if (!navMeshAgent) return;
-        navMeshAgent.SetDestination(targetPlayer.position);
+        if (navMeshAgent.destination != targetPlayer.position)
+        {
+            navMeshAgent.SetDestination(targetPlayer.position);
+        }
     }
 
     private void Update()
@@ -37,7 +40,10 @@ public class FollowPlayer : MonoBehaviour
         
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            navMeshAgent.SetDestination(targetPlayer.position);
+            if (navMeshAgent.destination != targetPlayer.position)
+            {
+                navMeshAgent.SetDestination(targetPlayer.position);
+            }
         }
     }
 }
