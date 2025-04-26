@@ -6217,8 +6217,8 @@ MonoBehaviour:
   downButtonLocked: {fileID: 5240259769065802247}
   leftButtonLocked: {fileID: 4157683457066920823}
   ZoneText: {fileID: 8856867517141283836}
-  lockedFrame: {fileID: 21300000, guid: c4eec003825296645a0058332cdef34b, type: 3}
-  unlockedFrame: {fileID: 21300000, guid: 9f34c2ddb5eb7ce4db8921efeebb7c41, type: 3}
+  lockedFrame: {fileID: 21300000, guid: fe2da11ce1183b54685a4271462b240f, type: 3}
+  unlockedFrame: {fileID: 21300000, guid: e36764d8d1c5cd74f8ae2e44f9e89421, type: 3}
   randomParticleSystem: {fileID: 6501962398785485123}
   maxParticleDepth: 10
   minDelay: 2

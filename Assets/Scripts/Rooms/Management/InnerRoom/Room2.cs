@@ -30,6 +30,11 @@ public class Room2 : EnigmeRoom
         }
     }
 
+    public override void InitilizeCurrentEnigma()
+    {
+        Debug.Log("nope");
+    }
+
     private void EnigmeFrameSwitched()
     {
         if ( currentEnigme!=null)

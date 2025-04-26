@@ -254,7 +254,7 @@ public class SoundEnigme : Enigme
         fragment.SetActive(true);
         canvaSoundEnigme.SetActive(false);
         enigmeLight.color = idleColor;
-
+        Success();
     }
 
 
@@ -298,7 +298,7 @@ public class SoundEnigme : Enigme
 
             DisableGlow(corail);
         }
-
+        sequenced = false;
         playerSequence.Clear();
         correctSequence.Clear();
         StopAllCoroutines();

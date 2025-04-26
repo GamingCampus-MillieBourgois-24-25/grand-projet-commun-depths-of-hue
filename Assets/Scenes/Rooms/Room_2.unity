@@ -628,7 +628,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &61550546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13095,7 +13095,7 @@ MonoBehaviour:
   idleColor: {r: 0.43529412, g: 0.5764706, b: 0.7411765, a: 0}
   testColor: {r: 0.43529412, g: 0.7411765, b: 0.64705884, a: 0}
   sequenceColor: {r: 0.7372549, g: 0.43529412, b: 0.7411765, a: 0}
-  amountOfNotes: 6
+  amountOfNotes: 1
   enigmeLight: {fileID: 1308456079}
   fragment: {fileID: 761992250}
   canvaSoundEnigme: {fileID: 61550545}
