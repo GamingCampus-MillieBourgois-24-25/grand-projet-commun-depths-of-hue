@@ -192,7 +192,7 @@ public class EnigmeRoom : Room
         }
     }
 
-    public void GetHintCurrentEnigme(GameObject button)
+    public void GetHintCurrentEnigme()
     {
         if (currentEnigme.hintUsed < currentEnigme.hintLeft)
         {
