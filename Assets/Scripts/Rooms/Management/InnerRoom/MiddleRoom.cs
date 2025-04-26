@@ -9,7 +9,7 @@ public class MiddleRoom : EnigmeRoom
     protected override void Start()
     {
         base.Start();
-        /*Initialize();*/
+        Initialize();
     }
     public override void Initialize()
     {
@@ -33,9 +33,9 @@ public class MiddleRoom : EnigmeRoom
         }
         else
         {
+            
             InitilizeCurrentEnigma();
-            FramesManager.Instance.LockFrame("main_frame");
-            FramesManager.Instance.UnlockFrame("Pillar");
+            
         }
     }
 
