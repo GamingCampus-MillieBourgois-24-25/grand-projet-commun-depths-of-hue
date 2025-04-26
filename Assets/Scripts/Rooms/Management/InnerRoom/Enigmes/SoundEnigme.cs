@@ -115,8 +115,10 @@ public class SoundEnigme : Enigme
             {
                 if (playerSequence[i] != correctSequence[i])
                 {
-                    Debug.Log("raté");
+
+                    statue.GetComponent<AudioSource>().PlayOneShot(lose);
                     ResetPuzzle();
+
                     return;
                 }
             }
@@ -136,7 +138,7 @@ public class SoundEnigme : Enigme
     {
         sequenced = false;
         playerSequence.Clear();
-        Debug.Log("ono");
+        StopAllCoroutines();
 
         StartCoroutine(FlashRedThenFadeOut());
     }

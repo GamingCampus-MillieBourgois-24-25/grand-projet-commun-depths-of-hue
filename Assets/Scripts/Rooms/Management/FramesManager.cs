@@ -56,6 +56,8 @@ public class FramesManager : MonoBehaviour
         public string connectedFrameId;
     }
 
+    public bool CameraSwap = false;
+
     public Frame currentFrame;
     public Frame[] frames;
     [SerializeField] private string initalFrame = "main_frame"; //First frame always called main_frame
@@ -252,6 +254,11 @@ public class FramesManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator MoveCamera(Transform targetTransform)
     {
+        if (CameraSwap)
+        {
+            Camera.main.orthographic = !Camera.main.orthographic;
+        }
+
         Vector3 startPosition = mainCamera.transform.position;
         Quaternion startRotation = mainCamera.transform.rotation;
         float elapsedTime = 0f;

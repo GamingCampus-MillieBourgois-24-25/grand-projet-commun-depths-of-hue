@@ -17,13 +17,14 @@ public class MiddleRoom : EnigmeRoom
 
     }
 
+    
     public override void EndRoomSequence()
     {
         base.EndRoomSequence();
 
         ReturnToHub();
     }
-
+    
     protected override void OnPostEnigme()
     {
         if (IsRoomComplete())
