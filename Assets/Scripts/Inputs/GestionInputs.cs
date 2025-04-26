@@ -2,7 +2,7 @@ using System;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
-using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+
 
 public class GestionInputs : MonoBehaviour
 {
@@ -24,8 +24,10 @@ public class GestionInputs : MonoBehaviour
     #endregion
 
     private void Awake()
-    {
+    {      
+
         EnhancedTouchSupport.Enable();
+      
     }
 
     private void OnEnable()
@@ -41,55 +43,7 @@ public class GestionInputs : MonoBehaviour
 
     private void Update()
     {
-        foreach (var touch in Touch.activeTouches)
-        {
-
-            if (touch.isTap)
-            {
-
-                Vector3 touchPosition = touch.screenPosition;
-                Ray ray = _camera.ScreenPointToRay(touchPosition);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit))
-                {
-
-                    GameObject go = hit.transform.gameObject;
-
-                    if (go != null)
-                    {
-                        OnClickOnGameObject?.Invoke(go);
-            
-
-                        return;
-                    }
-                    //MonoBehaviour script = hit.collider.GetComponent<MonoBehaviour>();
-
-                    //Collider collider = hit.collider;
-
-                    //Obj = collider.gameObject;
-
-                    //positionObj = collider.bounds.center + new Vector3(0, collider.bounds.extents.y, 0);
-
-                    //if (script != null)
-                    //{
-                    //    script.Invoke("OnObjectClicked", 0f);
-
-                    //}
-
-                    // if (hit.collider.CompareTag("Ancre"))
-                    // {
-                    //     MapNavigateCadre hitMapNavigate = hit.collider.GetComponent<MapNavigateCadre>();
-                    //     if (hitMapNavigate) hitMapNavigate.ClickMapNavigate();
-                    // }
-                }
-                else
-                {
-                    OnClickOnNothing?.Invoke();
-                    return;
-                }
-            }
-        }
+        
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 touchPosition = Input.mousePosition;
