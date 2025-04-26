@@ -8,8 +8,6 @@ public class EnigmeRoom : Room
 {
     [SerializeField] protected List<Enigme> enigmes;
 
-    public GestionInputs RaycastF;
-
     public Enigme currentEnigme;
 
     private int enigmesResolved = 0;
@@ -23,7 +21,10 @@ public class EnigmeRoom : Room
 
     protected virtual void Start()
     {
-        GestionInputs.OnClickOnGameObject += HandleObjectClick;
+        if (InputItems.Instance != null)
+        {
+            InputItems.Instance.OnClickOnGameObject += HandleObjectClick;
+        }
     }
 
     [ContextMenu("Initialize")]
@@ -185,7 +186,7 @@ public class EnigmeRoom : Room
 
         if (currentEnigme != null)
         {
-
+            Debug.Log("OLE");
             currentEnigme.CheckItem(robject);
         }
     }
