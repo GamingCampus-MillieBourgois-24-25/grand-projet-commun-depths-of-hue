@@ -199,7 +199,7 @@ public class EnigmeRoom : Room
             currentEnigme.hintUsed++;
             if (currentEnigme.hintUsed == currentEnigme.hintLeft)
             {
-                button.GetComponent<Button>().interactable = false;
+                currentEnigme.hintUsed = 0;
             }
         }
     }
