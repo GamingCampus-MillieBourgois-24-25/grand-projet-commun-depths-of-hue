@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 //
 public class AnimScale : MonoBehaviour
@@ -10,9 +13,40 @@ public class AnimScale : MonoBehaviour
     
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
+    
+    [Header("Pause")]
+    [SerializeField] private List<GameObject> objToHide;
+    [SerializeField] private GameObject pauseCanvas;
 
-    public void StartMap()
+    private bool isForMap;
+    private bool show;
+
+    #region Event
+
+    public delegate void SendArrowsToArrowsTrigger(bool _canUpdate);
+    public static event SendArrowsToArrowsTrigger OnSendArrowsToArrowsTrigger;
+    
+    public delegate void CanUpdateGestionInputs(bool _canUpdate);
+    public static event CanUpdateGestionInputs OnCanUpdateGestionInputs;
+    
+    public delegate void ShowArrowsHideden();
+    public static event ShowArrowsHideden OnShowArrowsHidden;
+
+    #endregion
+
+    private void Start()
     {
+        show = false;
+    }
+    
+    public void SetAnimator(Animator _animator)
+    {
+        animator = _animator;
+    }
+
+    public void StartMap(bool _isForMap)
+    {
+        isForMap = _isForMap;
         animator.SetTrigger(Open);
         PlaySoundBtn();
     }
@@ -20,7 +54,25 @@ public class AnimScale : MonoBehaviour
     public void ResetTrigger()
     {
         animator.ResetTrigger(Open);
-        showMap.ClickMapIcon();
+        if (isForMap)
+        {
+            showMap.ClickMapIcon();
+        }
+        else
+        {
+            if (show)
+            {
+                OnShowArrowsHidden?.Invoke();
+            }
+            else
+            {
+                OnSendArrowsToArrowsTrigger?.Invoke(show);
+            }
+            show = !show;
+            OnCanUpdateGestionInputs?.Invoke(show);
+            objToHide.ForEach(obj => obj.SetActive(!show));
+            pauseCanvas.SetActive(show);
+        }
     }
 
     private void PlaySoundBtn()

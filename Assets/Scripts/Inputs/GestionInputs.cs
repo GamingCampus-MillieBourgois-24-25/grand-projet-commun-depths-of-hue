@@ -16,6 +16,8 @@ public class GestionInputs : MonoBehaviour
     private Vector3 positionObj;
     private GameObject Obj;
 
+    private bool canUpdateGestionInputs;
+
     #region Event
 
     public delegate void PlayerGoFrontEnigme(Vector3 _position, DoorController _doorController, int _direction);
@@ -31,16 +33,29 @@ public class GestionInputs : MonoBehaviour
     private void OnEnable()
     {
         TouchSimulation.Enable();
+        AnimScale.OnCanUpdateGestionInputs += SetCanUpdateGestionInputs;
+    }
+
+    private void OnDisable()
+    {
+        AnimScale.OnCanUpdateGestionInputs -= SetCanUpdateGestionInputs;
     }
 
     private void Start()
     {
         Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
         _camera = Camera.main;
+        canUpdateGestionInputs = false;
+    }
+
+    private void SetCanUpdateGestionInputs(bool _canUpdate)
+    {
+        canUpdateGestionInputs = _canUpdate;
     }
 
     private void Update()
     {
+        if (canUpdateGestionInputs) return;
         foreach (var touch in Touch.activeTouches)
         {
 
