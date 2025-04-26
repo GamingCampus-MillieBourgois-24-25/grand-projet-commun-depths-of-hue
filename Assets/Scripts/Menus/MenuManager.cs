@@ -9,6 +9,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private float transitionTimeSettings = 0.5f;
     [SerializeField] private float transitionTimeCredits = 1f;
     [SerializeField] private Save save;
+    [SerializeField] private GameObject title;
+    [SerializeField] private GameObject button;
+    [SerializeField] private GameObject setting;
+    [SerializeField] private GameObject bubble;
     public Animator transitionSettings;
     public Animator transitionCredits;
 
@@ -37,12 +41,28 @@ public class MenuManager : MonoBehaviour
     {
         _settingsCanvasGameObject.SetActive(true);
         save.LoadCategory("audio");
+        if(title == null || button == null || setting == null || bubble == null)
+        {
+            return;
+        }
+        title.SetActive(false);
+        button.SetActive(false);
+        setting.SetActive(false);
+        bubble.SetActive(false);
     }
 
     public void CloseSettings()
     {
-        StartCoroutine(CloseSettingsTransition());
+        _settingsCanvasGameObject.SetActive(false);
         save.SaveCategory("audio");
+        if (title == null || button == null || setting == null || bubble == null)
+        {
+            return;
+        }
+        title.SetActive(true);
+        button.SetActive(true);
+        setting.SetActive(true);
+        bubble.SetActive(true);
     }
     
     public void OpenCredits()
@@ -86,6 +106,7 @@ public class MenuManager : MonoBehaviour
         transitionSettings.SetTrigger("End");
         yield return new WaitForSeconds(transitionTimeSettings);
         _settingsCanvasGameObject.SetActive(false);
+        
     }
 
     IEnumerator CloseCreditsTransition()
