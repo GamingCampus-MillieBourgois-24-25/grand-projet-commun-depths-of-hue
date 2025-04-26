@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-//
+
 public class AnimScale : MonoBehaviour
 {
     private static readonly int Open = Animator.StringToHash("Open");
