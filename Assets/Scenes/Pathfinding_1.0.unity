@@ -1891,7 +1891,7 @@ MonoBehaviour:
   sauvegarde: {fileID: 1644571682}
   originalMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   blurMaterial: {fileID: 2100000, guid: ec88693b0b260b04aa8637f226cb988b, type: 2}
-  ancre: {fileID: 21300000, guid: 4eae9f1440cd37c408eb72a42ca8f4dc, type: 3}
+  ancre: {fileID: 21300000, guid: f2245f9ca3d8a3a4e987ca5e6b9bfa3c, type: 3}
   lockedBubble: {fileID: 21300000, guid: fe2da11ce1183b54685a4271462b240f, type: 3}
 --- !u!1 &832575517
 GameObject:
