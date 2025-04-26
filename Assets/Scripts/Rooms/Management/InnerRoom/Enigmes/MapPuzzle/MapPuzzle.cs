@@ -8,6 +8,7 @@ public class MapPuzzle : Enigme
     public List<MapLocations> rightOrderList = new List<MapLocations>();
     public List<GameObject> chosenOrderList = new List<GameObject>();
     private List<LineRenderer> listLineRenderer = new List<LineRenderer>();
+    [SerializeField] private GameObject canvaEnigme;
 
     public GameObject prefabLine;
     public static MapPuzzle Instance;
@@ -15,6 +16,7 @@ public class MapPuzzle : Enigme
     public override void Initialize()
     {
         mapCanvas.SetActive(true);
+        canvaEnigme.SetActive(false);
 
 
         if (Instance == null)
@@ -82,12 +84,13 @@ public class MapPuzzle : Enigme
         }
         Debug.Log("WIN");
         mapCanvas.SetActive(false);
+        canvaEnigme.SetActive(true);
         Success();
     }
 
     public void Quit()
     {
- 
+        canvaEnigme.SetActive(true);
         mapCanvas.SetActive(false);
 
 
