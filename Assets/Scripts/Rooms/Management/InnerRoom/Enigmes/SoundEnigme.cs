@@ -12,28 +12,33 @@ public class SoundEnigme : Enigme
     private List<Corail> playerSequence;  
     public GameObject statue;
 
+    public Color idleColor;
+    public Color testColor;
+    public Color sequenceColor;
+
     public int amountOfNotes;
 
-
-    public GameObject panel;
-    public CanvasGroup panelImage;
-    public Image panelBackground;
+    public Light enigmeLight;
 
     public GameObject fragment;
 
     private bool sequenced =false;
 
     public static SoundEnigme Instance;
+    public GameObject canvaSoundEnigme;
+
 
     public AudioClip lose;
 
     public override void Initialize()
     {
+        enigmeLight.color = testColor;
+        canvaSoundEnigme.SetActive(true);
         corals.Clear();
         correctSequence.Clear();
    
 
-        panel.SetActive(true);
+        
 
         if (Instance == null)
         {
@@ -56,31 +61,32 @@ public class SoundEnigme : Enigme
 
     public void StartRound()
     {
-        panel.SetActive(true);
+        enigmeLight.color = sequenceColor;
+        //panel.SetActive(true);
         Debug.Log("started");
         sequenced = true;
-        StartCoroutine(FadeOverlay(1));
+        //StartCoroutine(FadeOverlay(1));
         GenerateMelody();
         playerSequence = new List<Corail>();
     }
 
-    IEnumerator FadeOverlay(float targetAlpha)
-    {
-        float duration = 0.5f;
-        float startAlpha = panelImage.alpha;
-        float t = 0f;
+    //IEnumerator FadeOverlay(float targetAlpha)
+    //{
+    //    float duration = 0.5f;
+    //    float startAlpha = panelImage.alpha;
+    //    float t = 0f;
 
-        while (t < duration)
-        {
-            t += Time.deltaTime;
-            panelImage.alpha = Mathf.Lerp(startAlpha, targetAlpha, t / duration);
-            yield return null;
-        }
+    //    while (t < duration)
+    //    {
+    //        t += Time.deltaTime;
+    //        panelImage.alpha = Mathf.Lerp(startAlpha, targetAlpha, t / duration);
+    //        yield return null;
+    //    }
 
 
-        panelImage.alpha = targetAlpha;
+    //    panelImage.alpha = targetAlpha;
 
-    }
+    //}
 
     void GenerateMelody()
     {
@@ -139,8 +145,13 @@ public class SoundEnigme : Enigme
         sequenced = false;
         playerSequence.Clear();
         StopAllCoroutines();
+        foreach (var coral in corals)
+        {
+            DisableGlow(coral);
+        }
 
-        StartCoroutine(FlashRedThenFadeOut());
+        //StartCoroutine(FlashRedThenFadeOut()); 
+        enigmeLight.color = testColor;
     }
 
     void SolvePuzzle()
@@ -241,27 +252,29 @@ public class SoundEnigme : Enigme
 
         statue.transform.localRotation = endRotation;
         fragment.SetActive(true);
+        canvaSoundEnigme.SetActive(false);
+        enigmeLight.color = idleColor;
 
     }
 
 
-    IEnumerator FlashRedThenFadeOut()
-    {
-        // Flash rouge
-        Color originalColor = panelBackground.color;
-        panelBackground.color = new Color(1f, 0f, 0f, originalColor.a);
+    //IEnumerator FlashRedThenFadeOut()
+    //{
+    //    // Flash rouge
+    //    Color originalColor = panelBackground.color;
+    //    panelBackground.color = new Color(1f, 0f, 0f, originalColor.a);
     
 
-        yield return new WaitForSeconds(0.7f); // durée du flash
+    //    yield return new WaitForSeconds(0.7f); // durée du flash
 
         
 
-        // Fade out ensuite
-        yield return StartCoroutine(FadeOverlay(0));
+    //    // Fade out ensuite
+    //    yield return StartCoroutine(FadeOverlay(0));
 
-        // Retour à la couleur d'origine (noir ou autre)
-        panelBackground.color = originalColor;
-    }
+    //    // Retour à la couleur d'origine (noir ou autre)
+    //    panelBackground.color = originalColor;
+    //}
 
     public override void CheckItem(GameObject item)
     {
@@ -275,4 +288,19 @@ public class SoundEnigme : Enigme
         }
     }
 
+    public override void EnigmeEndReset()
+    {
+        base.EnigmeEndReset();
+        enigmeLight.color = idleColor;
+        canvaSoundEnigme.SetActive(false);
+
+        foreach(Corail corail in corals) {
+
+            DisableGlow(corail);
+        }
+
+        playerSequence.Clear();
+        correctSequence.Clear();
+        StopAllCoroutines();
+    }
 }

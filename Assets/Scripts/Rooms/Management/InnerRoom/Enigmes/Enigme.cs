@@ -82,4 +82,9 @@ public abstract class Enigme : MonoBehaviour
         //Content//
         Debug.Log("sp");
     }
+
+    public virtual void EnigmeEndReset()
+    {
+        //Content//
+    }
 }
