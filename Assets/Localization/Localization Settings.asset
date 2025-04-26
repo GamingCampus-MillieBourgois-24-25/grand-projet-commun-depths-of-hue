@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Localization Settings
   m_EditorClassIdentifier: 
   m_StartupSelectors:
+  - rid: 9151943422120558594
   - rid: 9151943422120558592
   - rid: 9151943422120558593
-  - rid: 9151943422120558594
   m_AvailableLocales:
     rid: 9151943422120558595
   m_AssetDatabase:
@@ -25,7 +25,7 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_ProjectLocaleIdentifier:
-    m_Code: en
+    m_Code: fr-FR
   m_PreloadBehavior: 1
   m_InitializeSynchronously: 0
   references:
@@ -46,7 +46,7 @@ MonoBehaviour:
         asm: Unity.Localization}
       data:
         m_LocaleId:
-          m_Code: en
+          m_Code: fr-FR
     - rid: 9151943422120558595
       type: {class: LocalesProvider, ns: UnityEngine.Localization.Settings, asm: Unity.Localization}
       data: 
@@ -60,6 +60,7 @@ MonoBehaviour:
           rid: -2
         m_CustomTablePostprocessor:
           rid: -2
+        m_AsynchronousBehaviour: 0
         m_UseFallback: 0
     - rid: 9151943422120558597
       type: {class: LocalizedStringDatabase, ns: UnityEngine.Localization.Settings,
@@ -71,6 +72,7 @@ MonoBehaviour:
           rid: -2
         m_CustomTablePostprocessor:
           rid: -2
+        m_AsynchronousBehaviour: 0
         m_UseFallback: 0
         m_MissingTranslationState: 1
         m_NoTranslationFoundMessage: No translation found for '{key}' in {table.TableCollectionName}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NewRoom
   m_EditorClassIdentifier: 
   dialogues:
-  - npc: Player
+  - npc: Joueur
     image: {fileID: 0}
     dialogueKey: NewRoom
   tableKey: DialoguesText

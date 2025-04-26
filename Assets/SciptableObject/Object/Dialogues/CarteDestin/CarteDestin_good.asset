@@ -16,7 +16,7 @@ MonoBehaviour:
   - npc: "Voix Ext\xE9rieures"
     image: {fileID: 0}
     dialogueKey: CarteDestin_good1
-  - npc: Player
+  - npc: Joueur
     image: {fileID: 0}
     dialogueKey: CarteDestin_good2
   tableKey: DialoguesText

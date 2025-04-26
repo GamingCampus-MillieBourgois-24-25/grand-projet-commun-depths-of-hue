@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8da2fdd88ae8f74ab82d516c27daf8c, type: 3}
-  m_Name: Introspective_1
+  m_Name: CarteDestin_indice2
   m_EditorClassIdentifier: 
   dialogues:
   - npc: Joueur
     image: {fileID: 0}
-    dialogueKey: Introspec_1
+    dialogueKey: CarteDestin_Indice2
   tableKey: DialoguesText
