@@ -40,6 +40,8 @@ public class Sudoku : Enigme
 
     [SerializeField]
     private List<Color> colorList = new List<Color>();
+
+    [SerializeField] private Color unmodifiableColor;
     [SerializeField]
     private List<Sprite> countSpriteList = new List<Sprite>();
 
@@ -235,7 +237,8 @@ public class Sudoku : Enigme
                     child.SetActive(true);
                     cellImage.sprite = countSpriteList[sudokuGrid[i, j].countPiece-1];
                     cellScript.isEditable = false;
-                    cellScript.UpdateNotEditable();
+                    cell.GetComponent<Image>().color = unmodifiableColor;
+                    //cellScript.UpdateNotEditable();
                 }
                 else
                 {
@@ -333,7 +336,8 @@ public class Sudoku : Enigme
         childCell.GetComponent<Image>().sprite = countSpriteList[correctPlayToFill.countPiece-1];
         childCell.SetActive(true);
         hintCell.isEditable = false;
-        hintCell.UpdateNotEditable();
+        hintCell.GetComponent<Image>().color = unmodifiableColor;
+        //hintCell.UpdateNotEditable();
         CheckWin();
     }
 
