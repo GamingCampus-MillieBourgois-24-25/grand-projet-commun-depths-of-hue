@@ -10,17 +10,33 @@ public class Room2 : EnigmeRoom
     [SerializeField] private GameObject SoundCanvas;
 
     [SerializeField] private GameObject sirene;
+    [SerializeField] private FramesManager frameM;
 
-
+    protected override void Start()
+    {
+        base.Start();
+        Initialize();
+    }
     public override void Initialize()
     {
-        
+      
+        frameM.FrameSwitch -= EnigmeFrameSwitched;
+        frameM.FrameSwitch += EnigmeFrameSwitched;
 
         foreach (var enigme in enigmes)// subscribe to each enigme OnSucces event.
         {
             enigme.OnSuccess -= OnEnigmeResolved; // if already subscribed
             enigme.OnSuccess += OnEnigmeResolved;
         }
+    }
+
+    private void EnigmeFrameSwitched()
+    {
+        if ( currentEnigme!=null)
+        {
+            currentEnigme.EnigmeEndReset();
+            currentEnigme = null;
+        }   
     }
     public void InitializeSpecificEnigme(int enigme)
     {

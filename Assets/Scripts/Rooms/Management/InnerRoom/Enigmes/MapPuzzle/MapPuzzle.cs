@@ -10,6 +10,7 @@ public class MapPuzzle : Enigme
     private List<LineRenderer> listLineRenderer = new List<LineRenderer>();
     [SerializeField] private GameObject canvaEnigme;
 
+
     public GameObject prefabLine;
     public static MapPuzzle Instance;
     
