@@ -90,6 +90,8 @@ public class Enigme_Pillar : Enigme
 
     public override void Initialize()
     {
+        FramesManager.Instance.LockFrame("main_frame");
+        FramesManager.Instance.UnlockFrame("Pillar");
         base.Initialize();
         if (popUp == null || textPrefab == null)
         {
@@ -100,6 +102,7 @@ public class Enigme_Pillar : Enigme
         //img.transform.position = vector;
         popUp.SetActive(false);
         SpawnPillars();
+        
     }
 
     public void UpdatePopup()
@@ -184,7 +187,10 @@ public class Enigme_Pillar : Enigme
             RectTransform textRect = newText.GetComponent<RectTransform>();
             if (textRect != null)
             {
-                textRect.anchoredPosition = new Vector2(0, -totalHeight + (textMesh.preferredHeight / 2) + spacingY * i);
+                textRect.anchorMin = new Vector2(0.5f, 1f);
+                textRect.anchorMax = new Vector2(0.5f, 1f);
+                textRect.pivot = new Vector2(0.5f, 0.5f);
+                textRect.anchoredPosition = new Vector2(0f, -totalHeight + (textMesh.preferredHeight / 2) + spacingY * i);
             }
         }
 

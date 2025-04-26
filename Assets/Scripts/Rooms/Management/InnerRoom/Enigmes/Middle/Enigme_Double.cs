@@ -43,13 +43,14 @@ public class Enigme_Doble : Enigme
         CreateBulle();
         SpawnObjects();
         UpdateTexte();
-        Vector3 vector = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 5);
+        FramesManager.Instance.LockFrame("Pillar");
+        /*Vector3 vector = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 5);
 
         if (vector != null)
         {
             img.transform.position = vector;
-        }
-     
+        }*/
+
     }
 
     public void ObjectClicked(GameObject obj)
