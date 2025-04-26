@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -29,6 +30,8 @@ public class FramesManager : MonoBehaviour
     [SerializeField] private float maxParticleDepth = 25f;
     [SerializeField] private float minDelay = 2f;
     [SerializeField] private float maxDelay = 5f;
+
+    public event Action FrameSwitch;
 
     public static FramesManager Instance;
 
@@ -123,9 +126,9 @@ public class FramesManager : MonoBehaviour
     /// <returns></returns>
     Vector3 GetRandomPositionInView()
     {
-        float depth = Random.Range(15f, maxParticleDepth);
-        float randomX = Random.Range(0f, 1f);
-        float randomY = Random.Range(0f, 0.5f); // ↘️ partie basse de l'écran
+        float depth = UnityEngine.Random.Range(15f, maxParticleDepth);
+        float randomX = UnityEngine.Random.Range(0f, 1f);
+        float randomY = UnityEngine.Random.Range(0f, 0.5f); 
         Vector3 viewportPos = new Vector3(randomX, randomY, depth);
         return Camera.main.ViewportToWorldPoint(viewportPos);
     }
@@ -237,6 +240,7 @@ public class FramesManager : MonoBehaviour
             currentCameraCoroutine= StartCoroutine(MoveCamera(targetFrame.cameraPosition));
             currentFrame = targetFrame;
             UpdateDirectionButtons();
+            FrameSwitch?.Invoke();
         }
         else
         {
