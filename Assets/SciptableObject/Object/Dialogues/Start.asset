@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd4c70bf8427d804caae1c0c80de7bac, type: 3}
-  m_Name: Room2
+  m_Script: {fileID: 11500000, guid: f8da2fdd88ae8f74ab82d516c27daf8c, type: 3}
+  m_Name: Start
   m_EditorClassIdentifier: 
-  roomId: Room2
-  sceneName: Room_2
-  isVisited: 0
-  initialState: 1
-  roomState: 1
+  dialogues:
+  - npc: Player
+    image: {fileID: 0}
+    dialogueKey: Start
+  tableKey: DialoguesText

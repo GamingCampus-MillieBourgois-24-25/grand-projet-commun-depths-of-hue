@@ -24,7 +24,8 @@ public enum DialogueGroupKey
     carteDestin,
     introspection,
     newRoom,
-    sudokuLike
+    sudokuLike,
+    start
 }
 
 [System.Serializable]
@@ -91,7 +92,7 @@ public class DialogueManager : MonoBehaviour
                 }
             }
 
-            //StartDialogue(0,DialogueGroupKey.chantsSirene);
+            StartDialogue(0,DialogueGroupKey.start);
         }
     }
 
@@ -197,14 +198,44 @@ public class DialogueManager : MonoBehaviour
         StartDialogue(randId,DialogueGroupKey.introspection);
         currentTimer = 0f;
     }
+    
+    public void StopCurrentDialogue()
+    {
+        if (!isBusy) return;
+        
+        StopAllCoroutines();
+        
+        textComponent.text = string.Empty;
+        dialogFrame.SetActive(false);
+        isBusy = false;
+        index = 0;
+    }
+    
+    public void StartNewDialogue(int idDialogue, DialogueGroupKey keyGroup)
+    {
+        // Stop any current dialogue first
+        StopCurrentDialogue();
+    
+        // Find and start the new dialogue
+        foreach (var dialoguePair in listDialogues)
+        {
+            if (dialoguePair.key == keyGroup)
+            {
+                currentDialogue = dialoguePair.value[idDialogue];
+                break;
+            }
+        }
+    
+        StartCoroutine(WriteDialogue(currentDialogue));
+    }
 
     public void StartNewRoomDialogue()
     {
-        StartDialogue(0,DialogueGroupKey.newRoom);
+        StartNewDialogue(0,DialogueGroupKey.newRoom);
     }
 
     public void StartEnterPuzzleRoom(DialogueGroupKey puzzleKey)
     {
-        StartDialogue(0,puzzleKey);
+        StartNewDialogue(0,puzzleKey);
     }
 }

@@ -1126,9 +1126,30 @@ PrefabInstance:
       objectReference: {fileID: 2421352463787302521}
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
+      propertyPath: listDialogues.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[5].key
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[5].value.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
       propertyPath: listDialogues.Array.data[4].value.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 72ff3a4be34215e4cb9d6ac0d4c38549,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[5].value.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: be3ba530dd469ea4889f636c73e68865,
         type: 2}
     - target: {fileID: 5763987193334276352, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}

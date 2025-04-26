@@ -73,6 +73,10 @@ MonoBehaviour:
     m_Key: Sudoku_1
     m_Metadata:
       m_Items: []
+  - m_Id: 3223299087626240
+    m_Key: Start
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

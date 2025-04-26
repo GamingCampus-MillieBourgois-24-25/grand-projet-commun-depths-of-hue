@@ -116,4 +116,15 @@ public class RoomManager : MonoBehaviour
             Debug.Log(room.CurrentState.ToString());
         }
     }
+    
+    private void OnApplicationQuit()
+    {
+        foreach (var so in allRooms)
+        {
+            if (so != null)
+            {
+                so.isVisited = false; 
+            }
+        }
+    }
 }
