@@ -251,6 +251,7 @@ MonoBehaviour:
   navMeshAgent: {fileID: 10275493}
   compagnon: {fileID: 1086126498}
   targetCompagnon: {fileID: 883262702}
+  cinemachineVirtualCamera: {fileID: 426424519}
   listAnimations:
   - IsWalk
   - IsLeft
@@ -481,6 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d68bf048c7e3d6d4ebcd7bea2f28ad1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cinemachineVirtualCamera: {fileID: 426424519}
 --- !u!4 &269009707
 Transform:
   m_ObjectHideFlags: 0
