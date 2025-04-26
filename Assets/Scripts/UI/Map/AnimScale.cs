@@ -48,7 +48,6 @@ public class AnimScale : MonoBehaviour
     {
         isForMap = _isForMap;
         animator.SetTrigger(Open);
-        PlaySoundBtn();
     }
     
     public void ResetTrigger()
@@ -75,7 +74,7 @@ public class AnimScale : MonoBehaviour
         }
     }
 
-    private void PlaySoundBtn()
+    public void PlaySoundBtn()
     {
         audioSource.Play();
     }

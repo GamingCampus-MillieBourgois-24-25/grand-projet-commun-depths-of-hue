@@ -8,4 +8,9 @@ public class GetShowMap : MonoBehaviour
     {
         showMap.ResetTrigger();
     }
+    
+    public void PlaySoundInAnimation()
+    {
+        showMap.PlaySoundBtn();
+    }
 }
