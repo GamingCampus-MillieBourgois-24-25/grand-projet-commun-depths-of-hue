@@ -1890,9 +1890,9 @@ MonoBehaviour:
   compagnon: {fileID: 1086126494}
   sauvegarde: {fileID: 1644571682}
   originalMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  blurMaterial: {fileID: 2100000, guid: b1e5f7c3212c46943861597e75a80a4d, type: 2}
-  ancre: {fileID: 21300000, guid: 380c1b569a3a1254bbc33c7eee991836, type: 3}
-  lockedBubble: {fileID: 21300000, guid: c4eec003825296645a0058332cdef34b, type: 3}
+  blurMaterial: {fileID: 2100000, guid: ec88693b0b260b04aa8637f226cb988b, type: 2}
+  ancre: {fileID: 21300000, guid: 4eae9f1440cd37c408eb72a42ca8f4dc, type: 3}
+  lockedBubble: {fileID: 21300000, guid: fe2da11ce1183b54685a4271462b240f, type: 3}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
