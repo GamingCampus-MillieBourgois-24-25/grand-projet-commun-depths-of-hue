@@ -1633,11 +1633,11 @@ RectTransform:
   - {fileID: 111328065}
   m_Father: {fileID: 946245808}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 12431.061, y: 0}
-  m_SizeDelta: {x: 296.66, y: 520}
-  m_Pivot: {x: 41, y: 1}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -73.96, y: 0}
+  m_SizeDelta: {x: 296.6599, y: 520}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &309803755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7695,6 +7695,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d68bf048c7e3d6d4ebcd7bea2f28ad1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cinemachineVirtualCamera: {fileID: 0}
 --- !u!1 &1651717189
 GameObject:
   m_ObjectHideFlags: 0
