@@ -44,8 +44,12 @@ public class Enigme_Doble : Enigme
         SpawnObjects();
         UpdateTexte();
         Vector3 vector = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 5);
-        img.transform.position = vector;
-        FramesManager.Instance.LockFrame("Pillar");
+
+        if (vector != null)
+        {
+            img.transform.position = vector;
+        }
+     
     }
 
     public void ObjectClicked(GameObject obj)
@@ -137,6 +141,7 @@ public class Enigme_Doble : Enigme
         {
             base.Success();
             zoneText.SetActive(false);
+            
         }
     }
 
