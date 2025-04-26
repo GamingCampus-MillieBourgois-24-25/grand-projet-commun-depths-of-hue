@@ -49,7 +49,7 @@ public abstract class Enigme : MonoBehaviour
     {
         isStarted = false;
         isResolved = true;
-        Debug.Log("OahI");
+        
         OnSuccess?.Invoke();
     }
 

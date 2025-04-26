@@ -59,7 +59,7 @@ public class GestionInputs : MonoBehaviour
                     if (go != null)
                     {
                         OnClickOnGameObject?.Invoke(go);
-                        print("je click");
+            
 
                         return;
                     }

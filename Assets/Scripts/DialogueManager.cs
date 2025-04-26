@@ -164,12 +164,15 @@ public class DialogueManager : MonoBehaviour
     
     public void StartDialogue(int idDialogue,DialogueGroupKey keyGroup)
     {
+        Debug.Log(listDialogues);
         if (listDialogues == null) return;
         foreach (var dialoguePair in listDialogues)
         {
+            Debug.Log(dialoguePair.key);
             if (dialoguePair.key == keyGroup)
             {
                 currentDialogue = dialoguePair.value[idDialogue];
+                Debug.Log(currentDialogue);
             }
         }
         StartCoroutine(WriteDialogue(currentDialogue));
