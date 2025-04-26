@@ -44,7 +44,8 @@ public class Sudoku : Enigme
     private List<Sprite> countSpriteList = new List<Sprite>();
 
     [SerializeField] private int numberOfBlankCases = 8;
-    
+    [SerializeField] private GameObject canvaEnigme;
+
     private SudokuGenerator sudokuGenerator;
     private SudokuPlay[,] fullSolution;
 
@@ -57,6 +58,7 @@ public class Sudoku : Enigme
     public override void Initialize()
     {
         SudokuCanvas.SetActive(true);
+        canvaEnigme.SetActive(false);
 
         if (Instance == null)
         {
@@ -345,5 +347,6 @@ public class Sudoku : Enigme
     public void Quit()
     {
         SudokuCanvas.SetActive(false);
+        canvaEnigme.SetActive(true);
     }
 }

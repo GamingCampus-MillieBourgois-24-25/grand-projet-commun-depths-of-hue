@@ -24,6 +24,8 @@ public class Enigme_Pillar : Enigme
     private List<string> OrderEnigme = new List<string>();
     private List<Material> pillarMaterials = new List<Material>();
 
+    public GameObject pillarContainer;
+
     [SerializeField] ImgBackGroundEnigme img;
 
     public GameObject PillarPrefab
@@ -95,7 +97,7 @@ public class Enigme_Pillar : Enigme
             return;
         }
         Vector3 vector = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y,5);
-        img.transform.position = vector;
+        //img.transform.position = vector;
         popUp.SetActive(false);
         SpawnPillars();
     }
@@ -215,9 +217,13 @@ public class Enigme_Pillar : Enigme
         {
             float x = i * spacing - offset;
             Vector3 position = new Vector3(x, -4.15f, 0f);
+
+            Debug.Log("pillar");
+
             Quaternion rotation = Quaternion.Euler(-90f, 180f, 0f);
 
-            GameObject newPillar = Instantiate(pillarPrefab, position, rotation);
+            GameObject newPillar = Instantiate(pillarPrefab, pillarContainer.transform.GetChild(i).position, rotation);
+            newPillar.transform.localScale = new Vector3(132, 132, 132);
             if (newPillar == null)
             {
                 Debug.LogError("�chec de l'instanciation de pillarPrefab.");
