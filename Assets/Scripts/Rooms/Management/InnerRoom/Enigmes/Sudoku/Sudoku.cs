@@ -51,6 +51,7 @@ public class Sudoku : Enigme
     private void Start()
     {
         startPosition.SetActive(false);
+        hintLeft = numberOfBlankCases;
     }
 
     public override void Initialize()
@@ -291,7 +292,7 @@ public class Sudoku : Enigme
         ChangePlay(0,true);
     }
     
-    public void ProvideHint()
+    public void ProvideHint(GameObject button)
     {
         List<CellSudoku> hintableCells = new List<CellSudoku>();
     
@@ -315,6 +316,7 @@ public class Sudoku : Enigme
         if (hintableCells.Count == 0)
         {
             Debug.Log("No cells need hints - all editable cells are correct!");
+            button.GetComponent<Button>().interactable = false;
             return;
         }
         

@@ -25,7 +25,9 @@ public enum DialogueGroupKey
     introspection,
     newRoom,
     sudokuLike,
-    start
+    start,
+    chantsSireneHint,
+    carteDestinHint
 }
 
 [System.Serializable]
@@ -213,10 +215,7 @@ public class DialogueManager : MonoBehaviour
     
     public void StartNewDialogue(int idDialogue, DialogueGroupKey keyGroup)
     {
-        // Stop any current dialogue first
         StopCurrentDialogue();
-    
-        // Find and start the new dialogue
         foreach (var dialoguePair in listDialogues)
         {
             if (dialoguePair.key == keyGroup)

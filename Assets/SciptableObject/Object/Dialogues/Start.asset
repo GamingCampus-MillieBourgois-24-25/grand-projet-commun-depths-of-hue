@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Start
   m_EditorClassIdentifier: 
   dialogues:
-  - npc: Player
+  - npc: Joueur
     image: {fileID: 0}
     dialogueKey: Start
   tableKey: DialoguesText

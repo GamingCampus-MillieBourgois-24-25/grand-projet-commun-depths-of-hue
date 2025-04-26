@@ -1127,7 +1127,27 @@ PrefabInstance:
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
       propertyPath: listDialogues.Array.size
-      value: 6
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[1].key
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[2].key
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[3].key
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[4].key
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
@@ -1136,9 +1156,103 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
+      propertyPath: listDialogues.Array.data[6].key
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[7].key
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[1].value.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[2].value.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[3].value.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[4].value.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
       propertyPath: listDialogues.Array.data[5].value.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[6].value.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[7].value.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[1].value.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: c2d46ef46778b284eb42c89e3d198b0e,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[1].value.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: c064dda7c1d3cc646ae5f1d9ae81f30d,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[1].value.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 680345d2743bac84498f3860b915e186,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[2].value.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: fdd6a5f218ed2634da759f94275dba57,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[2].value.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2fea7a1b3aa50b94793559ee4b4da690,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[2].value.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2ca71eed72e8c164699b525f62fefaf2,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[3].value.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8b0cafb30b5d53f47a40ad4847a4325a,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[3].value.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 327c2f3f56573104bb2c12c240d587fd,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[3].value.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 558de4ce0a562b145a6fd0691eb5da31,
+        type: 2}
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
       propertyPath: listDialogues.Array.data[4].value.Array.data[0]
@@ -1147,9 +1261,69 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
+      propertyPath: listDialogues.Array.data[4].value.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 327c2f3f56573104bb2c12c240d587fd,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[4].value.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 558de4ce0a562b145a6fd0691eb5da31,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
       propertyPath: listDialogues.Array.data[5].value.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: be3ba530dd469ea4889f636c73e68865,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[5].value.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 327c2f3f56573104bb2c12c240d587fd,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[5].value.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 558de4ce0a562b145a6fd0691eb5da31,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[6].value.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8acbc648be6760b4e837e40cae2fa320,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[6].value.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: c625ccd3f299bba41b92c2701bfc761d,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[6].value.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: e460676f248d56f468e7ca4fb333e66c,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[7].value.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 01712e58b752ae343821b4bb417a863c,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[7].value.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2fea7a1b3aa50b94793559ee4b4da690,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[7].value.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2ca71eed72e8c164699b525f62fefaf2,
         type: 2}
     - target: {fileID: 5763987193334276352, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}

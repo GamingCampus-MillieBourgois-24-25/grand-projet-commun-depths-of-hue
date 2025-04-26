@@ -11,6 +11,7 @@ public class MapPuzzle : Enigme
 
     public GameObject prefabLine;
     public static MapPuzzle Instance;
+    
 
     public override void Initialize()
     {

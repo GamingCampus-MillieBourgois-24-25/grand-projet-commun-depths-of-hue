@@ -6,11 +6,12 @@ public abstract class Enigme : MonoBehaviour
     public bool isResolved = false;
     protected bool isStarted = false;
     public int hintLeft = 3;
-    private int hintUsed = 0;
+    public int hintUsed = 0;
 
     [SerializeField] protected GameObject itemsContainer;
 
     public DialogueGroupKey enigmeDialogKey;
+    public DialogueGroupKey enigmeHintKey;
 
 
     public List<GameObject> objectsInEnigme;  // Every object possibly usable for the enigme
