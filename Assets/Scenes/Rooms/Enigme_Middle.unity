@@ -177,7 +177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &200540718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1783,6 +1783,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isResolved: 0
   itemsContainer: {fileID: 0}
+  enigmeDialogKey: 0
+  objectsInEnigme: []
   pillarPrefab: {fileID: 5900255983290734435, guid: 0dad38000e7c84348997e821c2ad1661,
     type: 3}
   textPrefab: {fileID: 1248245279}
@@ -1843,6 +1845,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isResolved: 0
   itemsContainer: {fileID: 2118671561}
+  enigmeDialogKey: 0
+  objectsInEnigme: []
   ItemsDouble:
   - {fileID: 1223633482642783616}
   - {fileID: 428304142}
@@ -2446,6 +2450,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnigmeRoomManagement
+      objectReference: {fileID: 0}
+    - target: {fileID: 3660271007613235503, guid: 88add5dc7d127424485752bbb1344178,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5630152778204940063, guid: 88add5dc7d127424485752bbb1344178,
         type: 3}
