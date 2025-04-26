@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Bulle
+  m_Name: Shader Graphs_Bulle
   m_Shader: {fileID: -6465566751694194690, guid: 275f2eab0c8565944ba1b94e0c1169f3,
     type: 3}
   m_Parent: {fileID: 0}
@@ -39,17 +39,17 @@ Material:
     m_Ints: []
     m_Floats:
     - _MinClamp: 0.1
-    - _NoiseScale: 1000
-    - _Power: 5.5
+    - _NoiseScale: 150
+    - _Power: 6
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Speed: 0.0005
+    - _Speed: 1
     m_Colors:
-    - _Color: {r: 0, g: 0.912621, b: 1, a: 0}
-    - _InnerColor: {r: 1, g: 1, b: 1, a: 0}
+    - _Color: {r: 0.578818, g: 0.767078, b: 0.8641509, a: 0}
+    - _InnerColor: {r: 0.7735849, g: 0.045247354, b: 0.045247354, a: 0}
     - _OuterColor: {r: 1.216786, g: 1.216786, b: 1.216786, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &600615919683377493
+--- !u!114 &4215086150977841327
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
