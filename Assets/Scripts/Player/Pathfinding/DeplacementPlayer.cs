@@ -119,9 +119,9 @@ public class DeplacementPlayer : MonoBehaviour
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
             if (!actualCadre) return;
-            actualCadre.SetArrowsVisibilities();
             if (!uniqueSendEvent)
             {
+                actualCadre.SetArrowsVisibilities();
                 OnShowUI?.Invoke(true);
                 uniqueSendEvent = true;
             }

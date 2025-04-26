@@ -2,7 +2,7 @@ using System;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
-using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+
 
 public class GestionInputs : MonoBehaviour
 {
@@ -16,6 +16,8 @@ public class GestionInputs : MonoBehaviour
     private Vector3 positionObj;
     private GameObject Obj;
 
+    private bool canUpdateGestionInputs;
+
     #region Event
 
     public delegate void PlayerGoFrontEnigme(Vector3 _position, DoorController _doorController, int _direction);
@@ -24,72 +26,39 @@ public class GestionInputs : MonoBehaviour
     #endregion
 
     private void Awake()
-    {
+    {      
+
         EnhancedTouchSupport.Enable();
+      
     }
 
     private void OnEnable()
     {
         TouchSimulation.Enable();
+        AnimScale.OnCanUpdateGestionInputs += SetCanUpdateGestionInputs;
+    }
+
+    private void OnDisable()
+    {
+        AnimScale.OnCanUpdateGestionInputs -= SetCanUpdateGestionInputs;
     }
 
     private void Start()
     {
         Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
         _camera = Camera.main;
+        canUpdateGestionInputs = false;
+    }
+
+    private void SetCanUpdateGestionInputs(bool _canUpdate)
+    {
+        canUpdateGestionInputs = _canUpdate;
     }
 
     private void Update()
     {
-        foreach (var touch in Touch.activeTouches)
-        {
-
-            if (touch.isTap)
-            {
-
-                Vector3 touchPosition = touch.screenPosition;
-                Ray ray = _camera.ScreenPointToRay(touchPosition);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit))
-                {
-
-                    GameObject go = hit.transform.gameObject;
-
-                    if (go != null)
-                    {
-                        OnClickOnGameObject?.Invoke(go);
-            
-
-                        return;
-                    }
-                    //MonoBehaviour script = hit.collider.GetComponent<MonoBehaviour>();
-
-                    //Collider collider = hit.collider;
-
-                    //Obj = collider.gameObject;
-
-                    //positionObj = collider.bounds.center + new Vector3(0, collider.bounds.extents.y, 0);
-
-                    //if (script != null)
-                    //{
-                    //    script.Invoke("OnObjectClicked", 0f);
-
-                    //}
-
-                    // if (hit.collider.CompareTag("Ancre"))
-                    // {
-                    //     MapNavigateCadre hitMapNavigate = hit.collider.GetComponent<MapNavigateCadre>();
-                    //     if (hitMapNavigate) hitMapNavigate.ClickMapNavigate();
-                    // }
-                }
-                else
-                {
-                    OnClickOnNothing?.Invoke();
-                    return;
-                }
-            }
-        }
+        if (canUpdateGestionInputs) return;
+        
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 touchPosition = Input.mousePosition;
