@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -85,17 +85,23 @@ public class SoundEnigme : Enigme
     void GenerateMelody()
     {
         correctSequence = new List<Corail>();
+        StartCoroutine(PlaySequence());
+    }
+
+    IEnumerator PlaySequence()
+    {
         for (int i = 0; i < amountOfNotes; i++)
         {
             int index = UnityEngine.Random.Range(0, corals.Count);
+            Corail coral = corals[index];
 
-            correctSequence.Add(corals[index]);
+            correctSequence.Add(coral);
 
-            PlayCoral(corals[index]);
-
+            yield return StartCoroutine(PlaySoundWithGlow(coral)); 
             
         }
     }
+
 
     public void OnCoralClicked(Corail coral)
     {
@@ -109,7 +115,7 @@ public class SoundEnigme : Enigme
             {
                 if (playerSequence[i] != correctSequence[i])
                 {
-                    Debug.Log("raté");
+                    Debug.Log("ratÃ©");
                     ResetPuzzle();
                     return;
                 }
@@ -182,7 +188,7 @@ public class SoundEnigme : Enigme
     IEnumerator PulseGlow(Material mat, float pulseDuration = 1.5f, float fadeOutDuration = 1f)
     {
         float time = 0f;
-        float pulseSpeed = 1f; // vitesse du pulsé
+        float pulseSpeed = 1f; // vitesse du pulsÃ©
         Color baseColor = mat.GetColor("_BaseColor"); // ou "_Color" si ton shader n'a pas _BaseColor
 
         // Phase de pulse
@@ -244,14 +250,14 @@ public class SoundEnigme : Enigme
         panelBackground.color = new Color(1f, 0f, 0f, originalColor.a);
     
 
-        yield return new WaitForSeconds(0.7f); // durée du flash
+        yield return new WaitForSeconds(0.7f); // durÃ©e du flash
 
         
 
         // Fade out ensuite
         yield return StartCoroutine(FadeOverlay(0));
 
-        // Retour à la couleur d'origine (noir ou autre)
+        // Retour Ã  la couleur d'origine (noir ou autre)
         panelBackground.color = originalColor;
     }
 
