@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CellSudoku : MonoBehaviour
 {
@@ -14,6 +9,14 @@ public class CellSudoku : MonoBehaviour
     public bool isEditable = true;
 
     [SerializeField] private GameObject notEditableImage;
+    [SerializeField] private AudioClip clip;
+
+    #region Event
+
+    public delegate void SendSoundEffect(AudioClip _clip);
+    public static event SendSoundEffect OnSendSoundEffect;
+
+    #endregion
 
     public void UpdateNotEditable()
     {
@@ -46,6 +49,7 @@ public class CellSudoku : MonoBehaviour
         if (isEditable)
         {
             Sudoku.Instance.PlayHand(x, y, this);
+            if (clip) OnSendSoundEffect?.Invoke(clip);
         }
         else
         {
