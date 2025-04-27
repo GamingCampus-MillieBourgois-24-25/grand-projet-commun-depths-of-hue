@@ -10281,6 +10281,16 @@ PrefabInstance:
       propertyPath: frames.Array.data[2].connections.Array.data[0].connectedFrameId
       value: 'Map '
       objectReference: {fileID: 0}
+    - target: {fileID: 4617770484355051139, guid: ab2bea016b629e24cb29675996c534fd,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 245.7017
+      objectReference: {fileID: 0}
+    - target: {fileID: 4617770484355051139, guid: ab2bea016b629e24cb29675996c534fd,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 62.38
+      objectReference: {fileID: 0}
     - target: {fileID: 6396146621302095744, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
       propertyPath: m_Name
