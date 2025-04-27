@@ -8,6 +8,7 @@ public class AnimScale : MonoBehaviour
     [Header("Property")]
     [SerializeField] private ShowMap showMap;
     [SerializeField] private Animator animator;
+    [SerializeField] private Animator animatorPause;
     
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -18,6 +19,7 @@ public class AnimScale : MonoBehaviour
 
     private bool isForMap;
     private bool show;
+    private bool anitSpam;
 
     #region Event
 
@@ -35,6 +37,7 @@ public class AnimScale : MonoBehaviour
     private void Start()
     {
         show = false;
+        anitSpam = false;
     }
     
     public void SetAnimator(Animator _animator)
@@ -50,6 +53,7 @@ public class AnimScale : MonoBehaviour
     
     public void ResetTrigger()
     {
+        anitSpam = false;
         animator.ResetTrigger(Open);
         if (isForMap)
         {
@@ -57,19 +61,34 @@ public class AnimScale : MonoBehaviour
         }
         else
         {
-            if (show)
-            {
-                OnShowArrowsHidden?.Invoke();
-            }
-            else
-            {
-                OnSendArrowsToArrowsTrigger?.Invoke(show);
-            }
-            show = !show;
-            OnCanUpdateGestionInputs?.Invoke(show);
-            objToHide.ForEach(obj => obj.SetActive(!show));
-            pauseCanvas.SetActive(show);
+            OnHiddePause();
         }
+    }
+
+    private void OnHiddePause()
+    {
+        if (anitSpam) return;
+        animator.ResetTrigger(Open);
+        if (show)
+        {
+            OnShowArrowsHidden?.Invoke();
+        }
+        else
+        {
+            OnSendArrowsToArrowsTrigger?.Invoke(show);
+        }
+        show = !show;
+        OnCanUpdateGestionInputs?.Invoke(show);
+        objToHide.ForEach(obj => obj.SetActive(!show));
+        
+        if (show) pauseCanvas.SetActive(show);
+    }
+
+    public void SetHiddePauseCanvas()
+    {
+        pauseCanvas.SetActive(false);
+        OnHiddePause();
+        anitSpam = true;
     }
 
     public void PlaySoundBtn()

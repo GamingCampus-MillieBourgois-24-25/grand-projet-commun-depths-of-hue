@@ -123,6 +123,7 @@ public class SoundEnigme : Enigme
                 {
 
                     statue.GetComponent<AudioSource>().PlayOneShot(lose);
+                    DialogueManager.Instance.StartNewDialogue(2,DialogueGroupKey.chantsSirene);
                     ResetPuzzle();
 
                     return;
@@ -132,6 +133,7 @@ public class SoundEnigme : Enigme
 
             if (playerSequence.Count == correctSequence.Count)
             {
+                DialogueManager.Instance.StartNewDialogue(1,DialogueGroupKey.chantsSirene);
                 SolvePuzzle();
             }
         }

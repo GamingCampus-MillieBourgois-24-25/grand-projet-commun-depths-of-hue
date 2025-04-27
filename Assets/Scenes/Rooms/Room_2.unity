@@ -10733,6 +10733,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioSourceEffects
       objectReference: {fileID: 0}
+    - target: {fileID: 8297113529026386691, guid: 4b9fdaff686a26546859553ca2082e6e,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.686
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13654,7 +13659,7 @@ MonoBehaviour:
   hintUsed: 0
   itemsContainer: {fileID: 1154054596}
   enigmeDialogKey: 1
-  enigmeHintKey: 0
+  enigmeHintKey: 7
   objectsInEnigme: []
   corals:
   - {fileID: 5737530942109330773}
@@ -13701,7 +13706,7 @@ MonoBehaviour:
   hintUsed: 0
   itemsContainer: {fileID: 1731506902}
   enigmeDialogKey: 2
-  enigmeHintKey: 0
+  enigmeHintKey: 8
   objectsInEnigme: []
   mapCanvas: {fileID: 54057851}
   rightOrderList: 000000000100000002000000030000000400000005000000
