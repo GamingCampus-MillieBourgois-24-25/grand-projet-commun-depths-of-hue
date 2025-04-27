@@ -2006,6 +2006,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4c94c46b0e5ce54d92f758dd37abc26, type: 3}
+--- !u!1 &226256475 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7709958889365244362, guid: b4c94c46b0e5ce54d92f758dd37abc26,
+    type: 3}
+  m_PrefabInstance: {fileID: 226256474}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &265468650 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
@@ -13674,7 +13680,7 @@ MonoBehaviour:
   sequenceColor: {r: 0.7372549, g: 0.43529412, b: 0.7411765, a: 0}
   amountOfNotes: 1
   enigmeLight: {fileID: 1308456079}
-  fragment: {fileID: 0}
+  fragment: {fileID: 226256475}
   canvaSoundEnigme: {fileID: 61550545}
   lose: {fileID: 8300000, guid: 289e23283b22f0b49967448f460ea372, type: 3}
 --- !u!114 &1607507431

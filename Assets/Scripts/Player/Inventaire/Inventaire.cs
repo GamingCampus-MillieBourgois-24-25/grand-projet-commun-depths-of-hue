@@ -188,7 +188,7 @@ public class Inventaire : MonoBehaviour
 
         
 
-        GameObject instance = Instantiate(nextFragment);
+        GameObject instance = Instantiate(nextFragment, Vector3.zero, Quaternion.identity);
 
       
         return instance;
