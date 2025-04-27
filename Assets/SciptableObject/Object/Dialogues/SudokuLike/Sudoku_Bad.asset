@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sudoku_Bad
   m_EditorClassIdentifier: 
   dialogues:
-  - npc: Joueur
+  - npc: Plongeur
     image: {fileID: 0}
     dialogueKey: Sudoku_Bad
   tableKey: DialoguesText

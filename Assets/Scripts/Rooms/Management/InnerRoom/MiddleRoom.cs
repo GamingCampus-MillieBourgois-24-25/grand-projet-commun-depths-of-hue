@@ -10,11 +10,7 @@ public class MiddleRoom : EnigmeRoom
     {
         base.Start();
         Initialize();
-    }
-    public override void Initialize()
-    {
-        base.Initialize();
-
+        DialogueManager.Instance.StartEnterPuzzleRoom(enigmes[0].enigmeDialogKey);
     }
 
     

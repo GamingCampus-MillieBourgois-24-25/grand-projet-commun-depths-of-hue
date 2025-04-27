@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Introspective_2
   m_EditorClassIdentifier: 
   dialogues:
-  - npc: Joueur
+  - npc: Plongeur
     image: {fileID: 0}
     dialogueKey: Introspec_2
   tableKey: DialoguesText

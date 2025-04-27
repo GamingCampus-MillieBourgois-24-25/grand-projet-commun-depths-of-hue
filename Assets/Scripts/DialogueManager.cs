@@ -29,7 +29,8 @@ public enum DialogueGroupKey
     chantsSireneHint,
     carteDestinHint,
     findObject,
-    findObjectHint
+    findObjectHint,
+    memory
 }
 
 [System.Serializable]
