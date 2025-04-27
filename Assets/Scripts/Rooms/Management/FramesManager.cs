@@ -63,7 +63,7 @@ public class FramesManager : MonoBehaviour
 
     public Frame currentFrame;
     public Frame[] frames;
-    [SerializeField] private string initalFrame = "main_frame"; //First frame always called main_frame
+    [SerializeField] private string initalFrame; //First frame always called main_frame
 
     private Coroutine currentCameraCoroutine;
 
