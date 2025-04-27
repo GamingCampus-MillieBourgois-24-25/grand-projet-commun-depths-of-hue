@@ -32,7 +32,7 @@ public class Room2 : EnigmeRoom
 
     public override void InitilizeCurrentEnigma()
     {
-        Debug.Log("nope");
+ 
     }
 
     private void EnigmeFrameSwitched()
@@ -59,7 +59,7 @@ public class Room2 : EnigmeRoom
 
     protected override void HandleObjectClick(GameObject robject)
     {
-        Debug.Log(robject);
+      
         if (robject == sirene)
         {
             InitializeSpecificEnigme(2);

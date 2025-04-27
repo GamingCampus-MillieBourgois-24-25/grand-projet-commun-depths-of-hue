@@ -2,13 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
+[System.Serializable]
+public class PuzzleData
+{
+    public ItemData itemData;
+    public string prefabPath;  // Chemin du prefab dans Resources
+    public int row;
+    public int col;
+    public string id;
+}
 public class Inventaire : MonoBehaviour
 {
+    [SerializeField] private List<PuzzleData> inventaireFragment;
     [SerializeField] private List<ItemData> inventaire;
     [SerializeField] private UI_Inventaire inv;
     [SerializeField] private List<ItemData> itemDatas;
@@ -16,8 +26,17 @@ public class Inventaire : MonoBehaviour
     [SerializeField] private Save save;
     private List<string> ids = new List<string>();
 
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+
+    }
+
+    
     void Start()
     {
+        InputItems.Instance.OnClickOnGameObject += HandleObjectClick;
         save.LoadCategory("inventory");
         // string searchTerm = "perle";
         // List<ItemData> matchingItems = FindItemsByPartialName( searchTerm);
@@ -28,16 +47,40 @@ public class Inventaire : MonoBehaviour
         // }
 
     }
+    private void HandleObjectClick(GameObject go)
+    {
 
+        AnItem anItem = go.GetComponent<AnItem>();
+
+        if (anItem != null && anItem.itemData != null)
+        {
+
+            Add(anItem.itemData, go);
+        }
+    }
     public void Add(ItemData item, GameObject obj)
     {
-        if (inv.GetUnmodifiedSprite() > 0 || item.type.ToString() == "Stack" || (!inventaire.Contains(item) && item.type.ToString() != "Stack"))
+        if (/*inv.GetUnmodifiedSprite() > 0 || */item.type.ToString() == "Stack" || (!inventaire.Contains(item) && item.type.ToString() != "Stack"))
         {
-            inventaire.Add(item);
-            inv.UpdateUI();
+
+
+            
+                inventaire.Add(item);
+
+                Debug.Log(item.prefab.ToString());
+            
+            //GameObject obje =Instantiate(item.prefab);
+
+            //MonoBehaviour d = obje.AddComponent<PuzzleFragment>();
+
+            
+            //d = item.behaviours[0];
+                     
+            //inv.UpdateUI();
             Destroy(obj);
-            part.transform.position = obj.transform.position;
-            part.Play();
+   
+            //part.transform.position = obj.transform.position;
+            //part.Play();
             save.SaveCategory("inventory");
             Debug.Log(item.itemName + " ajouté à l'inventaire.");
         }
@@ -127,6 +170,42 @@ public class Inventaire : MonoBehaviour
                     inventaire.Add(itemDatas[j]);
                 }
             }
+        }
+    }
+
+   
+    public bool HasFragments()
+    {
+        return inventaire.Count > 0;
+    }
+
+    public GameObject InstantiateNextFragment()
+    {
+        if (inventaire.Count == 0)
+            return null;
+
+        GameObject nextFragment = inventaire[0].prefab;
+
+        
+
+        GameObject instance = Instantiate(nextFragment);
+
+      
+        return instance;
+    }
+
+    public void RemoveFirstFragment()
+    {
+        if (inventaire.Count > 0)
+        {
+            // Supprime le premier élément de la liste
+            inventaire.RemoveAt(0);
+            save.SaveCategory("inventory"); // Sauvegarde la modification
+            Debug.Log("Premier fragment retiré de l'inventaire");
+        }
+        else
+        {
+            Debug.LogWarning("Aucun fragment à supprimer - inventaire vide");
         }
     }
     public List<ItemData> GetItems() { return itemDatas; }

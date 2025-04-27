@@ -13,6 +13,8 @@ public class ItemData : ScriptableObject
     public enum itemType { none, inspectable, Enigme, Stack};
     public itemType type;
 
+    public GameObject prefab;
+
     public string GetId() { return id; }
 }
 

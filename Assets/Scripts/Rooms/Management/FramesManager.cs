@@ -138,7 +138,7 @@ public class FramesManager : MonoBehaviour
     {
         if (Instance == null)
         {
-            Debug.Log("cr�ation d'instance");
+            
             Instance = this;
         }
         else

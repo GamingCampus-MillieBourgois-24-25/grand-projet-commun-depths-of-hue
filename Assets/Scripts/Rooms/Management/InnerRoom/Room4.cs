@@ -7,6 +7,6 @@ public class Room4 : EnigmeRoom
     public override void Initialize()
     {
         base.Initialize();
-        Debug.Log("OOOOOO");
+      
     }
 }

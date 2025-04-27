@@ -26,7 +26,7 @@ public class Enigme_Doble : Enigme
     {
         if (bubulle == null)
         {
-            bubulle = Resources.Load<GameObject>("Assets/Assets/Objects/Bulle/bulle"); 
+            bubulle = Resources.Load<GameObject>("Assets/Prefabs/Object/Bulle/bulle.prefab");
         }
         foundObject = GameObject.Find("bulle");
         PrepareBulles();
@@ -37,7 +37,7 @@ public class Enigme_Doble : Enigme
         bulles = new List<GameObject>();
         for (int i = 0; i < ItemsDouble.Count; i++)
         {
-            GameObject newBulle = Instantiate(foundObject, Vector3.zero, Quaternion.identity);
+            GameObject newBulle = Instantiate(bubulle, Vector3.zero, Quaternion.identity);
             newBulle.SetActive(false);
             bulles.Add(newBulle);
         }

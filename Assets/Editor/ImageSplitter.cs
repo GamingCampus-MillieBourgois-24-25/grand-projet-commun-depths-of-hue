@@ -45,6 +45,7 @@ public class DynamicPuzzleGeneratorEditor : EditorWindow
 
     void GeneratePuzzlePieces()
     {
+        Debug.Log("s");
         uiOffset = -(thickness * 51f) / 100.0f;
 
         if (!ValidateInputs()) return;
