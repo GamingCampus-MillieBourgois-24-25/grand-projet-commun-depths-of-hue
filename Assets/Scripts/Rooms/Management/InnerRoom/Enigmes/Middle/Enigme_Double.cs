@@ -24,6 +24,7 @@ public class Enigme_Doble : Enigme
 
     private void Awake()
     {
+        if (bubulle == null) return;
         if (bubulle == null)
         {
             bubulle = Resources.Load<GameObject>("Assets/Prefabs/Object/Bulle/bulle.prefab");
