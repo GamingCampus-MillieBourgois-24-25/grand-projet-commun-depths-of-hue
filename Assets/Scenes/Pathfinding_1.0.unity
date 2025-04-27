@@ -2527,6 +2527,8 @@ MonoBehaviour:
     type: 2}
   soundEffectsMixerGroup: {fileID: -6542649198023140546, guid: 71f52830d136c4a46a911391dd88bd1b,
     type: 2}
+  underwaterEffectsMixerGroup: {fileID: 1272509445130632626, guid: 71f52830d136c4a46a911391dd88bd1b,
+    type: 2}
   sounds: []
 --- !u!114 &831218829
 MonoBehaviour:

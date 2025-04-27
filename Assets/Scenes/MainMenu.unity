@@ -5809,6 +5809,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8093860623684780161, guid: 816758c6cf1ee044abc6f7c3b40c46d5,
+        type: 3}
+      propertyPath: underwaterEffectsMixerGroup
+      value: 
+      objectReference: {fileID: 1272509445130632626, guid: 71f52830d136c4a46a911391dd88bd1b,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
