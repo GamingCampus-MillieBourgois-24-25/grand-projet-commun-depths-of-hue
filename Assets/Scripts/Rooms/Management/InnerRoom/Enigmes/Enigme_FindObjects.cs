@@ -53,7 +53,7 @@ public class Enigme_FindObjects : Enigme
         CollectAllPositionsFromScene();
 
         base.Initialize();
-                
+        DialogueManager.Instance.StartEnterPuzzleRoom(enigmeDialogKey);
         RoundRoutine();     
     }
 
@@ -70,6 +70,8 @@ public class Enigme_FindObjects : Enigme
         objectsUsedInEnigme = MakeObjectsList();
         ClearText();
         SetObject();
+        if(currentRound != 0)
+            DialogueManager.Instance.StartNewDialogue(currentRound+1,enigmeDialogKey);
         timer = timeLimit;
         panel.SetActive(true);
         StartTimer();
@@ -111,7 +113,7 @@ public class Enigme_FindObjects : Enigme
             }
         }
 
-        Debug.Log($"Nombre total de positions récupérées : {allObjectsPositions.Count}");
+        Debug.Log($"Nombre total de positions rï¿½cupï¿½rï¿½es : {allObjectsPositions.Count}");
     }
 
 
@@ -176,6 +178,7 @@ public class Enigme_FindObjects : Enigme
 
         if (timer <= 0f)
         {
+            DialogueManager.Instance.StartNewDialogue(4,enigmeDialogKey);
             Fail();
         }
     }
@@ -229,10 +232,10 @@ public class Enigme_FindObjects : Enigme
             angle = x;
             float t = angle / (360f * spinCount);
 
-            // Interpolation linéaire de la position de base à finale
+            // Interpolation linï¿½aire de la position de base ï¿½ finale
             Vector3 center = Vector3.Lerp(start, targetPosition, t);
 
-            // Création d’un offset circulaire
+            // Crï¿½ation dï¿½un offset circulaire
             float radians = Mathf.Deg2Rad * angle;
             Vector3 offset = new Vector3(
                 Mathf.Cos(radians),
@@ -248,12 +251,12 @@ public class Enigme_FindObjects : Enigme
         // Scale
         item.transform.DOScale(finalScale, duration).SetEase(Ease.OutBack);
 
-        // Rotation sur lui-même
+        // Rotation sur lui-mï¿½me
         item.transform.DORotate(new Vector3(360f, 360f, 360f), duration, RotateMode.FastBeyond360)
                      .SetEase(Ease.InOutSine)
                      .OnKill(() =>
                      {
-                         // Une fois l'animation terminée, restaurer la rotation d'origine
+                         // Une fois l'animation terminï¿½e, restaurer la rotation d'origine
                          item.transform.rotation = originalRotation;
                      });
     }
@@ -267,6 +270,7 @@ public class Enigme_FindObjects : Enigme
         {
             if (currentRound < (maxRound - 1))
             {
+                
                 currentRound++;
                 StartCoroutine(Wait(3)); 
                 
@@ -274,6 +278,7 @@ public class Enigme_FindObjects : Enigme
             else
             {
                 panel.SetActive(false);
+                DialogueManager.Instance.StartNewDialogue(3,enigmeDialogKey);
                 Success(); // End the enigme and invoke succes event
 
             }
@@ -386,7 +391,7 @@ public class Enigme_FindObjects : Enigme
         foreach (GameObject clone in instantiatedObjects)
         {
 
-            Destroy(clone); // Supprimer l'objet de la scène
+            Destroy(clone); // Supprimer l'objet de la scï¿½ne
         }
         instantiatedObjects.Clear(); // Effacer la liste des clones
     }
