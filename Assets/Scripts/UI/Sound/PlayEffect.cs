@@ -8,11 +8,13 @@ public class PlayEffect : MonoBehaviour
     private void OnEnable()
     {
         CellSudoku.OnSendSoundEffect += PlaySoundEffect;
+        Sudoku.OnSendSoundEffect += PlaySoundEffect;
     }
 
     private void OnDisable()
     {
         CellSudoku.OnSendSoundEffect -= PlaySoundEffect;
+        Sudoku.OnSendSoundEffect -= PlaySoundEffect;
     }
 
     public void PlaySoundEffect()
