@@ -30,7 +30,9 @@ public enum DialogueGroupKey
     carteDestinHint,
     findObject,
     findObjectHint,
-    memory
+    memory,
+    pillar,
+    pillarHint
 }
 
 [System.Serializable]

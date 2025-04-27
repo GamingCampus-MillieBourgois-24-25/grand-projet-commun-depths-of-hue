@@ -28,6 +28,9 @@ public class Enigme_Pillar : Enigme
 
     [SerializeField] ImgBackGroundEnigme img;
 
+    public bool firstPillarClicked = false;
+    public GameObject indiceButton;
+
     public GameObject PillarPrefab
     {
         get => pillarPrefab;
@@ -196,6 +199,7 @@ public class Enigme_Pillar : Enigme
 
         RectTransform popUpRect = popUp.GetComponent<RectTransform>();
         if (popUpRect != null) popUpRect.sizeDelta = new Vector2(maxWidth + horizontalPadding, totalHeight);
+        
     }
 
     private void OnResumeClicked()
@@ -337,7 +341,7 @@ public class Enigme_Pillar : Enigme
         {
             if (pillar.Objet == null || pillar.Objet.name != pillar.ID) return;
         }
-
+        
         base.Success();
     }
     public override void CheckItem(GameObject item)
@@ -353,5 +357,10 @@ public class Enigme_Pillar : Enigme
 
             }
         }
+    }
+
+    public void ShowIndiceButton()
+    {
+        indiceButton.SetActive(true);
     }
 }
