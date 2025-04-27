@@ -1,7 +1,6 @@
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngineInternal;
 
 public class Enigme_Doble : Enigme
 {
@@ -19,25 +18,27 @@ public class Enigme_Doble : Enigme
     [SerializeField] private GestionInputs gestion;
     private GameObject foundObject;
     private GameObject bubble;
-    private List<GameObject> bulles;
+    private List<GameObject> bulles = new List<GameObject>();
     private float timer = 1f; // 1 seconde
     private bool isTimerRunning = false;
 
    private void Awake()
     {
-        if (!bubble) return;
+        if (!bubulle) return;
         PrepareBulles();
     }
 
     private void PrepareBulles()
     {
-        Vector3 positionSpawn = new Vector3(1000, 0, 0);
+        //Vector3 pos = new Vector3(1000f, 0f, 0f);
         for (int i = 0; i < ItemsDouble.Count; i++)
         {
-            GameObject newBulle = Instantiate(bubble, positionSpawn, Quaternion.identity);
+            GameObject newBulle = Instantiate(bubulle, Vector3.zero, Quaternion.identity);
+            SpawnObjects(newBulle);
             newBulle.SetActive(false);
             bulles.Add(newBulle);
         }
+        CreateBulle();
     }
 
     public override void Initialize()
@@ -45,8 +46,6 @@ public class Enigme_Doble : Enigme
         base.Initialize();
         nbDouble = ItemsDouble.Count / 2;
         foundObject = GameObject.Find("bulle");
-        CreateBulle();
-        SpawnObjects();
         UpdateTexte();
         FramesManager.Instance.LockFrame("Pillar");
         /*Vector3 vector = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 5);
@@ -154,27 +153,24 @@ public class Enigme_Doble : Enigme
     }
 
 
-    public void SpawnObjects()
+    private void SpawnObjects(GameObject _obj)
     {
         Vector3 bottomLeft = cam.ViewportToWorldPoint(new Vector3(0, 0, cam.nearClipPlane));
         Vector3 topRight = cam.ViewportToWorldPoint(new Vector3(1, 1, cam.nearClipPlane));
 
-        float minX = bottomLeft.x + 1f;
-        float maxX = topRight.x - 1f;
-        float minY = bottomLeft.y + 1f;
-        float maxY = topRight.y - 1f;
+        float minX = bottomLeft.x + 7f;
+        float maxX = topRight.x - 7f;
+        float minY = bottomLeft.y + 5f;
+        float maxY = topRight.y - 5f;
 
         List<Vector2> occupiedPositions = new List<Vector2>();
 
-        foreach (var obj in bulles)
+        Vector2 spawnPosition = GetRandomPosition(minX, maxX, minY, maxY, occupiedPositions);
+        if (spawnPosition != Vector2.zero)
         {
-            Vector2 spawnPosition = GetRandomPosition(minX, maxX, minY, maxY, occupiedPositions);
-            if (spawnPosition != Vector2.zero)
-            {
-                Vector3 newPosition = new Vector3(spawnPosition.x, spawnPosition.y, obj.transform.position.z);
-                obj.transform.position = newPosition;
-                occupiedPositions.Add(spawnPosition);
-            }
+            Vector3 newPosition = new Vector3(spawnPosition.x, spawnPosition.y, _obj.transform.position.z);
+            _obj.transform.position = newPosition;
+            occupiedPositions.Add(spawnPosition);
         }
     }
 

@@ -9,6 +9,8 @@ public class Save : MonoBehaviour
     [SerializeField] Inventaire inventaire;
     [SerializeField] ShowMap showMap;
     [SerializeField] AudioOptionManager audio;
+    [SerializeField] RoomManager rooms;
+    [SerializeField] DialogueManager dialogueManager;
     #region Event
 
     public delegate void SaveStartGamePlayer();
@@ -85,6 +87,19 @@ public class Save : MonoBehaviour
                     isSave = true
                 };
                 break;
+            case "rooms":
+                saveData.roomData = new RoomData
+                {
+                    roomDataScriptableIDs = rooms.GetIdAllRooms(),
+                    roomDataAlreadyEntered = rooms.GetAlreadyVisitedBoolList()
+                };
+                break;
+            case "dialogbasemap":
+                saveData.dialBaseMapData = new DialBaseMapData
+                {
+                    alreadyDialogueBaseMap = dialogueManager.enteredBaseMap
+                };
+                break;
             default:
                 Debug.LogWarning($"Category {category} not recognized!");
                 return;
@@ -114,7 +129,17 @@ public class Save : MonoBehaviour
             {
                 music = audio != null ? audio.MusicSlider.value : 1f,
                 soundEffect = audio != null ? audio.SoundEffectsSlider.value : 1f,
+            },
+            roomData = new RoomData
+            {
+                roomDataScriptableIDs = rooms != null ? rooms.GetIdAllRooms() : new List<string>(),
+                roomDataAlreadyEntered = rooms != null ? rooms.GetAlreadyVisitedBoolList() : new List<bool>()
+            },
+            dialBaseMapData = new DialBaseMapData
+            {
+                alreadyDialogueBaseMap = dialogueManager != null && dialogueManager.enteredBaseMap
             }
+            
         };
 
         SaveToFile(saveData);
@@ -172,6 +197,16 @@ public class Save : MonoBehaviour
 
                 }
                 break;
+            case "rooms":
+                LoadRooms();
+                break;
+            case "dialogbasemap":
+                if (saveData.dialBaseMapData != null && dialogueManager)
+                {
+                    dialogueManager.enteredBaseMap = saveData.dialBaseMapData.alreadyDialogueBaseMap;
+                    Debug.Log("load " + dialogueManager.enteredBaseMap);
+                }
+                break;
             default:
                 Debug.LogWarning($"Category {category} not recognized!");
                 return;
@@ -201,6 +236,11 @@ public class Save : MonoBehaviour
             audio.SoundEffectsSlider.value = saveData.audiomanager.soundEffect;
             audio.IsLoad = saveData.audiomanager.isSave;
 
+        }
+
+        if (saveData.roomData != null)
+        {
+            LoadRooms();
         }
 
         Debug.Log($"All categories loaded from: {savePath}");
@@ -254,6 +294,23 @@ public class Save : MonoBehaviour
         return dict;
     }
 
+    private void LoadRooms()
+    {
+        SaveData saveData = LoadExistingData();
+        
+        for (int i = 0; i < saveData.roomData.roomDataScriptableIDs.Count; i++)
+        {
+            string roomid = saveData.roomData.roomDataScriptableIDs[i];
+            foreach (var room in rooms.GetAllRooms())
+            {
+                if (room.roomId == roomid)
+                {
+                    room.isVisited = saveData.roomData.roomDataAlreadyEntered[i];
+                }
+            }
+        }
+    }
+
     [System.Serializable]
     private class SaveData
     {
@@ -261,12 +318,27 @@ public class Save : MonoBehaviour
         public MapData mapData;
         public CadreData cadreData;
         public Audio audiomanager;
+        public RoomData roomData;
+        public DialBaseMapData dialBaseMapData;
     }
 
     [System.Serializable]
     private class InventoryData
     {
         public List<string> scriptableObjectIDs;
+    }
+    
+    [System.Serializable]
+    private class RoomData
+    {
+        public List<string> roomDataScriptableIDs;
+        public List<bool> roomDataAlreadyEntered;
+    }
+    
+    [System.Serializable]
+    private class DialBaseMapData
+    {
+        public bool alreadyDialogueBaseMap;
     }
 
     [System.Serializable]
