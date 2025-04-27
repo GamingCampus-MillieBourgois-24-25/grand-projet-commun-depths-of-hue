@@ -1146,16 +1146,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1353200527}
+      objectReference: {fileID: 1353200523}
     - target: {fileID: 3821574331331278617, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OIStart
+      value: ReturnToHub
       objectReference: {fileID: 0}
     - target: {fileID: 3821574331331278617, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PuzzleManager, Assembly-CSharp
+      value: Room, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
+        type: 3}
+      propertyPath: initalFrame
+      value: Gallerie
       objectReference: {fileID: 0}
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
@@ -1165,7 +1170,7 @@ PrefabInstance:
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
       propertyPath: frames.Array.data[0].id
-      value: main_frame
+      value: Gallerie
       objectReference: {fileID: 0}
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
