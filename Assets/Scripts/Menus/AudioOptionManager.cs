@@ -51,7 +51,11 @@ public class AudioOptionManager : MonoBehaviour
         SetupFixPivot(handleMusicSlider, musicSlider);
         if (!handleSoundEffectsSlider) return;
         SetupFixPivot(handleSoundEffectsSlider, soundEffectsSlider);
-    
+        
+        Vector3 posM = handleMusicSlider.anchoredPosition;
+        posM.x = 0f;
+        handleMusicSlider.anchoredPosition = posM;
+        
         Vector3 pos = handleSoundEffectsSlider.anchoredPosition;
         pos.x = 0f;
         handleSoundEffectsSlider.anchoredPosition = pos;
@@ -102,5 +106,8 @@ public class AudioOptionManager : MonoBehaviour
         Vector3 pos = _rectTransform.localPosition;
         pos.x = 0f;
         _rectTransform.localPosition = pos;
+        Vector3 anchored = _rectTransform.anchoredPosition;
+        anchored.x = 0f;
+        _rectTransform.anchoredPosition = anchored;
     }
 }

@@ -1562,7 +1562,6 @@ GameObject:
   m_Component:
   - component: {fileID: 488069700}
   - component: {fileID: 488069701}
-  - component: {fileID: 488069702}
   m_Layer: 5
   m_Name: SliderMusic
   m_TagString: Untagged
@@ -1655,26 +1654,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &488069702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488069699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 1
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!1 &531437207
 GameObject:
   m_ObjectHideFlags: 0
@@ -4462,7 +4441,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1450537529}
-  - component: {fileID: 1450537530}
   m_Layer: 5
   m_Name: Ensemble
   m_TagString: Untagged
@@ -4490,30 +4468,6 @@ RectTransform:
   m_AnchoredPosition: {x: 1200, y: -62.5}
   m_SizeDelta: {x: 1200, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1450537530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1450537528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 100
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 600, y: 100}
-  m_Spacing: {x: 50, y: 0}
-  m_Constraint: 0
-  m_ConstraintCount: 1
 --- !u!1 &1478791748
 GameObject:
   m_ObjectHideFlags: 0
