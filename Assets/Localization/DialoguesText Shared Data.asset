@@ -185,6 +185,34 @@ MonoBehaviour:
     m_Key: Start3
     m_Metadata:
       m_Items: []
+  - m_Id: 3684994604036096
+    m_Key: Pillar_Enter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3685043748696064
+    m_Key: Pillar_Good1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3685264876597248
+    m_Key: Pillar_Good2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3685455704846336
+    m_Key: Pillar_Bad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3685652698722304
+    m_Key: Pillar_Indice1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3685698475356160
+    m_Key: Pillar_Indice2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3685709988720640
+    m_Key: Pillar_Indice3
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

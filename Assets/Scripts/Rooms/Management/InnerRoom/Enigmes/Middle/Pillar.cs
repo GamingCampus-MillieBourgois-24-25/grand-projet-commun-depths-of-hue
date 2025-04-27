@@ -92,7 +92,14 @@ public class Pillar : MonoBehaviour
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
 
         RectTransform popupRect = popup.GetComponent<RectTransform>();
-        popupRect.position = screenPosition;
+        popupRect.position = new Vector2(screenPosition.x, screenPosition.y+30);
+
+        if (!spawner.firstPillarClicked)
+        {
+            spawner.firstPillarClicked = true;
+            DialogueManager.Instance.StartEnterPuzzleRoom(spawner.enigmeDialogKey);
+            spawner.ShowIndiceButton();
+        }
     }
 
     void HandleClickOnNothing()

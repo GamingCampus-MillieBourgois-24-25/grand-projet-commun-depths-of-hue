@@ -1138,7 +1138,7 @@ PrefabInstance:
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
       propertyPath: listDialogues.Array.size
-      value: 11
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
@@ -1193,7 +1193,12 @@ PrefabInstance:
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
       propertyPath: listDialogues.Array.data[11].key
-      value: 10
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[12].key
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
@@ -1248,6 +1253,11 @@ PrefabInstance:
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
       propertyPath: listDialogues.Array.data[11].value.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[12].value.Array.size
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
@@ -1458,19 +1468,49 @@ PrefabInstance:
         type: 3}
       propertyPath: listDialogues.Array.data[11].value.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 784406c0ccbd06c4c8c91cf5bb2e5344,
+      objectReference: {fileID: 11400000, guid: 422a2c8f630648e4a8669ea3a8b60ee6,
         type: 2}
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
       propertyPath: listDialogues.Array.data[11].value.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 9aed2a9759a38ef4aaba955d3425eb69,
+      objectReference: {fileID: 11400000, guid: b9cb682cdcc83f843b953d3b45ee1cf0,
         type: 2}
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
       propertyPath: listDialogues.Array.data[11].value.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 4386c6e1aba54e640b631a1e75f8272a,
+      objectReference: {fileID: 11400000, guid: 06a78f3e68e180340b18f332c6454055,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[11].value.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: b4edebfba1a78be4c9dd054af270961a,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[12].value.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: d13b836e692c853418af5bcf0fd7e27b,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[12].value.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4b93a8b429b39bd47865c571b193ef96,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[12].value.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: d01ccd86553e2bb4286a43ba4b02a230,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[12].value.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: b4edebfba1a78be4c9dd054af270961a,
         type: 2}
     - target: {fileID: 5763987193334276352, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}

@@ -31,7 +31,6 @@ public class MiddleRoom : EnigmeRoom
         {
             
             InitilizeCurrentEnigma();
-            
         }
     }
 
