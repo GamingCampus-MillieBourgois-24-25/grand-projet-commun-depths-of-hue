@@ -1354,7 +1354,7 @@ Transform:
   m_GameObject: {fileID: 205052297}
   serializedVersion: 2
   m_LocalRotation: {x: -0.3697444, y: -0.3697444, z: 0.6027347, w: 0.6027347}
-  m_LocalPosition: {x: 20.14, y: -1.41, z: 21.56}
+  m_LocalPosition: {x: 5.83, y: -4.51, z: 28.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2420,6 +2420,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2788830476853846094, guid: 95db439174577f1468f7268cb6018cf2,
+        type: 3}
+      propertyPath: skipEndTransition
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2840688917002009200, guid: 95db439174577f1468f7268cb6018cf2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2899,7 +2904,7 @@ Transform:
   m_GameObject: {fileID: 555286930}
   serializedVersion: 2
   m_LocalRotation: {x: -0.35397682, y: -0.35397682, z: 0.61212784, w: 0.61212784}
-  m_LocalPosition: {x: -18.84, y: -1.37, z: 20.5}
+  m_LocalPosition: {x: -5.76, y: -4.41, z: 19.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3704,7 +3709,7 @@ Transform:
   m_GameObject: {fileID: 728601477}
   serializedVersion: 2
   m_LocalRotation: {x: 0.12644918, y: 0.12644918, z: 0.69570875, w: 0.69570875}
-  m_LocalPosition: {x: -12.8, y: -4.5, z: 15.862975}
+  m_LocalPosition: {x: -10.54, y: -4.5, z: 15.91}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7649,13 +7654,18 @@ PrefabInstance:
       objectReference: {fileID: 846172826}
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
+      propertyPath: initalFrame
+      value: Salon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
+        type: 3}
       propertyPath: frames.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
       propertyPath: frames.Array.data[0].id
-      value: main_frame
+      value: Salon
       objectReference: {fileID: 0}
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}

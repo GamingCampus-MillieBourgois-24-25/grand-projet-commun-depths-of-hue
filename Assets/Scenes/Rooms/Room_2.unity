@@ -727,6 +727,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2788830476853846094, guid: 95db439174577f1468f7268cb6018cf2,
+        type: 3}
+      propertyPath: skipEndTransition
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2840688917002009200, guid: 95db439174577f1468f7268cb6018cf2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10146,6 +10151,11 @@ PrefabInstance:
       objectReference: {fileID: 1607507425}
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
+      propertyPath: initalFrame
+      value: "Chants_Sir\xE8nes"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
+        type: 3}
       propertyPath: lockedFrame
       value: 
       objectReference: {fileID: 21300000, guid: fe2da11ce1183b54685a4271462b240f,
@@ -10160,6 +10170,11 @@ PrefabInstance:
         type: 3}
       propertyPath: frames.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
+        type: 3}
+      propertyPath: frames.Array.data[0].id
+      value: "Chants_Sir\xE8nes"
       objectReference: {fileID: 0}
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
@@ -12331,12 +12346,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1493852803}
   m_SourcePrefab: {fileID: 100100000, guid: 69596fb975e483d48b8d24020882a038, type: 3}
---- !u!223 &1493852797 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 2347458732442185951, guid: 69596fb975e483d48b8d24020882a038,
-    type: 3}
-  m_PrefabInstance: {fileID: 1493852796}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1493852798 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6930305208576795412, guid: 69596fb975e483d48b8d24020882a038,
@@ -14116,7 +14125,6 @@ MonoBehaviour:
   gridSize: 4
   cellPrefab: {fileID: 7648516946977174678, guid: e8b420c64a6517444bc07ede1577dfc5,
     type: 3}
-  canvasEnigme: {fileID: 1493852797}
   startPosition: {fileID: 1317927850}
   choiceCount: {fileID: 1493852799}
   choiceColorImage: {fileID: 1493852798}
