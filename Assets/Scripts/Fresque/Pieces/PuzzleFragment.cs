@@ -11,7 +11,9 @@ public class PuzzleFragment:MonoBehaviour
 
     public void MoveFragment( Vector3 targetPosition, Vector3 finalScale)
     {
-        Vector3 start = transform.position;
+        Vector3 start = Vector3.zero;
+        Debug.Log("start" + start);
+        transform.localScale = Vector3.zero;
         float duration = 1.5f;
 
         float radius = 2.5f; // plus grand = spirale plus large
@@ -34,7 +36,7 @@ public class PuzzleFragment:MonoBehaviour
             ) * radius * (1 - t);
 
             // Applique la position finale
-            transform.position = center + offset;
+            transform.localPosition = center + offset;
 
         }, 360f * spinCount, duration).SetEase(Ease.InOutSine);
 

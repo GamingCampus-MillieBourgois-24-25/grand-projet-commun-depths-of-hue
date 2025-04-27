@@ -10,7 +10,9 @@ public class PuzzleManager : MonoBehaviour
     public static PuzzleManager Instance;
     public GameObject fresque;
 
-    public int rowAmount =4;
+    public Transform aled;
+
+    public int rowAmount = 4;
     public int columnAmount = 4;
 
     public float largeur;
@@ -20,24 +22,25 @@ public class PuzzleManager : MonoBehaviour
 
     public PuzzleFragment[,] puzzleGrid;
 
-   
+
     private void Awake()
     {
         puzzleGrid = new PuzzleFragment[rowAmount, columnAmount];
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        // Gets the size of the object
+        // Get the size of the object
         Collider collider = fresque.GetComponent<Collider>();
 
         if (collider != null)
         {
-            longueur = collider.bounds.size.x;  
-            largeur = collider.bounds.size.y;  
+            // If it's a Collider, use bounds but ignore the scale effect
+            longueur = collider.bounds.size.x / fresque.transform.lossyScale.x;
+            largeur = collider.bounds.size.y / fresque.transform.lossyScale.y;
         }
         else
         {
-    
+            // If it's a RectTransform, use the rect size directly
             RectTransform fresqueRectTransform = fresque.GetComponent<RectTransform>();
             if (fresqueRectTransform != null)
             {
@@ -46,20 +49,20 @@ public class PuzzleManager : MonoBehaviour
             }
         }
 
-
         col.Clear();
         row.Clear();
 
-        // This divides the width and length by the amount of wanted row/column. These values depend on the image splitter values.
+        // This divides the width and length by the amount of wanted row/column.
         for (int i = 0; i < 4; i++)
         {
-            col.Add((longueur / columnAmount) * i);  
-            row.Add((largeur / rowAmount) * i); 
+            col.Add((longueur / columnAmount) * i);
+            row.Add((largeur / rowAmount) * i);
         }
     }
 
-    public void StartFresque()
+    public void OStart()
     {
+        Debug.Log("sl");
         StartCoroutine(InitializePuzzleWithDelay());
     }
 
@@ -72,7 +75,7 @@ public class PuzzleManager : MonoBehaviour
             yield break;
         }
 
-        Debug.Log("ooso");
+
         // Tant qu'il reste des fragments dans l'inventaire
         while (_inventaire.HasFragments())
         {
@@ -101,66 +104,33 @@ public class PuzzleManager : MonoBehaviour
     /// <param name="fragment"></param>
     public void AddFragmentToFresque(PuzzleFragment fragment)
     {
-    
-       
-        float normalizedX = (col[fragment.col] / longueur) * fresque.transform.localScale.x;
+        // Calcul de la taille d'une cellule (case de la grille)
+        float fragmentWidth = longueur / columnAmount;  // Largeur d'une cellule
+        float fragmentHeight = largeur / rowAmount;    // Hauteur d'une cellule
 
-        float normalizedY = (row[fragment.row] / largeur) * fresque.transform.localScale.y;
+        // Récupérer la taille actuelle du fragment (avant redimensionnement)
+        Vector3 currentScale = fragment.transform.localScale;
 
+        // Inverser la position en Y pour que (0,0) soit en haut à gauche
+        float posX = (fragment.col + 0.5f) * fragmentWidth - (longueur / 2f);
+        float posY = -(fragment.row + 0.5f) * fragmentHeight + (largeur / 2f);  // Inversion de Y ici
+        Vector3 fragmentPosition = new Vector3(posX, posY, 0);
 
-        float offsetXFresque = fresque.transform.localScale.x / 2f;
+        // Ajouter le fragment comme enfant de la fresque
+        fragment.transform.SetParent(fresque.transform);
 
-        float offsetYFresque = fresque.transform.localScale.y / 2f;
+        // Appliquer la position
+
+        Vector3 scale = new Vector3(2.90287423f, 5.0263319f, 2);
         
-        float offsetXFragment = fragment.transform.localScale.x*2;
-        
-        float offsetYFragment = fragment.transform.localScale.y*2;
-
-        Vector3 position = new Vector3(normalizedX - offsetXFresque + offsetXFragment, offsetYFresque - normalizedY - offsetYFragment, this.transform.position.z);
-
-        Vector3 fragmentPosition = position;
-        Vector3 fragmentScale = Vector3.one;
-
-
-        float fragmentWidth = longueur / columnAmount;  
-        float fragmentHeight = largeur / rowAmount;  
-
-        //Adjusts the scale of the fragment to the fresque
-
-        BoxCollider fragCollider = fragment.GetComponent<BoxCollider>();
-        if (fragCollider != null)
-        {
-            Vector3 currentSize = fragCollider.size;
-            Vector3 newScale = new Vector3(
-                fragmentWidth / currentSize.x,
-                fragmentHeight / currentSize.y,
-                1f); // Conserve l'épaisseur Z
-
-            fragmentScale = newScale;
-        }
-        else 
-        {
-            fragment.transform.localScale = new Vector3(
-                fragmentWidth,
-                fragmentHeight,
-                3f);
-        }
-
-
-        if (puzzleGrid[fragment.row, fragment.col] != null)
-        {
-            Debug.LogWarning($"Un fragment est déjà en {fragment.row}, {fragment.col}");
-            return;
-        }
-
-        puzzleGrid[fragment.row, fragment.col] = fragment;
-
-        fragment.MoveFragment(fragmentPosition, fragmentScale);
-       
-        Debug.Log(IsPuzzleComplete());
-
+        fragment.MoveFragment(fragmentPosition, scale);
     }
-    
+
+
+
+
+
+
     public bool IsPuzzleComplete()
     {
         foreach (var fragment in puzzleGrid)
