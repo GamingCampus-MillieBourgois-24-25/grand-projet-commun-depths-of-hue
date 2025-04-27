@@ -1,6 +1,7 @@
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngineInternal;
 
 public class Enigme_Doble : Enigme
 {
@@ -22,7 +23,11 @@ public class Enigme_Doble : Enigme
 
     private void Awake()
     {
-        //PrepareBulles();
+        if (bubulle == null)
+        {
+            bubulle = Resources.Load<GameObject>("Objects/Bulle/bulle"); 
+        }
+        PrepareBulles();
     }
 
     private void PrepareBulles()
@@ -39,7 +44,6 @@ public class Enigme_Doble : Enigme
     public override void Initialize()
     {
         base.Initialize();
-        PrepareBulles();
         nbDouble = ItemsDouble.Count / 2;
         CreateBulle();
         SpawnObjects();
@@ -56,12 +60,12 @@ public class Enigme_Doble : Enigme
 
     public void ObjectClicked(GameObject obj)
     {
+        if (!gestion.enabled) return;
         Bulle bubulle = obj.GetComponent<Bulle>();
         if (bubulle.item == firstSelected) return;
 
         if (firstSelected == null && firstBulleSelected == null)
         {
-            /*Material outlineMaterial = new Material(materialToApply);*/
             firstSelected = bubulle.item;
             firstBulleSelected = obj;
             bubulle.item.transform.position = obj.transform.position;
@@ -70,13 +74,15 @@ public class Enigme_Doble : Enigme
         }
         else
         {
+            gestion.enabled = false;
             secondSelected = bubulle.item;
             secondBulleSelected = obj;
             bubulle.item.transform.position = obj.transform.position;
             bubulle.item.SetActive(true);
             obj.SetActive(false);
+            
             isTimerRunning = true;
-            gestion.enabled = false;
+            
         }
     }
 
