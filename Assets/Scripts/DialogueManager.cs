@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
 using UnityEngine.UI;
-using Random = System.Random;
 
 [Serializable]
 public class DialogueData
@@ -130,7 +130,14 @@ public class DialogueManager : MonoBehaviour
         foreach (char c in GetDialogue(dialogueData))
         {
             textComponent.text += c;
+            audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
             audioSource.PlayOneShot(dialogSound);
+
+            if (c == '.') {
+                yield return new WaitForSeconds(0.5f);
+            } else if (c == ',') {
+                yield return new WaitForSeconds(0.25f);
+            }
 
             yield return new WaitForSeconds(textSpeed);
         }
@@ -186,7 +193,7 @@ public class DialogueManager : MonoBehaviour
         if (!isCountingDown) return;
         currentTimer += Time.deltaTime;
         if (!(currentTimer >= timeBeforeInactivityText)) return;
-        Random rand = new Random();
+        System.Random rand = new System.Random();
         int countMax = 0;
         foreach (var dialoguePair in listDialogues)
         {

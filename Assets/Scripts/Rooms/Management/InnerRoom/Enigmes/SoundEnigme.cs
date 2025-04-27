@@ -171,10 +171,13 @@ public class SoundEnigme : Enigme
         EnableGlow(coral);
 
         AudioClip sound = coral.GetAudioClip();
+        AudioSource audioSource = statue.GetComponent<AudioSource>();
+        float newPitch = UnityEngine.Random.Range(0.7f, 1.2f);
 
-        statue.GetComponent <AudioSource>().PlayOneShot(sound);
+        audioSource.pitch = newPitch;
+        audioSource.PlayOneShot(sound);
 
-        yield return new WaitForSeconds(sound.length);
+        yield return new WaitForSeconds(sound.length * newPitch + 0.5f);
 
         DisableGlow(coral);
  
