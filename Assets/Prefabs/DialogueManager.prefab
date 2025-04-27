@@ -1138,7 +1138,7 @@ PrefabInstance:
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
       propertyPath: listDialogues.Array.size
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
@@ -1187,6 +1187,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
+      propertyPath: listDialogues.Array.data[10].key
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[11].key
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
       propertyPath: listDialogues.Array.data[1].value.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -1228,6 +1238,16 @@ PrefabInstance:
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
       propertyPath: listDialogues.Array.data[9].value.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[10].value.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[11].value.Array.size
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
@@ -1407,6 +1427,48 @@ PrefabInstance:
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
       propertyPath: listDialogues.Array.data[9].value.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4386c6e1aba54e640b631a1e75f8272a,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[10].value.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: cc43706aa35f50641ab762495268cc4e,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[10].value.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0f1b3af25b03b07409f135d36bc6112b,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[10].value.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 54ee37006bfa2994685ebdcf86c21fcc,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[10].value.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: b4edebfba1a78be4c9dd054af270961a,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[11].value.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 784406c0ccbd06c4c8c91cf5bb2e5344,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[11].value.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9aed2a9759a38ef4aaba955d3425eb69,
+        type: 2}
+    - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: listDialogues.Array.data[11].value.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: 4386c6e1aba54e640b631a1e75f8272a,
         type: 2}

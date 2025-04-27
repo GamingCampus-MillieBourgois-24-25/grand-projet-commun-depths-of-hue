@@ -47,9 +47,17 @@ public class Sudoku : Enigme
 
     [SerializeField] private int numberOfBlankCases = 8;
     [SerializeField] private GameObject canvaEnigme;
+    [SerializeField] private AudioClip clipSuccess;
 
     private SudokuGenerator sudokuGenerator;
     private SudokuPlay[,] fullSolution;
+
+    #region Event
+
+    public delegate void SendSoundSuccess(AudioClip _clip);
+    public static event SendSoundSuccess OnSendSoundEffect;
+
+    #endregion
 
     private void Start()
     {
@@ -350,7 +358,8 @@ public class Sudoku : Enigme
             return;
         }
         Debug.Log("You won the game!");
-        canvasEnigme.gameObject.SetActive(false);
+        if (clipSuccess) OnSendSoundEffect?.Invoke(clipSuccess);
+        canvaEnigme.SetActive(true);
         DialogueManager.Instance.StartNewDialogue(1,DialogueGroupKey.sudokuLike);
         Success();
     }

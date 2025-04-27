@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Start
   m_EditorClassIdentifier: 
   dialogues:
-  - npc: Joueur
+  - npc: Plongeur
     image: {fileID: 0}
     dialogueKey: Start1
-  - npc: Joueur
+  - npc: Plongeur
     image: {fileID: 0}
     dialogueKey: Start2
-  - npc: Joueur
+  - npc: Plongeur
     image: {fileID: 0}
     dialogueKey: Start3
   tableKey: DialoguesText

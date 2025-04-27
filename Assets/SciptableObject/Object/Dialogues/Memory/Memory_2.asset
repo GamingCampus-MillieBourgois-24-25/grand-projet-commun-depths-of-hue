@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8da2fdd88ae8f74ab82d516c27daf8c, type: 3}
-  m_Name: CarteDestin_indice2
+  m_Name: Memory_2
   m_EditorClassIdentifier: 
   dialogues:
-  - npc: Plongeur
+  - npc: "Voix ext\xE9rieures"
     image: {fileID: 0}
-    dialogueKey: CarteDestin_Indice2
+    dialogueKey: Memory_2
   tableKey: DialoguesText
