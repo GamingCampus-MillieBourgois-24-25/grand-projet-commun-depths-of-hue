@@ -343,10 +343,28 @@ public class Sudoku : Enigme
 
     private void CheckWin()
     {
-        if (!IsGameWon()) return;
+        if (!IsGameWon())
+        {
+            if(IsBoardFull())
+                DialogueManager.Instance.StartNewDialogue(2,DialogueGroupKey.sudokuLike);
+            return;
+        }
         Debug.Log("You won the game!");
         canvasEnigme.gameObject.SetActive(false);
+        DialogueManager.Instance.StartNewDialogue(1,DialogueGroupKey.sudokuLike);
         Success();
+    }
+
+    private bool IsBoardFull()
+    {
+        foreach (var sudokuPlay in sudokuGrid)
+        {
+            if (sudokuPlay.countPiece == 0 || sudokuPlay.color == ColorSudoku.None)
+            {
+                return false;
+            }
+        }
+        return true;
     }
     public void Quit()
     {
