@@ -1,7 +1,6 @@
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngineInternal;
 
 public class Enigme_Doble : Enigme
 {
@@ -19,13 +18,13 @@ public class Enigme_Doble : Enigme
     [SerializeField] private GestionInputs gestion;
     private GameObject foundObject;
     private GameObject bubble;
-    private List<GameObject> bulles;
+    private List<GameObject> bulles = new List<GameObject>();
     private float timer = 1f; // 1 seconde
     private bool isTimerRunning = false;
 
    private void Awake()
     {
-        if (!bubble) return;
+        if (!bubulle) return;
         PrepareBulles();
     }
 
@@ -34,7 +33,7 @@ public class Enigme_Doble : Enigme
         Vector3 positionSpawn = new Vector3(1000, 0, 0);
         for (int i = 0; i < ItemsDouble.Count; i++)
         {
-            GameObject newBulle = Instantiate(bubble, positionSpawn, Quaternion.identity);
+            GameObject newBulle = Instantiate(bubulle, positionSpawn, Quaternion.identity);
             newBulle.SetActive(false);
             bulles.Add(newBulle);
         }
