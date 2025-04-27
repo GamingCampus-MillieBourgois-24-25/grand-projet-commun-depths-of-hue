@@ -1104,6 +1104,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1358829331816242262}
     m_Modifications:
+    - target: {fileID: 3905951369045676254, guid: 78e449b43e74c3143868b98c7fd7218c,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -6542649198023140546, guid: 71f52830d136c4a46a911391dd88bd1b,
+        type: 2}
     - target: {fileID: 5682203978968959379, guid: 78e449b43e74c3143868b98c7fd7218c,
         type: 3}
       propertyPath: dialogFrame

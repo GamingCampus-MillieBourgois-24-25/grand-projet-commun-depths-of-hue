@@ -108,6 +108,8 @@ AudioMixerController:
     name: Music Volume
   - guid: bc036666075f4004a88e7c5179a5f0f8
     name: Sound Effects Volume
+  - guid: c4f305100b4f0da49813a43a0a761881
+    name: Underwater Volume
   m_AudioMixerGroupViews:
   - guids:
     - a0b1b888f3a11e14aaad6d210a83fbf0

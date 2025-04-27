@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioMixerGroup musicMixerGroup;
     [SerializeField] private AudioMixerGroup soundEffectsMixerGroup;
+    [SerializeField] private AudioMixerGroup underwaterEffectsMixerGroup;
     [SerializeField] private Sound[] sounds;
 
 
@@ -74,5 +75,7 @@ public class AudioManager : MonoBehaviour
 
         float soundEffectsDB = Mathf.Log10(AudioOptionManager.soundEffectsVolume) * 20;
         soundEffectsMixerGroup.audioMixer.SetFloat("Sound Effects Volume", AudioOptionManager.soundEffectsVolume);
+        
+        underwaterEffectsMixerGroup.audioMixer.SetFloat("Underwater Volume", AudioOptionManager.soundEffectsVolume/2);
     }
 }
