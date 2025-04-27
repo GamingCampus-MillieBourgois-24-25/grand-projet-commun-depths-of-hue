@@ -58,7 +58,7 @@ public class PuzzleManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void StartFresque()
     {
         StartCoroutine(InitializePuzzleWithDelay());
     }
@@ -76,6 +76,7 @@ public class PuzzleManager : MonoBehaviour
         // Tant qu'il reste des fragments dans l'inventaire
         while (_inventaire.HasFragments())
         {
+            Debug.Log("ooso");
             // Instancie le prochain fragment
             GameObject fragmentObj = _inventaire.InstantiateNextFragment();
             PuzzleFragment fragment = fragmentObj.GetComponent<PuzzleFragment>();
@@ -101,6 +102,7 @@ public class PuzzleManager : MonoBehaviour
     public void AddFragmentToFresque(PuzzleFragment fragment)
     {
     
+       
         float normalizedX = (col[fragment.col] / longueur) * fresque.transform.localScale.x;
 
         float normalizedY = (row[fragment.row] / largeur) * fresque.transform.localScale.y;
@@ -141,7 +143,7 @@ public class PuzzleManager : MonoBehaviour
             fragment.transform.localScale = new Vector3(
                 fragmentWidth,
                 fragmentHeight,
-                1f);
+                3f);
         }
 
 
@@ -153,49 +155,12 @@ public class PuzzleManager : MonoBehaviour
 
         puzzleGrid[fragment.row, fragment.col] = fragment;
 
-        MoveFragment(fragment,fragmentPosition, fragmentScale);
+        fragment.MoveFragment(fragmentPosition, fragmentScale);
        
         Debug.Log(IsPuzzleComplete());
 
     }
-    public void MoveFragment(PuzzleFragment fragment,Vector3 targetPosition, Vector3 finalScale)
-    {
-        Vector3 start = fragment.transform.position;
-        float duration = 1.5f;
-
-        float radius = 2.5f; // plus grand = spirale plus large
-        int spinCount = 2; // nombre de tours
-        float angle = 0f;
-
-        DOTween.To(() => angle, x => {
-            angle = x;
-            float t = angle / (360f * spinCount);
-
-            // Interpolation linéaire de la position de base à finale
-            Vector3 center = Vector3.Lerp(start, targetPosition, t);
-
-            // Création d’un offset circulaire
-            float radians = Mathf.Deg2Rad * angle;
-            Vector3 offset = new Vector3(
-                Mathf.Cos(radians),
-                Mathf.Sin(radians),
-                0f
-            ) * radius * (1 - t);
-
-            // Applique la position finale
-            fragment.transform.position = center + offset;
-
-        }, 360f * spinCount, duration).SetEase(Ease.InOutSine);
-
-        // Scale
-        fragment.transform.DOScale(finalScale, duration).SetEase(Ease.OutBack);
-
-        // Rotation sur lui-même
-        fragment.transform.DORotate(new Vector3(360f, 360f, 360f), duration, RotateMode.FastBeyond360)
-                 .SetEase(Ease.InOutSine);
-
-      
-    }
+    
     public bool IsPuzzleComplete()
     {
         foreach (var fragment in puzzleGrid)
