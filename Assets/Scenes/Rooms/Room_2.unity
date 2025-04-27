@@ -14038,6 +14038,7 @@ MonoBehaviour:
   enigmeLight: {fileID: 1308456079}
   canvaSoundEnigme: {fileID: 61550545}
   lose: {fileID: 8300000, guid: 289e23283b22f0b49967448f460ea372, type: 3}
+  success: {fileID: 8300000, guid: 4481a235fe8366e4188b2d2b2453d947, type: 3}
 --- !u!114 &1607507431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14074,8 +14075,9 @@ MonoBehaviour:
   rightOrderList: 000000000100000002000000030000000400000005000000
   chosenOrderList: []
   canvaEnigme: {fileID: 500114409}
-  playEffect: {fileID: 0}
-  clip: {fileID: 0}
+  playEffect: {fileID: 1450215905}
+  clip: {fileID: 8300000, guid: c92403b1c4ea15d4db9cfc7cc65a5d4e, type: 3}
+  success: {fileID: 8300000, guid: 4481a235fe8366e4188b2d2b2453d947, type: 3}
   prefabLine: {fileID: 7179921925950592113, guid: 5539d281fd18eb94d8a237c1e5346d94,
     type: 3}
 --- !u!114 &1607507433
@@ -14133,7 +14135,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: de8fa1e4feb1de940816fc981c966549, type: 3}
   numberOfBlankCases: 12
   canvaEnigme: {fileID: 500114409}
-  clipSuccess: {fileID: 8300000, guid: fa3cc8078bcc1b848907ecfedebb8244, type: 3}
+  clipSuccess: {fileID: 8300000, guid: 4481a235fe8366e4188b2d2b2453d947, type: 3}
 --- !u!1 &1617285438
 GameObject:
   m_ObjectHideFlags: 0

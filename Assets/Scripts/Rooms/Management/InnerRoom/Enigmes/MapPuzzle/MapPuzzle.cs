@@ -11,6 +11,7 @@ public class MapPuzzle : Enigme
     [SerializeField] private GameObject canvaEnigme;
     [SerializeField] private PlayEffect playEffect;
     [SerializeField] private AudioClip clip;
+    [SerializeField] private AudioClip success;
 
 
     public GameObject prefabLine;
@@ -99,7 +100,7 @@ public class MapPuzzle : Enigme
         canvaEnigme.SetActive(true);
         DialogueManager.Instance.StartNewDialogue(1, DialogueGroupKey.carteDestin);
         Success();
-        if (clip) OnSendSoundEffect?.Invoke(clip);
+        if (success) OnSendSoundEffect?.Invoke(success);
     }
 
     public void Quit()
