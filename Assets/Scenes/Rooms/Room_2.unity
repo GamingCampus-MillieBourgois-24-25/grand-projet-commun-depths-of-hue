@@ -1996,6 +1996,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Piece_0_0
       objectReference: {fileID: 0}
+    - target: {fileID: 7709958889365244362, guid: b4c94c46b0e5ce54d92f758dd37abc26,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13752,7 +13757,7 @@ MonoBehaviour:
   - {r: 0.7329851, g: 0.50284797, b: 0.9433962, a: 1}
   - {r: 0.54013884, g: 0.8530938, b: 0.9622642, a: 1}
   - {r: 0.9716981, g: 0.881409, b: 0.47209862, a: 1}
-  unmodifiableColor: {r: 0, g: 0, b: 0, a: 0}
+  unmodifiableColor: {r: 0.7764706, g: 0.7764706, b: 0.7764706, a: 1}
   countSpriteList:
   - {fileID: 21300000, guid: 8b6922dfbeea78f49b5fb89e9c9455dd, type: 3}
   - {fileID: 21300000, guid: bffcb7ec7a78e5249a56125f6e02a23b, type: 3}

@@ -400,7 +400,7 @@ MonoBehaviour:
   inv: {fileID: 0}
   itemDatas: []
   part: {fileID: 0}
-  save: {fileID: 0}
+  save: {fileID: 1644571682}
 --- !u!1 &29318347
 GameObject:
   m_ObjectHideFlags: 0
