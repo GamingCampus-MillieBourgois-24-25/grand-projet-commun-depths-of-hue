@@ -28,7 +28,7 @@ public class Sudoku : Enigme
     private SudokuPlay[,] sudokuGrid;
     [SerializeField] private int gridSize = 4;
     [SerializeField] private GameObject cellPrefab;
-    [SerializeField] private Canvas canvasEnigme;
+    
 
     [SerializeField] private GameObject startPosition;
 
@@ -360,6 +360,7 @@ public class Sudoku : Enigme
         Debug.Log("You won the game!");
         if (clipSuccess) OnSendSoundEffect?.Invoke(clipSuccess);
         canvaEnigme.SetActive(true);
+        SudokuCanvas.SetActive(false);
         DialogueManager.Instance.StartNewDialogue(1,DialogueGroupKey.sudokuLike);
         Success();
     }
