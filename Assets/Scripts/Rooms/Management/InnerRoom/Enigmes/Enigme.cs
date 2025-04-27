@@ -10,6 +10,8 @@ public abstract class Enigme : MonoBehaviour
     public int hintLeft = 3;
     public int hintUsed = 0;
 
+    public GameObject fragment;
+
     [SerializeField] protected GameObject itemsContainer;
 
     public DialogueGroupKey enigmeDialogKey;
@@ -54,7 +56,14 @@ public abstract class Enigme : MonoBehaviour
     {
         isStarted = false;
         isResolved = true;
-        
+
+        if (fragment != null)
+        {
+            fragment.SetActive(true);
+            fragment.GetComponent<PuzzleFragment>().Pop();
+            fragment.GetComponent<PuzzleFragment>().FloatAndRotateFragment(); 
+
+        }
         OnSuccess?.Invoke();
     }
 

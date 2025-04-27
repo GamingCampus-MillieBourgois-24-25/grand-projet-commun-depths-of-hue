@@ -21,7 +21,6 @@ public class SoundEnigme : Enigme
 
     public Light enigmeLight;
 
-    public GameObject fragment;
 
     private bool sequenced =false;
 
@@ -266,7 +265,7 @@ public class SoundEnigme : Enigme
         }
         isAnimating = false;
         statue.transform.localRotation = endRotation;
-        fragment.SetActive(true);
+        
         canvaSoundEnigme.SetActive(false);
         enigmeLight.color = idleColor;
         Success();
