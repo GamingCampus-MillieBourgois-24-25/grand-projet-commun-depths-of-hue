@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class SoundEnigme : Enigme
 {
+    bool isAnimating = false;
     public List<Corail> corals;  
     public List<Corail> correctSequence; 
     private List<Corail> playerSequence;  
@@ -117,28 +118,31 @@ public class SoundEnigme : Enigme
     {
         if (sequenced == true)
         {
-
-            playerSequence.Add(coral);
-
-
-            for (int i = 0; i < playerSequence.Count; i++)
+            if (isAnimating == false)
             {
-                if (playerSequence[i] != correctSequence[i])
+
+                playerSequence.Add(coral);
+
+
+                for (int i = 0; i < playerSequence.Count; i++)
                 {
+                    if (playerSequence[i] != correctSequence[i])
+                    {
 
-                    statue.GetComponent<AudioSource>().PlayOneShot(lose);
-                    DialogueManager.Instance.StartNewDialogue(2,DialogueGroupKey.chantsSirene);
-                    ResetPuzzle();
+                        statue.GetComponent<AudioSource>().PlayOneShot(lose);
+                        DialogueManager.Instance.StartNewDialogue(2, DialogueGroupKey.chantsSirene);
+                        ResetPuzzle();
 
-                    return;
+                        return;
+                    }
                 }
-            }
-            PlayCoral(coral);
+                PlayCoral(coral);
 
-            if (playerSequence.Count == correctSequence.Count)
-            {
-                DialogueManager.Instance.StartNewDialogue(1,DialogueGroupKey.chantsSirene);
-                SolvePuzzle();
+                if (playerSequence.Count == correctSequence.Count)
+                {
+                    DialogueManager.Instance.StartNewDialogue(1, DialogueGroupKey.chantsSirene);
+                    SolvePuzzle();
+                }
             }
         }
         else
@@ -162,6 +166,7 @@ public class SoundEnigme : Enigme
 
     void SolvePuzzle()
     {
+        
         StartCoroutine(RotateStatueTowardsCamera());
     }
 
@@ -243,6 +248,7 @@ public class SoundEnigme : Enigme
 
     IEnumerator RotateStatueTowardsCamera()
     {
+        isAnimating = true;
         float duration = 5f;
         float timer = 0f;
 
@@ -258,7 +264,7 @@ public class SoundEnigme : Enigme
 
             yield return null;
         }
-
+        isAnimating = false;
         statue.transform.localRotation = endRotation;
         fragment.SetActive(true);
         canvaSoundEnigme.SetActive(false);
@@ -291,7 +297,7 @@ public class SoundEnigme : Enigme
         
         Corail itemCorail = item.GetComponent<Corail>();
 
-        if (itemCorail != null)
+        if (itemCorail != null && !isAnimating)
         {
             OnCoralClicked(itemCorail);
         }
