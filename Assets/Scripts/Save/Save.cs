@@ -112,7 +112,7 @@ public class Save : MonoBehaviour
         switch (category.Trim().ToLower())
         {
             case "inventory":
-                if (saveData.inventoryData != null)
+                if (saveData.inventoryData != null && inventaire)
                 {
                     inventaire.SetId(saveData.inventoryData.scriptableObjectIDs);
                     inventaire.AddItemSave();
@@ -120,7 +120,7 @@ public class Save : MonoBehaviour
                 }
                 break;
             case "mapcadre":
-                if (saveData.mapData != null)
+                if (saveData.mapData != null && showMap)
                 {
                     if (saveData.mapData.mapInfo == null || saveData.mapData.mapInfo.Count == 0)
                     {
@@ -134,7 +134,7 @@ public class Save : MonoBehaviour
                 }
                 break;
             case "explorationcadre":
-                if (saveData.cadreData != null)
+                if (saveData.cadreData != null && showMap)
                 {
                     if (string.IsNullOrEmpty(saveData.cadreData.actualCadre) || saveData.cadreData == null)
                     {
@@ -149,7 +149,7 @@ public class Save : MonoBehaviour
                 }
                 break;
             case "audio":
-                if(saveData.audiomanager != null)
+                if(saveData.audiomanager != null && audio)
                 {
                     audio.MusicSlider.value = saveData.audiomanager.music;
                     audio.SoundEffectsSlider.value = saveData.audiomanager.soundEffect;
