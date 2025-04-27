@@ -87,7 +87,7 @@ public class MapPuzzle : Enigme
                 return;
             }
         }
-        Debug.Log("WIN");
+
         mapCanvas.SetActive(false);
         canvaEnigme.SetActive(true);
         Success();

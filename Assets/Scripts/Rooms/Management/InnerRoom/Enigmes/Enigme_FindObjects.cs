@@ -83,7 +83,6 @@ public class Enigme_FindObjects : Enigme
 
         if (container == null)
         {
-            Debug.LogError("Le GameObject avec le tag 'PositionContainer' est introuvable !");
             return;
         }
 
