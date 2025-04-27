@@ -11,6 +11,8 @@ public class DoorController : MonoBehaviour
     [SerializeField] private GameObject unlockedVisual;
     [SerializeField] private int direction;
 
+    public bool lastRoom = false;
+
     #region Getter
     public int Direction => direction;
 
@@ -79,4 +81,6 @@ public class DoorController : MonoBehaviour
             Debug.Log("Door Locked !");
         }
     }
+   
+
 }

@@ -10269,7 +10269,7 @@ PrefabInstance:
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
       propertyPath: frames.Array.data[1].connections.Array.data[0].connectedFrameId
-      value: main_frame
+      value: Chants_Coraux
       objectReference: {fileID: 0}
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
@@ -10295,6 +10295,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FrameManagement
+      objectReference: {fileID: 0}
+    - target: {fileID: 8856867517141283836, guid: ab2bea016b629e24cb29675996c534fd,
+        type: 3}
+      propertyPath: m_margin.z
+      value: -73.418655
       objectReference: {fileID: 0}
     - target: {fileID: 8876523096435981876, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
@@ -12766,7 +12771,7 @@ PrefabInstance:
     - target: {fileID: 3769522166582405867, guid: 40db547628a03f44b8919ee0eded9418,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.6399999
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3769522166582405867, guid: 40db547628a03f44b8919ee0eded9418,
         type: 3}
