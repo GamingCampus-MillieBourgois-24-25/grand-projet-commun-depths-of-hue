@@ -27,7 +27,9 @@ public enum DialogueGroupKey
     sudokuLike,
     start,
     chantsSireneHint,
-    carteDestinHint
+    carteDestinHint,
+    findObject,
+    findObjectHint
 }
 
 [System.Serializable]

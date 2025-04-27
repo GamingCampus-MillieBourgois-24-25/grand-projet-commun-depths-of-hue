@@ -10,16 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8da2fdd88ae8f74ab82d516c27daf8c, type: 3}
-  m_Name: Start
+  m_Name: FindObject_Good2
   m_EditorClassIdentifier: 
   dialogues:
-  - npc: Joueur
+  - npc: Statue
     image: {fileID: 0}
-    dialogueKey: Start1
-  - npc: Joueur
-    image: {fileID: 0}
-    dialogueKey: Start2
-  - npc: Joueur
-    image: {fileID: 0}
-    dialogueKey: Start3
+    dialogueKey: FindObjects_Good2
   tableKey: DialoguesText
