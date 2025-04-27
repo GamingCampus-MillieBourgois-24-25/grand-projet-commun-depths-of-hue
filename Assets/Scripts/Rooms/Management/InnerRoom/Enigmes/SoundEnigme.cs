@@ -61,13 +61,17 @@ public class SoundEnigme : Enigme
 
     public void StartRound()
     {
-        enigmeLight.color = sequenceColor;
-        //panel.SetActive(true);
+        if (isResolved == false)
+        {
 
-        sequenced = true;
-        //StartCoroutine(FadeOverlay(1));
-        GenerateMelody();
-        playerSequence = new List<Corail>();
+            enigmeLight.color = sequenceColor;
+            //panel.SetActive(true);
+
+            sequenced = true;
+            //StartCoroutine(FadeOverlay(1));
+            GenerateMelody();
+            playerSequence = new List<Corail>();
+        }
     }
 
     //IEnumerator FadeOverlay(float targetAlpha)
