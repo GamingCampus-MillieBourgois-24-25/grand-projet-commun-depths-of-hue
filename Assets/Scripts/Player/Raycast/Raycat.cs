@@ -43,7 +43,7 @@ public class Raycat : MonoBehaviour
 
             if (go != null)
             {
-                Debug.Log("sssss");
+               
                 OnClickOnGameObject?.Invoke(go);
                 
             }

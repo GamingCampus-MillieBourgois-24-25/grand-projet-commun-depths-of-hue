@@ -63,7 +63,7 @@ public class SoundEnigme : Enigme
     {
         enigmeLight.color = sequenceColor;
         //panel.SetActive(true);
-        Debug.Log("started");
+
         sequenced = true;
         //StartCoroutine(FadeOverlay(1));
         GenerateMelody();

@@ -28,7 +28,6 @@ public class Corail : MonoBehaviour
 
         if (coralRenderers.Length == 0)
         {
-            Debug.LogError($"[Corail] Aucun Renderer trouvé dans les enfants de {gameObject.name}!");
             return;
         }
 

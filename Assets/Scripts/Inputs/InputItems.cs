@@ -26,6 +26,7 @@ public class InputItems : MonoBehaviour
         Instance = this;
 
         DontDestroyOnLoad(gameObject);
+
         EnhancedTouchSupport.Enable();
         SceneManager.activeSceneChanged += OnSceneChanged;
     }

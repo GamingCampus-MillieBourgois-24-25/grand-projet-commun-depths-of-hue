@@ -80,7 +80,7 @@ public abstract class Enigme : MonoBehaviour
     public virtual void CheckItem(GameObject item)
     {
         //Content//
-        Debug.Log("sp");
+   
     }
 
     public virtual void EnigmeEndReset()
