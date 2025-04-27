@@ -235,6 +235,46 @@ MonoBehaviour:
       have you believe.
     m_Metadata:
       m_Items: []
+  - m_Id: 3705477692203008
+    m_Localized: English
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3705992773705728
+    m_Localized: Connected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3708561185120256
+    m_Localized: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3708644895039488
+    m_Localized: Effects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3708879931252736
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3709569386749952
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710066994782208
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710141452066816
+    m_Localized: Start new game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710956761849856
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3711021102473216
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
