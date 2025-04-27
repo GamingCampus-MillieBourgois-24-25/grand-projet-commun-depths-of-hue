@@ -54,13 +54,13 @@ public class PuzzleFragment:MonoBehaviour
     {
         if (burst != null)
         {
-            // Créer une instance du particle system au même endroit que ton fragment
+
             ParticleSystem instance = Instantiate(burst, transform.position, Quaternion.identity);
 
-            // Lancer l'animation
+  
             instance.Play();
 
-            // Détruire le particle system après qu'il soit terminé pour éviter de surcharger la scène
+
             Destroy(instance.gameObject, instance.main.duration + instance.main.startLifetime.constantMax);
         }
         else
@@ -71,12 +71,11 @@ public class PuzzleFragment:MonoBehaviour
 
     public void FloatAndRotateFragment(float amplitude = 0.5f, float floatDuration = 2f, float rotationSpeed = 30f)
     {
-        // Animation de flottement (Yoyo vertical)
+
         transform.DOLocalMoveY(transform.localPosition.y + amplitude, floatDuration)
                  .SetEase(Ease.InOutSine)
                  .SetLoops(-1, LoopType.Yoyo);
 
-        // Rotation continue sur Z
         transform.DORotate(new Vector3(0, 0, 360f), 360f / rotationSpeed, RotateMode.FastBeyond360)
                  .SetEase(Ease.Linear)
                  .SetLoops(-1, LoopType.Restart);

@@ -17,6 +17,8 @@ public class SoundEnigme : Enigme
     public Color testColor;
     public Color sequenceColor;
 
+    bool isSequencePlaying = false;
+
     public int amountOfNotes;
 
     public Light enigmeLight;
@@ -63,7 +65,16 @@ public class SoundEnigme : Enigme
     {
         if (isResolved == false)
         {
+            isSequencePlaying = true;
 
+            foreach (Corail corail in corals)
+            {
+
+                DisableGlow(corail);
+            }
+            StopAllCoroutines();
+
+            
             enigmeLight.color = sequenceColor;
             //panel.SetActive(true);
 
@@ -110,6 +121,8 @@ public class SoundEnigme : Enigme
             yield return StartCoroutine(PlaySoundWithGlow(coral)); 
             
         }
+
+        isSequencePlaying = false;
     }
 
 
@@ -296,7 +309,7 @@ public class SoundEnigme : Enigme
         
         Corail itemCorail = item.GetComponent<Corail>();
 
-        if (itemCorail != null && !isAnimating)
+        if (itemCorail != null && !isAnimating && !isSequencePlaying)
         {
             OnCoralClicked(itemCorail);
         }

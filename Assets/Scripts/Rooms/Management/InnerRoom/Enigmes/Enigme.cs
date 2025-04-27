@@ -59,6 +59,7 @@ public abstract class Enigme : MonoBehaviour
 
         if (fragment != null)
         {
+            Debug.Log("hein ");
             fragment.SetActive(true);
             fragment.GetComponent<PuzzleFragment>().Pop();
             fragment.GetComponent<PuzzleFragment>().FloatAndRotateFragment(); 
