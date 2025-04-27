@@ -157,6 +157,14 @@ MonoBehaviour:
       r\xF4le s\u2019arr\xEAte ici\u2026. Bonne chance !"
     m_Metadata:
       m_Items: []
+  - m_Id: 3558509104820224
+    m_Localized: "Les couleurs et chiffres se heurtent... \xE9coute mieux leur chant."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3558639858053120
+    m_Localized: "Les nombres et les couleurs s'\xE9quilibrent... "
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
