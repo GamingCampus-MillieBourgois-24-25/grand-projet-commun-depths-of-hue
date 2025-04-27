@@ -10863,6 +10863,11 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0.686
       objectReference: {fileID: 0}
+    - target: {fileID: 8297113529026386691, guid: 4b9fdaff686a26546859553ca2082e6e,
+        type: 3}
+      propertyPath: BypassEffects
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13895,6 +13900,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: de8fa1e4feb1de940816fc981c966549, type: 3}
   numberOfBlankCases: 12
   canvaEnigme: {fileID: 500114409}
+  clipSuccess: {fileID: 8300000, guid: fa3cc8078bcc1b848907ecfedebb8244, type: 3}
 --- !u!1 &1617285438
 GameObject:
   m_ObjectHideFlags: 0
