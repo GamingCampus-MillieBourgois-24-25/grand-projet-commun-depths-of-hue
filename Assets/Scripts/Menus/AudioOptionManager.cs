@@ -38,6 +38,10 @@ public class AudioOptionManager : MonoBehaviour
 
     private void Start()
     {
+        OnSendStartLoadAudioToSave?.Invoke();
+        OnMusicSliderValueChange();
+        OnSoundEffectsSliderValueChange();
+        
         if (!isLoad)
         {
             musicSlider.value = startMusicVolume;
@@ -46,8 +50,6 @@ public class AudioOptionManager : MonoBehaviour
             soundEffectsSlider.value = startSoundEffectsVolume;
             AudioManager.Instance.UpdateMixerVolume();
         }
-        
-        OnSendStartLoadAudioToSave?.Invoke();
     }
 
     private void OnEnable()
