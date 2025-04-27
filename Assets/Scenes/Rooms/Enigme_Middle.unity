@@ -2754,8 +2754,8 @@ MonoBehaviour:
   hintLeft: 3
   hintUsed: 0
   itemsContainer: {fileID: 2118671561}
-  enigmeDialogKey: 0
-  enigmeHintKey: 0
+  enigmeDialogKey: 11
+  enigmeHintKey: 11
   objectsInEnigme: []
   ItemsDouble:
   - {fileID: 1223633482642783616}

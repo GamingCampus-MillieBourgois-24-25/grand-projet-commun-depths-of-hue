@@ -108,15 +108,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3245896739287040
-    m_Key: 'Memory_2
-
-'
+    m_Key: Memory_2
     m_Metadata:
       m_Items: []
   - m_Id: 3245957758021632
-    m_Key: 'Memory_End1
-
-'
+    m_Key: Memory_End1
     m_Metadata:
       m_Items: []
   - m_Id: 3246044080992256

@@ -124,6 +124,15 @@ public class Enigme_Doble : Enigme
             firstBulleSelected = null;
             secondBulleSelected = null;
             nbDouble--;
+            if (nbDouble == 4)
+            {
+                DialogueManager.Instance.StartNewDialogue(2,enigmeDialogKey);
+            }
+
+            if (nbDouble == 2)
+            {
+                DialogueManager.Instance.StartNewDialogue(3,enigmeDialogKey);
+            }
             UpdateTexte();
             Success();
             gestion.enabled = true;
@@ -149,7 +158,7 @@ public class Enigme_Doble : Enigme
         {
             base.Success();
             zoneText.SetActive(false);
-            
+            DialogueManager.Instance.StartNewDialogue(1,enigmeDialogKey);
         }
     }
 
