@@ -31,7 +31,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 336795074560
-    m_Localized: "*Tend la cl\xE9 dor\xE9e au plongeur*"
+    m_Localized: '*Tend un morceau de fresque au plongeur*'
     m_Metadata:
       m_Items: []
   - m_Id: 345892519936
@@ -183,7 +183,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3600845633449984
-    m_Localized: "(Tend la cl\xE9 dor\xE9e.)"
+    m_Localized: '*Tend un morceau de fresque.*'
     m_Metadata:
       m_Items: []
   - m_Id: 3601092455657472
@@ -211,7 +211,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3616901060063232
-    m_Localized: "DeepReach Compagnie m\u2019ont envoy\xE9 explorer cette r\xE9gion
+    m_Localized: "La Compagnie DeepReach m\u2019a envoy\xE9 explorer cette r\xE9gion
       afin de d\xE9couvrir la source de tous ces incidents."
     m_Metadata:
       m_Items: []
@@ -226,7 +226,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3685264876597248
-    m_Localized: "(Tend la cl\xE9 dor\xE9e.)"
+    m_Localized: '*Tend un morceau de fresque.*'
     m_Metadata:
       m_Items: []
   - m_Id: 3685455704846336
