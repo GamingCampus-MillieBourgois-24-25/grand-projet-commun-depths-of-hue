@@ -11,20 +11,20 @@ public class AudioOptionManager : MonoBehaviour
     
     public Slider MusicSlider
     {
-        get { return musicSlider; }
-        set { musicSlider = value; }
+        get => musicSlider;
+        set => musicSlider = value;
     }
 
     public Slider SoundEffectsSlider
     {
-        get { return soundEffectsSlider; }
-        set { soundEffectsSlider = value; }
+        get => soundEffectsSlider;
+        set => soundEffectsSlider = value;
     }
 
     public bool IsLoad
     {
-        get { return isLoad; }
-        set {  isLoad = value; }
+        get => isLoad;
+        set => isLoad = value;
     }
 
     public static float musicVolume {  get; private set; }
@@ -33,8 +33,15 @@ public class AudioOptionManager : MonoBehaviour
     public float startMusicVolume = 5f;
     public float startSoundEffectsVolume = 5f;
 
+    public delegate void SendStartLoadAudioToSave();
+    public static event SendStartLoadAudioToSave OnSendStartLoadAudioToSave;
+
     private void Start()
     {
+        OnSendStartLoadAudioToSave?.Invoke();
+        OnMusicSliderValueChange();
+        OnSoundEffectsSliderValueChange();
+        
         if (!isLoad)
         {
             musicSlider.value = startMusicVolume;
@@ -48,9 +55,9 @@ public class AudioOptionManager : MonoBehaviour
     private void OnEnable()
     {
         if (!handleMusicSlider) return;
-        SetupFixPivot(handleMusicSlider, musicSlider);
+        //SetupFixPivot(handleMusicSlider, musicSlider);
         if (!handleSoundEffectsSlider) return;
-        SetupFixPivot(handleSoundEffectsSlider, soundEffectsSlider);
+        //SetupFixPivot(handleSoundEffectsSlider, soundEffectsSlider);
         
         Vector3 posM = handleMusicSlider.anchoredPosition;
         posM.x = 0f;
@@ -67,7 +74,7 @@ public class AudioOptionManager : MonoBehaviour
         AudioManager.Instance.UpdateMixerVolume();
         
         if (!handleMusicSlider) return;
-        SetupFixPivot(handleMusicSlider, musicSlider);
+        //SetupFixPivot(handleMusicSlider, musicSlider);
     }
 
     public void OnSoundEffectsSliderValueChange()
@@ -76,7 +83,7 @@ public class AudioOptionManager : MonoBehaviour
         AudioManager.Instance.UpdateMixerVolume();
         
         if (!handleSoundEffectsSlider) return;
-        SetupFixPivot(handleSoundEffectsSlider, soundEffectsSlider);
+        //SetupFixPivot(handleSoundEffectsSlider, soundEffectsSlider);
     }
 
     private void SetupFixPivot(RectTransform _rectTransform, Slider _slider)

@@ -84,12 +84,14 @@ public class MapPuzzle : Enigme
         {
             if (rightOrderList[i] != chosenOrderList[i].GetComponent<Location>().locationName)
             {
+                DialogueManager.Instance.StartNewDialogue(2, DialogueGroupKey.carteDestin);
                 return;
             }
         }
 
         mapCanvas.SetActive(false);
         canvaEnigme.SetActive(true);
+        DialogueManager.Instance.StartNewDialogue(1, DialogueGroupKey.carteDestin);
         Success();
     }
 

@@ -22,13 +22,9 @@ public class Enigme_Doble : Enigme
     private float timer = 1f; // 1 seconde
     private bool isTimerRunning = false;
 
-    private void Awake()
+   private void Awake()
     {
-        if (bubulle == null)
-        {
-            bubulle = Resources.Load<GameObject>("Assets/Prefabs/Object/Bulle/bulle.prefab");
-        }
-        foundObject = GameObject.Find("bulle");
+        if (bubulle == null) return;
         PrepareBulles();
     }
 
@@ -47,6 +43,7 @@ public class Enigme_Doble : Enigme
     {
         base.Initialize();
         nbDouble = ItemsDouble.Count / 2;
+        foundObject = GameObject.Find("bulle");
         CreateBulle();
         SpawnObjects();
         UpdateTexte();
