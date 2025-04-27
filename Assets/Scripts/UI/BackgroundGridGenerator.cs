@@ -52,7 +52,7 @@ public class BackgroundGridGenerator : MonoBehaviour
         {
             int x = i % columns;
             int y = i / columns;
-            
+
             Vector3 position = new Vector3(x * screenSize.x, -y * screenSize.y, 0);
             GameObject go = Instantiate(imagePrefab[i], position, Quaternion.identity, transform);
             backgrounds.Add(go);
