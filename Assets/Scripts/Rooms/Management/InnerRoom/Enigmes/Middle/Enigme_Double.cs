@@ -22,7 +22,7 @@ public class Enigme_Doble : Enigme
 
     private void Awake()
     {
-        PrepareBulles();
+        //PrepareBulles();
     }
 
     private void PrepareBulles()
@@ -39,6 +39,7 @@ public class Enigme_Doble : Enigme
     public override void Initialize()
     {
         base.Initialize();
+        PrepareBulles();
         nbDouble = ItemsDouble.Count / 2;
         CreateBulle();
         SpawnObjects();
@@ -87,7 +88,7 @@ public class Enigme_Doble : Enigme
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
-                Debug.Log("Timer terminé !");
+                Debug.Log("Timer terminï¿½ !");
                 isTimerRunning = false;
                 CheckObj();
                 timer = 1f;
