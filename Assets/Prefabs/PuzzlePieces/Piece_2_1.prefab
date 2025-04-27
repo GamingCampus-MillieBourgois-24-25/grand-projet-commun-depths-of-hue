@@ -164,7 +164,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 33, y: 33, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1202822630314984460}
@@ -208,6 +208,7 @@ MonoBehaviour:
   col: 2
   id: Piece_2_1
   icon: {fileID: 21300000, guid: 2e77d9d53731a2a4d87a9e3b6833d463, type: 3}
+  burst: {fileID: 5965070910477195111, guid: 43b71e88093cf974a87cafca55dffbe6, type: 3}
 --- !u!114 &7920586242136992314
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -359,7 +359,7 @@ public class Sudoku : Enigme
         }
         Debug.Log("You won the game!");
         if (clipSuccess) OnSendSoundEffect?.Invoke(clipSuccess);
-        canvasEnigme.gameObject.SetActive(false);
+        canvaEnigme.SetActive(true);
         DialogueManager.Instance.StartNewDialogue(1,DialogueGroupKey.sudokuLike);
         Success();
     }

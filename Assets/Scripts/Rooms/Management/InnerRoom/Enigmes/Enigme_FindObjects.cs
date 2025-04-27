@@ -48,6 +48,16 @@ public class Enigme_FindObjects : Enigme
 
     [SerializeField] private int amountObjectsUsed = 3; // How many objects are used for this enigme
 
+    [SerializeField] private AudioClip success;
+    
+    #region Event
+
+    public delegate void SendSoundEffect(AudioClip _clip);
+
+    public static event SendSoundEffect OnSendSoundEffect;
+
+    #endregion
+    
     public override void Initialize()
     {
 
@@ -284,7 +294,7 @@ public class Enigme_FindObjects : Enigme
                 panel.SetActive(false);
                 DialogueManager.Instance.StartNewDialogue(3,enigmeDialogKey);
                 Success(); // End the enigme and invoke succes event
-
+                if (success) OnSendSoundEffect?.Invoke(success);
             }
         }
 

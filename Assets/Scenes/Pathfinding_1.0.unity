@@ -5125,7 +5125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14f7570f800f4849a898e85d4cd6b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventaire: {fileID: 0}
+  inventaire: {fileID: 21561950}
   showMap: {fileID: 831218824}
   audio: {fileID: 831218829}
   rooms: {fileID: 634222675}

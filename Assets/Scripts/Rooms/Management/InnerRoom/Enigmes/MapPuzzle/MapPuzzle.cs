@@ -11,12 +11,19 @@ public class MapPuzzle : Enigme
     [SerializeField] private GameObject canvaEnigme;
     [SerializeField] private PlayEffect playEffect;
     [SerializeField] private AudioClip clip;
+    [SerializeField] private AudioClip success;
 
 
     public GameObject prefabLine;
     public static MapPuzzle Instance;
-    
 
+    #region Event
+    public delegate void SendSoundEffect(AudioClip _clip);
+
+    public static event SendSoundEffect OnSendSoundEffect;
+    
+    #endregion
+    
     public override void Initialize()
     {
         mapCanvas.SetActive(true);
@@ -93,6 +100,7 @@ public class MapPuzzle : Enigme
         canvaEnigme.SetActive(true);
         DialogueManager.Instance.StartNewDialogue(1, DialogueGroupKey.carteDestin);
         Success();
+        if (success) OnSendSoundEffect?.Invoke(success);
     }
 
     public void Quit()
