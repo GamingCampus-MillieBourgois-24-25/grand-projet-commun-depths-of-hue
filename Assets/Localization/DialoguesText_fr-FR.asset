@@ -88,9 +88,7 @@ MonoBehaviour:
   - m_Id: 3223299087626240
     m_Localized: "Naufrages de nombreux paquebots, temp\xEAtes impr\xE9visibles,
       s\xE9ismes, tous ces \xE9v\xE9nements r\xE9cents semblent concorder et m\xE8nent
-      \xE0 un seul endroit, ici. DeepReach Compagnie m\u2019ont envoy\xE9 explorer
-      cette r\xE9gion afin de d\xE9couvrir la source de tous ces incidents. \xC9trangement,
-      quelque chose me dit que je suis d\xE9j\xE0 venu ici\u2026"
+      \xE0 un seul endroit, ici."
     m_Metadata:
       m_Items: []
   - m_Id: 3243060907438080
@@ -113,7 +111,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3244312630358016
-    m_Localized: "Peut-\xEAtre ai-je rat\xE9 des informations ailleurs..."
+    m_Localized: "Peut-\xEAtre ai-je rat\xE9 des informations cach\xE9es dans les
+      salles adjacentes..."
     m_Metadata:
       m_Items: []
   - m_Id: 3244325494288384
@@ -163,6 +162,57 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3558639858053120
     m_Localized: "Les nombres et les couleurs s'\xE9quilibrent... "
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3599345716785152
+    m_Localized: "Des fragments perdus flottent dans ces eaux... Trouve-les avant
+      que le temps ne s'\xE9coule. Regarde leur forme, ignore les imposteurs aux
+      couleurs changeantes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3600608298758144
+    m_Localized: "Une pi\xE8ce retrouv\xE9e... mais l'oc\xE9an cache encore ses secrets."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3600676984680448
+    m_Localized: "La mer te reconna\xEEt... ach\xE8ve ce qu'elle a pr\xE9serv\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3600767531315200
+    m_Localized: "Tu as dompt\xE9 les profondeurs... prends cette cl\xE9, et souviens-toi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3600845633449984
+    m_Localized: "(Tend la cl\xE9 dor\xE9e.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3601092455657472
+    m_Localized: "Le temps s'\xE9coule comme le sable... et emporte tes chances."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3601126572126208
+    m_Localized: "Les textes flottants te guident... mais seuls les objets intacts
+      m\xE9ritent d'\xEAtre touch\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3601660389584896
+    m_Localized: Le temps file comme le sable... les vrais fragments gardent leur
+      forme pure, contrairement aux reflets trompeurs.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3601785488896000
+    m_Localized: "Chaque pi\xE8ce authentique est unique... une fois trouv\xE9e,
+      elle rejoindra le courant."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3616915522023424
+    m_Localized: "\xC9trangement, quelque chose me dit que je suis d\xE9j\xE0 venu
+      ici\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3616901060063232
+    m_Localized: "DeepReach Compagnie m\u2019ont envoy\xE9 explorer cette r\xE9gion
+      afin de d\xE9couvrir la source de tous ces incidents."
     m_Metadata:
       m_Items: []
   references:
