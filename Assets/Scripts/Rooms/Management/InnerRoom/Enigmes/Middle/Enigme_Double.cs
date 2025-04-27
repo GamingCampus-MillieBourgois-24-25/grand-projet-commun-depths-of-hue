@@ -16,6 +16,7 @@ public class Enigme_Doble : Enigme
     [SerializeField] private GameObject zoneText;
     [SerializeField] private GameObject bubulle;
     [SerializeField] private GestionInputs gestion;
+    [SerializeField] private List<Vector3> AllPosition;
     private GameObject foundObject;
     private GameObject bubble;
     private List<GameObject> bulles = new List<GameObject>();
@@ -163,40 +164,15 @@ public class Enigme_Doble : Enigme
         float minY = bottomLeft.y + 5f;
         float maxY = topRight.y - 5f;
 
-        List<Vector2> occupiedPositions = new List<Vector2>();
+        float minDistance = 3f;
 
-        Vector2 spawnPosition = GetRandomPosition(minX, maxX, minY, maxY, occupiedPositions);
-        if (spawnPosition != Vector2.zero)
-        {
-            Vector3 newPosition = new Vector3(spawnPosition.x, spawnPosition.y, _obj.transform.position.z);
-            _obj.transform.position = newPosition;
-            occupiedPositions.Add(spawnPosition);
-        }
+
+        int id = Random.Range(0, AllPosition.Count);
+        _obj.transform.position = AllPosition[id];
+
+        AllPosition.RemoveAt(id);
     }
 
-
-    public Vector2 GetRandomPosition(float minX, float maxX, float minY, float maxY, List<Vector2> occupiedPositions)
-    {
-        const int maxAttempts = 30;
-        for (int attempt = 0; attempt < maxAttempts; attempt++)
-        {
-            Vector2 position = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
-            bool isValid = true;
-
-            foreach (var occupied in occupiedPositions)
-            {
-                if (Vector2.Distance(position, occupied) < 2f)
-                {
-                    isValid = false;
-                    break;
-                }
-            }
-
-            if (isValid)
-                return position;
-        }
-        return Vector2.zero;
-    }
 
 
     public override void CheckItem(GameObject item)
