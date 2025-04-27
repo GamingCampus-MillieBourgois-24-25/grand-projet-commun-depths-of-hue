@@ -12,8 +12,12 @@ public class PuzzleManager : MonoBehaviour
 
     public Transform aled;
 
+    public GameObject fin;
+
     public int rowAmount = 4;
     public int columnAmount = 4;
+
+    public int fragments = 0;
 
     public float largeur;
     public float longueur;
@@ -62,39 +66,57 @@ public class PuzzleManager : MonoBehaviour
 
     public void OStart()
     {
-        Debug.Log("sl");
-        StartCoroutine(InitializePuzzleWithDelay());
+        if (fragments >= 6)
+        {
+            Debug.Log("otn");
+            fin.SetActive(true);
+        }
+        InitializePuzzleWithDelay();
     }
 
-    private IEnumerator InitializePuzzleWithDelay()
+    private void InitializePuzzleWithDelay()
     {
-        _inventaire = FindObjectOfType<Inventaire>();
+        // Trouve l'inventaire une fois au début si nécessaire
         if (_inventaire == null)
         {
-            Debug.LogError("Inventaire non trouvé dans la scène!");
-            yield break;
-        }
-
-
-        // Tant qu'il reste des fragments dans l'inventaire
-        while (_inventaire.HasFragments())
-        {
-            Debug.Log("ooso");
-            // Instancie le prochain fragment
-            GameObject fragmentObj = _inventaire.InstantiateNextFragment();
-            PuzzleFragment fragment = fragmentObj.GetComponent<PuzzleFragment>();
-
-            if (fragment != null)
+            _inventaire = FindObjectOfType<Inventaire>();
+            if (_inventaire == null)
             {
-                AddFragmentToFresque(fragment);
-
-                // Supprime le fragment instancié de la liste
-                _inventaire.RemoveFirstFragment();
+                Debug.LogError("Inventaire non trouvé dans la scène!");
+                return;
             }
-
-            // Attend 2 secondes avant le prochain
-            yield return new WaitForSeconds(2f);
         }
+
+        // Vérifie s'il reste des fragments
+        if (!_inventaire.HasFragments())
+        {
+            Debug.Log("Aucun fragment restant dans l'inventaire");
+            return;
+        }
+
+        // Instancie le prochain fragment
+        GameObject fragmentObj = _inventaire.InstantiateNextFragment();
+        if (fragmentObj == null)
+        {
+            Debug.LogWarning("Échec de l'instanciation du fragment");
+            return;
+        }
+
+        PuzzleFragment fragment = fragmentObj.GetComponent<PuzzleFragment>();
+        if (fragment != null)
+        {
+            AddFragmentToFresque(fragment);
+            fragments++;
+            _inventaire.RemoveFirstFragment();
+        }
+        
+        // Vérifie si le puzzle est complet
+        if (IsPuzzleComplete())
+        {
+            Debug.Log("omggg");
+            fin.SetActive(true);
+        }
+
     }
 
     /// <summary>
@@ -122,12 +144,10 @@ public class PuzzleManager : MonoBehaviour
         // Appliquer la position
 
         Vector3 scale = new Vector3(2.90287423f, 5.0263319f, 2);
-        
+        puzzleGrid[fragment.row, fragment.col] = fragment;
+
         fragment.MoveFragment(fragmentPosition, scale);
     }
-
-
-
 
 
 

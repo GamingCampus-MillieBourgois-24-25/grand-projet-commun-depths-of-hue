@@ -12331,12 +12331,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1493852803}
   m_SourcePrefab: {fileID: 100100000, guid: 69596fb975e483d48b8d24020882a038, type: 3}
---- !u!223 &1493852797 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 2347458732442185951, guid: 69596fb975e483d48b8d24020882a038,
-    type: 3}
-  m_PrefabInstance: {fileID: 1493852796}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1493852798 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6930305208576795412, guid: 69596fb975e483d48b8d24020882a038,
@@ -14116,7 +14110,6 @@ MonoBehaviour:
   gridSize: 4
   cellPrefab: {fileID: 7648516946977174678, guid: e8b420c64a6517444bc07ede1577dfc5,
     type: 3}
-  canvasEnigme: {fileID: 1493852797}
   startPosition: {fileID: 1317927850}
   choiceCount: {fileID: 1493852799}
   choiceColorImage: {fileID: 1493852798}

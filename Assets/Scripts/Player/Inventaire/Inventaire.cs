@@ -179,6 +179,11 @@ public class Inventaire : MonoBehaviour
         return inventaire.Count > 0;
     }
 
+    public bool HasAllFragment()
+    {
+        return inventaire.Count >= 6;
+    }
+
     public GameObject InstantiateNextFragment()
     {
         if (inventaire.Count == 0)

@@ -209,6 +209,7 @@ MonoBehaviour:
     type: 3}
   unlockedVisual: {fileID: 0}
   direction: 0
+  lastRoom: 1
 --- !u!61 &5468157750648860551
 BoxCollider2D:
   m_ObjectHideFlags: 0
