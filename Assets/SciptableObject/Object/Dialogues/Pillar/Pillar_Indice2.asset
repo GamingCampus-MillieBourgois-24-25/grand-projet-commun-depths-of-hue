@@ -10,13 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8da2fdd88ae8f74ab82d516c27daf8c, type: 3}
-  m_Name: Memory_End
+  m_Name: Pillar_Indice2
   m_EditorClassIdentifier: 
   dialogues:
   - npc: "Voix ext\xE9rieures"
     image: {fileID: 0}
-    dialogueKey: Memory_End1
-  - npc: "Voix ext\xE9rieures"
-    image: {fileID: 0}
-    dialogueKey: Memory_End2
+    dialogueKey: Pillar_Indice2
   tableKey: DialoguesText

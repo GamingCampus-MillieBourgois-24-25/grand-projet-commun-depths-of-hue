@@ -16,7 +16,7 @@ MonoBehaviour:
   m_TableCollectionNameGuidString: 089a8ce5a2373aa4e80f4ccf0347f527
   m_Entries:
   - m_Id: 172177031168
-    m_Key: ChantSirenes_enterP
+    m_Key: langu
     m_Metadata:
       m_Items: []
   - m_Id: 208478732288
@@ -183,6 +183,74 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3616915522023424
     m_Key: Start3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3684994604036096
+    m_Key: Pillar_Enter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3685043748696064
+    m_Key: Pillar_Good1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3685264876597248
+    m_Key: Pillar_Good2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3685455704846336
+    m_Key: Pillar_Bad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3685652698722304
+    m_Key: Pillar_Indice1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3685698475356160
+    m_Key: Pillar_Indice2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3685709988720640
+    m_Key: Pillar_Indice3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3705477692203008
+    m_Key: Langue_settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3705992773705728
+    m_Key: Connected_settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3708561185120256
+    m_Key: music_settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3708644895039488
+    m_Key: effect_settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3708879931252736
+    m_Key: back_settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3709569386749952
+    m_Key: langue_settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710066994782208
+    m_Key: Continue_mainMenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710141452066816
+    m_Key: Start_mainMenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710956761849856
+    m_Key: settings_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3711021102473216
+    m_Key: close_settings
     m_Metadata:
       m_Items: []
   m_Metadata:

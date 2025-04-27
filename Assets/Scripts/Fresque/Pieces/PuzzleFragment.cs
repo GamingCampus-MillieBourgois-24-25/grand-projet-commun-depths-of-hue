@@ -13,7 +13,7 @@ public class PuzzleFragment:MonoBehaviour
     public void MoveFragment( Vector3 targetPosition, Vector3 finalScale)
     {
         Vector3 start = Vector3.zero;
-        Debug.Log("start" + start);
+
         transform.localScale = Vector3.zero;
         float duration = 1.5f;
 

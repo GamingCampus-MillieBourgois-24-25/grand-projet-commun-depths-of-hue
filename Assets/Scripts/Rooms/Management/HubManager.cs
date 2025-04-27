@@ -35,6 +35,7 @@ public class HubManager : MonoBehaviour
     private void Start()
     {
         InitializeDoors();
+        CheckUnlockFinalRoom();
     }
 
     /// <summary>
@@ -56,5 +57,30 @@ public class HubManager : MonoBehaviour
         doors = GameObject.FindObjectsOfType<DoorController>(true)
             .Where(d => d.gameObject.CompareTag("Doors"))
             .ToArray();
+    }
+
+   private void CheckUnlockFinalRoom()
+    {
+        Inventaire inventory = FindObjectOfType<Inventaire>();
+
+        if (inventory == null)
+        {
+            Debug.LogWarning("InventoryManager not found in the scene!");
+            return;
+        }
+
+        if (inventory.HasAllFragment())
+        {
+            foreach (DoorController door in doors)
+            {
+                if (door.lastRoom)
+                {
+                    door.gameObject.SetActive(true);
+                    break;
+                }
+            }
+        }
+
+        
     }
 }
