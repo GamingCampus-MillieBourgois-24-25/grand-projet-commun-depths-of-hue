@@ -18,6 +18,7 @@ public class Enigme_Doble : Enigme
     [SerializeField] private GameObject bubulle;
     [SerializeField] private GestionInputs gestion;
     private GameObject foundObject;
+    private GameObject bubble;
     private List<GameObject> bulles;
     private float timer = 1f; // 1 seconde
     private bool isTimerRunning = false;
@@ -30,10 +31,12 @@ public class Enigme_Doble : Enigme
 
     private void PrepareBulles()
     {
+        bubble = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        bubble.AddComponent<Bulle>();
         bulles = new List<GameObject>();
         for (int i = 0; i < ItemsDouble.Count; i++)
         {
-            GameObject newBulle = Instantiate(bubulle, Vector3.zero, Quaternion.identity);
+            GameObject newBulle = Instantiate(bubble, Vector3.zero, Quaternion.identity);
             newBulle.SetActive(false);
             bulles.Add(newBulle);
         }
