@@ -159,6 +159,80 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1110888301}
   m_LocalEulerAnglesHint: {x: 17.000002, y: 0, z: 0}
+--- !u!1001 &143216965
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1400977980419304764, guid: 3fa94f2142fe2b040b1857f2501bcfaa,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400977980419304764, guid: 3fa94f2142fe2b040b1857f2501bcfaa,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.1327946
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400977980419304764, guid: 3fa94f2142fe2b040b1857f2501bcfaa,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400977980419304764, guid: 3fa94f2142fe2b040b1857f2501bcfaa,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400977980419304764, guid: 3fa94f2142fe2b040b1857f2501bcfaa,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400977980419304764, guid: 3fa94f2142fe2b040b1857f2501bcfaa,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400977980419304764, guid: 3fa94f2142fe2b040b1857f2501bcfaa,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400977980419304764, guid: 3fa94f2142fe2b040b1857f2501bcfaa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400977980419304764, guid: 3fa94f2142fe2b040b1857f2501bcfaa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400977980419304764, guid: 3fa94f2142fe2b040b1857f2501bcfaa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1745873421507049350, guid: 3fa94f2142fe2b040b1857f2501bcfaa,
+        type: 3}
+      propertyPath: m_Name
+      value: bulle
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3fa94f2142fe2b040b1857f2501bcfaa, type: 3}
+--- !u!1 &143216966 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1745873421507049350, guid: 3fa94f2142fe2b040b1857f2501bcfaa,
+    type: 3}
+  m_PrefabInstance: {fileID: 143216965}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &200540717
 GameObject:
   m_ObjectHideFlags: 0
@@ -2618,8 +2692,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isResolved: 0
+  hintLeft: 3
+  hintUsed: 0
   itemsContainer: {fileID: 0}
   enigmeDialogKey: 0
+  enigmeHintKey: 0
   objectsInEnigme: []
   pillarPrefab: {fileID: 5900255983290734435, guid: 0dad38000e7c84348997e821c2ad1661,
     type: 3}
@@ -2663,7 +2740,6 @@ MonoBehaviour:
   enigmes:
   - {fileID: 1837205995}
   - {fileID: 1837205991}
-  RaycastF: {fileID: 993183705}
   currentEnigme: {fileID: 0}
   successBanner: {fileID: 915174391}
   bannerCanvasGroup: {fileID: 915174393}
@@ -2681,8 +2757,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isResolved: 0
+  hintLeft: 3
+  hintUsed: 0
   itemsContainer: {fileID: 2118671561}
   enigmeDialogKey: 0
+  enigmeHintKey: 0
   objectsInEnigme: []
   ItemsDouble:
   - {fileID: 1223633482642783616}
@@ -2699,7 +2778,7 @@ MonoBehaviour:
   img: {fileID: 0}
   text: {fileID: 936070025}
   zoneText: {fileID: 936070023}
-  bubulle: {fileID: 1745873421507049350, guid: 3fa94f2142fe2b040b1857f2501bcfaa, type: 3}
+  bubulle: {fileID: 143216966}
   gestion: {fileID: 993183705}
 --- !u!1 &1842611428 stripped
 GameObject:
@@ -4348,3 +4427,4 @@ SceneRoots:
   - {fileID: 742898050}
   - {fileID: 791531039}
   - {fileID: 1417064651}
+  - {fileID: 143216965}
