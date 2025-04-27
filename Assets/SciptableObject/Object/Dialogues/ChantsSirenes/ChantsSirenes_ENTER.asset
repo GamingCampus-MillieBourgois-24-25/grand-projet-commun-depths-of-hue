@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChantsSirenes_ENTER
   m_EditorClassIdentifier: 
   dialogues:
-  - npc: Player
+  - npc: Joueur
     image: {fileID: 0}
     dialogueKey: ChantSirenes_enterP
   - npc: Statue

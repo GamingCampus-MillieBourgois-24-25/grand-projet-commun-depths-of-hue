@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Room_", menuName = "Game/Rooms/Data", order = 1)]
@@ -10,7 +12,7 @@ public class RoomDataBase : ScriptableObject
     [ScenePath] 
     public string sceneName;
 
-    private bool isVisited = false;
+    public bool isVisited = false;
     
     [Header("Default State")]
     public RoomStateEnum initialState;
@@ -24,7 +26,7 @@ public class RoomDataBase : ScriptableObject
         set => PlayerPrefs.SetInt(roomId + "_state", (int)value);
 
     }
-    
+
     public void VisitRoom()
     {
         isVisited = true;

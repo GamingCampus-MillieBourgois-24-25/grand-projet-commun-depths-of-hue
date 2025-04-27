@@ -85,6 +85,78 @@ MonoBehaviour:
       de plus..."
     m_Metadata:
       m_Items: []
+  - m_Id: 3223299087626240
+    m_Localized: "Naufrages de nombreux paquebots, temp\xEAtes impr\xE9visibles,
+      s\xE9ismes, tous ces \xE9v\xE9nements r\xE9cents semblent concorder et m\xE8nent
+      \xE0 un seul endroit, ici. DeepReach Compagnie m\u2019ont envoy\xE9 explorer
+      cette r\xE9gion afin de d\xE9couvrir la source de tous ces incidents. \xC9trangement,
+      quelque chose me dit que je suis d\xE9j\xE0 venu ici\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3243060907438080
+    m_Localized: "Il semblerait que la statue \xE9mette une sorte de m\xE9lodie...
+      Comment la reproduire ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3243186925301760
+    m_Localized: "\xC0 quoi peuvent bien servir ces coraux ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3243198358974464
+    m_Localized: "Chacun de ces coraux \xE9met un son distinct... Serait-il possible
+      d'en tirer une m\xE9lodie ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3244238990962688
+    m_Localized: "Cette carte semble r\xE9agir \xE0 un ordre pr\xE9cis... Comment
+      organiser ces lieux correctement ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3244312630358016
+    m_Localized: "Peut-\xEAtre ai-je rat\xE9 des informations ailleurs..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3244325494288384
+    m_Localized: "Je crois avoir vu un dessin ressemblant \xE0 l'un des lieux dans
+      cette salle."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3245658976776192
+    m_Localized: "Dans cette salle, dix objets cherchent leur \xE2me s\u0153ur. Peux-tu
+      les r\xE9unir ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3245765390462976
+    m_Localized: "Chaque paire me donne un objet \xE9trange... Mais \xE0 quoi peuvent-ils
+      bien servir ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3245896739287040
+    m_Localized: "Allez, plus que la moiti\xE9 !"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3245957758021632
+    m_Localized: "Enfin r\xE9unis ! Merci d'avoir apais\xE9 ces \xE2mes perdues."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3246044080992256
+    m_Localized: "Mais l'\xE9nigme n'est pas termin\xE9e... Ordonne les r\xE9compenses
+      que tu as re\xE7ues."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3246094693658624
+    m_Localized: "Regarde autour de toi. La r\xE9ponse est inscrite depuis le d\xE9but."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3246553248526336
+    m_Localized: "Ce n\u2019est pas le bon ordre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3246907289726976
+    m_Localized: "Bien jou\xE9, tu peux maintenant continuer ton aventure, notre
+      r\xF4le s\u2019arr\xEAte ici\u2026. Bonne chance !"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

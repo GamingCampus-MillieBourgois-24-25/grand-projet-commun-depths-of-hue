@@ -411,3 +411,4 @@ MonoBehaviour:
   y: 0
   isEditable: 1
   notEditableImage: {fileID: 4165188618056975546}
+  clip: {fileID: 8300000, guid: 5459d95d395bc0b4d80daf8786d17a78, type: 3}

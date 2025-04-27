@@ -1,6 +1,7 @@
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngineInternal;
 
 public class Enigme_Doble : Enigme
 {
@@ -16,12 +17,18 @@ public class Enigme_Doble : Enigme
     [SerializeField] private GameObject zoneText;
     [SerializeField] private GameObject bubulle;
     [SerializeField] private GestionInputs gestion;
+    private GameObject foundObject;
     private List<GameObject> bulles;
     private float timer = 1f; // 1 seconde
     private bool isTimerRunning = false;
 
     private void Awake()
     {
+        if (bubulle == null)
+        {
+            bubulle = Resources.Load<GameObject>("Assets/Assets/Objects/Bulle/bulle"); 
+        }
+        foundObject = GameObject.Find("bulle");
         PrepareBulles();
     }
 
@@ -30,7 +37,7 @@ public class Enigme_Doble : Enigme
         bulles = new List<GameObject>();
         for (int i = 0; i < ItemsDouble.Count; i++)
         {
-            GameObject newBulle = Instantiate(bubulle, Vector3.zero, Quaternion.identity);
+            GameObject newBulle = Instantiate(foundObject, Vector3.zero, Quaternion.identity);
             newBulle.SetActive(false);
             bulles.Add(newBulle);
         }
@@ -55,12 +62,12 @@ public class Enigme_Doble : Enigme
 
     public void ObjectClicked(GameObject obj)
     {
+        if (!gestion.enabled) return;
         Bulle bubulle = obj.GetComponent<Bulle>();
         if (bubulle.item == firstSelected) return;
 
         if (firstSelected == null && firstBulleSelected == null)
         {
-            /*Material outlineMaterial = new Material(materialToApply);*/
             firstSelected = bubulle.item;
             firstBulleSelected = obj;
             bubulle.item.transform.position = obj.transform.position;
@@ -69,13 +76,15 @@ public class Enigme_Doble : Enigme
         }
         else
         {
+            gestion.enabled = false;
             secondSelected = bubulle.item;
             secondBulleSelected = obj;
             bubulle.item.transform.position = obj.transform.position;
             bubulle.item.SetActive(true);
             obj.SetActive(false);
+            
             isTimerRunning = true;
-            gestion.enabled = false;
+            
         }
     }
 
@@ -87,7 +96,7 @@ public class Enigme_Doble : Enigme
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
-                Debug.Log("Timer terminé !");
+                Debug.Log("Timer terminï¿½ !");
                 isTimerRunning = false;
                 CheckObj();
                 timer = 1f;

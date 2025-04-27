@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class EnigmeRoom : Room
@@ -15,7 +16,7 @@ public class EnigmeRoom : Room
     [SerializeField] private GameObject successBanner;
     [SerializeField] private CanvasGroup bannerCanvasGroup;
     [SerializeField] private RectTransform bannerTransform;
-
+    
 
     
 
@@ -188,6 +189,19 @@ public class EnigmeRoom : Room
         {
             Debug.Log("OLE");
             currentEnigme.CheckItem(robject);
+        }
+    }
+
+    public void GetHintCurrentEnigme()
+    {
+        if (currentEnigme.hintUsed < currentEnigme.hintLeft)
+        {
+            DialogueManager.Instance.StartNewDialogue(currentEnigme.hintUsed, currentEnigme.enigmeHintKey);
+            currentEnigme.hintUsed++;
+            if (currentEnigme.hintUsed == currentEnigme.hintLeft)
+            {
+                currentEnigme.hintUsed = 0;
+            }
         }
     }
 
