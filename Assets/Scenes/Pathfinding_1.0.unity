@@ -1612,6 +1612,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b9ebd5f47f7309a4a9b9fe1b422371e4, type: 2}
   - {fileID: 11400000, guid: 329fbe233aec6be4fafbd2bbdd10d72d, type: 2}
   - {fileID: 11400000, guid: 84cb9d13a29e1ab4992a6fe485352a2e, type: 2}
+  sauvegarde: {fileID: 1644571682}
 --- !u!4 &634222676
 Transform:
   m_ObjectHideFlags: 0
@@ -2931,6 +2932,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3100750918402528315, guid: 918567b17f0075d4fbc77ed1cbe84d7b,
+        type: 3}
+      propertyPath: sauvegarde
+      value: 
+      objectReference: {fileID: 1644571682}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8526736472193611228, guid: 918567b17f0075d4fbc77ed1cbe84d7b, type: 3}
@@ -2944,6 +2950,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 913760196}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &913760198 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3100750918402528315, guid: 918567b17f0075d4fbc77ed1cbe84d7b,
+    type: 3}
+  m_PrefabInstance: {fileID: 913760196}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 191053689e4d0f1489179eee94494f14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &930434274
 GameObject:
   m_ObjectHideFlags: 0
@@ -5110,6 +5128,8 @@ MonoBehaviour:
   inventaire: {fileID: 0}
   showMap: {fileID: 831218824}
   audio: {fileID: 831218829}
+  rooms: {fileID: 634222675}
+  dialogueManager: {fileID: 913760198}
 --- !u!1 &1650484930
 GameObject:
   m_ObjectHideFlags: 0
