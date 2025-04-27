@@ -11,20 +11,20 @@ public class AudioOptionManager : MonoBehaviour
     
     public Slider MusicSlider
     {
-        get { return musicSlider; }
-        set { musicSlider = value; }
+        get => musicSlider;
+        set => musicSlider = value;
     }
 
     public Slider SoundEffectsSlider
     {
-        get { return soundEffectsSlider; }
-        set { soundEffectsSlider = value; }
+        get => soundEffectsSlider;
+        set => soundEffectsSlider = value;
     }
 
     public bool IsLoad
     {
-        get { return isLoad; }
-        set {  isLoad = value; }
+        get => isLoad;
+        set => isLoad = value;
     }
 
     public static float musicVolume {  get; private set; }
@@ -32,6 +32,9 @@ public class AudioOptionManager : MonoBehaviour
 
     public float startMusicVolume = 5f;
     public float startSoundEffectsVolume = 5f;
+
+    public delegate void SendStartLoadAudioToSave();
+    public static event SendStartLoadAudioToSave OnSendStartLoadAudioToSave;
 
     private void Start()
     {
@@ -43,6 +46,8 @@ public class AudioOptionManager : MonoBehaviour
             soundEffectsSlider.value = startSoundEffectsVolume;
             AudioManager.Instance.UpdateMixerVolume();
         }
+        
+        OnSendStartLoadAudioToSave?.Invoke();
     }
 
     private void OnEnable()

@@ -28,6 +28,21 @@ public class Save : MonoBehaviour
         EnsureSaveFileExists();
     }
 
+    private void OnEnable()
+    {
+        AudioOptionManager.OnSendStartLoadAudioToSave += LoadAudio;
+    }
+    
+    private void OnDisable()
+    {
+        AudioOptionManager.OnSendStartLoadAudioToSave -= LoadAudio;
+    }
+
+    private void LoadAudio()
+    {
+        if (audio) LoadCategory("audio");
+    }
+
     private void EnsureSaveFileExists()
     {
         if (!File.Exists(savePath))
