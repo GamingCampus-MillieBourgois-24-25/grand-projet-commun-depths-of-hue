@@ -246,6 +246,46 @@ MonoBehaviour:
       ombres ne le laissent croire."
     m_Metadata:
       m_Items: []
+  - m_Id: 3705477692203008
+    m_Localized: Francais
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3705992773705728
+    m_Localized: Connecte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3708561185120256
+    m_Localized: Musique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3708644895039488
+    m_Localized: Effets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3708879931252736
+    m_Localized: Retour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3709569386749952
+    m_Localized: Langue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710066994782208
+    m_Localized: Continuer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710141452066816
+    m_Localized: Nouvelle partie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710956761849856
+    m_Localized: Parametres
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3711021102473216
+    m_Localized: Fermer
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
