@@ -8,6 +8,7 @@ using UnityEngine;
 [System.Serializable]
 public class PositionData
 {
+   
     public string roomName;
     public Vector3 worldPosition;
     public Quaternion worldRotation;
@@ -22,6 +23,9 @@ public class PositionData
 
 public class Enigme_FindObjects : Enigme
 {
+    public GameObject start;
+    public GameObject inGame;
+
 
     [SerializeField] int maxRound = 3;
     public int currentRound = 0;
@@ -33,9 +37,6 @@ public class Enigme_FindObjects : Enigme
     [SerializeField] private float timeLimit = 60f;
     private float timer; //current time
 
-
-    [SerializeField] private Material frost;
-    public GameObject fogPlane;
 
     [SerializeField] private List<GameObject> objectsUsedInEnigme; // Every object dynamically chose for the enigme
 
@@ -49,6 +50,9 @@ public class Enigme_FindObjects : Enigme
 
     public override void Initialize()
     {
+
+        start.SetActive(false);
+        inGame.SetActive(true);
 
         CollectAllPositionsFromScene();
 
@@ -396,4 +400,12 @@ public class Enigme_FindObjects : Enigme
         instantiatedObjects.Clear(); // Effacer la liste des clones
     }
 
+    protected override void Fail()
+    {
+        start.SetActive(true);
+        inGame.SetActive(false);
+        ClearText();
+        currentRound = 0;
+        base.Fail();
+    }
 }
