@@ -727,6 +727,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2788830476853846094, guid: 95db439174577f1468f7268cb6018cf2,
+        type: 3}
+      propertyPath: skipEndTransition
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2840688917002009200, guid: 95db439174577f1468f7268cb6018cf2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10146,6 +10151,11 @@ PrefabInstance:
       objectReference: {fileID: 1607507425}
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
+      propertyPath: initalFrame
+      value: Chants_Coraux
+      objectReference: {fileID: 0}
+    - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
+        type: 3}
       propertyPath: lockedFrame
       value: 
       objectReference: {fileID: 21300000, guid: fe2da11ce1183b54685a4271462b240f,
@@ -10160,6 +10170,11 @@ PrefabInstance:
         type: 3}
       propertyPath: frames.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
+        type: 3}
+      propertyPath: frames.Array.data[0].id
+      value: Chants_Coraux
       objectReference: {fileID: 0}
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}

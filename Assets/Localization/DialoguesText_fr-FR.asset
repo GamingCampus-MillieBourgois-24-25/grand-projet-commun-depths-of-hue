@@ -31,7 +31,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 336795074560
-    m_Localized: "*Tend la cl\xE9 dor\xE9e au plongeur*"
+    m_Localized: '*Tend un morceau de fresque au plongeur*'
     m_Metadata:
       m_Items: []
   - m_Id: 345892519936
@@ -183,7 +183,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3600845633449984
-    m_Localized: "(Tend la cl\xE9 dor\xE9e.)"
+    m_Localized: '*Tend un morceau de fresque.*'
     m_Metadata:
       m_Items: []
   - m_Id: 3601092455657472
@@ -211,7 +211,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3616901060063232
-    m_Localized: "DeepReach Compagnie m\u2019ont envoy\xE9 explorer cette r\xE9gion
+    m_Localized: "La Compagnie DeepReach m\u2019a envoy\xE9 explorer cette r\xE9gion
       afin de d\xE9couvrir la source de tous ces incidents."
     m_Metadata:
       m_Items: []
@@ -226,7 +226,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3685264876597248
-    m_Localized: "(Tend la cl\xE9 dor\xE9e.)"
+    m_Localized: '*Tend un morceau de fresque.*'
     m_Metadata:
       m_Items: []
   - m_Id: 3685455704846336
@@ -244,6 +244,46 @@ MonoBehaviour:
   - m_Id: 3685709988720640
     m_Localized: "Compare les formes... l\u2019\xE9nigme est plus simple que les
       ombres ne le laissent croire."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3705477692203008
+    m_Localized: Francais
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3705992773705728
+    m_Localized: Connecte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3708561185120256
+    m_Localized: Musique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3708644895039488
+    m_Localized: Effets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3708879931252736
+    m_Localized: Retour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3709569386749952
+    m_Localized: Langue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710066994782208
+    m_Localized: Continuer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710141452066816
+    m_Localized: Nouvelle partie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710956761849856
+    m_Localized: Parametres
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3711021102473216
+    m_Localized: Fermer
     m_Metadata:
       m_Items: []
   references:
