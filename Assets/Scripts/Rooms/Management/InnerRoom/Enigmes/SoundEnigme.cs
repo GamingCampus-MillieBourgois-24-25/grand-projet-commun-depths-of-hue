@@ -29,6 +29,15 @@ public class SoundEnigme : Enigme
 
 
     public AudioClip lose;
+    [SerializeField] private AudioClip success;
+
+    #region Event
+
+    public delegate void SendSoundEffect(AudioClip _clip);
+
+    public static event SendSoundEffect OnSendSoundEffect;
+
+    #endregion
 
     public override void Initialize()
     {
@@ -264,6 +273,7 @@ public class SoundEnigme : Enigme
         canvaSoundEnigme.SetActive(false);
         enigmeLight.color = idleColor;
         Success();
+        if (success) OnSendSoundEffect?.Invoke(success);
     }
 
 
