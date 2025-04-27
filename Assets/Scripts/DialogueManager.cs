@@ -63,6 +63,9 @@ public class DialogueManager : MonoBehaviour
     private float currentTimer;
     private bool isCountingDown = true;
 
+    public bool enteredBaseMap = false;
+    [SerializeField] private Save sauvegarde;
+
     public static DialogueManager Instance;
 
     // Start is called before the first frame update
@@ -75,7 +78,10 @@ public class DialogueManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(this.gameObject);
-        
+        if (sauvegarde)
+        {
+            sauvegarde.LoadCategory("dialogbasemap");
+        }
         if (dialogFrame != null)
         {
             dialogFrame.SetActive(false);
@@ -96,7 +102,13 @@ public class DialogueManager : MonoBehaviour
                 }
             }
 
-            StartDialogue(0,DialogueGroupKey.start);
+            if (!enteredBaseMap)
+            {
+                enteredBaseMap = true;
+                StartDialogue(0,DialogueGroupKey.start);
+                sauvegarde.SaveCategory("dialogbasemap");
+            }
+           
         }
     }
 
@@ -176,15 +188,12 @@ public class DialogueManager : MonoBehaviour
     
     public void StartDialogue(int idDialogue,DialogueGroupKey keyGroup)
     {
-        Debug.Log(listDialogues);
         if (listDialogues == null) return;
         foreach (var dialoguePair in listDialogues)
         {
-            Debug.Log(dialoguePair.key);
             if (dialoguePair.key == keyGroup)
             {
                 currentDialogue = dialoguePair.value[idDialogue];
-                Debug.Log(currentDialogue);
             }
         }
         StartCoroutine(WriteDialogue(currentDialogue));

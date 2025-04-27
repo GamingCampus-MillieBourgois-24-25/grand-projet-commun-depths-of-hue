@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,11 +10,20 @@ public class RoomManager : MonoBehaviour
     [Header("Data")]
     private RoomDataBase currentRoom;
     [SerializeField] private RoomDataBase[] allRooms;
+    [SerializeField] private Save sauvegarde;
     void Awake()
     {
         if (Instance == null) Instance = this; //Singleton instantiation
         else Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        if (sauvegarde)
+        {
+            sauvegarde.LoadCategory("rooms");
+        }
     }
 
 
@@ -68,11 +79,12 @@ public class RoomManager : MonoBehaviour
             {
                 Debug.LogWarning("No RoomController found in scene!");
             }
-
+            DialogueManager.Instance.StopCurrentDialogue();
             if (!currentRoom.GetIsVisited())
             {
                 currentRoom.VisitRoom();
                 DialogueManager.Instance.StartNewRoomDialogue();
+                sauvegarde.SaveCategory("rooms");
             }
             SceneManager.sceneLoaded -= OnSceneLoaded; // On scene loaded event unsubscription
         }
@@ -126,5 +138,31 @@ public class RoomManager : MonoBehaviour
                 so.isVisited = false; 
             }
         }
+    }
+
+    public List<string> GetIdAllRooms()
+    {
+        List<string> roomIds = new List<string>();
+        foreach (var so in allRooms)
+        {
+            roomIds.Add(so.roomId);
+        }
+        return roomIds;
+    }
+
+    public List<bool> GetAlreadyVisitedBoolList()
+    {
+        List<bool> visited = new List<bool>();
+        foreach (var so in allRooms)
+        {
+            visited.Add(so.isVisited);
+        }
+
+        return visited;
+    }
+
+    public RoomDataBase[] GetAllRooms()
+    {
+        return allRooms;
     }
 }
