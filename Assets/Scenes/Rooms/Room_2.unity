@@ -10152,7 +10152,7 @@ PrefabInstance:
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
       propertyPath: initalFrame
-      value: "Chants_Sir\xE8nes"
+      value: Chants_Coraux
       objectReference: {fileID: 0}
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
@@ -10174,7 +10174,7 @@ PrefabInstance:
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
       propertyPath: frames.Array.data[0].id
-      value: "Chants_Sir\xE8nes"
+      value: Chants_Coraux
       objectReference: {fileID: 0}
     - target: {fileID: 3958757723104941773, guid: ab2bea016b629e24cb29675996c534fd,
         type: 3}
