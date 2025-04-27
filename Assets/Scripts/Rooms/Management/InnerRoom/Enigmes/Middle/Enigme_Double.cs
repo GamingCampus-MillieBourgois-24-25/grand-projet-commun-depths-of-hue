@@ -25,18 +25,16 @@ public class Enigme_Doble : Enigme
 
    private void Awake()
     {
-        if (bubulle == null) return;
+        if (!bubble) return;
         PrepareBulles();
     }
 
     private void PrepareBulles()
     {
-        bubble = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        bubble.AddComponent<Bulle>();
-        bulles = new List<GameObject>();
+        Vector3 positionSpawn = new Vector3(1000, 0, 0);
         for (int i = 0; i < ItemsDouble.Count; i++)
         {
-            GameObject newBulle = Instantiate(bubble, Vector3.zero, Quaternion.identity);
+            GameObject newBulle = Instantiate(bubble, positionSpawn, Quaternion.identity);
             newBulle.SetActive(false);
             bulles.Add(newBulle);
         }
