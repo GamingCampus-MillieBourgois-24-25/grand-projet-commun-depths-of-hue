@@ -17,6 +17,7 @@ public class Enigme_Doble : Enigme
     [SerializeField] private GameObject zoneText;
     [SerializeField] private GameObject bubulle;
     [SerializeField] private GestionInputs gestion;
+    private GameObject foundObject;
     private List<GameObject> bulles;
     private float timer = 1f; // 1 seconde
     private bool isTimerRunning = false;
@@ -25,8 +26,9 @@ public class Enigme_Doble : Enigme
     {
         if (bubulle == null)
         {
-            bubulle = Resources.Load<GameObject>("Objects/Bulle/bulle"); 
+            bubulle = Resources.Load<GameObject>("Assets/Assets/Objects/Bulle/bulle"); 
         }
+        foundObject = GameObject.Find("bulle");
         PrepareBulles();
     }
 
@@ -35,7 +37,7 @@ public class Enigme_Doble : Enigme
         bulles = new List<GameObject>();
         for (int i = 0; i < ItemsDouble.Count; i++)
         {
-            GameObject newBulle = Instantiate(bubulle, Vector3.zero, Quaternion.identity);
+            GameObject newBulle = Instantiate(foundObject, Vector3.zero, Quaternion.identity);
             newBulle.SetActive(false);
             bulles.Add(newBulle);
         }
