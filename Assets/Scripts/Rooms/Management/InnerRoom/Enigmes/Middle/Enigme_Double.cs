@@ -22,22 +22,18 @@ public class Enigme_Doble : Enigme
     private float timer = 1f; // 1 seconde
     private bool isTimerRunning = false;
 
-    private void Awake()
+   /* private void Awake()
     {
-        if (bubulle == null)
-        {
-            bubulle = Resources.Load<GameObject>("Assets/Prefabs/Object/Bulle/bulle.prefab");
-        }
         foundObject = GameObject.Find("bulle");
         PrepareBulles();
-    }
+    }*/
 
     private void PrepareBulles()
     {
         bulles = new List<GameObject>();
         for (int i = 0; i < ItemsDouble.Count; i++)
         {
-            GameObject newBulle = Instantiate(bubulle, Vector3.zero, Quaternion.identity);
+            GameObject newBulle = Instantiate(foundObject, Vector3.zero, Quaternion.identity);
             newBulle.SetActive(false);
             bulles.Add(newBulle);
         }
@@ -47,6 +43,8 @@ public class Enigme_Doble : Enigme
     {
         base.Initialize();
         nbDouble = ItemsDouble.Count / 2;
+        foundObject = GameObject.Find("bulle");
+        PrepareBulles();
         CreateBulle();
         SpawnObjects();
         UpdateTexte();
