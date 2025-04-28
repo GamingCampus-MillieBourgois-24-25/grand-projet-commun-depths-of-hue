@@ -20,4 +20,20 @@ public class LangueSwitch : MonoBehaviour
             LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales.Find(locale => locale.Identifier.Code == "en");
         }
     }
+    
+    // FIX TABLEAU
+    #region Event
+
+    public delegate void ShowTableau(bool _isShow);
+    public static event ShowTableau OnShowTableau;
+
+    #endregion
+    
+    private bool isShow = false;
+
+    public void ShowTableauFunc()
+    {
+        isShow = !isShow;
+        OnShowTableau?.Invoke(isShow);
+    }
 }
