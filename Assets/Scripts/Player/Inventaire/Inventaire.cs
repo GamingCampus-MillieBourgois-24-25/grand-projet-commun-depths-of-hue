@@ -49,7 +49,7 @@ public class Inventaire : MonoBehaviour
     }
     private void HandleObjectClick(GameObject go)
     {
-
+        if (!go) return;
         AnItem anItem = go.GetComponent<AnItem>();
 
         if (anItem != null && anItem.itemData != null)
@@ -81,7 +81,7 @@ public class Inventaire : MonoBehaviour
    
             //part.transform.position = obj.transform.position;
             //part.Play();
-            save.SaveCategory("inventory");
+            if (save) save.SaveCategory("inventory");
             Debug.Log(item.itemName + " ajouté à l'inventaire.");
         }
         else

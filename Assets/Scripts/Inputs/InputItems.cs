@@ -73,7 +73,7 @@ public class InputItems : MonoBehaviour
 
                     if (go != null)
                     {
-                        OnClickOnGameObject?.Invoke(go);
+                        if (go) OnClickOnGameObject?.Invoke(go);
 
 
                         return;

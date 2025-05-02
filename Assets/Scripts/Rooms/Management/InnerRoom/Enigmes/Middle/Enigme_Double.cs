@@ -60,9 +60,12 @@ public class Enigme_Doble : Enigme
 
     public void ObjectClicked(GameObject obj)
     {
-        if (!gestion.enabled) return;
+        if (!gestion.enabled || !obj) return;
         Bulle bubulle = obj.GetComponent<Bulle>();
-        if (bubulle.item == firstSelected) return;
+        if (bubulle.item && firstSelected)
+        {
+            if (bubulle.item == firstSelected) return;
+        }
 
         if (firstSelected == null && firstBulleSelected == null)
         {
@@ -187,7 +190,7 @@ public class Enigme_Doble : Enigme
     public override void CheckItem(GameObject item)
     {
         base.CheckItem(item);
-        ObjectClicked(item);
+        if (item) ObjectClicked(item);
     }
 
     public void CreateBulle()

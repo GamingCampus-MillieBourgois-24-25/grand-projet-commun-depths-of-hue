@@ -188,7 +188,7 @@ public class EnigmeRoom : Room
         if (currentEnigme != null)
         {
             Debug.Log("OLE");
-            currentEnigme.CheckItem(robject);
+            if (robject) currentEnigme.CheckItem(robject);
         }
     }
 

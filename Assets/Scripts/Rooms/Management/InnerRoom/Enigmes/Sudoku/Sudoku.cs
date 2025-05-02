@@ -218,7 +218,7 @@ public class Sudoku : Enigme
             for (int j = 0; j < gridSize; j++)
             {
                 GameObject cell = Instantiate(cellPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-                cell.transform.SetParent(startPosition.transform);
+                cell.transform.SetParent(startPosition.transform, false);
                 var cellScript = cell.GetComponent<CellSudoku>();
                 cellScript.x = i;
                 cellScript.y = j;
